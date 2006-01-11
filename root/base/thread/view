@@ -1,0 +1,41 @@
+<h1>[% current_thread.subject %]</h1>
+
+[% IF post_list.count > 0 %]
+<form action="thread/reply?thread=[% current_thread.id %]" method="POST" name="new_thread">
+  <table>
+    [% WHILE (post = post_list.next) %]
+    <tr>
+      [% UNLESS current_thread.subject == post.subject %]
+      [% SET table_cols = 3 %]
+      <td class="post_subject">
+      [% post.subject %]
+      </td>
+      [% ELSE %]
+      [% SET table_cols = 2 %]
+      [% END %]
+      <td class="post_creator">
+      [% post.creator.forum_name %]
+      </td>
+      <td class="post_created">
+      [% nicedate(post.created) %]
+      </td>
+    </tr>
+  
+    <tr>
+      <td colspan="[% table_cols %]" class="post_message">
+      [% FILTER html_line_break %][% HTML.escape(post.message) %][% END %]
+      </td>
+    </tr>
+    [% END %]
+  
+    <tr>
+      <td colspan="[% table_cols %]" style="text-align: center;">
+        <input type="submit" value="Reply" name="reply_to_post"    class="input_button" />
+      </td>
+    </tr>
+  </table>
+</form>
+[% ELSE %]
+  No active posts in this thread
+[% END %]
+

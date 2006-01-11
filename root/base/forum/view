@@ -1,0 +1,34 @@
+<h1>[% current_forum.name %] : List Of Active Threads</h1>
+
+<p>
+<a href="thread/add?forum=[% current_forum.id %]">[Start A New Topic]</a>
+</p>
+
+[% IF thread_list.count > 0 %]
+<table>
+  <tr>
+    <th>Topic</th>
+    <th>Last Post</th>
+  </tr>
+  [% WHILE (thread = thread_list.next) %]
+  <tr>
+    <td>
+    <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% thread.subject %]</a>
+    <br />
+    <span class="topic_creator">created by
+        <span class="post_creator">[% thread.creator.forum_name %]</span>
+    </span>
+    </td>
+    <td>
+     [% nicedate(thread.last_post.created) %]
+     <br />
+     <span class="topic_creator">posted by
+        <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
+     </span>
+    </td>
+  </tr>
+  [% END %]
+</table>
+[% ELSE %]
+  No active threads in this forum
+[% END %]

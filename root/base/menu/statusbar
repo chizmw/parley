@@ -1,0 +1,31 @@
+<!-- status bar : start -->
+<table width="100%">
+        <tr>
+                <td width="60%" class="left">
+                    <a href="forum/list">Home</a>
+                    [% IF current_forum %]
+                      &raquo;
+                      <a href="forum/view?forum=[% current_forum.id %]">[% current_forum.name %]</a>
+                      [% IF current_thread %]
+                        &raquo;
+                        <a href="thread/view?thread=[% current_thread.id %]">[% current_thread.subject %]</a>
+                      [% END %]
+                    [% END %]
+                </td>
+
+                <td width="40%" class="right">
+                        [% IF (authed_user = c.session.authed_user) %]
+                        Logged in as <b>[% authed_user.first_name %] [% authed_user.last_name %]</b>
+                        [% UNLESS authed_user.authentication.authenticated %]
+                        (<b><i>Not Authenticated</i></b>)
+                        [% END %]
+                        <i>[
+                                <a href="user/logout">Logout</a>
+                        ]</i>
+                        [% ELSE %]
+            <i>[ <a href="user/login">Click Here To Login</a> ]</i>
+                        [% END %] [%# authed_user end %]
+                </td>
+        </tr>
+</table>
+<!-- status bar : end -->

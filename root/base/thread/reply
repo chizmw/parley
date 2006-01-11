@@ -1,0 +1,35 @@
+<h1>Reply to: [% current_thread.subject %]</h1>
+
+[% IF messages %]
+    <ul>
+        [% FOREACH message IN messages %]
+            <li>[% message %]</li>
+        [% END %]
+    </ul>
+[% END %]
+
+
+<form action="thread/post?thread=[% current_thread.id %]" method="POST" name="new_thread">
+<table>
+  <tr>
+    <td> Topic </td>
+    <td>
+      <input type="text" name="thread_subject" size="60" class="input_text" value="[% current_thread.subject %]" />
+    </td>
+  </tr>
+
+  <tr>
+    <td> Message </td>
+    <td>
+      <textarea name="thread_message" cols="60" rows="20" class="input_text" /></textarea>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: center;">
+      <input type="submit" value="Add Reply"      name="post_reply"    class="input_button" />
+    </td>
+  </tr>
+</table>
+</form>
+

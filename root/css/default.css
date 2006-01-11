@@ -1,0 +1,292 @@
+/* $Id$ */
+
+body {
+    background:  rgb(171,121,100);
+    background:  #fff;
+    color:       #000;
+    font-family: verdana, arial, helvetica, sans-serif;
+    margin:      0px 0px 0px 0px;
+    padding:     0px 0px 0px 0px;
+	font-size:   12px;
+}
+
+
+/* sections of the screen */
+#top {
+	background: url("images/logo.png") fixed top right no-repeat rgb(171,121,100);
+	border:     0px;
+	height:     50px; 
+	margin:     0px 0px 0px 0px;
+	padding:    10px;
+}
+#left {
+	background: transparent;
+	border:     0px;
+	left:       0px;
+	margin:     0px;
+	padding-left:    10px;
+	padding-right:    10px;
+	position:   absolute;
+	top:        90px;
+	width:      150px; 
+}
+#middle {
+	background: transparent;
+	border:      0px;
+	padding:     10px;
+	top:         90px;
+	margin-left: 170px;
+	margin-top:  20px;
+	margin-bottom: 0px;
+}
+
+#footer {
+    border: 0px;
+	background: transparent;
+    margin: 0px 0px 0px 150px;
+    clear: both;
+    text-align:     right;
+    padding-top: 1em;
+    padding-right: 1em;
+}
+
+#footer p {
+    color: #999;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+
+#statusbar {
+    background-color: #97b3cf;
+    background-color: rgb(213,158,128);
+
+	border:        none;
+    border:        2px ridge #ccc;
+    
+	height:        20px;
+	/*border: solid 2px yellow;
+	border-style: outset;*/
+	left:          0px;
+	margin-left:   0px;
+	margin-right:  0px;
+	position:      absolute;
+	right:         0px;
+	text-align:    right;
+	top:           70px;
+	padding-top: 2px;
+    padding-right: 1em;
+}
+
+#statusbar table {
+    margin-left: 5px;
+    border: 0px solid #999;
+    padding: 0px;
+}
+#statusbar td {
+    border: 0px solid #999;
+    text-align: left;
+    vertical-align: top;
+    border-collapse: collapse;
+    margin: 5px;
+    padding: 0px;
+}
+#statusbar td.left {
+    text-align: left;
+}
+#statusbar td.right {
+    text-align: right;
+}
+
+/* use dl/dt/dd to make left nav */
+dd {
+	/* hide dd from graphical browsers, they should appear for text-only
+	* browsers, giving a nice description of the link */
+	display: none;
+}
+
+dt.nav_header {
+	display:block;
+	width: 140px;
+    color: black;
+
+    background: #ccc;
+    border: solid black 1px;
+	border-style: outset;
+    font-weight: bold;
+    list-style-image: none;
+    list-style-type: none;
+    margin-top: 0.4em;
+	padding-left: 0.5em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    text-decoration: none;
+}
+
+/* class for nav stuff in left menu */
+a.nav, a.nav:visited, a.nav:link, a.nav:active {
+	display:block;
+	width: 120px;
+
+    background: #ccc;
+    border: solid black 1px;
+	border-style: outset;
+    font-weight: bold;
+    list-style-image: none;
+    list-style-type: none;
+    margin-top: 0px;
+	margin-left: 20px;
+	padding-left: 0.5em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    text-decoration: none;
+	font-size: 0.8em;
+}
+
+a.nav:hover {
+	background:#000;
+	color:#fff;
+}
+
+a, a:link, a:visited, a:active {
+    text-decoration: none;
+    color: blue;
+    /*border-bottom: 1px dotted #bbb;*/
+	background: transparent;
+}
+
+table {
+    border: 1px solid #999;
+}
+td {
+    /*background-color: #f7f7f7;*/
+    border: 1px solid #999;
+    text-align: left;
+    vertical-align: top;
+    border-collapse: collapse;
+    margin: 5px;
+    padding: 5px;
+}
+th {
+    /*background-color: #f7f7f7;*/
+	padding-left: 0.4em;
+	text-align: left;
+    border: 1px solid #999;
+}
+h1 {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+h2 {
+	font-size: 1em;
+	font-weight: bold;
+}
+
+/* colour things differently if they're deleted */
+.deleted, .deleted a {
+	background: #622;
+	color: #ff0;
+}
+
+/* colour users differently if they're not-active/usthenticated */
+.nonauth, .nonauth a {
+	background: orange;
+	color: #000;
+}
+
+.right_align {
+	display: block;
+	text-align: right;
+    /*background: #f00;*/
+}
+
+.header_row {
+	background: #666;
+	color:      #ff0;
+}
+
+.codeblock {
+        border:         solid black 1pt;
+        background:     #ccc;
+        font-family:    "courier new", courier, fixed;
+        color:          #000;
+        margin-left:    0px;
+        margin-right:   0px;
+        margin-top:     5px;
+        margin-bottom:  5px;
+        padding:        5px;
+        line-height:    1.5em;
+
+		display: block;
+		overflow: auto;
+		white-space: pre;
+}
+
+.codeblockhilite {
+        background:                     #ff6;
+        border:                         dashed black 1px;
+}
+
+
+.input_text {
+    background-color: #ccc;
+    background-color: #c4cacf;
+    background-color: rgb(251,215,194);
+    border: 2px inset #fff;
+    font-family: verdana, arial, helvetica, sans-serif;
+	font-size:   12px;
+}
+
+.input_button {
+    background-color: #97b3cf;
+    background-color: rgb(251,215,194);
+    font-family: verdana, arial, helvetica, sans-serif;
+	font-size:   12px;
+    border: 2px ridge #000;
+}
+
+.niceform {
+    background-color: #369;
+    color: #fff;
+    font-family: verdana, arial, helvetica, sans-serif;
+	font-size:   12px;
+}
+
+.forum_link {
+    font-weight:    bold;
+}
+.forum_description {
+    font-size:      0.8em;
+}
+
+.topic_link {
+    font-weight:    bold;
+}
+.topic_creator {
+    display:        block;
+    font-size:      0.8em;
+    text-align:     right;
+}
+.topic_last_post {
+    font-size:      0.8em;
+}
+
+.post_subject {
+    font-weight:    bold;
+}
+
+.post_creator {
+    font-style:     italic;
+}
+
+.post_message {
+    background-color: rgb(251,215,194);
+    border: 2px inset #fff;
+}
+
+.no_table_border table {
+    border: none;
+}
+.no_table_border td {
+    border: none;
+}

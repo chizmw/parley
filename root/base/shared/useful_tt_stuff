@@ -1,0 +1,6 @@
+[% USE HTML %]
+
+[% MACRO nicedate(d) BLOCK %]
+[% d.strftime('%A %d %B %Y at %R') %]
+[% d.time_zone_short_name() %]
+[% END %]

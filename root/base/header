@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+[% PROCESS shared/useful_tt_stuff %]
+
+<!-- Header : Start -->
+<html>
+	<head>
+        <base href="[% c.req.base %]" />
+        <title>
+            [% c.config.name %]
+
+            [%# Show version if we're debugging %]
+            [% IF c.debug %]
+            - [% c.config.version %]
+            [% END %]
+
+            [%# Show custom page title if we have one %]
+            [% IF page_title %]
+             : [% page_title %]
+            [%# Show thread name if we have one %]
+            [% ELSIF current_thread %]
+             : [% current_thread.subject %]
+            [%# Show forum name if we have one %]
+            [% ELSIF current_forum %]
+             : [% current_forum.name %]
+            [% END %]
+        </title>
+		<meta name="author" content="Chisel Wright" />
+        <link rel="stylesheet" title="Default" href="css/default.css" />
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+        <!-- MARKER -->
+        <script type="text/javascript" src="static/script/prototype.js"></script>
+        [% INCLUDE shared/autocomplete_style %]
+	</head>
+
+	<div id="top">
+	</div>
+
+	<div id="statusbar">
+		[% INCLUDE menu/statusbar %]
+	</div>
+
+	<div id="left">
+		[% INCLUDE menu/left/main %]
+	</div>
+
+	<!-- start the main content area -->
+	<div id="middle">
+<body>
+
+<!-- Header : End -->

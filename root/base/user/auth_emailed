@@ -1,0 +1,8 @@
+<h1>Almost there...</h1>
+
+<p>Thanks for signing up [% newdata.first_name %]!</p>
+
+<p>
+An email has been sent to <i>[% newdata.email %]</i> which you should receive shortly.<br />
+To activate your account click on the link in the email.
+</p>

@@ -1,0 +1,48 @@
+<form action="/user/login" method="post" name="login_form">
+    <div class="no_table_border">
+    <table width="100%">
+        <tr>
+            <td colspan="2">
+                [% IF login_message %]
+                [% login_message %]<br />
+                [% ELSE %]
+                [% message %]<br />
+                [% END %]
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="username">username:</label>
+            </td>
+            <td>
+                <input type="text" id="username" name="username" size="40" class="input_text" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="password">password:</label>
+            </td>
+            <td>
+                <input type="password" id="password" name="password" size="40" class="input_text" />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <input type="submit" value="log in" class="input_button" />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align:right;">
+                Need an account? <a href="/user/signup">Signup Now</a>
+            </td>
+        </tr>
+    </table>
+    </div>
+</form>
+
+[% INCLUDE shared/focus_username_js %]
+
