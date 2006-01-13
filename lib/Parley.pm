@@ -68,7 +68,7 @@ sub auto : Private {
 #            );
 #            $c->log->debug('results returned: ' . $results->count());
 #            $c->session->{authed_user} = $results->first();
-#            $c->log->dumper( $c->session->{authed_user} );
+            $c->log->dumper( $c->session->{authed_user} );
         }
 
         # XXX for now do it the long way ...
