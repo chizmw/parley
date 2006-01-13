@@ -97,10 +97,10 @@ sub auto : Private {
     # do we have a post id in the URL?
     if (defined $c->req->param('post')) {
         if (not $c->req->param('post') =~ m{\A\d+\z}) {
-            die 'non-integer post id passed: ['
-                . $c->req->param->('post')
-                . ']'
-            ;
+            $c->stash->{error}{message} = 'non-integer post id passed: ['
+                . $c->req->param('post')
+                . ']';
+            return;
         }
         $c->log->debug('setting: current_post');
         $c->stash->{current_post} = $c->model('ParleyDB')->table('post')->search(
@@ -119,10 +119,10 @@ sub auto : Private {
     # do we have a thread id in the URL?
     elsif (defined $c->req->param('thread')) {
         if (not $c->req->param('thread') =~ m{\A\d+\z}) {
-            die 'non-integer thread id passed: ['
-                . $c->req->param->('thread')
-                . ']'
-            ;
+            $c->stash->{error}{message} = 'non-integer thread id passed: ['
+                . $c->req->param('thread')
+                . ']';
+            return;
         }
         $c->log->debug('setting: current_thread');
         $c->stash->{current_thread} = $c->model('ParleyDB')->table('thread')->search(
@@ -137,10 +137,10 @@ sub auto : Private {
     # do we have a forum id in the URL?
     elsif (defined $c->req->param('forum')) {
         if (not $c->req->param('forum') =~ m{\A\d+\z}) {
-            die 'non-integer forum id passed: ['
-                . $c->req->param->('forum')
-                . ']'
-            ;
+            $c->stash->{error}{message} = 'non-integer forum id passed: ['
+                . $c->req->param('forum')
+                . ']';
+            return;
         }
         $c->log->debug('setting: current_forum');
 
