@@ -44,6 +44,7 @@ BEGIN {
 sub view : Local {
     my ($self, $c) = @_;
 
+    # get all the posts in the thread
     $c->stash->{post_list} = $c->model('ParleyDB')->table('post')->search(
         {
             thread => $c->stash->{current_thread}->id(),
@@ -51,6 +52,9 @@ sub view : Local {
         {
         }
     );
+
+    # increase the number of views
+    $self->_increase_view_count($c);
 }
 
 sub add : Local {
@@ -159,6 +163,9 @@ sub _add_new_topic {
             # update information about the most recent forum/thread post
             $self->_update_last_post($c, $new_post);
 
+            # increase the post count for the thread
+            $self->_increase_post_count($c, $new_thread);
+
             # commit everything
             $c->model('ParleyDB')->table('thread')->storage->txn_commit;
         };
@@ -211,6 +218,9 @@ sub _add_new_reply {
             # update information about the most recent forum/thread post
             $self->_update_last_post($c, $new_post);
 
+            # increase the post count for the thread
+            $self->_increase_post_count($c, $c->stash->{current_thread});
+
             # commit everything
             $c->model('ParleyDB')->table('post')->storage->txn_commit;
         };
@@ -249,6 +259,66 @@ sub _update_last_post {
     $thread->last_post($new_post->post_id());
      $forum->update();
     $thread->update();
+}
+
+sub _increase_view_count {
+    my ($self, $c) = @_;
+
+    # increase the number of views for the thread
+    # transaction method taken from:
+    #  http://search.cpan.org/~mstrout/DBIx-Class-0.04999_01/lib/DBIx/Class/Manual/Cookbook.pod#Transactions
+    eval {
+        # start a transaction
+        $c->model('ParleyDB')->table('thread')->storage->txn_begin;
+
+        # we don't need to get the thread, it's in our stash,
+        # and if it isn't we have bigger problems
+        # increase the view count for the thread
+        $c->stash->{current_thread}->view_count(
+            $c->stash->{current_thread}->view_count() + 1
+        );
+        $c->stash->{current_thread}->update();
+            
+        # commit everything
+        $c->model('ParleyDB')->table('thread')->storage->txn_commit;
+    };
+    # any errors?
+    if ($@) {
+        # put something in the logs
+        $c->log->error($@);
+        # rollback
+        eval { $c->model('ParleyDB')->table('thread')->storage->txn_rollback };
+    }
+}
+
+sub _increase_post_count {
+    my ($self, $c, $thread) = @_;
+
+    # increase the number of replies for the thread
+#    # transaction method taken from:
+#    #  http://search.cpan.org/~mstrout/DBIx-Class-0.04999_01/lib/DBIx/Class/Manual/Cookbook.pod#Transactions
+#    eval {
+#        # start a transaction
+#        $c->model('ParleyDB')->table('thread')->storage->txn_begin;
+
+        # we don't need to get the thread, it's in our stash,
+        # and if it isn't we have bigger problems
+        # increase the reply count for the thread
+        $thread->post_count(
+            $thread->post_count() + 1
+        );
+        $thread->update();
+            
+#        # commit everything
+#        $c->model('ParleyDB')->table('thread')->storage->txn_commit;
+#    };
+#    # any errors?
+#    if ($@) {
+#        # put something in the logs
+#        $c->log->error($@);
+#        # rollback
+#        eval { $c->model('ParleyDB')->table('thread')->storage->txn_rollback };
+#    }
 }
 
 =head1 NAME

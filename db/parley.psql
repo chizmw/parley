@@ -65,6 +65,8 @@ CREATE TABLE thread (
                     default CURRENT_TIMESTAMP,
     creator         integer     not null
                     references person,
+    post_count      integer     not null    default 0,
+    view_count      integer     not null    default 0,
     active          boolean     not null    default True
 );
 

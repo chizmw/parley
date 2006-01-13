@@ -9,6 +9,8 @@
   <tr>
     <th>Topic</th>
     <th>Last Post</th>
+    <th>Replies</th>
+    <th>Views</th>
   </tr>
   [% WHILE (thread = thread_list.next) %]
   <tr>
@@ -25,6 +27,12 @@
      <span class="topic_creator">posted by
         <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
      </span>
+    </td>
+    <td style="text-align: center;">
+      [% thread.post_count %]
+    </td>
+    <td style="text-align: center;">
+      [% thread.view_count %]
     </td>
   </tr>
   [% END %]
