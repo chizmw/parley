@@ -103,14 +103,9 @@ INSERT INTO person
 VALUES
 (0, 'Top','Dog','topdog@herlpacker.co.uk','TopDog', 0);
 
-INSERT INTO forum
-(forum_id, name, description)
-VALUES
-(0, 'Off-Topic', 'General off-topic discussion');
-
-INSERT INTO authentication (username, password, authenticated) VALUES ('jason', md5('seafood'), true);
-INSERT INTO person (first_name, last_name, email, forum_name, authentication)
-  VALUES ('Jason','Tang','jason@dragor.net','Jason', 1);
+INSERT INTO forum (forum_id, name, description) VALUES (0, 'Off-Topic', 'General off-topic discussion');
+INSERT INTO forum (name, description) VALUES ('Suggestions', 'Things you think should be added');
+INSERT INTO forum (name, description) VALUES ('Bugs', 'If you find anything broken, report it here');
 
 -- commit our schema
 COMMIT;
