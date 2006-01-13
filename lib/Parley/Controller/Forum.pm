@@ -49,9 +49,12 @@ sub view : Local {
 
     $c->stash->{thread_list} = $c->model('ParleyDB')->table('thread')->search(
         {
-            forum   => $c->stash->{current_forum}->id(),
+            forum       => $c->stash->{current_forum}->id(),
+            active      => 1,
         },
         {
+            join        => 'last_post',
+            order_by    => 'last_post.created desc',
         }
     );
 }
