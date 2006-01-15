@@ -179,8 +179,10 @@ sub _add_new_topic {
             eval { $c->model('ParleyDB')->table('thread')->storage->txn_rollback };
         }
 
-        # view the new thread
-        $c->response->redirect( $c->req->base . 'thread/view?thread=' . $new_thread->id() );
+        # view the new thread - but only if no errors
+        if (not scalar(@messages)) {
+            $c->response->redirect( $c->req->base . 'thread/view?thread=' . $new_thread->id() );
+        }
     }
     else {
         $c->log->error('DFV failed');
@@ -234,8 +236,10 @@ sub _add_new_reply {
             eval { $c->model('ParleyDB')->table('post')->storage->txn_rollback };
         }
 
-        # view the new thread
-        $c->response->redirect( $c->req->base . 'thread/view?thread=' . $c->stash->{current_thread}->id() );
+        # view the new thread - but only if no errors
+        if (not scalar(@messages)) {
+            $c->response->redirect( $c->req->base . 'thread/view?thread=' . $c->stash->{current_thread}->id() );
+        }
     }
     else {
         $c->log->error('DFV failed');

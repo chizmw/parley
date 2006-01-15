@@ -4,6 +4,10 @@ use strict;
 use warnings;
 use base 'DBIx::Class::Core';
 
+__PACKAGE__->belongs_to(
+    last_post => 'Parley::Model::ParleyDB::Post',
+);
+
 __PACKAGE__->inflate_column(
     'created',
     {
