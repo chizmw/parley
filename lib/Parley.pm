@@ -71,8 +71,6 @@ sub auto : Private {
                 join => 'authentication',
             },
         );
-        $c->log->dumper( $results );
-        $c->log->dumper( $results->count() );
         $c->session->{authed_user} = $results->first();
     }
 
