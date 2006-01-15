@@ -28,11 +28,13 @@
     </tr>
     [% END %]
   
+    [% UNLESS current_thread.locked %]
     <tr>
       <td colspan="[% table_cols %]" style="text-align: center;">
         <input type="submit" value="Reply" name="reply_to_post"    class="input_button" />
       </td>
     </tr>
+    [% END %]
   </table>
 </form>
 [% ELSE %]
