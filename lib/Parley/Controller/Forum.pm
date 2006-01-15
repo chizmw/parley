@@ -58,6 +58,10 @@ sub view : Local {
             order_by    => 'sticky DESC, last_post.created DESC',
         }
     );
+
+    # user permissions
+    $c->stash->{can_lock}  = Parley::App::Helper->can_make_locked($c);
+    $c->stash->{can_stick} = Parley::App::Helper->can_make_sticky($c);
 }
 
 =head1 AUTHOR
