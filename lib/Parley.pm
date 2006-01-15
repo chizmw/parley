@@ -28,7 +28,7 @@ use Catalyst qw/
 /;
 use YAML;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 #
 # Configure the application
@@ -61,18 +61,22 @@ sub auto : Private {
     # if we have a user ... fetch some info (if we don't already have it)
     if ( $c->user and not defined $c->session->{authed_user} ) {
         $c->log->info('Fetching user information');
-        # XXX once we've worked out has_one or belongs_to ...
-        if (0) {
-#            my $results = $m_person->search(
-#                'authentication.username'   => $c->user->user->username(),
-#            );
-#            $c->log->debug('results returned: ' . $results->count());
-#            $c->session->{authed_user} = $results->first();
-            $c->log->dumper( $c->session->{authed_user} );
-        }
 
-        # XXX for now do it the long way ...
-        else {
+        # get the person info for the username
+        my $results = $c->model('ParleyDB')->table('person')->search(
+            {
+                'authentication.username'   => $c->user->user->username(),
+            },
+            {
+                join => 'authentication',
+            },
+        );
+        $c->log->dumper( $results );
+        $c->log->dumper( $results->count() );
+        $c->session->{authed_user} = $results->first();
+        
+        # crappy old way
+        if (0) {
             # get the (first) authentication record
             my $auth = $c->model('ParleyDB')->table('authentication')->search(
                 'username' => $c->user->user->username(),
