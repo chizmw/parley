@@ -55,7 +55,7 @@ sub view : Local {
         },
         {
             join        => 'last_post',
-            order_by    => 'last_post.created desc',
+            order_by    => 'sticky DESC, last_post.created DESC',
         }
     );
 }

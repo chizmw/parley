@@ -7,6 +7,7 @@
 [% IF thread_list.count > 0 %]
 <table>
   <tr>
+    <th>&nbsp;</th>
     <th>Topic</th>
     <th>Last Post</th>
     <th>Replies</th>
@@ -14,6 +15,16 @@
   </tr>
   [% WHILE (thread = thread_list.next) %]
   <tr>
+    <td width="36">
+    <!-- interesting things about the thread; sticky, locked, etc -->
+    [% IF thread.sticky %]
+    <img src="static/images/sticky.png" alt="Sticky" title="Sticky Topic" width="16" height="16" />
+    [% END %]
+    [% IF thread.locked %]
+    <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
+    [% END %]
+    </td>
+
     <td>
     <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% thread.subject %]</a>
     <br />
@@ -21,6 +32,7 @@
         <span class="post_creator">[% thread.creator.forum_name %]</span>
     </span>
     </td>
+
     <td>
      [% nicedate(thread.last_post.created) %]
      <br />
@@ -28,9 +40,12 @@
         <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
      </span>
     </td>
+
     <td style="text-align: center;">
-      [% thread.post_count %]
+      [%# number of replies is one less than the number of posts %]
+      [% thread.post_count - 1 %]
     </td>
+
     <td style="text-align: center;">
       [% thread.view_count %]
     </td>
