@@ -39,7 +39,6 @@
      <span class="topic_creator">posted by
         <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
      </span>
-     [% IF can_lock %] [Lock] [% END %]
     </td>
 
     <td style="text-align: center;">
