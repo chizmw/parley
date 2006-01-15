@@ -74,28 +74,7 @@ sub auto : Private {
         $c->log->dumper( $results );
         $c->log->dumper( $results->count() );
         $c->session->{authed_user} = $results->first();
-        
-        # crappy old way
-        if (0) {
-            # get the (first) authentication record
-            my $auth = $c->model('ParleyDB')->table('authentication')->search(
-                'username' => $c->user->user->username(),
-            )->first();
-            # get the corresponding persion record
-            my $person = $c->model('ParleyDB')->table('person')->search(
-                'authentication' => $auth->authentication_id,
-            );
-
-            # if count isn't one we have a problem
-            if (1 != $person->count()) {
-                # TODO use a nicer error page
-                die "we've got two mathing usernames for a lookup on " . $c->user->user->username();
-            }
-            # store the person information
-            $c->session->{authed_user} = $person->first();
-        }
     }
-
 
 
     # do we have a post id in the URL?
