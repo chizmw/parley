@@ -12,6 +12,7 @@ use warnings;
 use Catalyst qw/
     -Debug
     Dumper
+    StackTrace
 
     Email
     Static::Simple
