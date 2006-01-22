@@ -58,6 +58,20 @@ Catalyst based application.
 sub auto : Private {
     my ($self, $c) = @_;
 
+    # warn people about the DBIx::Class::Loader issue
+    my $dcl_version = DBIx::Class::Loader->VERSION;
+    if ($dcl_version =~ m{\A0.1[012]\z}) {
+        $c->stash->{error}{message} = qq{
+            <p>You are using a version of DBIx::Class::Loader (v$dcl_version)
+                that is known to not work with this application.</p>
+            <p>This issue has been reported to the module author,
+                and an unofficial release is available.</p>
+            <p>v0.09 is also known to work with this application,
+                so you may downgrade if you prefer</p>
+        };
+        return;
+    }
+
     # if we have a user ... fetch some info (if we don't already have it)
     if ( $c->user and not defined $c->session->{authed_user} ) {
         $c->log->info('Fetching user information');
