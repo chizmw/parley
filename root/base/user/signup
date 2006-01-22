@@ -1,7 +1,7 @@
 <h1>User Signup</h1>
 
-<table width="100%">
-	<form action="/user/signup" method="POST" name="signup_form">
+<table>
+	<form action="user/signup" method="POST" name="signup_form">
 		<tr>
 			<td colspan="2">
 				Complete the form below to create a new user account.
