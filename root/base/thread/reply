@@ -1,15 +1,40 @@
 <h1>Reply to: [% current_thread.subject %]</h1>
 
+<form action="thread/post?thread=[% current_thread.id %]" method="POST" name="new_thread">
+<!-- The post we're replying to -->
+<table>
+  <tr>
+    <td class="post_subject">
+      [% responding_to_post.subject %]
+    </td>
+    <td class="post_creator">
+      [% responding_to_post.creator.forum_name %]
+    </td>
+    <td class="post_created">
+      [% nicedate(responding_to_post.created) %]
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="3" class="post_message">
+      [% FILTER html_line_break %][% HTML.escape(responding_to_post.message) %][% END %]
+    </td>
+  </tr>
+</table>
+    
+<p>Please enter your reply in the form below:</p>
+
 [% IF messages %]
+<p>
     <ul>
         [% FOREACH message IN messages %]
             <li>[% message %]</li>
         [% END %]
     </ul>
+</p>
 [% END %]
 
 
-<form action="thread/post?thread=[% current_thread.id %]" method="POST" name="new_thread">
 <table>
   <tr>
     <td> Topic </td>

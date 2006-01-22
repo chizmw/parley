@@ -50,6 +50,7 @@ sub view : Local {
             thread => $c->stash->{current_thread}->id(),
         },
         {
+            order_by    => 'created ASC',
         }
     );
 
@@ -78,7 +79,11 @@ sub reply : Local {
     # need to be authenticated to post
     if (not Parley::App::Helper->is_authenticted($c)) {
         $c->stash->{error}{message} = q{You need to authenticate your registration before you can reply to a topic.};
+        return;
     }
+
+    # grab the post we're replying to
+    $self->_get_thread_reply_post($c)
 }
 
 sub post : Local {
@@ -108,6 +113,12 @@ sub post : Local {
             $c->stash->{template} = 'thread/reply';
         }
         $c->stash->{messages} = \@messages;
+
+        # get the post we're replying to
+        my $status = $self->_get_thread_reply_post($c);
+        if (not $status) {
+            return;
+        }
     }
 }
 
@@ -323,6 +334,47 @@ sub _increase_post_count {
 #        # rollback
 #        eval { $c->model('ParleyDB')->table('thread')->storage->txn_rollback };
 #    }
+}
+
+sub _get_thread_reply_post {
+    my ($self, $c) = @_;
+
+    # it would be good to display the relevant post in the thread, so people know
+    # what they're replying to
+    # - if adding a reply, assume the first post
+    # - if we have a post value, then that's the one we're replying to
+    if (defined $c->stash->{current_post}) {
+        die "responding to a specific post";
+    }
+    elsif (defined $c->stash->{current_thread}) {
+        # get the first post in the thread
+        my $posts = $c->model('ParleyDB')->table('post')->search(
+            {
+                thread      => $c->stash->{current_thread}->id(),
+            },
+            {
+                order_by    => 'created ASC',
+                rows        => 1,
+            }
+        );
+
+        # if we don't have one post, something really odd happened
+        if (1 != $posts->count()) {
+            $c->stash->{error}{message} = q{I don't know how you managed to reply to a thread with no posts};
+            return;
+        }
+
+        # save the first (and only) post from our results
+        $c->stash->{responding_to_post} = $posts->first();
+        $c->log->dumper($c->stash->{responding_to_post}, 'RESPONDING_TO');
+
+        # be successful
+        return 1;
+    }
+    else {
+        $c->stash->{error}{message} = q{No information for thread or post to reply to};
+        return;
+    }
 }
 
 =head1 NAME
