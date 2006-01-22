@@ -1,6 +1,12 @@
 This file documents the revision history for Perl extension Forum.
 
 0.06
+    - added and updated module dependencies in Makefile.PL
+    - added application warning if using known 'bad version' of
+      DBIx::Class::Loader
+    - display thread's first post on reply screen
+    - re-copied end() feom DefaultEnd plugin, and applied local additions
+      This fixed an unexplained bug when logging out
     - removed / from form actions in login and signup
     - remove signup table width to avoid IE 100% bug
     - warn if using buggy DBIx::Class::Loader
