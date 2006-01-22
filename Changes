@@ -1,6 +1,9 @@
 This file documents the revision history for Perl extension Forum.
 
 0.06
+    - removed / from form actions in login and signup
+    - remove signup table width to avoid IE 100% bug
+    - warn if using buggy DBIx::Class::Loader
     - fixed authed_user info fetch to use joins
     - added sticky and locked columns to thread table
     - order thread list to show sticky threads first
