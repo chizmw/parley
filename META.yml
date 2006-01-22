@@ -1,24 +1,27 @@
 name: Parley
-version: 0.01
+version: 0.06
 abstract: Catalyst Application
 author: Chisel Wright C<< <pause@herlpacker.co.uk> >>
 license: perl
 distribution_type: module
 requires:
-  Catalyst::Model::DBIC: 0.13
-  DBD::Pg: 1.43
   Catalyst: 5.61
+  Catalyst::Model::DBIC: 0.13
   Catalyst::Plugin::Authentication: 0.05
   Catalyst::Plugin::Authentication::Store::DBIC: 0.04
-  Catalyst::Plugin::Dumper: 0.000001
+  Catalyst::Plugin::Dumper: 0.000002
   Catalyst::Plugin::Email: 0.05
   Catalyst::Plugin::FillInForm: 0.05
   Catalyst::Plugin::Session: 0.01
   Catalyst::Plugin::Session::State::Cookie: 0.01
   Catalyst::Plugin::Session::Store::FastMmap: 0.01
   Catalyst::Plugin::Static::Simple: 0.12
+  Catalyst::View::TT: 0.20
+  DBD::Pg: 1.43
   DBIx::Class: 0.04001
+  DBIx::Class::Loader: 0.12
   Data::FormValidator: 4.02
+  DateTime::Format::Pg: 0.09
   Digest::MD5: 2.33
   List::MoreUtils: 0.17
   Readonly: 1.03
