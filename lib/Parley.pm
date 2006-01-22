@@ -160,7 +160,7 @@ sub default : Private {
 }
 
 
-sub end : Private {
+sub Xend : Private {
     my ($self, $c) = @_;
 
     die 'forced debug' if $c->debug && $c->request->params->{dump_info};
@@ -186,6 +186,29 @@ sub end : Private {
     # (re)populate the form
     $c->fillform( $c->stash->{formdata} );
 }
+
+sub end : Private {
+    my ( $self, $c ) = @_;
+    die "forced debug" if $c->debug && $c->req->params->{dump_info};
+    return 1 if $c->response->status =~ /^3\d\d$/;
+    return 1 if $c->response->body;
+    unless ( $c->response->content_type ) {
+       $c->response->content_type('text/html; charset=utf-8');
+    }
+
+    # if we have any error(s) in the stash, automatically show the error page
+    if (defined $c->stash->{error}) {
+        $c->stash->{template} = 'error/simple';
+    }
+
+    return $c->forward($c->config->{view}) if $c->config->{view};
+    my ($comp) = $c->comp('^'.ref($c).'::(V|View)::');
+    $c->forward(ref $comp);
+
+    # (re)populate the form
+    $c->fillform( $c->stash->{formdata} );
+}
+
         
 =head1 AUTHOR
 
