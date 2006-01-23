@@ -16,6 +16,7 @@ requires(
     'Catalyst::Plugin::Dumper'                      => '0.000002',
     'Catalyst::Plugin::Email'                       => '0.05',
     'Catalyst::Plugin::FillInForm'                  => '0.05',
+    'Catalyst::Plugin::Prototype'                   => '1.32',
     'Catalyst::Plugin::Session'                     => '0.01',
     'Catalyst::Plugin::Session::State::Cookie'      => '0.01',
     'Catalyst::Plugin::Session::Store::FastMmap'    => '0.01',
