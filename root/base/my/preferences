@@ -1,0 +1,59 @@
+<h1>Your preferences</h1>
+
+<h2>Timezone</h2>
+
+<p>Select your desired location. This will be used to display times using your local timezone.</p>
+
+<p>Debug: TZ=[% c.session.authed_user.preference.timezone %]</p>
+
+<form action="my/preferences/update" method="POST" name="timezone">
+
+    <table width="550">
+    <tr>
+    <td>
+    <select id="selectCountry">
+        <option>[ Select Country ]</option>
+        [% FOREACH item=tz_categories %]
+        <option value="[% item %]">[% item %]</option>
+        [% END %]
+    </select>
+    </td>
+
+    <td>
+    <div id="selectCity0">
+    <select id="selectCity">
+        <option>[ Select Country First ]</option>
+    </select>
+    </div>
+    </td>
+    [% c.prototype.observe_field('selectCountry',{
+    url    => base _ 'my/preferences/setSelectCities',
+    with   => "'country='+document.getElementById('selectCountry').value",
+    update => 'selectCity0',
+    }) %]
+    </tr>
+    
+    <tr>
+    <td colspan="2" style="text-align: right;">
+    <input type="checkbox" id="use_utc" name="use_utc" onChange="toggle_timezone_menus(this)"/>
+    <label for="use_utc">Use UTC</label>
+    </td>
+    </tr>
+
+    </table>
+
+</form>
+
+<script language="JavaScript">
+<!-- Begin
+
+    function toggle_timezone_menus(checkbox) {
+        var country_menu = document.getElementById('selectCountry');
+        var city_menu    = document.getElementById('selectCity');
+
+        country_menu.disabled   = checkbox.checked;
+        city_menu.disabled      = checkbox.checked;
+    }
+
+// End -->
+</script>
