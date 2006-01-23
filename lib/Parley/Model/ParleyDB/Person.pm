@@ -11,6 +11,10 @@ __PACKAGE__->belongs_to(
     authentication => 'Parley::Model::ParleyDB::Authentication'
 );
 
+__PACKAGE__->belongs_to(
+    preference => 'Parley::Model::ParleyDB::Preference'
+);
+
 =head1 NAME
 
 Parley::Model::ParleyDB::Person - Catalyst DBIC Table Model
