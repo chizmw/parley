@@ -20,6 +20,13 @@ CREATE TABLE authentication (
     UNIQUE (username)
 );
 
+CREATE TABLE preference (
+    preference_id   SERIAL      primary key,
+
+    timezone        text        not null
+            default 'UTC'
+);
+
 CREATE TABLE person (
     person_id       SERIAL      primary key,
     
@@ -28,6 +35,9 @@ CREATE TABLE person (
     email           text        not null,
     
     forum_name      text        not null,
+
+    preference      integer
+                    references preference,
 
     authentication  integer
                     references authentication,
@@ -96,16 +106,27 @@ ALTER TABLE forum ADD COLUMN last_post
     integer references post
 ;
 
+--
 -- some default stuff
+--
+
+-- #0 authentication
 INSERT INTO authentication
 (authentication_id, username, password, authenticated)
 VALUES
 (0, 'topdog', md5('k1tt3n'), true);
 
-INSERT INTO person
-(person_id,first_name, last_name, email, forum_name, authentication)
+-- #0 preference
+INSERT INTO preference
+(preference_id, timezone)
 VALUES
-(0, 'Top','Dog','topdog@herlpacker.co.uk','TopDog', 0);
+(0, 'UTC');
+
+-- #0 person info
+INSERT INTO person
+(person_id,first_name, last_name, email, forum_name, authentication, preference)
+VALUES
+(0, 'Top','Dog','topdog@herlpacker.co.uk','TopDog', 0, 0);
 
 INSERT INTO forum (forum_id, name, description) VALUES (0, 'Off-Topic', 'General off-topic discussion');
 INSERT INTO forum (name, description) VALUES ('Suggestions', 'Things you think should be added');
