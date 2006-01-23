@@ -25,6 +25,7 @@ use Catalyst qw/
     Authentication::Store::DBIC
     Authentication::Credential::Password
 
+    Prototype
     FillInForm
 /;
 use YAML;
