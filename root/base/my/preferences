@@ -29,14 +29,14 @@
         [% END %]
     </select>
     </div>
-    </td>
+
     [% c.prototype.observe_field('selectZone',{
     url    => base _ 'my/preferences/setSelectPlaces',
     with   => "'zone='+document.getElementById('selectZone').value",
     update => 'selectPlace0',
     }) %]
-    </tr>
-    
+
+    </td>
     <tr>
     <td colspan="2" style="text-align: right;">
     <input type="checkbox" id="use_utc" name="use_utc" value="1" onChange="toggle_timezone_menus(this)"/>
