@@ -7,6 +7,9 @@ default_uri:  forum/list
 #-- LINES BELOW THIS SHOULDN'T NEED CHANGING
 #--
 
+# the default view to use
+view:         'Parley::View::TT'
+
 # authentiation settings; perldoc Catalyst::Plugin::Authentication::Store::DBIC
 authentication:
     dbic:
