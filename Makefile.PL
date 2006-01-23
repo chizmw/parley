@@ -13,6 +13,7 @@ requires(
     'Catalyst::Model::DBIC'                         => '0.13',
     'Catalyst::Plugin::Authentication'              => '0.05',
     'Catalyst::Plugin::Authentication::Store::DBIC' => '0.04',
+    'Catalyst::Plugin::DefaultEnd'                  => '0.03',
     'Catalyst::Plugin::Dumper'                      => '0.000002',
     'Catalyst::Plugin::Email'                       => '0.05',
     'Catalyst::Plugin::FillInForm'                  => '0.05',
