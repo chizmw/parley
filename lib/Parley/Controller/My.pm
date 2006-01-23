@@ -29,31 +29,67 @@ sub preferences : Local {
 
     $tz_categories = DateTime::TimeZone->categories();
     $c->stash->{tz_categories} = $tz_categories;
+
+    # if the user has a timezone picked (and it's not UTC) pre-populate the menus
+    my $user_pref = $c->session->{authed_user}->preference();
+    $c->log->dumper( $user_pref );
+    if (defined (my $user_tz = $user_pref->timezone())) {
+        $c->log->info( $user_tz );
+        # deal with UTC differently
+        if ($user_tz eq 'UTC') {
+            $c->stash->{formdata}{use_utc} = 1;
+        }
+        else {
+            my ($zone, $place, @items);
+
+            # match <zone>/<place>
+            ($zone,$place) = ($user_tz =~ m{\A(.+?)\/(.+?)\z});
+
+            # set the zone
+            $c->stash->{formdata}{selectZone} = $zone;
+            # set the place
+            $c->stash->{formdata}{selectPlace} = $place;
+
+            # fetch information for the place
+            @items = _select_data_from_zone( $zone );
+            # put information into the stash
+            $c->stash->{selectPlaceData} = \@items;
+        }
+    }
 }
 
-sub select_country : Path('/my/preferences/setSelectCities') {
+sub select_place : Path('/my/preferences/setSelectPlaces') {
     my ( $self, $c ) = @_;
-    my ($country, @cities, @items);
+    my ($zone, @places, @items);
 
-    $country = $c->request->param('country');
-    @cities = DateTime::TimeZone->names_in_category($country);
+    $zone = $c->request->param('zone');
+    @places = DateTime::TimeZone->names_in_category($zone);
+    @items = _select_data_from_zone( $zone );
 
-    if (scalar(@cities)) {
-        @items = ('[ Select City ]', @cities);
-    }
-    else {
-        push @items, '[ Select Country First ]';
-    }
-
-    $c->log->dumper( \@items, 'COUNTRY_LIST' );
     $c->stash(
         select => {
-            id    => 'selectCity',
+            id    => 'selectPlace',
             items => \@items
         },
-        template => 'my/selectcountry_ajaxresult'    # TT response template
+        template => 'my/selectplace_ajaxresult'    # TT response template
     );
     $c->forward('Parley::View::NoHeader');
+}
+
+sub _select_data_from_zone {
+    my ($zone) = @_;
+    my (@places, @items);
+
+    @places = DateTime::TimeZone->names_in_category($zone);
+
+    if (scalar(@places)) {
+        @items = ('[ Select Zone ]', @places);
+    }
+    else {
+        push @items, '[ Select Zone First ]';
+    }
+
+    return @items;
 }
 
 =head1 NAME

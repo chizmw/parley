@@ -4,15 +4,12 @@
 
 <p>Select your desired location. This will be used to display times using your local timezone.</p>
 
-<p>Debug: TZ=[% c.session.authed_user.preference.timezone %]</p>
-
 <form action="my/preferences/update" method="POST" name="timezone">
-
     <table width="550">
     <tr>
     <td>
-    <select id="selectCountry">
-        <option>[ Select Country ]</option>
+    <select id="selectZone" name="selectZone">
+        <option>[ Select Zone ]</option>
         [% FOREACH item=tz_categories %]
         <option value="[% item %]">[% item %]</option>
         [% END %]
@@ -20,40 +17,50 @@
     </td>
 
     <td>
-    <div id="selectCity0">
-    <select id="selectCity">
-        <option>[ Select Country First ]</option>
+    <div id="selectPlace0">
+    <select id="selectPlace" name="selectPlace">
+        [%# if we have selectPlaceData ... %]
+        [% IF selectPlaceData %]
+        [% FOREACH item = selectPlaceData %]
+        <option value="[% item %]">[% item %]</option>
+        [% END %]
+        [% ELSE %]
+        <option>[ Select Zone First ]</option>
+        [% END %]
     </select>
     </div>
     </td>
-    [% c.prototype.observe_field('selectCountry',{
-    url    => base _ 'my/preferences/setSelectCities',
-    with   => "'country='+document.getElementById('selectCountry').value",
-    update => 'selectCity0',
+    [% c.prototype.observe_field('selectZone',{
+    url    => base _ 'my/preferences/setSelectPlaces',
+    with   => "'zone='+document.getElementById('selectZone').value",
+    update => 'selectPlace0',
     }) %]
     </tr>
     
     <tr>
     <td colspan="2" style="text-align: right;">
-    <input type="checkbox" id="use_utc" name="use_utc" onChange="toggle_timezone_menus(this)"/>
+    <input type="checkbox" id="use_utc" name="use_utc" value="1" onChange="toggle_timezone_menus(this)"/>
     <label for="use_utc">Use UTC</label>
     </td>
     </tr>
 
     </table>
-
 </form>
 
 <script language="JavaScript">
 <!-- Begin
 
     function toggle_timezone_menus(checkbox) {
-        var country_menu = document.getElementById('selectCountry');
-        var city_menu    = document.getElementById('selectCity');
+        var zone_menu   = document.getElementById('selectZone');
+        var place_menu  = document.getElementById('selectPlace');
 
-        country_menu.disabled   = checkbox.checked;
-        city_menu.disabled      = checkbox.checked;
+        zone_menu.disabled  = checkbox.checked;
+        place_menu.disabled = checkbox.checked;
     }
 
+    // we want to make sure the menus are disabled if they need to be
+    var use_utc_cbox = document.getElementById('use_utc');
+    toggle_timezone_menus(use_utc_cbox);
+    
 // End -->
 </script>
