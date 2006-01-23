@@ -27,6 +27,7 @@ use Catalyst qw/
 
     Prototype
     FillInForm
+    DefaultEnd
 /;
 use YAML;
 
@@ -160,28 +161,21 @@ sub default : Private {
     $c->response->redirect( $c->req->base . $c->config->{default_uri} );
 }
 
+# updated to use information from: http://catalyst.perl.org/calendar/2005/8/
 sub end : Private {
-    my ( $self, $c ) = @_;
-    die "forced debug" if $c->debug && $c->req->params->{dump_info};
-    return 1 if $c->response->status =~ /^3\d\d$/;
-    return 1 if $c->response->body;
-    unless ( $c->response->content_type ) {
-       $c->response->content_type('text/html; charset=utf-8');
-    }
+    my ($self, $c) = @_;
 
     # if we have any error(s) in the stash, automatically show the error page
     if (defined $c->stash->{error}) {
         $c->stash->{template} = 'error/simple';
     }
 
-    return $c->forward($c->config->{view}) if $c->config->{view};
-    my ($comp) = $c->comp('^'.ref($c).'::(V|View)::');
-    $c->forward(ref $comp);
+    # use DefaultEnd magic
+    $c->NEXT::end( $c );
 
     # (re)populate the form
     $c->fillform( $c->stash->{formdata} );
 }
-
         
 =head1 AUTHOR
 
