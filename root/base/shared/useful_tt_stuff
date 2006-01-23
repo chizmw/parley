@@ -5,8 +5,9 @@
 [%# if a person has preferences, and there's a time_zone option set, use it to
     set the TZ used to display the time in nicedate
 %]
-[% # ok, this is just a hardwired test %]
-[% # CALL d.set_time_zone('Australia/Sydney') %]
+[% IF c.session.authed_user.preference.timezone %]
+[% CALL d.set_time_zone(c.session.authed_user.preference.timezone) %]
+[% END %]
 
 [% d.strftime('%A %d %B %Y at %R') %]
 [% d.time_zone_short_name() %]
