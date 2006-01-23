@@ -62,7 +62,7 @@ sub add : Local {
     my ($self, $c) = @_;
 
     # need to be logged in to post
-    $self->_login_if_required($c, q{You must be logged in before you can start a new topic.});
+    Parley::App::Helper->login_if_required($c, q{You must be logged in before you can start a new topic.});
 
     # need to be authenticated to post
     if (not Parley::App::Helper->is_authenticted($c)) {
@@ -74,7 +74,7 @@ sub reply : Local {
     my ($self, $c) = @_;
 
     # need to be logged in to post
-    $self->_login_if_required($c, q{You must be logged in before you can add a reply.});
+    Parley::App::Helper->login_if_required($c, q{You must be logged in before you can add a reply.});
 
     # need to be authenticated to post
     if (not Parley::App::Helper->is_authenticted($c)) {
@@ -119,21 +119,6 @@ sub post : Local {
         if (not $status) {
             return;
         }
-    }
-}
-
-sub _login_if_required {
-    my ($self, $c, $message) = @_;
-
-    if( not Parley::App::Helper->is_logged_in($c) ) {
-        # make sure we return here after a successful login
-        $c->session->{after_login} = $c->request->uri();
-        # set an informative message to display on the login screen
-        if (defined $message) {
-            $c->session->{login_message} = $message;
-        }
-        # send the user to the login screen
-        $c->response->redirect( $c->req->base() . 'user/login' );
     }
 }
 

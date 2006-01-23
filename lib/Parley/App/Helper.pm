@@ -29,6 +29,21 @@ sub is_authenticted {
     return 1;
 }
 
+sub login_if_required {
+    my ($self, $c, $message) = @_;
+
+    if( not Parley::App::Helper->is_logged_in($c) ) {
+        # make sure we return here after a successful login
+        $c->session->{after_login} = $c->request->uri();
+        # set an informative message to display on the login screen
+        if (defined $message) {
+            $c->session->{login_message} = $message;
+        }
+        # send the user to the login screen
+        $c->response->redirect( $c->req->base() . 'user/login' );
+    }
+}
+
 # OK, shitty way of doing it, but we can look into proper ACLs, etc later
 sub can_make_locked {
     my ($self, $c, $forum) = @_;
