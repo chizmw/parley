@@ -41,6 +41,7 @@ sub login_if_required {
         }
         # send the user to the login screen
         $c->response->redirect( $c->req->base() . 'user/login' );
+        return;
     }
 }
 
