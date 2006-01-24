@@ -9,10 +9,13 @@ use DateTime::TimeZone;
 sub auto : Private {
     my ($self, $c) = @_;
     # need to be logged in to perform any 'my' actions
-    Parley::App::Helper->login_if_required(
+    my $status = Parley::App::Helper->login_if_required(
         $c,
         q{You must be logged in before you can access this area}
     );
+    if (not defined $status) {
+        return 0;
+    }
 
     # undecided if you need to be authed to perform 'my' actions
     #if (not Parley::App::Helper->is_authenticted($c)) {
@@ -21,7 +24,6 @@ sub auto : Private {
 
     return 1;
 }
-
 
 sub preferences : Local {
     my ($self, $c) = @_;
@@ -32,9 +34,7 @@ sub preferences : Local {
 
     # if the user has a timezone picked (and it's not UTC) pre-populate the menus
     my $user_pref = $c->session->{authed_user}->preference();
-    $c->log->dumper( $user_pref );
     if (defined (my $user_tz = $user_pref->timezone())) {
-        $c->log->info( $user_tz );
         # deal with UTC differently
         if ($user_tz eq 'UTC') {
             $c->stash->{formdata}{use_utc} = 1;
@@ -57,6 +57,52 @@ sub preferences : Local {
         }
     }
 }
+
+sub preferences_update : Path('/my/preferences/update') {
+    my ($self, $c) = @_;
+    my $user_pref = $c->session->{authed_user}->preference();
+    
+    # we always want to see the preferences screen
+    $c->stash->{template} = 'my/preferences';
+
+    # store timezone info
+    $self->_store_tz_prefs($c, $user_pref);
+
+    $c->forward('preferences');
+}
+
+sub _store_tz_prefs {
+    my ($self, $c, $user_pref) = @_;
+
+    # if utc is set we have it easy
+    if ($c->request->param('use_utc')) {
+        $user_pref->timezone('UTC');
+        $user_pref->update();
+    }
+    # otherwise, we need to validate the Zone and Place, then update (if valid)
+    else {
+        my ($zone, $place, $tz_string);
+        # get a list af all <zone>/<place> TZ names
+        my @all_names = DateTime::TimeZone->all_names();
+        # get form data
+        $zone = $c->request->param('selectZone');
+        $place = $c->request->param('selectPlace');
+        # join into a TZ name
+        $tz_string = "$zone/$place";
+
+        # look for the name in the all_names list
+        my $match_count = grep { m[\A ${tz_string} \z]xms } @all_names;
+        $c->log->debug("MATCHES: $match_count");
+        # if we have a match, then update the TZ info
+        if (1 == $match_count) {
+            $user_pref->timezone( $tz_string );
+            $user_pref->update();
+        }
+        # otherwise, we don't update, and the page reloads showing their last
+        # valid setting
+    }
+}
+
 
 sub select_place : Path('/my/preferences/setSelectPlaces') {
     my ( $self, $c ) = @_;
