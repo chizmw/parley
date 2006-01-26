@@ -163,8 +163,7 @@ sub _add_new_topic {
             $self->_increase_post_count($c, $new_thread);
 
             # increase the post count for the user
-            $c->session->{authed_user}->post_count( $c->session->{authed_user}->post_count() + 1 );
-            $c->session->{authed_user}->update();
+            $self->_update_person_post_info($c, $c->session->{authed_user}, $new_post);
 
             # commit everything
             $c->model('ParleyDB')->table('thread')->storage->txn_commit;
@@ -224,8 +223,7 @@ sub _add_new_reply {
             $self->_increase_post_count($c, $c->stash->{current_thread});
 
             # increase the post count for the user
-            $c->session->{authed_user}->post_count( $c->session->{authed_user}->post_count() + 1 );
-            $c->session->{authed_user}->update();
+            $self->_update_person_post_info($c, $c->session->{authed_user}, $new_post);
 
             # commit everything
             $c->model('ParleyDB')->table('post')->storage->txn_commit;
@@ -327,6 +325,18 @@ sub _increase_post_count {
 #        # rollback
 #        eval { $c->model('ParleyDB')->table('thread')->storage->txn_rollback };
 #    }
+}
+
+sub _update_person_post_info {
+    my ($self, $c, $person, $post) = @_;
+
+    # increase the post count for the user
+    $person->post_count( $person->post_count() + 1 );
+    # make a note of their last post
+    $person->last_post( $post->id() );
+    # push the changes back tot the db
+    $person->update();
+
 }
 
 sub _get_thread_reply_post {

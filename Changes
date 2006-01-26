@@ -6,6 +6,11 @@ This file documents the revision history for Perl extension Forum.
     - added my/preferences page, to allow setting of timezone area
     - fixed behaviour with login_if_required() in auto()
     - store updated and valid timezone prefs
+    - update schema to include new columns (post.reply_to, person.last_post,
+      person.post_count)
+    - update person.count after a new post or reply
+    - alter thread view layout and include post count for person
+    - store user's last post (not sure why we might want this, it just feels useful)
 
 0.06  Sun Jan 22 23:14:31 GMT 2006
     - added and updated module dependencies in Makefile.PL
