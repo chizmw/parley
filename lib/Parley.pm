@@ -94,53 +94,58 @@ sub auto : Private {
 
     # do we have a post id in the URL?
     if (defined $c->req->param('post')) {
+        $c->log->debug(qq{post value is } . $c->request->param('post'));
         if (not $c->req->param('post') =~ m{\A\d+\z}) {
             $c->stash->{error}{message} = 'non-integer post id passed: ['
                 . $c->req->param('post')
                 . ']';
             return;
         }
-        $c->log->debug('setting: current_post');
+        $c->log->debug('[from post #] setting: current_post');
         $c->stash->{current_post} = $c->model('ParleyDB')->table('post')->search(
             post_id  => $c->req->param('post'),
         )->first;
 
         # set the current_thread from the current_post
-        $c->log->debug('setting: current_thread');
+        $c->log->debug('[from post #] setting: current_thread');
         $c->stash->{current_thread} = $c->stash->{current_post}->thread();
+        $c->log->debug('Thread #' . $c->stash->{current_thread}->id());
 
         # set the current_forum from the current thread
-        $c->log->debug('setting: current_forum');
+        $c->log->debug('[from post #] setting: current_forum');
         $c->stash->{current_forum} = $c->stash->{current_thread}->forum();
+        $c->log->debug('Forum #' . $c->stash->{current_forum}->id());
     }
 
     # do we have a thread id in the URL?
     elsif (defined $c->req->param('thread')) {
+        $c->log->debug(qq{thread value is } . $c->request->param('thread'));
         if (not $c->req->param('thread') =~ m{\A\d+\z}) {
             $c->stash->{error}{message} = 'non-integer thread id passed: ['
                 . $c->req->param('thread')
                 . ']';
             return;
         }
-        $c->log->debug('setting: current_thread');
+        $c->log->debug('[from thread #] setting: current_thread');
         $c->stash->{current_thread} = $c->model('ParleyDB')->table('thread')->search(
             thread_id  => $c->req->param('thread'),
         )->first;
 
         # set the current_forum from the current thread
-        $c->log->debug('setting: current_forum');
+        $c->log->debug('[from thread #] setting: current_forum');
         $c->stash->{current_forum} = $c->stash->{current_thread}->forum();
     }
 
     # do we have a forum id in the URL?
     elsif (defined $c->req->param('forum')) {
+        $c->log->debug(qq{forum value is } . $c->request->param('forum'));
         if (not $c->req->param('forum') =~ m{\A\d+\z}) {
             $c->stash->{error}{message} = 'non-integer forum id passed: ['
                 . $c->req->param('forum')
                 . ']';
             return;
         }
-        $c->log->debug('setting: current_forum');
+        $c->log->debug('[from forum #] setting: current_forum');
 
         $c->stash->{current_forum} = $c->model('ParleyDB')->table('forum')->search(
             forum_id  => $c->req->param('forum'),
@@ -176,7 +181,7 @@ sub end : Private {
     }
 
     # use DefaultEnd magic
-    $c->NEXT::end( $c );
+    $self->NEXT::end( $c );
 
     # (re)populate the form
     $c->fillform( $c->stash->{formdata} );

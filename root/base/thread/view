@@ -16,16 +16,33 @@
             </td>
             <td class="post_created">
             Posted at <i>[% nicedate(post.created) %]</i>
+            (#[% post.id %])
             </td>
         </tr>
         <tr>
-            <td class="post_message">
-                [% FILTER html_line_break %][% HTML.escape(post.message) %][% END %]
+            <td>
+                [% IF post.quoted_post %]
+                    <span class="post_message">
+                        <span class="in_response_to">
+                        [% nicedate(post.quoted_post.created) %],
+                        [% post.quoted_post.creator.forum_name %] said:
+                        </span>
+                        <br />
+                        <span class="quoted_message">
+                        [% FILTER html_line_break %][% HTML.escape(post.quoted_post.message) %][% END %]
+                        </span>
+                    [% FILTER html_line_break %][% HTML.escape(post.message) %][% END %]
+                    </span>
+                [% ELSE %]
+                    <span class="post_message">
+                    [% FILTER html_line_break %][% HTML.escape(post.message) %][% END %]
+                    </span>
+                [% END %]
             </td>
         </tr>
         <tr>
         <td style="text-align: right;">
-            <form action="thread/reply?post=[% current_thread.id %]" method="POST" name="new_thread">
+            <form action="thread/reply?post=[% post.id %]" method="POST" name="post_actions">
                 [% IF c.session.authed_user.id == post.creator.id %]
                 <input type="submit" value="Edit" name="edit_post" class="small_input_button" />
                 <input type="submit" value="Delete" name="delete_post" class="small_input_button" />

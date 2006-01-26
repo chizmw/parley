@@ -13,7 +13,7 @@ body {
 
 /* sections of the screen */
 #top {
-	background: url("images/logo.png") fixed top right no-repeat rgb(171,121,100);
+	background: url("images/logo.png") top left no-repeat rgb(171,121,100);
 	border:     0px;
 	height:     50px; 
 	margin:     0px 0px 0px 0px;
@@ -227,20 +227,29 @@ h2 {
 }
 
 
+.quoted_reply_textarea {
+    background-color: #ccc;
+    background-color: #c4cacf;
+    background-color: rgb(250,180,180);
+    border: 2px inset #fff;
+    font-family: verdana, arial, helvetica, sans-serif;
+	font-size:   0.8em;
+}
+
 .input_text {
     background-color: #ccc;
     background-color: #c4cacf;
     background-color: rgb(251,215,194);
     border: 2px inset #fff;
     font-family: verdana, arial, helvetica, sans-serif;
-	font-size:   12px;
+	font-size:   1em;
 }
 
 .input_button {
     background-color: #97b3cf;
     background-color: rgb(251,215,194);
     font-family: verdana, arial, helvetica, sans-serif;
-	font-size:   12px;
+	font-size:   1em;
     border: 2px ridge #000;
 }
 
@@ -248,7 +257,7 @@ h2 {
     background-color: #97b3cf;
     background-color: rgb(251,215,194);
     font-family: verdana, arial, helvetica, sans-serif;
-	font-size:   9px;
+	font-size:   0.8em;
     border: 2px ridge #000;
 }
 
@@ -256,7 +265,7 @@ h2 {
     background-color: #369;
     color: #fff;
     font-family: verdana, arial, helvetica, sans-serif;
-	font-size:   12px;
+	font-size:   1em;
 }
 
 .forum_link {
@@ -293,10 +302,42 @@ h2 {
     font-size:      0.8em;
 }
 
-.post_message {
+.reply_post_message {
+    width: 100%;
     background-color: rgb(251,215,194);
     border: 2px inset #fff;
 }
+
+.post_message {
+    width: 100%;
+    background-color: rgb(251,215,194);
+    border: 2px inset #fff;
+    display: block;
+}
+
+.in_response_to {
+    margin-left:    20px;
+    font-weight:    bold;
+    font-style:     italic;
+    font-size:      0.8em;
+}
+
+.quoted_message {
+        border:         solid black 1pt;
+        background:     #ccc;
+        /*font-family:    "courier new", courier, fixed;*/
+        color:          #000;
+        margin-left:    20px;
+        margin-right:   0px;
+        margin-top:     0px;
+        margin-bottom:  0px;
+        padding:        2px;
+        font-size:      0.9em;
+
+		display: block;
+		overflow: auto;
+}
+
 
 .no_table_border table {
     border: none;

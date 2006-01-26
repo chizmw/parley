@@ -44,6 +44,15 @@ ALTER TABLE person ADD COLUMN post_count
     integer NOT NULL default 0
 ;
 
+-- deal with quoted replies
+ALTER TABLE post
+ADD COLUMN quoted_post
+integer REFERENCES post;
+
+ALTER TABLE post
+ADD COLUMN quoted_text text;
+
+
 -- patch ends here --
 
 COMMIT;

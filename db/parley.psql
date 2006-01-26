@@ -102,6 +102,13 @@ CREATE TABLE post (
 ALTER TABLE post ADD COLUMN reply_to
     integer references post
 ;
+-- deal with quoted replies
+ALTER TABLE post
+ADD COLUMN quoted_post
+integer REFERENCES post;
+
+ALTER TABLE post
+ADD COLUMN quoted_text text;
 
 -- add LastPost information
 ALTER TABLE thread ADD COLUMN last_post

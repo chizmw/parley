@@ -83,7 +83,13 @@ sub reply : Local {
     }
 
     # grab the post we're replying to
-    $self->_get_thread_reply_post($c)
+    $self->_get_thread_reply_post($c);
+
+    # quoting a post?
+    if ($c->request->param('quote_post')) {
+        $c->log->info('QUOTE THE POST!');
+        $c->stash->{quote_post} = $c->stash->{current_post};
+    }
 }
 
 sub post : Local {
@@ -216,6 +222,22 @@ sub _add_new_reply {
                 }
             );
 
+            # if we have current_post information it means this is in reply to
+            # another post (instead of just a new post to a thread)
+            if (defined $c->stash->{current_post}) {
+                $new_post->reply_to( $c->stash->{current_post}->id() );
+                $new_post->update();
+            }
+
+            # do we have a quoted post? if we do we need to store the
+            # (potentially ammended) quoted text, and the actual post being
+            # quoted (so we can get author, date, etc)
+            if (defined $c->request->param('have_quoted_post')) {
+                $new_post->quoted_post( $c->stash->{current_post}->id() );
+                $new_post->quoted_text( $c->req->param('quote_message') );
+                $new_post->update();
+            }
+
             # update information about the most recent forum/thread post
             $self->_update_last_post($c, $new_post);
 
@@ -321,17 +343,26 @@ sub _update_person_post_info {
 
 sub _get_thread_reply_post {
     my ($self, $c) = @_;
+    my ($posts);
 
     # it would be good to display the relevant post in the thread, so people know
     # what they're replying to
     # - if adding a reply, assume the first post
     # - if we have a post value, then that's the one we're replying to
     if (defined $c->stash->{current_post}) {
-        die "responding to a specific post";
+        # get the specific post we're responding to
+        $posts = $c->model('ParleyDB')->table('post')->search(
+            {
+                post_id     => $c->stash->{current_post}->id(),
+            },
+            {
+                rows        => 1,
+            }
+        );
     }
     elsif (defined $c->stash->{current_thread}) {
         # get the first post in the thread
-        my $posts = $c->model('ParleyDB')->table('post')->search(
+        $posts = $c->model('ParleyDB')->table('post')->search(
             {
                 thread      => $c->stash->{current_thread}->id(),
             },
@@ -340,24 +371,23 @@ sub _get_thread_reply_post {
                 rows        => 1,
             }
         );
-
-        # if we don't have one post, something really odd happened
-        if (1 != $posts->count()) {
-            $c->stash->{error}{message} = q{I don't know how you managed to reply to a thread with no posts};
-            return;
-        }
-
-        # save the first (and only) post from our results
-        $c->stash->{responding_to_post} = $posts->first();
-        $c->log->dumper($c->stash->{responding_to_post}, 'RESPONDING_TO');
-
-        # be successful
-        return 1;
     }
     else {
         $c->stash->{error}{message} = q{No information for thread or post to reply to};
         return;
     }
+
+    # if we don't have one post, something really odd happened
+    if (1 != $posts->count()) {
+        $c->stash->{error}{message} = q{I don't know how you managed to reply to a thread with no posts};
+        return;
+    }
+
+    # save the first (and only) post from our results
+    $c->stash->{responding_to_post} = $posts->first();
+
+    # be successful
+    return 1;
 }
 
 =head1 NAME
