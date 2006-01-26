@@ -1,5 +1,6 @@
 This file documents the revision history for Perl extension Forum.
 
+0.07  Thu Jan 26 08:49:19 GMT 2006
     - added preference table to main schema
     - added patch file for moving from 0.06 to 0.07 db schema
     - nicedate() sets timezone to value in user's preference
