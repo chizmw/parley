@@ -156,8 +156,13 @@ sub auto : Private {
 #
 sub default : Private {
     my ( $self, $c ) = @_;
+    $c->response->status(404);
+    $c->response->body( '404 Not Found' );
+}
 
-    # redirect to the default fop action
+sub index : Private {
+    my ( $self, $c ) = @_;
+    # redirect to the default action
     $c->response->redirect( $c->req->base . $c->config->{default_uri} );
 }
 
