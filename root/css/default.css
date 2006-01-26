@@ -64,9 +64,7 @@ body {
 	border:        none;
     border:        2px ridge #ccc;
     
-	height:        20px;
-	/*border: solid 2px yellow;
-	border-style: outset;*/
+    height:        1.6em;
 	left:          0px;
 	margin-left:   0px;
 	margin-right:  0px;
@@ -74,7 +72,8 @@ body {
 	right:         0px;
 	text-align:    right;
 	top:           70px;
-	padding-top: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
     padding-right: 1em;
 }
 
