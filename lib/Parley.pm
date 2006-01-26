@@ -31,7 +31,7 @@ use Catalyst qw/
 /;
 use YAML;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08-pre';
 
 #
 # Configure the application
