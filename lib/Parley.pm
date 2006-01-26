@@ -94,7 +94,6 @@ sub auto : Private {
 
     # do we have a post id in the URL?
     if (defined $c->req->param('post')) {
-        $c->log->debug(qq{post value is } . $c->request->param('post'));
         if (not $c->req->param('post') =~ m{\A\d+\z}) {
             $c->stash->{error}{message} = 'non-integer post id passed: ['
                 . $c->req->param('post')
@@ -109,12 +108,10 @@ sub auto : Private {
         # set the current_thread from the current_post
         $c->log->debug('[from post #] setting: current_thread');
         $c->stash->{current_thread} = $c->stash->{current_post}->thread();
-        $c->log->debug('Thread #' . $c->stash->{current_thread}->id());
 
         # set the current_forum from the current thread
         $c->log->debug('[from post #] setting: current_forum');
         $c->stash->{current_forum} = $c->stash->{current_thread}->forum();
-        $c->log->debug('Forum #' . $c->stash->{current_forum}->id());
     }
 
     # do we have a thread id in the URL?
