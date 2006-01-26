@@ -301,30 +301,10 @@ sub _increase_post_count {
     my ($self, $c, $thread) = @_;
 
     # increase the number of replies for the thread
-#    # transaction method taken from:
-#    #  http://search.cpan.org/~mstrout/DBIx-Class-0.04999_01/lib/DBIx/Class/Manual/Cookbook.pod#Transactions
-#    eval {
-#        # start a transaction
-#        $c->model('ParleyDB')->table('thread')->storage->txn_begin;
-
-        # we don't need to get the thread, it's in our stash,
-        # and if it isn't we have bigger problems
-        # increase the reply count for the thread
         $thread->post_count(
             $thread->post_count() + 1
         );
         $thread->update();
-            
-#        # commit everything
-#        $c->model('ParleyDB')->table('thread')->storage->txn_commit;
-#    };
-#    # any errors?
-#    if ($@) {
-#        # put something in the logs
-#        $c->log->error($@);
-#        # rollback
-#        eval { $c->model('ParleyDB')->table('thread')->storage->txn_rollback };
-#    }
 }
 
 sub _update_person_post_info {
