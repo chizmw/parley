@@ -245,6 +245,14 @@ h2 {
     border: 2px ridge #000;
 }
 
+.small_input_button {
+    background-color: #97b3cf;
+    background-color: rgb(251,215,194);
+    font-family: verdana, arial, helvetica, sans-serif;
+	font-size:   9px;
+    border: 2px ridge #000;
+}
+
 .niceform {
     background-color: #369;
     color: #fff;
@@ -276,7 +284,14 @@ h2 {
 }
 
 .post_creator {
+    font-weight:    bold;
     font-style:     italic;
+    font-size:      0.9em;
+}
+
+.post_created {
+    text-align:     right;
+    font-size:      0.8em;
 }
 
 .post_message {

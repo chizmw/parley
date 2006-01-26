@@ -98,12 +98,25 @@ CREATE TABLE post (
                     references person
 );
 
+-- add ReplyTo information for post
+ALTER TABLE post ADD COLUMN reply_to
+    integer references post
+;
+
 -- add LastPost information
 ALTER TABLE thread ADD COLUMN last_post
     integer references post
 ;
 ALTER TABLE forum ADD COLUMN last_post
     integer references post
+;
+
+-- person posting information
+ALTER TABLE person ADD COLUMN last_post
+    integer references post
+;
+ALTER TABLE person ADD COLUMN post_count
+    integer NOT NULL default 0
 ;
 
 --

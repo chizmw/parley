@@ -1,43 +1,51 @@
 <h1>[% current_thread.subject %]</h1>
 
+
+[% SET dummy_value = post_list.reset %]
 [% IF post_list.count > 0 %]
-<form action="thread/reply?thread=[% current_thread.id %]" method="POST" name="new_thread">
-  <table>
+    <table>
     [% WHILE (post = post_list.next) %]
-    <tr>
-      [% UNLESS current_thread.subject == post.subject %]
-      [% SET table_cols = 3 %]
-      <td class="post_subject">
-      [% post.subject %]
-      </td>
-      [% ELSE %]
-      [% SET table_cols = 2 %]
-      [% END %]
-      <td class="post_creator">
-      [% post.creator.forum_name %]
-      </td>
-      <td class="post_created">
-      [% nicedate(post.created) %]
-      </td>
-    </tr>
-  
-    <tr>
-      <td colspan="[% table_cols %]" class="post_message">
-      [% FILTER html_line_break %][% HTML.escape(post.message) %][% END %]
-      </td>
-    </tr>
+        <tr>
+            <td rowspan="3">
+            <span class="post_creator">
+            [% post.creator.forum_name %]
+            </span>
+            <br />
+            [% post.creator.post_count %]
+            post[% IF (post.creator.post_count != 1) %]s[% END %]
+            </td>
+            <td class="post_created">
+            Posted at <i>[% nicedate(post.created) %]</i>
+            </td>
+        </tr>
+        <tr>
+            <td class="post_message">
+                [% FILTER html_line_break %][% HTML.escape(post.message) %][% END %]
+            </td>
+        </tr>
+        <tr>
+        <td style="text-align: right;">
+            <form action="thread/reply?post=[% current_thread.id %]" method="POST" name="new_thread">
+                [% IF c.session.authed_user.id == post.creator.id %]
+                <input type="submit" value="Edit" name="edit_post" class="small_input_button" />
+                <input type="submit" value="Delete" name="delete_post" class="small_input_button" />
+                [% END %]
+                <input type="submit" value="Quote" name="quote_post" class="small_input_button" />
+                <input type="submit" value="Reply" name="reply_to_post" class="small_input_button" />
+            </form>
+        </td>
+        </tr>
     [% END %]
-  
     [% UNLESS current_thread.locked %]
-    <tr>
-      <td colspan="[% table_cols %]" style="text-align: center;">
-        <input type="submit" value="Reply" name="reply_to_post"    class="input_button" />
-      </td>
-    </tr>
+    <form action="thread/reply?thread=[% current_thread.id %]" method="POST" name="new_thread">
+        <tr>
+        <td colspan="2" style="text-align: center;">
+            <input type="submit" value="New Reply" name="reply_to_thread"    class="input_button" />
+        </td>
+        </tr>
+    </form>
     [% END %]
-  </table>
-</form>
+    </table>
 [% ELSE %]
   No active posts in this thread
 [% END %]
-

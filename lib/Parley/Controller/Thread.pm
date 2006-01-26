@@ -162,6 +162,10 @@ sub _add_new_topic {
             # increase the post count for the thread
             $self->_increase_post_count($c, $new_thread);
 
+            # increase the post count for the user
+            $c->session->{authed_user}->post_count( $c->session->{authed_user}->post_count() + 1 );
+            $c->session->{authed_user}->update();
+
             # commit everything
             $c->model('ParleyDB')->table('thread')->storage->txn_commit;
         };
@@ -218,6 +222,10 @@ sub _add_new_reply {
 
             # increase the post count for the thread
             $self->_increase_post_count($c, $c->stash->{current_thread});
+
+            # increase the post count for the user
+            $c->session->{authed_user}->post_count( $c->session->{authed_user}->post_count() + 1 );
+            $c->session->{authed_user}->update();
 
             # commit everything
             $c->model('ParleyDB')->table('post')->storage->txn_commit;

@@ -30,6 +30,20 @@ UPDATE person
 SET preference=0
 WHERE person_id=0
 
+
+-- add ReplyTo information for post
+ALTER TABLE post ADD COLUMN reply_to
+    integer references post
+;
+
+-- person posting information
+ALTER TABLE person ADD COLUMN last_post
+    integer references post
+;
+ALTER TABLE person ADD COLUMN post_count
+    integer NOT NULL default 0
+;
+
 -- patch ends here --
 
 COMMIT;
