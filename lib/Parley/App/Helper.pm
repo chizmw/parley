@@ -71,6 +71,32 @@ sub can_make_sticky {
     return (0 == $c->session->{authed_user}->id());
 }
 
+
+sub user_preference_check {
+    my ($self, $c) = @_;
+
+    if (not defined $c->session->{authed_user}->preference()) {
+        $c->log->error(
+                q{User #}
+            . $c->session->{authed_user}->id()
+            . q{ doesn't have any preferences. Fixing.}
+        );
+
+        # create a new preference
+        my $new_preference = $c->model('ParleyDB')->table('preference')->create(
+            {
+                # one value - the rest can default to whatever the table
+                # says
+                timezone => 'UTC',
+            }
+        );
+        $c->session->{authed_user}->preference( $new_preference->id() );
+        $c->session->{authed_user}->update();
+    }
+}
+
+
+
 1;
 __END__
 vim: ts=8 sts=4 et sw=4 sr sta
