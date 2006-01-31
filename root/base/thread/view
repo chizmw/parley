@@ -55,6 +55,9 @@
                     [% FILTER html_line_break %][% HTML.escape(post.message) %][% END %]
                     </span>
                 [% END %]
+                [% IF post.edited %]
+                <span class="post_edited_alert">Edited: [% nicedate(post.edited) %]</span>
+                [% END %]
             </td>
         </tr>
         [% UNLESS current_thread.locked %]

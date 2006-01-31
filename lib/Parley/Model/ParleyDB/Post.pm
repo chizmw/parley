@@ -5,21 +5,27 @@ use warnings;
 use base 'DBIx::Class::Core';
 use DateTime::Format::Pg;
 
-__PACKAGE__->inflate_column(
-    'created',
-    {
-        inflate     => sub {
-            my $dtf = DateTime::Format::Pg->parse_timestamptz( shift );
-            $dtf->set_time_zone('UTC');
-            $dtf->set('locale', 'en_GB');
-            return $dtf;
-        },
-        deflate     => sub {
-            my $dtf = shift;
-            DateTime::Format::Pg->format_timestamptz( $dtf );
-        },
-    }
-);
+my @date_cols = qw[ created edited ];
+
+foreach my $datecol (@date_cols) {
+    __PACKAGE__->inflate_column(
+        $datecol,
+        {
+            inflate     => sub {
+                my $dtf = DateTime::Format::Pg->parse_timestamptz( shift );
+                $dtf->set_time_zone('UTC');
+                $dtf->set('locale', 'en_GB');
+                return $dtf;
+            },
+            deflate     => sub {
+                my $dtf = shift;
+                DateTime::Format::Pg->format_timestamptz( $dtf );
+            },
+        }
+    );
+}
+
+
 
 =head1 NAME
 

@@ -350,3 +350,9 @@ h2 {
 .inline_form {
     display: inline;
 }
+
+.post_edited_alert {
+    font-weight:    bold;
+    font-style:     italic;
+    font-size:      0.8em;
+}

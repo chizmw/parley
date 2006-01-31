@@ -3,6 +3,7 @@ package Parley::Controller::Post;
 use strict;
 use warnings;
 use base 'Catalyst::Controller';
+use DateTime;
 use List::MoreUtils qw{ uniq };
 
 =head1 NAME
@@ -92,6 +93,10 @@ sub _edit_post {
         # update the post with the new information
         $c->stash->{current_post}->message( $results->valid->{post_message} );
 
+        # set the edited time
+        $c->stash->{current_post}->edited( DateTime->now() );
+
+        # store the updates in the db
         $c->stash->{current_post}->update();
 
         # view the thread - but only if no errors
