@@ -67,10 +67,8 @@ sub auto : Private {
         $c->stash->{error}{message} = qq{
             <p>You are using a version of DBIx::Class::Loader (v$dcl_version)
                 that is known to not work with this application.</p>
-            <p>This issue has been reported to the module author,
-                and an unofficial release is available.</p>
-            <p>v0.09 is also known to work with this application,
-                so you may downgrade if you prefer</p>
+            <p>This issue has been resolved.</p>
+            <p>Please upgrade to v0.13 or higher</p>
         };
         return;
     }
