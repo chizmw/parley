@@ -24,6 +24,7 @@ requires(
     'Catalyst::Plugin::Static::Simple'              => '0.12',
     'Catalyst::Plugin::StackTrace'                  => '0.02',
     'Catalyst::View::TT'                            => '0.20',
+    'Data::SpreadPagination'                        => 0,
     'DBD::Pg'                                       => '1.43',
     'DBIx::Class'                                   => '0.04001',
     'DBIx::Class::Loader'                           => '0.14',

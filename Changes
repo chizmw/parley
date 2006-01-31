@@ -2,6 +2,10 @@ This file documents the revision history for Perl extension Forum.
 
     - hide per-post actions in a locked thread
     - allow users to edit their own posts
+    - added paging for long threads (fixed to 10 posts/thread for the moment)
+    - if we have a post when viewing thread, go to last page in thread
+      [ideally we'd like to go to the page containing the post, but we don't
+      know how to work this out yet]
 
 0.07  Thu Jan 26 08:49:19 GMT 2006
     - added preference table to main schema

@@ -8,6 +8,7 @@ use List::MoreUtils qw{ uniq };
 
 use Parley::App::Helper;
 use Data::FormValidator 4.02;
+use Data::SpreadPagination;
 
 our $DFV;
 
@@ -44,6 +45,30 @@ BEGIN {
 sub view : Local {
     my ($self, $c) = @_;
 
+    # TODO - configure this somewhere, maybe a user preference
+    my $rows_per_page = 10;
+
+    # page to show - either a param, or show the first
+    my $page = $c->request->param('page') || 1;
+
+    # TODO - see if we can go to that page the post is on, not just the last page
+    # if we've a current post, we'd like to show the page with that post
+    # for now assume we just want to show the last page in the thread
+    if ($c->stash->{current_post}) {
+        my $tmp_post_list = $c->model('ParleyDB')->table('post')->search(
+            {
+                thread => $c->stash->{current_thread}->id(),
+            },
+            {
+                order_by    => 'created ASC',
+                rows        => $rows_per_page,
+                page        => $page,
+            }
+        );
+
+        $page = $tmp_post_list->pager()->last_page();
+    }
+
     # get all the posts in the thread
     $c->stash->{post_list} = $c->model('ParleyDB')->table('post')->search(
         {
@@ -51,8 +76,26 @@ sub view : Local {
         },
         {
             order_by    => 'created ASC',
+            rows        => $rows_per_page,
+            page        => $page,
         }
     );
+    $c->log->dumper( $c->stash->{post_list}->count(), 'POST_COUNT' );
+
+    # set up the pager
+    $c->stash->{page} = $c->stash->{post_list}->pager();
+
+    # TODO - find a better way to do this
+    # set up Data::SpreadPagination
+    my $pagination = Data::SpreadPagination->new(
+        {
+            totalEntries        => $c->stash->{page}->total_entries(),
+            entriesPerPage      => $rows_per_page,
+            currentPage         => $page,
+            maxPages            => 4,
+        }
+    );
+    $c->stash->{page_range_spread} = $pagination->pages_in_spread();
 
     # increase the number of views
     $self->_increase_view_count($c);
@@ -262,7 +305,13 @@ sub _add_new_reply {
 
         # view the new thread - but only if no errors
         if (not scalar(@messages)) {
-            $c->response->redirect( $c->req->base . 'thread/view?thread=' . $c->stash->{current_thread}->id() );
+            $c->response->redirect(
+                  $c->req->base
+                . 'thread/view?thread='
+                . $c->stash->{current_thread}->id()
+                . '&post='
+                . $new_post->id()
+            );
         }
     }
     else {

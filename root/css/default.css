@@ -156,7 +156,9 @@ a, a:link, a:visited, a:active {
 
 table {
     border: 1px solid #999;
+    width:  100%;
 }
+
 td {
     /*background-color: #f7f7f7;*/
     border: 1px solid #999;
@@ -194,7 +196,6 @@ h2 {
 }
 
 .right_align {
-	display: block;
 	text-align: right;
     /*background: #f00;*/
 }

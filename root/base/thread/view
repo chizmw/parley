@@ -1,5 +1,17 @@
-<h1>[% current_thread.subject %]</h1>
 
+<table>
+    <tr>
+        <td>
+            <b>Topic: [% current_thread.subject %]</b>
+        </td>
+
+        <td class="right_align">
+            <small>
+            [% INCLUDE shared/pager_advanced %]
+            </small>
+        </td>
+    </tr>
+</table>
 
 [% SET dummy_value = post_list.reset %]
 [% IF post_list.count > 0 %]
@@ -71,6 +83,17 @@
     </form>
     [% END %]
     </table>
+<table>
+    <tr>
+        <td class="right_align">
+            <small>
+            [% INCLUDE shared/pager_advanced %]
+            </small>
+        </td>
+    </tr>
+</table>
+
+
 [% ELSE %]
   No active posts in this thread
 [% END %]
