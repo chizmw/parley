@@ -89,6 +89,28 @@ sub auto : Private {
             },
         );
         $c->session->{authed_user} = $results->first();
+
+        ##################################################
+        # cater for database upgrades, and make sure the user has preferences
+        if (not defined $c->session->{authed_user}->preference()) {
+            $c->log->error(
+                  q{User #}
+                . $c->session->{authed_user}->id()
+                . q{ doesn't have any preferences. Fixing.}
+            );
+
+            # create a new preference
+            my $new_preference = $c->model('ParleyDB')->table('preference')->create(
+                {
+                    # one value - the rest can default to whatever the table
+                    # says
+                    timezone => 'UTC',
+                }
+            );
+            $c->session->{authed_user}->preference( $new_preference->id() );
+            $c->session->{authed_user}->update();
+        }
+        ##################################################
     }
 
 
