@@ -40,7 +40,7 @@ sub login_if_required {
             $c->session->{login_message} = $message;
         }
         # send the user to the login screen
-        $c->response->redirect( $c->req->base() . 'user/login' );
+        $c->response->redirect( $c->uri_for('/user/login') );
         return;
     }
 }

@@ -101,7 +101,12 @@ sub _edit_post {
 
         # view the thread - but only if no errors
         if (not scalar(@messages)) {
-            $c->response->redirect( $c->req->base . 'thread/view?thread=' . $c->stash->{current_post}->thread()->id() );
+            $c->response->redirect(
+                $c->uri_for(
+                      '/thread/view?thread='
+                    . $c->stash->{current_post}->thread()->id()
+                )
+            );
         }
     }
     else {

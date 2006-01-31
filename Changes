@@ -1,5 +1,6 @@
 This file documents the revision history for Perl extension Forum.
 
+    - move to using uri_for(...) in redirects
     - hide per-post actions in a locked thread
     - allow users to edit their own posts
     - show if a post has been edited

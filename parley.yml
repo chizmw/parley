@@ -1,7 +1,7 @@
 --- #YAML:1.0
 # DO NOT USE TABS FOR INDENTATION OR label/value SEPARATION!!!
 name:         Parley
-default_uri:  forum/list
+default_uri:  /forum/list
 
 #--
 #-- LINES BELOW THIS SHOULDN'T NEED CHANGING

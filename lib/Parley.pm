@@ -170,7 +170,7 @@ sub default : Private {
 sub index : Private {
     my ( $self, $c ) = @_;
     # redirect to the default action
-    $c->response->redirect( $c->req->base . $c->config->{default_uri} );
+    $c->response->redirect( $c->uri_for($c->config->{default_uri}) );
 }
 
 # updated to use information from: http://catalyst.perl.org/calendar/2005/8/

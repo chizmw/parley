@@ -95,7 +95,7 @@ sub login : Path('/user/login') {
                 $c->response->redirect( delete $c->session->{after_login} );
             }
             else {
-                $c->response->redirect( $c->request->base() . $c->config()->{default_uri} );
+                $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
             }
         }
 
@@ -115,7 +115,7 @@ sub logout : Path('/user/logout') {
     delete $c->session->{'authed_user'};
 
     # do the 'default' action
-    $c->response->redirect( $c->request->base . $c->config()->{default_uri} );
+    $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
 }
 
 sub signup : Path('/user/signup') {

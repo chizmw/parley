@@ -149,7 +149,12 @@ sub post : Local {
         @messages = $self->_add_new_reply($c);
     }
     elsif ($c->request->param('cancel_new_topic')) {
-        $c->response->redirect( $c->request->base() . 'forum/view?forum=' . $c->stash->{current_forum}->id());
+        $c->response->redirect(
+            $c->uri_for(
+                  '/forum/view?forum='
+                . $c->stash->{current_forum}->id()
+            )
+        );
     }
 
     if (scalar @messages) {
@@ -229,7 +234,12 @@ sub _add_new_topic {
 
         # view the new thread - but only if no errors
         if (not scalar(@messages)) {
-            $c->response->redirect( $c->req->base . 'thread/view?thread=' . $new_thread->id() );
+            $c->response->redirect(
+                $c->uri_for(
+                      '/thread/view?thread='
+                    . $new_thread->id()
+                )
+            );
         }
     }
     else {
@@ -306,11 +316,12 @@ sub _add_new_reply {
         # view the new thread - but only if no errors
         if (not scalar(@messages)) {
             $c->response->redirect(
-                  $c->req->base
-                . 'thread/view?thread='
-                . $c->stash->{current_thread}->id()
-                . '&post='
-                . $new_post->id()
+                $c->uri_for(
+                      '/thread/view?thread='
+                    . $c->stash->{current_thread}->id()
+                    . '&post='
+                    . $new_post->id()
+                )
             );
         }
     }
