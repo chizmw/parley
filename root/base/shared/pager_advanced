@@ -5,6 +5,7 @@
 [% END %]
 
 Page [% page.current_page %] of [% page.last_page %]
+[% IF page.last_page > 1 %]
 [
 
     [% UNLESS page.current_page == page.first_page %]
@@ -40,5 +41,6 @@ Page [% page.current_page %] of [% page.last_page %]
     [% END %]
 
 ]
+[% END %]
 
 [% END %]
