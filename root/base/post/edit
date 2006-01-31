@@ -1,0 +1,25 @@
+[% IF messages %]
+<p>
+    <ul>
+        [% FOREACH message IN messages %]
+            <li>[% message %]</li>
+        [% END %]
+    </ul>
+</p>
+[% END %]
+
+<form action="post/edit?post=[% current_post.id %]" method="POST" name="new_thread">
+    <table>
+        <tr>
+            <td>
+                <textarea name="post_message" cols="60" rows="10" class="post_message" />[% current_post.message %]</textarea>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <input type="submit" value="Update Reply" name="post_update"    class="input_button" />
+            </td>
+        </tr>
+    </table>
+</form>
