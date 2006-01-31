@@ -3,10 +3,15 @@
 
 [% SET dummy_value = post_list.reset %]
 [% IF post_list.count > 0 %]
+    [% IF current_thread.locked %]
+    [% rowspan = 2 %]
+    [% ELSE %]
+    [% rowspan = 3 %]
+    [% END %]
     <table>
     [% WHILE (post = post_list.next) %]
         <tr>
-            <td rowspan="3">
+            <td rowspan="[% rowspan %]">
             <span class="post_creator">
             [% post.creator.forum_name %]
             </span>
@@ -40,18 +45,21 @@
                 [% END %]
             </td>
         </tr>
+        [% UNLESS current_thread.locked %]
         <tr>
         <td style="text-align: right;">
-            <form action="thread/reply?post=[% post.id %]" method="POST" name="post_actions">
-                [% IF c.session.authed_user.id == post.creator.id %]
+            [% IF c.session.authed_user.id == post.creator.id %]
+            <form action="post/edit?post=[% post.id %]" method="POST" name="post_actions" class="inline_form">
                 <input type="submit" value="Edit" name="edit_post" class="small_input_button" />
-                <input type="submit" value="Delete" name="delete_post" class="small_input_button" />
-                [% END %]
+            </form>
+            [% END %]
+            <form action="thread/reply?post=[% post.id %]" method="POST" name="post_actions" class="inline_form">
                 <input type="submit" value="Quote" name="quote_post" class="small_input_button" />
                 <input type="submit" value="Reply" name="reply_to_post" class="small_input_button" />
             </form>
         </td>
         </tr>
+        [% END %]
     [% END %]
     [% UNLESS current_thread.locked %]
     <form action="thread/reply?thread=[% current_thread.id %]" method="POST" name="new_thread">

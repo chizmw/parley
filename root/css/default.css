@@ -345,3 +345,7 @@ h2 {
 .no_table_border td {
     border: none;
 }
+
+.inline_form {
+    display: inline;
+}
