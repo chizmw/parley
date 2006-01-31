@@ -46,7 +46,7 @@
                         </span>
                         <br />
                         <span class="quoted_message">
-                        [% FILTER html_line_break %][% HTML.escape(post.quoted_post.message) %][% END %]
+                        [% FILTER html_line_break %][% HTML.escape(post.quoted_text) %][% END %]
                         </span>
                     [% FILTER html_line_break %][% HTML.escape(post.message) %][% END %]
                     </span>
