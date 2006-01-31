@@ -33,7 +33,7 @@ use Catalyst qw/
 use Parley::App::Helper;
 use YAML;
 
-our $VERSION = '0.08-pre';
+our $VERSION = '0.08';
 
 #
 # Configure the application

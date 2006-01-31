@@ -1,5 +1,6 @@
 This file documents the revision history for Perl extension Forum.
 
+0.08  Tue Jan 31 08:54:32 GMT 2006
     - move to using uri_for(...) in redirects
     - hide per-post actions in a locked thread
     - allow users to edit their own posts
