@@ -37,7 +37,7 @@
 
         <tr>
             <td colspan="2" style="text-align:right;">
-                Need an account? <a href="/user/signup">Signup Now</a>
+                Need an account? <a href="user/signup">Signup Now</a>
             </td>
         </tr>
     </table>
