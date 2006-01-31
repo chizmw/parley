@@ -126,6 +126,13 @@ ALTER TABLE person ADD COLUMN post_count
     integer NOT NULL default 0
 ;
 
+-- post edited time (if any)
+ALTER TABLE post
+    ADD COLUMN
+        edited  timestamp with time zone
+;
+
+
 --
 -- some default stuff
 --
