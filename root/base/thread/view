@@ -2,7 +2,7 @@
 <table>
     <tr>
         <td>
-            <b>Topic: [% current_thread.subject %]</b>
+            <b>Topic: [% HTML.escape(current_thread.subject) %]</b>
         </td>
 
         <td class="right_align">
