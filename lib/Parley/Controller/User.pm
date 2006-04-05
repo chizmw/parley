@@ -319,7 +319,7 @@ sub _send_auth_email {
     $c->log->info('about to send an email');
     $c->email(
         header => [
-            From    => q{Parley Registration <parley@herlpacker.co.uk>},
+            From    => Parley::App::Helper->application_email_address($c),
             To      => $person->email(),
             Subject => qq{Activate your @{[$c->config->{name}]} registration},
         ],

@@ -14,6 +14,8 @@ use Catalyst qw/
     Dumper
     StackTrace
 
+    ConfigLoader
+
     Email
     Static::Simple
 
@@ -38,27 +40,18 @@ our $VERSION = '0.09-pre';
 #
 # Configure the application
 #
-__PACKAGE__->config( YAML::LoadFile(__PACKAGE__->config->{'home'}.'/parley.yml') );
 __PACKAGE__->config( version => $VERSION );
 __PACKAGE__->setup;
 
-=head1 NAME
+sub authed_user {
+    my ($c, $value) = @_;
 
-Parley - Catalyst based application
+    if (defined $value) {
+        $c->stash->{authed_user} = $value;
+    }
 
-=head1 SYNOPSIS
-
-    script/forum_server.pl
-
-=head1 DESCRIPTION
-
-Catalyst based application.
-
-=head1 METHODS
-
-=head2 default
-
-=cut
+    return $c->stash->{authed_user};
+}
 
 sub auto : Private {
     my ($self, $c) = @_;
@@ -76,19 +69,19 @@ sub auto : Private {
     }
 
     # if we have a user ... fetch some info (if we don't already have it)
-    if ( $c->user and not defined $c->session->{authed_user} ) {
-        $c->log->info('Fetching user information');
+    if ( $c->user and not defined $c->authed_user ) {
+        $c->log->info('Fetching user information for ' . $c->user->id);
 
         # get the person info for the username
         my $results = $c->model('ParleyDB')->table('person')->search(
             {
-                'authentication.username'   => $c->user->user->username(),
+                'authentication.username'   => $c->user->username(),
             },
             {
                 join => 'authentication',
             },
         );
-        $c->session->{authed_user} = $results->first();
+        $c->authed_user( $results->first() );
 
         #####################################################################
         # cater for database upgrades, and make sure the user has preferences
@@ -188,7 +181,25 @@ sub end : Private {
     # (re)populate the form
     $c->fillform( $c->stash->{formdata} );
 }
-        
+
+
+
+=head1 NAME
+
+Parley - Catalyst based application
+
+=head1 SYNOPSIS
+
+    script/forum_server.pl
+
+=head1 DESCRIPTION
+
+Catalyst based application.
+
+=head1 METHODS
+
+=head2 auto
+
 =head1 AUTHOR
 
 Chisel Wright C<< <pause@herlpacker.co.uk> >>

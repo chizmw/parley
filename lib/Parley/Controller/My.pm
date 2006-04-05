@@ -33,7 +33,7 @@ sub preferences : Local {
     $c->stash->{tz_categories} = $tz_categories;
 
     # if the user has a timezone picked (and it's not UTC) pre-populate the menus
-    my $user_pref = $c->session->{authed_user}->preference();
+    my $user_pref = $c->authed_user->preference();
     if (defined (my $user_tz = $user_pref->timezone())) {
         # deal with UTC differently
         if ($user_tz eq 'UTC') {
@@ -60,7 +60,7 @@ sub preferences : Local {
 
 sub preferences_update : Path('/my/preferences/update') {
     my ($self, $c) = @_;
-    my $user_pref = $c->session->{authed_user}->preference();
+    my $user_pref = $c->authed_user->preference();
     
     # we always want to see the preferences screen
     $c->stash->{template} = 'my/preferences';

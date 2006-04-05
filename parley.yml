@@ -3,6 +3,10 @@
 name:         Parley
 default_uri:  /forum/list
 
+alerts:
+    from_name:      'Parley'
+    from_address:   'parley@localhost'
+
 #--
 #-- LINES BELOW THIS SHOULDN'T NEED CHANGING
 #--
@@ -22,7 +26,7 @@ authentication:
 # session settings; perldoc Catalyst::Plugin::Session::FastMmap
 session:
     expires:    3600
-    storage:    '/tmp/forum.session'
+    storage:    '/tmp/parley.session'
 
 
 # template toolkit options

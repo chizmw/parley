@@ -196,7 +196,7 @@ sub _add_new_topic {
                 {
                     forum       => $c->stash->{current_forum}->id(),
                     subject     => $results->valid->{thread_subject},
-                    creator     => $c->session->{authed_user}->id(),
+                    creator     => $c->authed_user->id(),
                 }
             );
 
@@ -206,7 +206,7 @@ sub _add_new_topic {
                     thread      => $new_thread->id(),
                     subject     => $results->valid->{thread_subject},
                     message     => $results->valid->{thread_message},
-                    creator     => $c->session->{authed_user}->id(),
+                    creator     => $c->authed_user->id(),
                 }
             );
 
@@ -217,7 +217,7 @@ sub _add_new_topic {
             $self->_increase_post_count($c, $new_thread);
 
             # increase the post count for the user
-            $self->_update_person_post_info($c, $c->session->{authed_user}, $new_post);
+            $self->_update_person_post_info($c, $c->authed_user, $new_post);
 
             # commit everything
             $c->model('ParleyDB')->table('thread')->storage->txn_commit;
@@ -271,7 +271,7 @@ sub _add_new_reply {
                     thread      => $c->stash->{current_thread}->id(),
                     subject     => ($results->valid->{thread_subject} || undef),
                     message     => $results->valid->{thread_message},
-                    creator     => $c->session->{authed_user}->id(),
+                    creator     => $c->authed_user->id(),
                 }
             );
 
@@ -298,7 +298,7 @@ sub _add_new_reply {
             $self->_increase_post_count($c, $c->stash->{current_thread});
 
             # increase the post count for the user
-            $self->_update_person_post_info($c, $c->session->{authed_user}, $new_post);
+            $self->_update_person_post_info($c, $c->authed_user, $new_post);
 
             # commit everything
             $c->model('ParleyDB')->table('post')->storage->txn_commit;

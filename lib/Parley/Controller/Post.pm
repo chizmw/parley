@@ -61,7 +61,7 @@ sub edit : Local {
     Parley::App::Helper->login_if_required($c, q{You must be logged in to edit your posts});
 
     # you can only edit posts you've created
-    if ($c->session->{authed_user}->id() != $c->stash->{current_post}->creator()->id()) {
+    if ($c->authed_user->id() != $c->stash->{current_post}->creator()->id()) {
         push @messages, q{You can only edit your own posts};
     }
 

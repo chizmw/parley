@@ -2,6 +2,18 @@ package Parley::App::Helper;
 use strict;
 use warnings;
 
+sub application_email_address {
+    my ($self, $c) = @_;
+
+    my $address = 
+          $c->config->{alerts}{from_name}
+        . q{ <}
+        . $c->config->{alerts}{from_address}
+        . q{>}
+    ;
+
+    return $address;
+}
 
 sub is_logged_in {
     my ($self, $c) = @_;
@@ -55,8 +67,8 @@ sub can_make_locked {
     }
 
     # for now only user #0 can lock threads
-    $c->log->dumper( $c->session->{authed_user}->id() );
-    return (0 == $c->session->{authed_user}->id());
+    $c->log->dumper( $c->authed_user->id() );
+    return (0 == $c->authed_user->id());
 }
 
 sub can_make_sticky {
@@ -68,17 +80,18 @@ sub can_make_sticky {
     }
 
     # for now only user #0 can lock threads
-    return (0 == $c->session->{authed_user}->id());
+    return (0 == $c->authed_user->id());
 }
 
 
 sub user_preference_check {
     my ($self, $c) = @_;
 
-    if (not defined $c->session->{authed_user}->preference()) {
+    if (not defined $c->authed_user->preference()) {
         $c->log->error(
                 q{User #}
-            . $c->session->{authed_user}->id()
+            . $c->authed_user->id()
+            #. $c->stash->{authed_user}->id()
             . q{ doesn't have any preferences. Fixing.}
         );
 
@@ -90,8 +103,8 @@ sub user_preference_check {
                 timezone => 'UTC',
             }
         );
-        $c->session->{authed_user}->preference( $new_preference->id() );
-        $c->session->{authed_user}->update();
+        $c->authed_user->preference( $new_preference->id() );
+        $c->authed_user->update();
     }
 }
 

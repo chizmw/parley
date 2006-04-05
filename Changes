@@ -1,9 +1,20 @@
 This file documents the revision history for Perl extension Forum.
 
-    - added Template::Plugin::ForumCode (not all BBCode functionality is complete yet)
-    - from-address for emails is now set in config file
+    - modify log-in check in auto() to use Auth::DBIC calling style
+    - use ConfigLoader plugin to load application config
+    - add authed_user() function, and alter instances of
+      $c->session->{authed_user} accordingly
+    - added new function to Parley::App::Helper - application_email_address()
+    - update dependencies/versions in Makefile.PL
+    - added Template::Plugin::ForumCode (not all BBCode functionality is
+      complete yet)
+    - use ForumCode plugin to process various display elements
+    - email from-address for emails is now set in config file
     - new helper function application_email_address()
     - small layout fixes
+    - change name of session file
+    - ammend statusbar and post-edit templating to work correctly with new
+      storage location of authed_user object
 
 0.08  Tue Jan 31 08:54:32 GMT 2006
     - move to using uri_for(...) in redirects
