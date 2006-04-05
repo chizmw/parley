@@ -1,7 +1,7 @@
 abstract: Catalyst Forum Application
 author: 'Chisel Wright C<< <pause@herlpacker.co.uk> >>'
 distribution_type: module
-generated_by: Module::Install version 0.54
+generated_by: Module::Install version 0.61
 license: perl
 name: Parley
 no_index:
@@ -9,27 +9,30 @@ no_index:
     - inc
     - t
 requires:
-  Catalyst: 5.63
+  Catalyst: 5.66
   Catalyst::Model::DBIC: 0.13
-  Catalyst::Plugin::Authentication: 0.05
-  Catalyst::Plugin::Authentication::Store::DBIC: 0.04
+  Catalyst::Plugin::Authentication: 0.07
+  Catalyst::Plugin::Authentication::Store::DBIC: 0.05002
+  Catalyst::Plugin::DefaultEnd: 0.05
   Catalyst::Plugin::Dumper: 0.000002
   Catalyst::Plugin::Email: 0.05
-  Catalyst::Plugin::FillInForm: 0.05
-  Catalyst::Plugin::Session: 0.01
-  Catalyst::Plugin::Session::State::Cookie: 0.01
-  Catalyst::Plugin::Session::Store::FastMmap: 0.01
-  Catalyst::Plugin::StackTrace: 0.02
-  Catalyst::Plugin::Static::Simple: 0.12
-  Catalyst::View::TT: 0.20
-  DBD::Pg: 1.43
-  DBIx::Class: 0.04001
-  DBIx::Class::Loader: 0.14
-  Data::FormValidator: 4.02
-  DateTime::Format::Pg: 0.09
-  Digest::MD5: 2.33
-  List::MoreUtils: 0.17
+  Catalyst::Plugin::FillInForm: 0.06
+  Catalyst::Plugin::Prototype: 1.32
+  Catalyst::Plugin::Session: 0.05
+  Catalyst::Plugin::Session::State::Cookie: 0.02
+  Catalyst::Plugin::Session::Store::FastMmap: 0.02
+  Catalyst::Plugin::StackTrace: 0.04
+  Catalyst::Plugin::Static::Simple: 0.13
+  Catalyst::View::TT: 0.22
+  DBD::Pg: 1.47
+  DBIx::Class: 0.06000
+  DBIx::Class::Loader: 0.21
+  Data::FormValidator: 4.14
+  Data::SpreadPagination: 0
+  DateTime::Format::Pg: 0.11
+  Digest::MD5: 2.36
+  List::MoreUtils: 0.19
   Readonly: 1.03
-  Time::Piece: 1.08
-  YAML: 0.53
-version: 0.06
+  Time::Piece: 1.09
+  YAML: 0.58
+version: 0.09-pre
