@@ -5,6 +5,7 @@ use base 'Catalyst::Controller';
 use Parley::App::Helper;
 
 use DateTime::TimeZone;
+use DateTime;
 
 sub auto : Private {
     my ($self, $c) = @_;
@@ -34,6 +35,10 @@ sub preferences : Local {
         $c->session->{my_pref_came_from} = $c->request->referer();
     }
 
+    # what's the current time? then we can show it in the TZ area
+    $c->stash->{current_time} = DateTime->now();
+
+    # fetch timezone categories
     $tz_categories = DateTime::TimeZone->categories();
     $c->stash->{tz_categories} = $tz_categories;
 

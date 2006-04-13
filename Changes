@@ -1,6 +1,7 @@
 This file documents the revision history for Perl extension Forum.
 
     - added visual feedback when TZ preference is updated
+    - show time-formatting sample in my/preferences
     - store the referer when visiting my/preferences making it easier to return
       to where we were previously
     - added about/modules, an easier way to obtain version information for

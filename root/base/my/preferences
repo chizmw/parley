@@ -14,6 +14,11 @@
     [% END %]
 
     <tr>
+        <td>Time formatting example:</td>
+        <td><i>[% nicedate(current_time) %]</i></td>
+    </tr>
+
+    <tr>
     <td>
     <select id="selectZone" name="selectZone">
         <option>[ Select Zone ]</option>
