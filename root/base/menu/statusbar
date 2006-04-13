@@ -23,7 +23,7 @@
                                 <a href="user/logout">Logout</a>
                         ]</i>
                         [% ELSE %]
-            <i>[ <a onclick="new Effect.Appear('loginbox'); $('username').focus(); return false;" href="user/login">Click Here To Login</a> ]</i>
+            <i>[ <a onclick="new Effect.Appear('loginbox', { duration:0.2 }); $('username').focus(); return false;" href="user/login">Click Here To Login</a> ]</i>
                         [% END %] [%# authed_user end %]
                 </td>
 
