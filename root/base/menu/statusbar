@@ -34,7 +34,7 @@
 
 <!-- we have to put the div outside the table, otherwise we get trapped inside it! -->
 <div id="loginbox" style="display: none">
-    <form action="user/login" method="post" name="login_form">
+    <form action="user/login" method="post" name="popup_login_form">
         <table>
             <tr>
                 <td>

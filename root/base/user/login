@@ -44,5 +44,9 @@
     </div>
 </form>
 
-[% INCLUDE shared/focus_username_js %]
-
+<!-- put focus into the username field on the form above -->
+<script language="JavaScript">
+	<!-- Begin
+    document.forms['login_form'].elements['username'].focus();
+	// End -->
+</script>
