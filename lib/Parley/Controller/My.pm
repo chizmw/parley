@@ -29,6 +29,12 @@ sub preferences : Local {
     my ($self, $c) = @_;
     my ($tz_categories);
 
+    # where did we come from? it would be nice to return there when we're done
+    $c->log->info( 'We came from: ' . $c->request->referer() );
+    if ($c->request->referer() !~ m{/my/preferences/}xms) {
+        $c->session->{my_pref_came_from} = $c->request->referer();
+    }
+
     $tz_categories = DateTime::TimeZone->categories();
     $c->stash->{tz_categories} = $tz_categories;
 
@@ -78,6 +84,7 @@ sub _store_tz_prefs {
     if ($c->request->param('use_utc')) {
         $user_pref->timezone('UTC');
         $user_pref->update();
+        $c->stash->{tz_message} = 'Timezone set to UTC';
     }
     # otherwise, we need to validate the Zone and Place, then update (if valid)
     else {
@@ -97,6 +104,7 @@ sub _store_tz_prefs {
         if (1 == $match_count) {
             $user_pref->timezone( $tz_string );
             $user_pref->update();
+            $c->stash->{tz_message} = "Timezone set to $tz_string";
         }
         # otherwise, we don't update, and the page reloads showing their last
         # valid setting

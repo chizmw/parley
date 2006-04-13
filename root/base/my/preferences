@@ -6,6 +6,13 @@
 
 <form action="my/preferences/update" method="POST" name="timezone">
     <table width="550">
+
+    [% IF tz_message %]
+    <tr>
+    <td colspan="2"><b><i>[% tz_message %]</i></b></td>
+    </tr>
+    [% END %]
+
     <tr>
     <td>
     <select id="selectZone" name="selectZone">
@@ -70,3 +77,7 @@
     
 // End -->
 </script>
+
+[% IF c.session.my_pref_came_from %]
+<a href="[% c.session.my_pref_came_from %]">Return to the forum</a>
+[% END %]

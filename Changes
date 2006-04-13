@@ -1,5 +1,8 @@
 This file documents the revision history for Perl extension Forum.
 
+    - added visual feedback when TZ preference is updated
+    - store the referer when visiting my/preferences making it easier to return
+      to where we were previously
     - added about/modules, an easier way to obtain version information for
       loaded modules
     - modify log-in check in auto() to use Auth::DBIC calling style
