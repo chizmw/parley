@@ -30,8 +30,7 @@ sub preferences : Local {
     my ($tz_categories);
 
     # where did we come from? it would be nice to return there when we're done
-    $c->log->info( 'We came from: ' . $c->request->referer() );
-    if ($c->request->referer() !~ m{/my/preferences/}xms) {
+    if ($c->request->referer() !~ m{/my/preferences}xms) {
         $c->session->{my_pref_came_from} = $c->request->referer();
     }
 
