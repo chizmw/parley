@@ -23,9 +23,43 @@
                                 <a href="user/logout">Logout</a>
                         ]</i>
                         [% ELSE %]
-            <i>[ <a href="user/login">Click Here To Login</a> ]</i>
+            <i>[ <a onclick="new Effect.Appear('loginbox'); $('username').focus(); return false;" href="user/login">Click Here To Login</a> ]</i>
                         [% END %] [%# authed_user end %]
+                </td>
+
+                <td>
                 </td>
         </tr>
 </table>
+
+<!-- we have to put the div outside the table, otherwise we get trapped inside it! -->
+<div id="loginbox" style="display: none">
+    <form action="user/login" method="post" name="login_form">
+        <table>
+            <tr>
+                <td>
+                    <label for="username"><b>Username:</b></label>
+                </td>
+                <td>
+                    <input type="text" id="username" name="username" style="width: 15em;" class="input_text" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="password"><b>Password:</b></label>
+                </td>
+                <td>
+                    <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="log in" class="input_button" style="margin-left: 170px;"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 <!-- status bar : end -->

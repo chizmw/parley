@@ -91,8 +91,15 @@ sub login : Path('/user/login') {
 
         # if we have a user we're logged in
         if ( $login_status ) {
+            my $base    = $c->request->base();
+            my $action  = $c->request->action();
+
             if ( $c->session->{after_login} ) {
                 $c->response->redirect( delete $c->session->{after_login} );
+            }
+            # redirect to where we were referred from, unless our referer is our action
+            elsif ( $c->request->referer() =~ m{\A$base}xms and $c->request->referer() !~ m{$action\z}xms) {
+                $c->response->redirect( $c->request->referer() );
             }
             else {
                 $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
@@ -114,8 +121,16 @@ sub logout : Path('/user/logout') {
     $c->logout;
     delete $c->session->{'authed_user'};
 
-    # do the 'default' action
-    $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
+    # redisplay the page we were on, or just do the 'default' action
+    my $base    = $c->request->base();
+    my $action  = $c->request->action();
+    # redirect to where we were referred from, unless our referer is our action
+    if ( $c->request->referer() =~ m{\A$base}xms and $c->request->referer() !~ m{$action\z}xms) {
+        $c->response->redirect( $c->request->referer() );
+    }
+    else {
+        $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
+    }
 }
 
 sub signup : Path('/user/signup') {
@@ -335,7 +350,6 @@ The @{[$c->config->{name}]} team.],
     );
     $c->log->info('email sent - supposedly');
 }
-
 
 =head1 NAME
 

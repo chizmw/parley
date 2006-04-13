@@ -97,6 +97,17 @@ body {
     text-align: right;
 }
 
+#loginbox {
+    border: 1px solid #ccc;
+    width: 250px;
+    float: right;
+    background-color: #f8f8f8;
+    padding: 5px;
+    margin-top: 1.5em;
+    margin-right: 3em;
+    font-size:      0.8em;
+}
+
 /* use dl/dt/dd to make left nav */
 dd {
     /* hide dd from graphical browsers, they should appear for text-only
@@ -356,3 +367,4 @@ h2 {
     font-style:     italic;
     font-size:      0.8em;
 }
+
