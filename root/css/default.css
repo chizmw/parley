@@ -29,6 +29,7 @@ body {
     position:   absolute;
     top:        100px;
     width:      150px; 
+    font-size: 0.9em;
 }
 #middle {
     background: transparent;
@@ -75,6 +76,8 @@ body {
     padding-top: 1px;
     padding-bottom: 1px;
     padding-right: 1em;
+
+    font-size: 0.9em;
 }
 
 #statusbar table {
