@@ -8,7 +8,7 @@
             [% END %]
         </p>
         <label for="username" accesskey="u"><b>Username:</b></label>
-        <input type="login_text" id="login_username" name="username" size="40" class="input_text" tabindex="1" />
+        <input type="text" id="login_username" name="username" size="40" class="input_text" tabindex="1" />
 
         <label for="login_password" accesskey="p"><b>Password:</b></label>
         <input type="password" id="login_password" name="password" size="40" class="input_text" tabindex="2" />
