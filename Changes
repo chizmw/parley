@@ -1,5 +1,6 @@
 This file documents the revision history for Perl extension Forum.
 
+    - start moving towards use of <fieldset> instead of <table> for form layout
     - use a floating loginbox instead of a separate screen (as inspired by
       calendarhub.com)
     - added visual feedback when TZ preference is updated

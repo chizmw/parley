@@ -374,9 +374,7 @@ h2 {
 
 
 
-
 form {  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
-  font:100% verdana,arial,sans-serif;
   margin: 0;
   padding: 0;
   min-width: 500px;
@@ -440,3 +438,17 @@ form .required{font-weight:bold;} /* uses class instead of div, more efficient *
 form br {
 	clear:left; /* setting clear on inputs didn't work consistently, so brs added for degrade */
 }
+
+
+
+form.loginbox {
+    min-width: 0px;
+    max-width: 250px;
+}
+form.loginbox fieldset label, form.loginbox fieldset input{  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
+    padding: 0px;
+    margin: 5px 0 0 10px;
+    width: 8em;
+}
+
+
