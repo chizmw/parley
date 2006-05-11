@@ -8,7 +8,7 @@
                       <a href="forum/view?forum=[% current_forum.id %]">[% current_forum.name %]</a>
                       [% IF current_thread %]
                         &raquo;
-                        <a href="thread/view?thread=[% current_thread.id %]">[% HTML.escape(current_thread.subject) %]</a>
+                        <a href="thread/view?thread=[% current_thread.id %]">[% ForumCode.escape(current_thread.subject) %]</a>
                       [% END %]
                     [% END %]
                 </td>
@@ -47,6 +47,10 @@
             <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
             <br />
             <button type="submit" value="log in" class="input_button" style="margin-left: 170px;"/>log in</button>
+
+            <p>
+            <a href="user/password/forgotten">Forgotten Password</a>
+            </p>
         </fieldset>
     </form>
 </div>
