@@ -1,5 +1,9 @@
 This file documents the revision history for Perl extension Forum.
 
+    - make email column unique
+      ** this may cause problems if you already have a large amount of user data **
+    - added lost password functionality in Controller::User::LostPassword
+    - factored signup functionality out into Controller::User::SignUp
     - start moving towards use of <fieldset> instead of <table> for form layout
     - use a floating loginbox instead of a separate screen (as inspired by
       calendarhub.com)
