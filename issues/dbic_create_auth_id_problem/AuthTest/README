@@ -1,0 +1,16 @@
+1. create the database
+
+    createuser -A -D parleytest
+    createdb -E UTF8 -O parleytest parleytest
+    psql -U parleytest -d parleytest -f db/schema.psql
+
+2. run the two tests
+
+    # should work
+    prove --lib --verbose t/model_ParleyTest-Preference.t
+
+    # fails on my laptop
+    prove --lib --verbose t/model_ParleyTest-Authentication.t
+
+    # works on my laptop - odd because it's a copy of the Authentication test
+    prove --lib --verbose t/model_ParleyTest-Foo.t
