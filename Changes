@@ -1,5 +1,6 @@
-This file documents the revision history for Perl extension Forum.
+This file documents the revision history for Parley.
 
+0.09  Thu May 11 17:50:07 BST 2006
     - make email column unique
       ** this may cause problems if you already have a large amount of user data **
     - added lost password functionality in Controller::User::LostPassword
