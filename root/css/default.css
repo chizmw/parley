@@ -403,6 +403,7 @@ form label {
 	padding: 0; 
 	margin: 5px 0 0; /* set top margin same as form input - textarea etc. elements */
 	text-align: right; 
+    font-weight: bold;
 }
 
 form fieldset label:first-letter { /* use first-letter pseudo-class to underline accesskey, note that */
@@ -451,4 +452,13 @@ form.loginbox fieldset label, form.loginbox fieldset input{  /* set width in for
     width: 8em;
 }
 
+form fieldset p {
+    text-align: left;
+}
 
+form fieldset button {
+	margin:5px 0 0 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
