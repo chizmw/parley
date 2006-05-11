@@ -43,6 +43,13 @@ our $VERSION = '0.09-pre';
 __PACKAGE__->config( version => $VERSION );
 __PACKAGE__->setup;
 
+# only show certain log levels in output
+__PACKAGE__->log (Catalyst::Log->new( @{__PACKAGE__->config->{log_levels}} ));
+
+
+# a function that easily lets us refer to where we're storing authed user
+# information - we had to change it from session to stash with a DBIx::Class
+# upgrade
 sub authed_user {
     my ($c, $value) = @_;
 

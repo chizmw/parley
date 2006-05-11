@@ -7,6 +7,15 @@ alerts:
     from_name:      'Parley'
     from_address:   'parley@localhost'
 
+# comment out any log levels you don't want to see in your logs
+# 'info' and 'debug' are common choices for suppresing in a live environment
+log_levels:
+#    - 'info'
+    - 'debug'
+    - 'warn'
+    - 'error'
+    - 'fatal'
+
 #--
 #-- LINES BELOW THIS SHOULDN'T NEED CHANGING
 #--
