@@ -46,27 +46,14 @@ sub view : Local {
     my ($self, $c) = @_;
 
     # TODO - configure this somewhere, maybe a user preference
-    my $rows_per_page = 10;
+    my $rows_per_page = $c->config->{posts_per_page};
 
     # page to show - either a param, or show the first
     my $page = $c->request->param('page') || 1;
 
-    # TODO - see if we can go to that page the post is on, not just the last page
-    # if we've a current post, we'd like to show the page with that post
-    # for now assume we just want to show the last page in the thread
+    # if we have a current_post, view the page with the post on it
     if ($c->stash->{current_post}) {
-        my $tmp_post_list = $c->model('ParleyDB')->table('post')->search(
-            {
-                thread => $c->stash->{current_thread}->id(),
-            },
-            {
-                order_by    => 'created ASC',
-                rows        => $rows_per_page,
-                page        => $page,
-            }
-        );
-
-        $page = $tmp_post_list->pager()->last_page();
+        $c->detach('/post/view');
     }
 
     # get all the posts in the thread
@@ -127,6 +114,21 @@ sub reply : Local {
 
     # grab the post we're replying to
     $self->_get_thread_reply_post($c);
+     
+    # XXX
+    if (defined $c->stash->{current_post}) {
+        my $post_position = $c->model('ParleyDB')->table('post')->thread_position(
+            $c->stash->{current_post},
+        );
+        $c->log->info( $c->stash->{current_post}->id() . ' is at position ' . $post_position);
+        my $page_number =  $c->model('ParleyDB')->table('post')->page_containing_post(
+            $c->stash->{current_post},
+            $c->config->{posts_per_page},
+        );
+        $c->log->info( $c->stash->{current_post}->id() . ' is on page #' . $page_number);
+    }
+    # XXX
+
 
     # quoting a post?
     if ($c->request->param('quote_post')) {

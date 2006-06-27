@@ -53,6 +53,32 @@ BEGIN {
     )
 }
 
+sub view : Local {
+    my ($self, $c) = @_;
+
+    # if we don't have a post param, then return with an error
+    unless (defined $c->stash->{current_post}) {
+        $c->stash->{error}{message} = q{Incomplete URL};
+        return;
+    }
+
+    # work out what page in which thread the post lives
+    my $thread = $c->stash->{current_post}->thread->id();
+    my $page_number =  $c->model('ParleyDB')->table('post')->page_containing_post(
+        $c->stash->{current_post},
+        $c->config->{posts_per_page},
+    );
+
+    # build the URL to redirect to
+    my $redirect_url = $c->uri_for(
+        '/thread',
+          "view?thread=$thread"
+        . "&page=$page_number"
+        . "#" . $c->stash->{current_post}->id()
+    );
+    $c->response->redirect( $redirect_url );
+}
+
 sub edit : Local {
     my ($self, $c) = @_;
     my (@messages);
