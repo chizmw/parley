@@ -23,6 +23,7 @@
     [% WHILE (post = post_list.next) %]
         <tr>
             <td rowspan="[% rowspan %]">
+            <a name="[% post.id %]" />
             <span class="post_creator">
             [% post.creator.forum_name %]
             </span>
