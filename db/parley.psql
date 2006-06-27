@@ -42,7 +42,8 @@ CREATE TABLE person (
     authentication  integer
                     references authentication,
 
-    UNIQUE(forum_name)
+    UNIQUE(forum_name),
+    UNIQUE(email)
 );
 
 CREATE TABLE registration_authentication (
@@ -131,6 +132,19 @@ ALTER TABLE post
     ADD COLUMN
         edited  timestamp with time zone
 ;
+
+
+-- when a user last viewed a thread
+CREATE TABLE thread_view (
+    thread_view_id      SERIAL      not null        primary key,
+    person              integer     not null        references person,
+    thread              integer     not null        references thread,
+    timestamp           timestamp with time zone    not null
+                        default CURRENT_TIMESTAMP,
+
+    unique(person, thread)
+);
+
 
 
 --
