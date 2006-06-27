@@ -1,0 +1,27 @@
+t/inflate....1..7
+ok 1 - use TimeDB;
+ok 2 - schema object is defined
+# first of all get an item into the database
+ok 3 - resultset for new Thingy is defined
+ok 4 - PK-id for new Thingy is defined
+# look up the thingy by pg_time - this should be fine
+ok 5 - correct number of thingies [=, $pg_time]
+# look up the thingy by ->created() - this should be fine, but it isn't
+# search() doesn't appear to deflate as we might expect it to
+not ok 6 - correct number of thingies [=, $new_thingy->created()]
+
+#   Failed test 'correct number of thingies [=, $new_thingy->created()]'
+#   in t/inflate.t at line 69.
+#          got: '0'
+#     expected: '1'
+# look up the thingy by ->created(), using an explicit 'deflate'
+ok 7 - correct number of thingies [=, DateTime::Format::Pg->format_datetime($new_thingy->created())]
+# Looks like you failed 1 test of 7.
+dubious
+	Test returned status 1 (wstat 256, 0x100)
+DIED. FAILED test 6
+	Failed 1/7 tests, 85.71% okay
+Failed Test Stat Wstat Total Fail  Failed  List of Failed
+-------------------------------------------------------------------------------
+t/inflate.t    1   256     7    1  14.29%  6
+Failed 1/1 test scripts, 0.00% okay. 1/7 subtests failed, 85.71% okay.
