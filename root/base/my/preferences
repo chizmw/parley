@@ -51,8 +51,8 @@
     </td>
     <tr>
     <td colspan="2" style="text-align: right;">
-    <input type="checkbox" id="use_utc" name="use_utc" value="1" onChange="toggle_timezone_menus(this)"/>
     <label for="use_utc">Use UTC</label>
+    <input type="checkbox" id="use_utc" name="use_utc" value="1" onChange="toggle_timezone_menus(this)"/>
     </td>
     </tr>
 
