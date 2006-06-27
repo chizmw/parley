@@ -1,0 +1,23 @@
+1. Create the database and schema
+
+  createdb -E UTF8 search_deflate
+  psql -d search_deflate -f db/search_deflate.pgsql
+
+
+2. Run the tests
+
+  prove --lib --verbose t/inflate.t
+
+To run all the tests:
+
+  prove --lib --verbose t/
+
+
+3. Work out what's broken
+
+  [exercise left for the reader]
+
+
+4. Cleanup
+
+  dropdb search_deflate
