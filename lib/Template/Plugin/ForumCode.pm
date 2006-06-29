@@ -5,7 +5,7 @@ use warnings;
 use base qw{ Template::Plugin };
 use base qw{ Template::Plugin::HTML };
 
-our $VERSION = '0.01';
+our $VERSION = '0.01_01';
 
 sub new {
     my ($class, $context, @args) = @_;
@@ -34,6 +34,9 @@ sub forumcode {
     # first of all ESCAPE EVERYTHING!
     $text = Template::Plugin::HTML->escape($text);
 
+    # turn newlines into <br /> tags
+    $self->_preserve_newlines(\$text );
+
     $self->_simple_tags     ( \$text );
     $self->_replacements    ( \$text );
     $self->_colouring       ( \$text );
@@ -42,6 +45,12 @@ sub forumcode {
     $self->_images          ( \$text );
     
     return $text;
+}
+
+sub _preserve_newlines {
+    my ($self, $textref) = @_;
+
+    $$textref =~ s{\n}{<br />}xmsg;
 }
 
 sub _simple_tags {
