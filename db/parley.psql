@@ -142,6 +142,10 @@ CREATE TABLE thread_view (
     timestamp           timestamp with time zone    not null
                         default CURRENT_TIMESTAMP,
 
+    watched             boolean     not null        default False,
+    last_notified       timestamp with time zone
+                        default NULL,
+
     unique(person, thread)
 );
 
