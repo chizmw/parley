@@ -1,5 +1,12 @@
 This file documents the revision history for Parley.
 
+    - added thread_post_count(), thread_position() and page_containing_post()
+      to Post model class
+    - added /post/view action, used to redirect to a thread page containing the
+      specified post
+    - /thread/view now detach()es to /post/view if we have a current_post in
+      the stash
+
 0.09  Thu May 11 17:50:07 BST 2006
     - make email column unique
       ** this may cause problems if you already have a large amount of user data **
