@@ -1,1 +1,2 @@
 DBIx::Class: 0.06003
+DBIx::Class: 0.06999_03
