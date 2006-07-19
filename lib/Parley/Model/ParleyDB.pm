@@ -11,6 +11,8 @@ __PACKAGE__->config(
         AutoCommit => 1,
     },
     relationships => 1,
+
+    debug   => 0,
 );
 
 =head1 NAME
