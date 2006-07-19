@@ -1,7 +1,7 @@
 abstract: Catalyst Forum Application
 author: 'Chisel Wright C<< <pause@herlpacker.co.uk> >>'
 distribution_type: module
-generated_by: Module::Install version 0.61
+generated_by: Module::Install version 0.63
 license: perl
 name: Parley
 no_index:
@@ -25,7 +25,7 @@ requires:
   Catalyst::Plugin::Static::Simple: 0.13
   Catalyst::View::TT: 0.22
   DBD::Pg: 1.47
-  DBIx::Class: 0.06000
+  DBIx::Class: 0.06999
   DBIx::Class::Loader: 0.21
   Data::FormValidator: 4.14
   Data::SpreadPagination: 0
@@ -35,4 +35,4 @@ requires:
   Readonly: 1.03
   Time::Piece: 1.09
   YAML: 0.58
-version: 0.09-pre
+version: 0.10-pre
