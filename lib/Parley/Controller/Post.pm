@@ -76,6 +76,7 @@ sub view : Local {
         . "&page=$page_number"
         . "#" . $c->stash->{current_post}->id()
     );
+    $c->log->debug( "post/view: redirecting to $redirect_url" );
     $c->response->redirect( $redirect_url );
 }
 
