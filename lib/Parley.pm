@@ -105,17 +105,17 @@ sub auto : Private {
                 . ']';
             return;
         }
-        $c->log->debug('[from post #] setting: current_post');
+        #$c->log->debug('[from post #] setting: current_post');
         $c->stash->{current_post} = $c->model('ParleyDB')->table('post')->search(
             post_id  => $c->req->param('post'),
         )->first;
 
         # set the current_thread from the current_post
-        $c->log->debug('[from post #] setting: current_thread');
+        #$c->log->debug('[from post #] setting: current_thread');
         $c->stash->{current_thread} = $c->stash->{current_post}->thread();
 
         # set the current_forum from the current thread
-        $c->log->debug('[from post #] setting: current_forum');
+        #$c->log->debug('[from post #] setting: current_forum');
         $c->stash->{current_forum} = $c->stash->{current_thread}->forum();
     }
 
@@ -128,13 +128,13 @@ sub auto : Private {
                 . ']';
             return;
         }
-        $c->log->debug('[from thread #] setting: current_thread');
+        #$c->log->debug('[from thread #] setting: current_thread');
         $c->stash->{current_thread} = $c->model('ParleyDB')->table('thread')->search(
             thread_id  => $c->req->param('thread'),
         )->first;
 
         # set the current_forum from the current thread
-        $c->log->debug('[from thread #] setting: current_forum');
+        #$c->log->debug('[from thread #] setting: current_forum');
         $c->stash->{current_forum} = $c->stash->{current_thread}->forum();
     }
 
@@ -147,7 +147,7 @@ sub auto : Private {
                 . ']';
             return;
         }
-        $c->log->debug('[from forum #] setting: current_forum');
+        #$c->log->debug('[from forum #] setting: current_forum');
 
         $c->stash->{current_forum} = $c->model('ParleyDB')->table('forum')->search(
             forum_id  => $c->req->param('forum'),
