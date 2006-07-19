@@ -62,6 +62,53 @@ sub page_containing_post {
     return $page_number;
 }
 
+sub last_post_in_list {
+    my ($self, $post_list) = @_;
+
+    my $posts_in_slice = $post_list->count();
+
+    # get the last post on the page
+    my $slice = $post_list->slice(
+        $posts_in_slice - 1,
+        $posts_in_slice - 1,
+    );
+
+    if (defined $slice->first()) {
+        return $slice->first();
+    }
+
+    return;
+}
+
+sub next_post {
+    my ($self, $post) = @_;
+    my $next_post;
+
+    # we want to find the next post after the one we've been given, based on
+    # creation time
+    # if for some reason there are no matches, just return the post we were passed
+    $next_post = $self->search(
+        {
+            created => { '>' => DateTime::Format::Pg->format_datetime($post->created()) },
+            thread  => $post->thread()->id(),
+        },
+        {
+            rows    => 1,
+        }
+    );
+
+    if (defined $next_post->first()) {
+        return $next_post->first();
+    }
+
+    return $post;
+}
+
+if (not __PACKAGE__->can('last_post_in_list')) {
+    #die "fucksticks";
+}
+#die "candy floss";
+
 1;
 __END__
 
