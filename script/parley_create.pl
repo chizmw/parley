@@ -1,21 +1,24 @@
 #!/usr/bin/perl -w
 
 use strict;
+use warnings;
 use Getopt::Long;
 use Pod::Usage;
 use Catalyst::Helper;
 
 my $force = 0;
+my $mech  = 0;
 my $help  = 0;
 
 GetOptions(
-    'nonew|force' => \$force,
-    'help|?'      => \$help
+    'nonew|force'    => \$force,
+    'mech|mechanize' => \$mech,
+    'help|?'         => \$help
  );
 
 pod2usage(1) if ( $help || !$ARGV[0] );
 
-my $helper = Catalyst::Helper->new( { '.newfiles' => !$force } );
+my $helper = Catalyst::Helper->new( { '.newfiles' => !$force, mech => $mech } );
 
 pod2usage(1) unless $helper->mk_component( 'Parley', @ARGV );
 
@@ -30,17 +33,21 @@ parley_create.pl - Create a new Catalyst Component
 parley_create.pl [options] model|view|controller name [helper] [options]
 
  Options:
-   -force    don't create a .new file where a file to be created exists
-   -help     display this help and exits
+   -force        don't create a .new file where a file to be created exists
+   -mechanize    use Test::WWW::Mechanize::Catalyst for tests if available
+   -help         display this help and exits
 
  Examples:
    parley_create.pl controller My::Controller
+   parley_create.pl -mechanize controller My::Controller
    parley_create.pl view My::View
    parley_create.pl view MyView TT
    parley_create.pl view TT TT
    parley_create.pl model My::Model
-   parley_create.pl model SomeDB CDBI dbi:SQLite:/tmp/my.db
-   parley_create.pl model AnotherDB CDBI dbi:Pg:dbname=foo root 4321
+   parley_create.pl model SomeDB DBIC::Schema MyApp::Schema create=dynamic\
+   dbi:SQLite:/tmp/my.db
+   parley_create.pl model AnotherDB DBIC::Schema MyApp::Schema create=static\
+   dbi:Pg:dbname=foo root 4321
 
  See also:
    perldoc Catalyst::Manual
@@ -57,10 +64,9 @@ This behavior can be suppressed with the C<-force> option.
 =head1 AUTHOR
 
 Sebastian Riedel, C<sri@oook.de>
+Maintained by the Catalyst Core Team.
 
 =head1 COPYRIGHT
-
-Copyright 2004 Sebastian Riedel. All rights reserved.
 
 This library is free software, you can redistribute it and/or modify
 it under the same terms as Perl itself.
