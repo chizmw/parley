@@ -9,6 +9,7 @@ use List::MoreUtils qw{ uniq };
 use Parley::App::Helper;
 use Data::FormValidator 4.02;
 use Data::SpreadPagination;
+use DateTime;
 
 our $DFV;
 
@@ -67,7 +68,47 @@ sub view : Local {
             page        => $page,
         }
     );
-    $c->log->dumper( $c->stash->{post_list}->count(), 'POST_COUNT' );
+
+    # get the last post on the page
+    my ($last_post, $last_post_timestamp);
+    $last_post = $c->model('ParleyDB')->table('post')->last_post_in_list(
+        $c->stash->{post_list}
+    );
+    $last_post_timestamp = $last_post->created();
+
+    # ONLY DO THE FOLLOWING IF THE USER IS LOGGED IN
+    if ($c->authed_user()) {
+        # make a note of when we last viewed this thread
+        my $thread_view = $c->model('ParleyDB')->table('thread_view')->find_or_create(
+            {
+                person      => $c->authed_user()->id(),
+                thread      => $c->stash->{current_thread}->id(),
+                timestamp   => $last_post_timestamp,
+            },
+        );
+        # set the timestamp the time of the last post on the page (unless the
+        # existing time is later)
+        if ($thread_view->timestamp() < $last_post_timestamp) {
+            $c->log->debug('thread view time is less than last_post time');
+            $thread_view->timestamp( $last_post_timestamp );
+        }
+        $thread_view->update;
+
+
+        # find out if the user is watching the thread
+        $c->stash->{watching_thread} = $c->model('ParleyDB')->table('thread')->watching_thread(
+            $c->stash->{current_thread},
+            $c->authed_user(),
+        );
+    }
+
+    # how many people are watching this thread?
+    $c->stash->{watcher_count} = $c->model('ParleyDB')->table('thread_view')->count(
+        {
+            thread  => $c->stash->{current_thread}->id(),
+            watched => 1,
+        }
+    );
 
     # set up the pager
     $c->stash->{page} = $c->stash->{post_list}->pager();
@@ -86,6 +127,81 @@ sub view : Local {
 
     # increase the number of views
     $self->_increase_view_count($c);
+}
+
+sub next_post : Local {
+    my ($self, $c) = @_;
+
+    # need to be logged in to use next_post
+    # (we don't store last_viewed information for people who aren't logged in)
+    Parley::App::Helper->login_if_required($c, q{You must be logged in before you can use the thread continuation functionality.});
+
+    # now get the most recent post the user has seen
+    my $last_viewed_post = $c->model('ParleyDB')->table('person')->last_post_viewed_in_thread(
+        $c->authed_user(),
+        $c->stash->{current_thread},
+    );
+
+    # now get the next post after it
+    $c->stash->{current_post} = $c->model('ParleyDB')->table('post')->next_post(
+        $last_viewed_post
+    );
+
+    # now view the next post
+    $c->detach('/post/view');
+}
+
+sub watch : Local {
+    my ($self, $c) = @_;
+
+    my $watched = $c->request->param('watch');
+    if (not defined $watched) {
+        $watched = 1;
+    }
+
+    # need to be logged in to watch threads
+    Parley::App::Helper->login_if_required($c, q{You must be logged in before you can watch a topic.});
+
+    # get the ThreadView so we can update it
+    my $thread_view = $c->model('ParleyDB')->table('thread_view')->find(
+        {
+            person  => $c->authed_user()->id(),
+            thread  => $c->stash->{current_thread}->id(),
+        }
+    );
+
+    if (defined $thread_view) {
+        my $redirect_url;
+
+        # update the watched status
+        $thread_view->watched($watched);
+        $thread_view->update;
+
+        # if we have a current post, we can just use 'post/view'
+        if (defined $c->stash->{current_post}) {
+            $c->detach('/post/view');
+        }
+        # otherwise we want to redirect back the the same page of the sane
+        # thread
+        else {
+            # page to show - either a param, or show the first
+            my $page_number = $c->request->param('page') || 1;
+
+            # build the URL to redirect to
+            my $redirect_url = $c->uri_for(
+                '/thread',
+                'view?thread='
+                . $c->stash->{current_thread}->id()
+                . "&page=$page_number"
+            );
+
+            # redirect to the apropriate place
+            $c->response->redirect( $redirect_url );
+        }
+    }
+    else {
+        $c->stash->{error}{message} = q{Failed to watch thread};
+    }
 }
 
 sub add : Local {
@@ -293,6 +409,13 @@ sub _add_new_reply {
                 $new_post->update();
             }
 
+            # get the full object record
+            $new_post = $c->model('ParleyDB')->table('post')->find(
+                {
+                    post_id => $new_post->id(),
+                }
+            );
+
             # update information about the most recent forum/thread post
             $self->_update_last_post($c, $new_post);
 
@@ -314,6 +437,20 @@ sub _add_new_reply {
             # rollback
             eval { $c->model('ParleyDB')->table('post')->storage->txn_rollback };
         }
+
+        # now get a list of people we want to send an alert to
+        $c->model('ParleyDB')->table('thread')->storage->debug(1);
+        my $alert_list = $c->model('ParleyDB')->table('thread')->new_post_alert_list(
+            $c->stash->{current_thread},
+            $new_post,
+        );
+        if (defined $alert_list) {
+            $c->log->dumper( $alert_list->count() );
+
+           while (my $cd = $alert_list->next) { $c->log->dumper( $cd ); }
+
+        }
+        $c->model('ParleyDB')->table('thread')->storage->debug(0);
 
         # view the new thread - but only if no errors
         if (not scalar(@messages)) {
