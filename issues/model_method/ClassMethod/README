@@ -1,0 +1,52 @@
+1. Create database
+
+ createdb -E UTF8 classmethod
+ psql -d classmethod -f db/classmethod.sql
+
+2. Create DB Model
+
+ ./script/classmethod_create.pl model CMDB DBIC dbi:Pg:dbname=classmethod
+
+3. Add a method to the ClassMethod class
+
+  vi ./lib/ClassMethod/Model/CMDB/ClassMethod.pm
+
+# add:
+    sub some_method {
+        my $self = shift;
+        return 1;
+    }
+
+4. Add a call to the default controller
+
+  vi ./lib/ClassMethod/Controller/Root.pm
+
+  # add to sub default():
+    $c->model('CMDB')->table('class_method')->some_method();
+
+5. Add a test
+
+  vi ./t/model_CMDB-ClassMethod.t
+
+  # increase number of tests to 3
+  # add following test:
+    can_ok('ClassMethod::Model::CMDB::ClassMethod', qw/ some_method /);
+
+6. Run the test
+
+  prove --lib --verbose t/model_CMDB-ClassMethod.t
+
+All tests should pass, we're specifically interested in:
+
+  ok 3 - ClassMethod::Model::CMDB::ClassMethod->can('some_method')
+
+7. Run the application
+
+  ./script/classmethod_test.pl / 2>&1 |grep 'class="error"'
+
+If there are any application errors, you'll see them, otherwise you'll see nothing.
+
+
+8. Drop database
+
+  dropdb classmethod
