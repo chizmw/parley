@@ -4,6 +4,18 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+sub index : Private {
+    my ( $self, $c ) = @_;
+
+    $c->response->body('Matched Parley::Controller::Forum in Forum.');
+}
+
+1;
+
+__END__
+
+=pod
+
 =head1 NAME
 
 Parley::Controller::Forum - Catalyst Controller
@@ -14,23 +26,11 @@ Catalyst Controller.
 
 =head1 METHODS
 
-=cut
-
-
 =head2 index 
-
-=cut
-
-sub index : Private {
-    my ( $self, $c ) = @_;
-
-    $c->response->body('Matched Parley::Controller::Forum in Forum.');
-}
-
 
 =head1 AUTHOR
 
-Chisel Wright,,,
+Chisel Wright C<< <chisel@herlpacker.co.uk> >>
 
 =head1 LICENSE
 
@@ -39,4 +39,4 @@ it under the same terms as Perl itself.
 
 =cut
 
-1;
+vim: ts=8 sts=4 et sw=4 sr sta
