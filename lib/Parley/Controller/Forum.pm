@@ -18,6 +18,23 @@ sub list : Local {
     );
 }
 
+sub view : Local {
+    my ($self, $c) = @_;
+
+    # get a list of (active) threads in a given forum
+    $c->stash->{thread_list} = $c->model('ParleyDB')->resultset('Thread')->search(
+        {
+            forum       => $c->stash->{current_forum}->id(),
+            active      => 1,
+        },
+        {
+            join        => 'last_post',
+            order_by    => 'sticky DESC, last_post.created DESC',
+        }
+    );
+}
+
+
 1;
 
 __END__
