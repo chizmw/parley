@@ -40,7 +40,7 @@ session:
 
 
 # template toolkit options
-template:
+View::TT:
     EVAL_PERL:      '0'
     PRE_PROCESS:    'header'
     POST_PROCESS:   'footer'
