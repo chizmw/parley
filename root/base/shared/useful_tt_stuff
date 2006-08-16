@@ -7,6 +7,8 @@
     %]
     [% IF authed_user.preference.timezone %]
     [% CALL d.set_time_zone(authed_user.preference.timezone) %]
+    [% ELSE %]
+    [% CALL d.set_time_zone('UTC') %]
     [% END %]
 
     [% d.strftime('%A %d %B %Y at %R') %]
