@@ -12,6 +12,27 @@
     </tr>
 </table>
 
+[%- IF authed_user %]
+<table>
+    <tr>
+        <td class="right_align">
+            <small>
+                <strong>[% watcher_count %] [% IF watcher_count == 1 %]person[% ELSE %]people[% END %] watching this thread.</strong>
+
+                [%- IF watching_thread %]
+                    You are watching this thread.
+                    (
+                    <a href="thread/watch?thread=[% current_thread.id %]&page=[% page.current_page %]&watch=0">Remove Watch</a>
+                    )
+                [%- ELSE %]
+                    <a href="thread/watch?thread=[% current_thread.id %]&page=[% page.current_page %]">Watch this thread</a>
+                [%- END%]
+            </small>
+        </td>
+    </tr>
+</table>
+[%- END %]
+
 [% SET dummy_value = post_list.reset %]
 [% IF post_list.count > 0 %]
     [% IF current_thread.locked %]
