@@ -17,6 +17,11 @@ __PACKAGE__->add_columns(
         is_nullable => 0,
         size => undef,
     },
+    sample => {
+        data_type => "text",
+        is_nullable => 0,
+        size => undef,
+    },
     comment => {
         data_type => "text",
         is_nullable => 1,
