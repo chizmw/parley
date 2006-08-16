@@ -4,10 +4,18 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
-sub index : Private {
-    my ( $self, $c ) = @_;
+sub list : Local {
+    my ($self, $c) = @_;
 
-    $c->response->body('Matched Parley::Controller::Forum in Forum.');
+    # get a list of (active) forums
+    $c->stash->{forum_list} = $c->model('ParleyDB')->resultset('Forum')->search(
+        {
+            active => 1,
+        },
+        {
+            'order_by'  => 'forum_id ASC',
+        }
+    );
 }
 
 1;
