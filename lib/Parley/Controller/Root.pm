@@ -21,11 +21,11 @@ sub auto : Private {
     ############################################################
     # if we have a user ... fetch some info (if we don't already have it)
     ############################################################
-    if ( $c->user and not defined $c->authed_user ) {
+    if ( $c->user and not defined $c->_authed_user ) {
         $c->log->info('Fetching user information for ' . $c->user->id);
 
         # get the person info for the username
-        my $row = $c->model('ParleyDB')->resultset('person')->find(
+        my $row = $c->model('ParleyDB')->resultset('Person')->find(
             {
                 'authentication.username'   => $c->user->username(),
             },
@@ -88,7 +88,9 @@ sub auto : Private {
         # get the matching thread
         $c->_current_thread(
             $c->model('ParleyDB')->resultset('Thread')->find(
-                thread_id  => $c->request->param('thread'),
+                {
+                    thread_id  => $c->request->param('thread'),
+                }
             )
         );
 
@@ -112,7 +114,9 @@ sub auto : Private {
         # get the matching forum
         $c->_current_forum(
             $c->model('ParleyDB')->resultset('Forum')->find(
-                forum_id  => $c->request->param('forum'),
+                {
+                    forum_id  => $c->request->param('forum'),
+                }
             )
         );
     }
