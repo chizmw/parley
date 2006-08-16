@@ -4,6 +4,10 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+1;
+
+__END__
+
 =head1 NAME
 
 Parley::Controller::User - Catalyst Controller
@@ -14,23 +18,9 @@ Catalyst Controller.
 
 =head1 METHODS
 
-=cut
-
-
-=head2 index 
-
-=cut
-
-sub index : Private {
-    my ( $self, $c ) = @_;
-
-    $c->response->body('Matched Parley::Controller::User in User.');
-}
-
-
 =head1 AUTHOR
 
-Chisel Wright,,,
+Chisel Wright C<< <chisel@herlpacker.co.uk> >>
 
 =head1 LICENSE
 
@@ -39,4 +29,4 @@ it under the same terms as Perl itself.
 
 =cut
 
-1;
+vim: ts=8 sts=4 et sw=4 sr sta
