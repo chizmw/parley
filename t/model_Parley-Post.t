@@ -1,4 +1,4 @@
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 BEGIN {
     # use modules
@@ -19,6 +19,17 @@ END {
     # ROLLBACK TRANSACTION
     Parley->model('ParleyDB')->table('post')->storage->txn_rollback;
 }
+
+can_ok($post_table, qw
+    [
+        thread_post_count
+        thread_position
+        page_containing_post
+        last_post_in_list
+        next_post
+    ]
+);
+
 
 my $pg_time = q{1974-10-02 09:17:52.855649000+01};
 
