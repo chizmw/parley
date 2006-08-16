@@ -20,11 +20,26 @@ CREATE TABLE authentication (
     UNIQUE (username)
 );
 
+
+-- a table of acceptable TZ strings
+CREATE TABLE preference_time_string (
+    preference_time_string_id     SERIAL      primary key,
+    time_string                   text        not null,
+    comment                       text
+);
+-- some TZ strings
+INSERT INTO preference_time_string (time_string) VALUES ('%A %d %B %Y at %R');
+INSERT INTO preference_time_string (time_string) VALUES ('%F %T');
+INSERT INTO preference_time_string (time_string, comment) VALUES ('%c','locale\'s date and time (e.g., Thu Mar  3 23:05:25 2005)'); 
+
+
 CREATE TABLE preference (
     preference_id   SERIAL      primary key,
 
     timezone        text        not null
-            default 'UTC'
+            default 'UTC',
+    time_format     integer     references preference_time_string,
+    show_tz         boolean     default True
 );
 
 CREATE TABLE person (

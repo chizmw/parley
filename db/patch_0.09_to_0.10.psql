@@ -42,6 +42,27 @@ CREATE TABLE email_queue (
 
 );
 
+-- a table of acceptable TZ strings
+CREATE TABLE preference_time_string (
+    preference_time_string_id     SERIAL      primary key,
+    time_string                   text        not null,
+    comment                       text
+);
+-- some TZ strings
+INSERT INTO preference_time_string (time_string) VALUES ('%A %d %B %Y at %R');
+INSERT INTO preference_time_string (time_string) VALUES ('%F %T');
+INSERT INTO preference_time_string (time_string, comment) VALUES ('%c','locale\'s date and time (e.g., Thu Mar  3 23:05:25 2005)'); 
+
+-- add time_format_string to user preferences
+ALTER TABLE preference
+ADD COLUMN time_format integer
+    references preference_time_string
+;
+ALTER TABLE preference
+ADD COLUMN show_tz boolean
+    default True
+;
+
 -- patch ends here --
 
 COMMIT;
