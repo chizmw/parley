@@ -1,0 +1,183 @@
+-- Phorum schema
+
+-- to get your user and database:
+--  createuser -A -d parley
+--  createdb -U parley -E UTF8 parley
+--  psql -U parley -d parley -f db/parley.psql
+
+\set QUIET 'on'
+
+-- wrap it all in a transaction
+BEGIN;
+
+-- we have authentication
+CREATE TABLE authentication (
+    authentication_id       SERIAL          not null        primary key,
+    username                text            not null,
+    password                text            not null,
+    authenticated           boolean         NOT NULL        default False,
+
+    UNIQUE (username)
+);
+
+CREATE TABLE preference (
+    preference_id   SERIAL      primary key,
+
+    timezone        text        not null
+            default 'UTC'
+);
+
+CREATE TABLE person (
+    person_id       SERIAL      primary key,
+    
+    first_name      text        not null,
+    last_name       text        not null,
+    email           text        not null,
+    
+    forum_name      text        not null,
+
+    preference      integer
+                    references preference,
+
+    authentication  integer
+                    references authentication,
+
+    UNIQUE(forum_name),
+    UNIQUE(email)
+);
+
+CREATE TABLE registration_authentication (
+    registration_authentication_id  text  primary key,
+    recipient       integer     not null
+                    references person,
+    expires         date
+);
+
+CREATE TABLE forum (
+    forum_id        SERIAL      primary key,
+    name            text        not null,
+    description     text,
+
+    active          boolean     not null    default True,
+
+    post_count      integer     not null    default 0,
+
+    UNIQUE(name)
+);
+
+CREATE TABLE thread (
+    thread_id       SERIAL      primary key,
+    forum           integer     not null
+                    references forum,
+
+    subject         text        not null,
+    
+    created         timestamp with time zone
+                    default CURRENT_TIMESTAMP,
+    creator         integer     not null
+                    references person,
+    post_count      integer     not null    default 0,
+    view_count      integer     not null    default 0,
+
+    active          boolean     not null    default True,
+
+    sticky          boolean     not null    default False,
+    locked          boolean     not null    default False
+);
+
+CREATE TABLE post (
+    post_id         SERIAL      primary key,
+    thread          integer     not null
+                    references thread,
+
+    subject         text,
+    message         text        not null,
+
+    created         timestamp with time zone
+                    default CURRENT_TIMESTAMP,
+    creator         integer     not null
+                    references person
+);
+
+-- add ReplyTo information for post
+ALTER TABLE post ADD COLUMN reply_to
+    integer references post
+;
+-- deal with quoted replies
+ALTER TABLE post
+ADD COLUMN quoted_post
+integer REFERENCES post;
+
+ALTER TABLE post
+ADD COLUMN quoted_text text;
+
+-- add LastPost information
+ALTER TABLE thread ADD COLUMN last_post
+    integer references post
+;
+ALTER TABLE forum ADD COLUMN last_post
+    integer references post
+;
+
+-- person posting information
+ALTER TABLE person ADD COLUMN last_post
+    integer references post
+;
+ALTER TABLE person ADD COLUMN post_count
+    integer NOT NULL default 0
+;
+
+-- post edited time (if any)
+ALTER TABLE post
+    ADD COLUMN
+        edited  timestamp with time zone
+;
+
+
+-- when a user last viewed a thread
+CREATE TABLE thread_view (
+    thread_view_id      SERIAL      not null        primary key,
+    person              integer     not null        references person,
+    thread              integer     not null        references thread,
+    timestamp           timestamp with time zone    not null
+                        default CURRENT_TIMESTAMP,
+
+    watched             boolean     not null        default False,
+    last_notified       timestamp with time zone
+                        default NULL,
+
+    unique(person, thread)
+);
+
+
+
+--
+-- some default stuff
+--
+
+-- #0 authentication
+INSERT INTO authentication
+(authentication_id, username, password, authenticated)
+VALUES
+(0, 'topdog', md5('k1tt3n'), true);
+
+-- #0 preference
+INSERT INTO preference
+(preference_id, timezone)
+VALUES
+(0, 'UTC');
+
+-- #0 person info
+INSERT INTO person
+(person_id,first_name, last_name, email, forum_name, authentication, preference)
+VALUES
+(0, 'Top','Dog','topdog@herlpacker.co.uk','TopDog', 0, 0);
+
+INSERT INTO forum (forum_id, name, description) VALUES (0, 'Off-Topic', 'General off-topic discussion');
+INSERT INTO forum (name, description) VALUES ('Suggestions', 'Things you think should be added');
+INSERT INTO forum (name, description) VALUES ('Bugs', 'If you find anything broken, report it here');
+
+-- commit our schema
+COMMIT;
+
+-- vim:ft=sql

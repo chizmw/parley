@@ -1,0 +1,47 @@
+-- Patch:
+--   From: 0.09
+--   To:   0.10
+--
+-- Description:
+--  new table for tracking when a viewer has last viewed a thread
+
+BEGIN;
+
+-- patch starts here --
+
+CREATE TABLE thread_view (
+    thread_view_id      SERIAL      not null        primary key,
+    person              integer     not null        references person,
+    thread              integer     not null        references thread,
+    timestamp           timestamp with time zone    not null
+                        default CURRENT_TIMESTAMP,
+
+    watched             boolean     not null        default False,
+    last_notified       timestamp with time zone
+                        default NULL,
+
+    unique(person, thread)
+);
+
+
+-- overall it's better to queue outgoing emails, and have a separate process
+-- deal with them
+CREATE TABLE email_queue (
+    email_queue_id      SERIAL      not null        primary key,
+    queued              timestamp with time zone    not null
+                        default CURRENT_TIMESTAMP,
+
+    recipient           integer     not null        references person,
+
+    subject             text        not null,
+    text_content        text        not null,
+    html_content        text,
+
+    -- delivery statuses
+    attempted_delivery  boolean     not null        default False
+
+);
+
+-- patch ends here --
+
+COMMIT;
