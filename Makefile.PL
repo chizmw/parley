@@ -26,7 +26,7 @@ requires(
     'Catalyst::View::TT'                            => '0.22',
     'Data::SpreadPagination'                        => 0,
     'DBD::Pg'                                       => '1.47',
-    'DBIx::Class'                                   => '0.06000',
+    'DBIx::Class'                                   => '0.06999',
     'DBIx::Class::Loader'                           => '0.21',
     'Data::FormValidator'                           => '4.14',
     'DateTime::Format::Pg'                          => '0.11',
