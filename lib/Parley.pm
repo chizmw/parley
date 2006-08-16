@@ -70,6 +70,11 @@ __PACKAGE__->log (Catalyst::Log->new( @{__PACKAGE__->config->{log_levels}} ));
     }
 }
 
+1;
+
+__END__
+
+=pod
 
 =head1 NAME
 
@@ -131,4 +136,4 @@ it under the same terms as Perl itself.
 
 =cut
 
-1;
+vim: ts=8 sts=4 et sw=4 sr sta
