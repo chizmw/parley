@@ -18,7 +18,6 @@ body {
     margin:     0px 0px 0px 0px;
     padding:    10px;
     height:     70px; 
-	height:     70px; 
 }
 #left {
     background: transparent;
@@ -287,7 +286,14 @@ h2 {
 .topic_creator {
     display:        block;
     font-size:      0.8em;
-    text-align:     right;
+    /*text-align:     right;*/
+    float: right;
+}
+.forum_mini_pager {
+    display:        block;
+    font-size:      0.8em;
+    /*text-align:     right;*/
+    float: left;
 }
 .topic_last_post {
     font-size:      0.8em;
@@ -431,7 +437,7 @@ form br {
 }
 
 
-#loginbox {
+#Xloginbox {
     border: 1px solid #ccc;
     width: 250px;
     float: right;
@@ -440,6 +446,20 @@ form br {
     margin-top: 1.5em;
     margin-right: 3em;
     font-size:      0.8em;
+}
+
+#loginbox {
+    position : absolute;
+    left : 200px;
+    top : 100px;
+    display : none;
+
+    border: 1px solid #000;
+    width: 250px;
+    font-size:      0.8em;
+    background-color: #f8f8f8;
+    background-color: #ccc;
+    padding: 5px;
 }
 
 #searchbox {
