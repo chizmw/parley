@@ -21,10 +21,6 @@ use Catalyst qw/
     Authentication
     Authentication::Store::DBIC
     Authentication::Credential::Password
-
-    Prototype
-    FillInForm
-    DefaultEnd
 /;
 
 
