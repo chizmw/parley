@@ -70,6 +70,7 @@ __PACKAGE__->log (Catalyst::Log->new( @{__PACKAGE__->config->{log_levels}} ));
     }
 }
 
+
 =head1 NAME
 
 Parley - Catalyst based application
