@@ -7,7 +7,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("PK::Auto", "Core");
+__PACKAGE__->load_components('ResultSetManager', "PK::Auto", "Core");
 __PACKAGE__->table("thread");
 __PACKAGE__->add_columns(
   "thread_id",
@@ -82,6 +82,7 @@ foreach my $datecol (qw/created/) {
         deflate => sub { DateTime::Format::Pg->format_datetime(shift); },
     });
 }
+
 
 
 

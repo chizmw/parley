@@ -9,7 +9,7 @@ use DateTime::Format::Pg;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("PK::Auto", "Core");
+__PACKAGE__->load_components("ResultSetManager", "PK::Auto", "Core");
 __PACKAGE__->table("post");
 __PACKAGE__->add_columns(
   "creator",
@@ -93,6 +93,36 @@ foreach my $datecol (qw/created/) {
 }
 
 
+
+
+sub last_post_in_list : ResultSet {
+    my ($self, $post_list) = @_;
+
+    my $posts_in_list = $post_list->count();
+    warn "posts_in_list:   $posts_in_list\n";
+    my $splice_position = $posts_in_list - 2;
+    warn "splice_position: $splice_position\n";
+
+    # get the last post on the page
+    my $slice = $post_list->slice(
+        $splice_position,
+        $splice_position,
+    );
+    warn "posts_in_slice:   " . $slice->count() . "\n";
+    warn (ref($slice));
+
+    if (defined $slice->first()) {
+        warn "first in slice is defined\n";
+        warn $slice->first()->created();
+        return $slice->first();
+    }
+
+    warn "return naff all\n";
+    return;
+}
+
+sub my_damn_function {
+}
 
 1;
 

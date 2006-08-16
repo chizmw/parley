@@ -7,7 +7,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("PK::Auto", "Core");
+__PACKAGE__->load_components('ResultSetManager', "PK::Auto", "Core");
 __PACKAGE__->table("thread_view");
 __PACKAGE__->add_columns(
   "watched",
@@ -58,6 +58,28 @@ foreach my $datecol (qw/timestamp/) {
     });
 }
 
+
+sub watching_thread : ResultSet {
+    my ($self, $thread, $person) = @_;
+
+    if (not defined $thread) {
+        warn 'undefined value passed as $thread in watching_thread()';
+        return;
+    }
+    if (not defined $person) {
+        warn 'undefined value passed as $person in watching_thread()';
+        return;
+    }
+
+    my $thread_view = $self->find(
+        {
+            person  => $person->id(),
+            thread  => $thread->id(),
+        }
+    );
+
+    return $thread_view->watched();
+}
 
 1;
 
