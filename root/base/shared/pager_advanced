@@ -1,0 +1,46 @@
+[% IF page %]
+
+[% IF current_thread %]
+[% url_extra_args = '&thread=' _ current_thread.id %]
+[% END %]
+
+Page [% page.current_page %] of [% page.last_page %]
+[% IF page.last_page > 1 %]
+[
+
+    [% UNLESS page.current_page == page.first_page %]
+    <a href="[% c.req.path %]?page=[% page.first_page %][% url_extra_args %]">First</a> |
+    [% END %]
+
+    [% IF page.previous_page %]
+    <a href="[% c.req.path %]?page=[% page.previous_page %][% url_extra_args %]">Previous</a>
+    |
+    [% END %]
+
+    [%# pagination majick! %]
+    [% FOREACH jiffy = page_range_spread %]
+        [% IF jiffy %]
+            [% IF page.current_page == jiffy %]
+            <b>[% jiffy %]</b>
+            [% ELSE %]
+            <a href="[% c.req.path %]?page=[% jiffy %][% url_extra_args %]">[% jiffy %]</a>
+            [% END %]
+        [% ELSE %]
+            ...
+        [% END %]
+    [% END %]
+
+    [% IF page.next_page %]
+    |
+    <a href="[% c.req.path %]?page=[% page.next_page %][% url_extra_args %]">Next</a>
+    [% END %]
+
+    [% UNLESS page.current_page == page.last_page %]
+    |
+    <a href="[% c.req.path %]?page=[% page.last_page %][% url_extra_args %]">Last</a>
+    [% END %]
+
+]
+[% END %]
+
+[% END %]

@@ -1,0 +1,525 @@
+/* $Id$ */
+
+body {
+    background:  rgb(171,121,100);
+    background:  #fff;
+    color:       #000;
+    font-family: verdana, arial, helvetica, sans-serif;
+    margin:      0px 0px 0px 0px;
+    padding:     0px 0px 0px 0px;
+    font-size:   12px;
+}
+
+
+/* sections of the screen */
+#top {
+    background: url("images/logo.png") top left no-repeat rgb(171,121,100);
+    border:     0px;
+    margin:     0px 0px 0px 0px;
+    padding:    10px;
+    height:     70px; 
+}
+#left {
+    background: transparent;
+    border:     0px;
+    left:       0px;
+    margin:     0px;
+    padding-left:    10px;
+    padding-right:    10px;
+    position:   absolute;
+    top:        100px;
+    width:      150px; 
+    font-size: 0.9em;
+}
+#middle {
+    background: transparent;
+    border:      0px;
+    padding:     10px;
+    top:         90px;
+    margin-left: 170px;
+    margin-top:  20px;
+    margin-bottom: 0px;
+}
+
+#footer {
+    border: 0px;
+    background: transparent;
+    margin: 0px 0px 0px 150px;
+    clear: both;
+    text-align:     right;
+    padding-top: 1em;
+    padding-right: 1em;
+}
+
+#footer p {
+    color: #999;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+
+#statusbar {
+    background-color: #97b3cf;
+    background-color: rgb(213,158,128);
+
+    border:        none;
+    border:        2px ridge #ccc;
+    
+    height:        1.6em;
+    left:          0px;
+    margin-left:   0px;
+    margin-right:  0px;
+    position:      absolute;
+    right:         0px;
+    text-align:    right;
+    top:           70px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-right: 1em;
+
+    font-size: 0.9em;
+}
+
+#statusbar table {
+    margin-left: 5px;
+    border: 0px solid #999;
+    padding: 0px;
+}
+#statusbar td {
+    border: 0px solid #999;
+    text-align: left;
+    vertical-align: top;
+    border-collapse: collapse;
+    margin: 5px;
+    padding: 0px;
+}
+#statusbar td.left {
+    text-align: left;
+}
+#statusbar td.right {
+    text-align: right;
+}
+
+
+/* use dl/dt/dd to make left nav */
+dd {
+    /* hide dd from graphical browsers, they should appear for text-only
+    * browsers, giving a nice description of the link */
+    display: none;
+}
+
+dt.nav_header {
+    display:block;
+    width: 140px;
+    color: black;
+
+    background: #ccc;
+    border: solid black 1px;
+    border-style: outset;
+    font-weight: bold;
+    list-style-image: none;
+    list-style-type: none;
+    margin-top: 0.4em;
+    padding-left: 0.5em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    text-decoration: none;
+}
+
+/* class for nav stuff in left menu */
+a.nav, a.nav:visited, a.nav:link, a.nav:active {
+    display:block;
+    width: 120px;
+
+    background: #ccc;
+    border: solid black 1px;
+    border-style: outset;
+    font-weight: bold;
+    list-style-image: none;
+    list-style-type: none;
+    margin-top: 0px;
+    margin-left: 20px;
+    padding-left: 0.5em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    text-decoration: none;
+    font-size: 0.8em;
+}
+
+a.nav:hover {
+    background:#000;
+    color:#fff;
+}
+
+a, a:link, a:visited, a:active {
+    text-decoration: none;
+    color: blue;
+    /*border-bottom: 1px dotted #bbb;*/
+    background: transparent;
+}
+
+/*
+table {
+    border: 1px solid #999;
+    width:  100%;
+}
+
+td {
+    border: 1px solid #999;
+    text-align: left;
+    vertical-align: top;
+    border-collapse: collapse;
+    margin: 5px;
+    padding: 5px;
+}
+th {
+    padding-left: 0.4em;
+    text-align: left;
+    border: 1px solid #999;
+}
+*/
+h1 {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+h2 {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+/* colour things differently if they're deleted */
+.deleted, .deleted a {
+    background: #622;
+    color: #ff0;
+}
+
+/* colour users differently if they're not-active/usthenticated */
+.nonauth, .nonauth a {
+    background: orange;
+    color: #000;
+}
+
+.right_align {
+    text-align: right;
+    /*background: #f00;*/
+}
+
+.header_row {
+    background: #666;
+    color:      #ff0;
+}
+
+.codeblock {
+        border:         solid black 1pt;
+        background:     #ccc;
+        font-family:    "courier new", courier, fixed;
+        color:          #000;
+        margin-left:    0px;
+        margin-right:   0px;
+        margin-top:     5px;
+        margin-bottom:  5px;
+        padding:        5px;
+        line-height:    1.5em;
+
+        display: block;
+        overflow: auto;
+        white-space: pre;
+}
+
+.codeblockhilite {
+        background:                     #ff6;
+        border:                         dashed black 1px;
+}
+
+
+.quoted_reply_textarea {
+    background-color: #ccc;
+    background-color: #c4cacf;
+    background-color: rgb(250,180,180);
+    border: 2px inset #fff;
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size:   0.8em;
+}
+
+.input_text {
+    background-color: #ccc;
+    background-color: #c4cacf;
+    background-color: rgb(251,215,194);
+    border: 2px inset #fff;
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size:   1em;
+}
+
+.input_button {
+    background-color: #97b3cf;
+    background-color: rgb(251,215,194);
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size:   1em;
+    border: 2px ridge #000;
+}
+
+.small_input_button {
+    background-color: #97b3cf;
+    background-color: rgb(251,215,194);
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size:   0.8em;
+    border: 2px ridge #000;
+}
+
+.niceform {
+    background-color: #369;
+    color: #fff;
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size:   1em;
+}
+
+.forum_link {
+    font-weight:    bold;
+}
+.forum_description {
+    font-size:      0.8em;
+}
+
+.topic_link {
+    font-weight:    bold;
+}
+.topic_creator {
+    display:        block;
+    font-size:      0.8em;
+    /*text-align:     right;*/
+    float: right;
+}
+.forum_mini_pager {
+    display:        block;
+    font-size:      0.8em;
+    /*text-align:     right;*/
+    float: left;
+}
+.topic_last_post {
+    font-size:      0.8em;
+}
+
+.post_subject {
+    font-weight:    bold;
+}
+
+.post_creator {
+    font-weight:    bold;
+    font-style:     italic;
+    font-size:      0.9em;
+}
+
+.post_created {
+    text-align:     right;
+    font-size:      0.8em;
+}
+
+.reply_post_message {
+    width: 100%;
+    background-color: rgb(251,215,194);
+    border: 2px inset #fff;
+}
+
+.post_message {
+    width: 100%;
+    background-color: rgb(251,215,194);
+    border: 2px inset #fff;
+    display: block;
+}
+
+.in_response_to {
+    margin-left:    20px;
+    font-weight:    bold;
+    font-style:     italic;
+    font-size:      0.8em;
+}
+
+.quoted_message {
+        border:         solid black 1pt;
+        background:     #ccc;
+        /*font-family:    "courier new", courier, fixed;*/
+        color:          #000;
+        margin-left:    20px;
+        margin-right:   0px;
+        margin-top:     0px;
+        margin-bottom:  0px;
+        padding:        2px;
+        font-size:      0.9em;
+
+        display: block;
+        overflow: auto;
+}
+
+
+.no_table_border table {
+    border: none;
+}
+.no_table_border td {
+    border: none;
+}
+
+.inline_form {
+    display: inline;
+}
+
+.post_edited_alert {
+    font-weight:    bold;
+    font-style:     italic;
+    font-size:      0.8em;
+}
+
+
+
+form {  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
+  margin: 0;
+  padding: 0;
+  min-width: 500px;
+  max-width: 600px;
+  width: 560px; 
+}
+
+form fieldset {
+  / * clear: both; note that this clear causes inputs to break to left in ie5.x mac, commented out */
+  border-color: #000;
+  border-width: 1px;
+  border-style: solid;
+  padding: 10px;        /* padding in fieldset support spotty in IE */
+  margin: 0;
+}
+
+form fieldset legend {
+	font-size:1.1em; /* bump up legend font size, not too large or it'll overwrite border on left */
+                       /* be careful with padding, it'll shift the nice offset on top of border  */
+}
+
+form label { 
+	display: block;  /* block float the labels to left column, set a width */
+	float: left; 
+	width: 150px; 
+	padding: 0; 
+	margin: 5px 0 0; /* set top margin same as form input - textarea etc. elements */
+	text-align: right; 
+    font-weight: bold;
+}
+
+form fieldset label:first-letter { /* use first-letter pseudo-class to underline accesskey, note that */
+	text-decoration:none;    /* Firefox 1.07 WIN and Explorer 5.2 Mac don't support first-letter */
+                                    /* pseudo-class on legend elements, but do support it on label elements */
+                                    /* we instead underline first letter on each label element and accesskey */
+                                    /* each input. doing only legends would  lessens cognitive load */
+                                   /* opera breaks after first letter underlined legends but not labels */
+}
+
+form input, form textarea {
+	/* display: inline; inline display must not be set or will hide submit buttons in IE 5x mac */
+	width:auto;      /* set width of form elements to auto-size, otherwise watch for wrap on resize */
+	margin:5px 0 0 10px; /* set margin on left of form elements rather than right of
+                              label aligns textarea better in IE */
+}
+
+form input#reset {
+	margin-left:0px; /* set margin-left back to zero on reset button (set above) */
+}
+
+textarea { overflow: auto; }
+
+form small {
+	display: block;
+	margin: 0 0 5px 160px; /* instructions/comments left margin set to align w/ right column inputs */
+	padding: 1px 3px;
+	font-size: 88%;
+}
+
+form .required{font-weight:bold;} /* uses class instead of div, more efficient */
+
+form br {
+	clear:left; /* setting clear on inputs didn't work consistently, so brs added for degrade */
+}
+
+
+#Xloginbox {
+    border: 1px solid #ccc;
+    width: 250px;
+    float: right;
+    background-color: #f8f8f8;
+    padding: 5px;
+    margin-top: 1.5em;
+    margin-right: 3em;
+    font-size:      0.8em;
+}
+
+#loginbox {
+    position : absolute;
+    left : 200px;
+    top : 100px;
+    display : none;
+
+    border: 1px solid #000;
+    width: 250px;
+    font-size:      0.8em;
+    background-color: #f8f8f8;
+    background-color: #ccc;
+    padding: 5px;
+}
+
+#searchbox {
+    border: 1px solid #ccc;
+    /*width: 400px;*/
+    float: right;
+    background-color: #f8f8f8;
+    padding: 5px;
+    /*
+    margin-top: 1.5em;
+    margin-right: 13em;
+    */
+    font-size:      0.8em;
+    position: relative;
+    top: -10px;
+}
+
+
+
+form.searchbox {
+    min-width: 0px;
+    max-width: 35em;
+}
+
+form.searchbox fieldset label {
+    margin-left: 0;
+    padding-top: 8px;
+    padding-right: 5px;
+    margin: 0;
+    width: auto;
+    text-align: left;
+}
+form.searchbox fieldset input {
+    margin: 0;
+    width: 20em;
+}
+form.searchbox fieldset button {
+    margin-left: auto;
+    margin-right: auto;
+    display: inline;
+}
+
+
+form.loginbox {
+    min-width: 0px;
+    max-width: 250px;
+}
+form.loginbox fieldset label, form.loginbox fieldset input{  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
+    padding: 0px;
+    margin: 5px 0 0 10px;
+    width: 8em;
+}
+
+form fieldset p {
+    text-align: left;
+}
+
+form fieldset button {
+	margin:5px 0 0 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}

@@ -1,0 +1,27 @@
+<form action="user/login" method="post" name="login_form">
+    <fieldset>
+        <p>
+            [% IF login_message %]
+            [% login_message %]<br />
+            [% ELSE %]
+            [% message %]<br />
+            [% END %]
+        </p>
+        <label for="username" accesskey="u"><b>Username:</b></label>
+        <input type="text" id="login_username" name="username" size="40" class="input_text" tabindex="1" />
+
+        <label for="login_password" accesskey="p"><b>Password:</b></label>
+        <input type="password" id="login_password" name="password" size="40" class="input_text" tabindex="2" />
+
+        <br />
+        <button type="submit" class="input_button" tabindex="3" />log in</button>
+    </fieldset>
+</form>
+
+<!-- put focus into the username field on the form above -->
+<script language="JavaScript">
+	<!-- Begin
+    document.forms['login_form'].elements['username'].focus();
+	// End -->
+</script>
+

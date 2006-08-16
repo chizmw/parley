@@ -1,0 +1,82 @@
+<!--
+<h1>Reply to: [% current_thread.subject %]</h1>
+-->
+
+[%# different action depending on whether we're adding to a thread or replying to a specific post %]
+[% IF current_post %]
+<form action="thread/post?post=[% current_post.id %]" method="POST" name="new_thread">
+[% ELSE %]
+<form action="thread/post?thread=[% current_thread.id %]" method="POST" name="new_thread">
+[% END %]
+
+<!-- The post we're replying to -->
+<table>
+  <tr>
+    <td class="post_subject">
+      [% responding_to_post.subject %]
+    </td>
+    <td class="post_creator">
+      [% responding_to_post.creator.forum_name %]
+    </td>
+    <td class="post_created">
+      [% nicedate(responding_to_post.created) %]
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="3" class="reply_post_message">
+      [% FILTER html_line_break %][% HTML.escape(responding_to_post.message) %][% END %]
+    </td>
+  </tr>
+</table>
+    
+<p>Please enter your reply in the form below:</p>
+
+[% IF messages %]
+<p>
+    <ul>
+        [% FOREACH message IN messages %]
+            <li>[% message %]</li>
+        [% END %]
+    </ul>
+</p>
+[% END %]
+
+
+<table>
+  <tr>
+    <td> Topic </td>
+    <td>
+      <input type="text" name="thread_subject" size="60" class="input_text" value="[% current_thread.subject %]" />
+    </td>
+  </tr>
+
+  [% IF quote_post %]
+  <input type="hidden" name="have_quoted_post" value="1" />
+  <input type="hidden" name="__post" value="[% quote_post.id %]" />
+  <tr>
+  <td>&nbsp;</td>
+  <td>
+    <span class="post_creator">
+      [% quote_post.creator.forum_name %] said:
+    </span>
+    <br />
+    <textarea name="quote_message" cols="60" rows="10" class="quoted_reply_textarea" />[% quote_post.message %]</textarea>
+  </td>
+  </tr>
+  [% END %]
+
+  <tr>
+    <td> Message </td>
+    <td>
+      <textarea name="thread_message" cols="60" rows="20" class="input_text" /></textarea>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: center;">
+      <input type="submit" value="Add Reply"      name="post_reply"    class="input_button" />
+    </td>
+  </tr>
+</table>
+</form>

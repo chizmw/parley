@@ -1,0 +1,7 @@
+<h1>An error has occurred</h1>
+
+<p>
+The following error message was returned by the application:
+
+<blockquote>[% error.message %]</blockquote>
+</p>

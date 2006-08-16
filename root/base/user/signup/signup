@@ -1,0 +1,121 @@
+<h1>User Signup</h1>
+
+<table>
+	<form action="user/signup" method="POST" name="signup_form">
+		<tr>
+			<td colspan="2">
+				Complete the form below to create a new user account.
+			</td>
+		</tr>
+
+		[% IF messages %]
+		<tr>
+			<td colspan="2">
+				The following errors were found in your submission:<br />
+				<ul>
+                    <ul>
+                        [% FOREACH message IN messages %]
+                            <li>[% message %]</li>
+                        [% END %]
+                    </ul>
+				</ul>
+			</td>
+		</tr>
+		[% END %]
+
+		<tr>
+			<td width="20%">
+				<label for="username">Desired username:</label>
+			</td>
+			<td>
+				<input type="text" id="username" name="username" class="input_text" />
+				[% form_error.field_error_username %]
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<label for="password">Desired password:</label>
+			</td>
+			<td>
+				<input type="password" id="password" name="password" class="input_text" />
+				[% form_error.field_error_password %]
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<label for="confirm_password">Confirm password:</label>
+			</td>
+			<td>
+				<input type="password" id="confirm_password" name="confirm_password" class="input_text" />
+				[% form_error.field_error_confirm_password %]
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">
+				Your email address will not be passed on to any third parties.
+				It will be used to send an activation link for the new account.
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<label for="email">Your email address:</label>
+			</td>
+			<td>
+				<input type="text" id="email" name="email" size="40" class="input_text" />
+				[% form_error.field_error_email %]
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<label for="confirm_email">Confirm email address:</label>
+			</td>
+			<td>
+				<input type="text" id="confirm_email" name="confirm_email" size="40" class="input_text" />
+				[% form_error.field_error_confirm_email %]
+			</td>
+		</tr>
+
+		<tr><td colspan="2"><hr /></td></tr>
+
+		<tr>
+			<td>
+				<label for="first_name">First name:</label>
+			</td>
+			<td>
+				<input type="text" id="first_name" name="first_name" size="40" class="input_text" />
+				[% form_error.field_error_first_name %]
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<label for="first_name">Last name:</label>
+			</td>
+			<td>
+				<input type="text" id="last_name" name="last_name" size="40" class="input_text" />
+				[% form_error.field_error_last_name %]
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<label for="first_name">Forum name:</label>
+			</td>
+			<td>
+				<input type="text" id="forum_name" name="forum_name" size="40" class="input_text" />
+				[% form_error.field_error_forum_name %]
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2" style="text-align:center;">
+				<input type="submit" name="form_submit" value="Sign Up" class="input_button" />
+			</td>
+		</tr>
+	</form>
+</table>
