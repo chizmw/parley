@@ -1,4 +1,20 @@
 <!-- status bar : start -->
+
+<style type="text/css">
+</style>
+
+<script type="text/javascript">
+	function showLoginBox(start){
+        var popUp = dojo.lfx.explode(start, 'loginbox', 250, function(n) {
+            /* there's a timing issue here I think as the focus() only works if we have an alert() before it */
+            var something = dojo.byId('username');
+            something.focus();
+        });
+        popUp.play();
+	}
+</script>
+
+
 <table width="100%">
         <tr>
                 <td width="60%" class="left">
@@ -24,11 +40,33 @@
                         ]</i>
                         [% ELSE %]
             <i>[
-            <a onclick="new Effect.Appear('loginbox', { duration:0.2 }); $('username').focus(); return false;" href="user/login">Login</a>
+
+            <!-- loginbox -->
+            <div id="loginbox">
+                <form action="user/login" method="post" name="login_form" class="loginbox">
+                    <fieldset>
+                        <label for="username"><b>Username:</b></label>
+                        <input type="text" id="username" name="username" style="width: 15em;" class="input_text" />
+                        <br />
+                        <label for="password"><b>Password:</b></label>
+                        <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
+                        <br />
+                        <button type="submit" value="log in" class="input_button" style="margin-left: 170px;"/>log in</button>
+
+                        <p>
+                        <a href="user/password/forgotten">Forgotten Password</a>
+                        </p>
+                    </fieldset>
+                </form>
+            </div>
+            <a href="javascript:;" onclick="showLoginBox(this)">Login</a>
+            <!-- loginbox -->
             |
             <a href="user/signup">Signup</a>
             ]</i>
                         [% END %] [%# authed_user end %]
+
+
                 </td>
 
                 <td>
@@ -36,22 +74,22 @@
         </tr>
 </table>
 
-<!-- we have to put the div outside the table, otherwise we get trapped inside it! -->
-<div id="loginbox" style="display: none">
-    <form action="user/login" method="post" name="login_form" class="loginbox">
-        <fieldset>
-            <label for="username"><b>Username:</b></label>
-            <input type="text" id="username" name="username" style="width: 15em;" class="input_text" />
-            <br />
-            <label for="password"><b>Password:</b></label>
-            <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
-            <br />
-            <button type="submit" value="log in" class="input_button" style="margin-left: 170px;"/>log in</button>
-
-            <p>
-            <a href="user/password/forgotten">Forgotten Password</a>
-            </p>
-        </fieldset>
-    </form>
-</div>
 <!-- status bar : end -->
+
+<!--
+<script type="text/javascript">
+var dlg0, dlg1, dlg2, dlg3;
+function init(e) {
+	dlg1 = dojo.widget.byId("dialog1");
+	var timer = document.getElementById("timer1");
+	dlg1.setTimerNode(timer);
+	var btn = document.getElementById("hider1");
+	dlg1.setCloseControl(btn);
+}
+dojo.addOnLoad(init);
+</script>
+
+<div dojoType="dialog" id="dialog1" bgColor="red" bgOpacity="0.1" toggle="fade" toggleDuration="250" lifetime="5000">
+	Disappearing in <span id="timer1">3</span>... <a id="hider1" href="#">[X]</a>
+</div>
+-->
