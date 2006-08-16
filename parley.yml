@@ -1,2 +1,50 @@
----
-name: Parley
+--- #YAML:1.0
+# DO NOT USE TABS FOR INDENTATION OR label/value SEPARATION!!!
+name:         Parley
+default_uri:  /forum/list
+posts_per_page: 20
+
+alerts:
+    from_name:      'Parley'
+    from_address:   'parley@localhost'
+
+# comment out any log levels you don't want to see in your logs
+# 'info' and 'debug' are common choices for suppresing in a live environment
+log_levels:
+    - 'info'
+    - 'debug'
+    - 'warn'
+    - 'error'
+    - 'fatal'
+
+#--
+#-- LINES BELOW THIS SHOULDN'T NEED CHANGING
+#--
+
+# the default view to use
+view:         'Parley::View::TT'
+
+# authentiation settings; perldoc Catalyst::Plugin::Authentication::Store::DBIC
+authentication:
+    dbic:
+        user_class:         'Parley::Model::ParleyDB::Authentication'
+        user_field:         'username'
+        password_field:     'password'
+        password_type:      'hashed'
+        password_hash_type: 'MD5'
+
+# session settings; perldoc Catalyst::Plugin::Session::FastMmap
+session:
+    expires:    3600
+    storage:    '/tmp/parley.session'
+
+
+# template toolkit options
+template:
+    EVAL_PERL:      '0'
+    PRE_PROCESS:    'header'
+    POST_PROCESS:   'footer'
+    # comment out the following line to enable Template::Timer output in your
+    # template source
+    CONTEXT:        ''
+
