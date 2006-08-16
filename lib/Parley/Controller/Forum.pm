@@ -24,7 +24,7 @@ sub view : Local {
     # get a list of (active) threads in a given forum
     $c->stash->{thread_list} = $c->model('ParleyDB')->resultset('Thread')->search(
         {
-            forum       => $c->stash->{current_forum}->id(),
+            forum       => $c->_current_forum->id(),
             active      => 1,
         },
         {
