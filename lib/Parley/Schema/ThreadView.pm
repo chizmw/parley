@@ -48,5 +48,16 @@ __PACKAGE__->add_unique_constraint("thread_view_person_key", ["person", "thread"
 __PACKAGE__->belongs_to("thread", "Thread", { thread_id => "thread" });
 __PACKAGE__->belongs_to("person", "Person", { person_id => "person" });
 
+
+
+
+foreach my $datecol (qw/timestamp/) {
+    __PACKAGE__->inflate_column($datecol, {
+        inflate => sub { DateTime::Format::Pg->parse_datetime(shift); },
+        deflate => sub { DateTime::Format::Pg->format_datetime(shift); },
+    });
+}
+
+
 1;
 

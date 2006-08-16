@@ -74,5 +74,16 @@ __PACKAGE__->has_many(
   { "foreign.thread" => "self.thread_id" },
 );
 
+
+
+foreach my $datecol (qw/created/) {
+    __PACKAGE__->inflate_column($datecol, {
+        inflate => sub { DateTime::Format::Pg->parse_datetime(shift); },
+        deflate => sub { DateTime::Format::Pg->format_datetime(shift); },
+    });
+}
+
+
+
 1;
 

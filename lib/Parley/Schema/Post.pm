@@ -5,6 +5,8 @@ package Parley::Schema::Post;
 use strict;
 use warnings;
 
+use DateTime::Format::Pg;
+
 use base 'DBIx::Class';
 
 __PACKAGE__->load_components("PK::Auto", "Core");
@@ -79,6 +81,18 @@ __PACKAGE__->has_many(
   { "foreign.quoted_post" => "self.post_id" },
 );
 __PACKAGE__->has_many("people", "Person", { "foreign.last_post" => "self.post_id" });
+
+
+
+
+foreach my $datecol (qw/created/) {
+    __PACKAGE__->inflate_column($datecol, {
+        inflate => sub { DateTime::Format::Pg->parse_datetime(shift); },
+        deflate => sub { DateTime::Format::Pg->format_datetime(shift); },
+    });
+}
+
+
 
 1;
 
