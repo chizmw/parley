@@ -10,6 +10,34 @@ sub index : Private {
     $c->response->body('Matched Parley::Controller::Thread in Thread.');
 }
 
+sub view : Local {
+    my ($self, $c) = @_;
+
+    # TODO - configure this somewhere, maybe a user preference
+    my $rows_per_page = $c->config->{posts_per_page};
+
+    # page to show - either a param, or show the first
+    my $page = $c->request->param('page') || 1;
+
+    # if we have a current_post, view the page with the post on it
+    if ($c->_current_post) {
+        $c->detach('/post/view');
+    }
+
+    # get all the posts in the thread
+    $c->stash->{post_list} = $c->model('ParleyDB')->resultset('Post')->search(
+        {
+            thread => $c->_current_thread->id(),
+        },
+        {
+            order_by    => 'created ASC',
+            rows        => $rows_per_page,
+            page        => $page,
+        }
+    );
+
+}
+
 1;
 
 __END__
