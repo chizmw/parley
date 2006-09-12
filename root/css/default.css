@@ -523,3 +523,16 @@ form fieldset button {
     margin-right: auto;
     display: block;
 }
+
+
+a.button:visited, a.button:link, a.button:active, .button, a.button {
+    border:             2px solid;
+    border-color:       #FC9 #630 #330 #F96;
+    padding:            2px 7px 2px 7px;
+    font:               bold 0.8em verdana,sans-serif;
+    color:              #000;
+    background:         #ccc;
+    text-decoration:    none;
+    margin:             0;
+}
+
