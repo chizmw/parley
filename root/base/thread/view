@@ -581,7 +581,7 @@ color:#900;
                 [% INCLUDE shared/pager_advanced %]
                 </small>
                 <br />
-                <a href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
               </td>
             </tr>
             
@@ -654,7 +654,7 @@ color:#900;
                 <span class="small">[% nicedate(post.created) %]</span>
                 <span class="small_link">
                   <strong>
-                    <a href="thread/reply?post=[% post.id %]">Quote</a>
+                    <a class="button" href="thread/reply?post=[% post.id %]">Quote</a>
                   </strong>
                 </span>
               </td>
