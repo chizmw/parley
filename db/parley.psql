@@ -71,6 +71,14 @@ CREATE TABLE registration_authentication (
     expires         date
 );
 
+-- new table used during forgotten password process
+CREATE TABLE password_reset (
+    password_reset_id       text        primary key,
+    recipient               integer     not null
+                            references person,
+    expires                 timestamp
+);
+
 CREATE TABLE forum (
     forum_id        SERIAL      primary key,
     name            text        not null,
