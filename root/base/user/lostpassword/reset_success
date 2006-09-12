@@ -1,3 +1,2 @@
 Your password has been set to the value you entered. You may now 
-
-<a onclick="new Effect.Appear('loginbox', { duration:0.2 }); $('username').focus(); return false;" href="user/login">login</a>.
+<a href="javascript:;" onclick="showLoginBox(this)">login</a>
