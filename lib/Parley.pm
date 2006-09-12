@@ -71,6 +71,21 @@ __PACKAGE__->log (Catalyst::Log->new( @{__PACKAGE__->config->{log_levels}} ));
 
 ################################################################################
 
+
+sub application_email_address {
+    my ($c) = @_;
+
+    my $address = 
+          $c->config->{alerts}{from_name}
+        . q{ <}
+        . $c->config->{alerts}{from_address}
+        . q{>}
+    ;
+
+    return $address;
+}
+
+
 sub is_logged_in {
     my ($c) = @_;
 
@@ -94,6 +109,50 @@ sub login_if_required {
         # send the user to the login screen
         $c->response->redirect( $c->uri_for('/user/login') );
         return;
+    }
+}
+
+sub send_email {
+    my ($c, $options) = @_;
+
+    # send an email off to the new user
+    my $email_status = $c->email(
+        header => [
+            To      => $options->{person}->email(),
+            From    => $options->{headers}{from}      || q{Missing From <chisel@somewhere.com>},
+            Subject => $options->{headers}{subject}   || q{Subject Line Missing},
+        ],
+
+        body => $c->view('Plain')->render(
+            $c,
+            $options->{template},
+            {
+                additional_template_paths => [ $c->config->{root} . q{/email_templates}],
+
+                # automatically make the person data available
+                person => $options->{person},
+
+                # pass through extra TT data
+                %{ $options->{template_data} || {} },
+            }
+        ),
+    );
+
+    # did we get "Message sent" from the email send?
+    if ($email_status eq q{Message sent}) {
+        $c->log->info(
+              q{send_email(}
+            . $options->{person}->email()
+            . q{): }
+            . $email_status
+        );
+
+        return 1;
+    }
+    else {
+        $c->log->error( $email_status );
+        $c->stash->{error}{message} = q{Sorry, we are currently unable to store your information. Please try again later.};
+        return 0;
     }
 }
 
