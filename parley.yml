@@ -2,7 +2,8 @@
 # DO NOT USE TABS FOR INDENTATION OR label/value SEPARATION!!!
 name:         Parley
 default_uri:  /forum/list
-posts_per_page: 20
+posts_per_page: 10
+replies_have_own_subject: 0
 
 alerts:
     from_name:      'Parley'
@@ -16,6 +17,11 @@ log_levels:
     - 'warn'
     - 'error'
     - 'fatal'
+
+
+
+
+
 
 #--
 #-- LINES BELOW THIS SHOULDN'T NEED CHANGING
@@ -47,4 +53,3 @@ View::TT:
     # comment out the following line to enable Template::Timer output in your
     # template source
     CONTEXT:        ''
-
