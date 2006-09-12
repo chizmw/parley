@@ -1,5 +1,14 @@
 <h1>User Signup</h1>
 
+[% IF view.error.message %]
+    [% view.error.message %]
+    <ul>
+        [% FOREACH message IN view.error.messages %]
+            <li>[% message %]</li>
+        [% END %]
+    </ul>
+[% END %]
+
 <table>
 	<form action="user/signup" method="POST" name="signup_form">
 		<tr>
