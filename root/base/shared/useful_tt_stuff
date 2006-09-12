@@ -17,7 +17,7 @@
             [% d.time_zone_short_name() %]
         [% END %]
     [% ELSE %]
-        (Default) [% d.strftime('%c') %]
+        [% d.strftime('%c') %]
         [% d.time_zone_short_name() %]
     [% END %]
 [% END %]
