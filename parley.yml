@@ -20,15 +20,18 @@ log_levels:
 
 
 
-
-
+# emails; perldoc Catalyst::Plugin::Email
+# this passes options as an array :(
+email:
+    - SMTP
+    - localhost
 
 #--
 #-- LINES BELOW THIS SHOULDN'T NEED CHANGING
 #--
 
 # the default view to use
-view:         'Parley::View::TT'
+default_view:         'TT'
 
 # authentiation settings; perldoc Catalyst::Plugin::Authentication::Store::DBIC
 authentication:
