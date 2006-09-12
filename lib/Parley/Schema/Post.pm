@@ -99,30 +99,82 @@ sub last_post_in_list : ResultSet {
     my ($self, $post_list) = @_;
 
     my $posts_in_list = $post_list->count();
-    warn "posts_in_list:   $posts_in_list\n";
-    my $splice_position = $posts_in_list - 2;
-    warn "splice_position: $splice_position\n";
+    my $splice_position = $posts_in_list - 1;
 
     # get the last post on the page
     my $slice = $post_list->slice(
         $splice_position,
         $splice_position,
     );
-    warn "posts_in_slice:   " . $slice->count() . "\n";
-    warn (ref($slice));
 
     if (defined $slice->first()) {
-        warn "first in slice is defined\n";
-        warn $slice->first()->created();
         return $slice->first();
     }
 
-    warn "return naff all\n";
     return;
 }
 
-sub my_damn_function {
+
+sub next_post :ResultSet {
+    my ($self, $post) = @_;
+    my $next_post;
+
+    # we want to find the next post after the one we've been given, based on
+    # creation time
+    # if for some reason there are no matches, just return the post we were passed
+    $next_post = $self->search(
+        {
+            created => { '>' => DateTime::Format::Pg->format_datetime($post->created()) },
+            thread  => $post->thread()->id(),
+        },
+        {
+            rows    => 1,
+        }
+    );
+
+    if (defined $next_post->first()) {
+        return $next_post->first();
+    }
+
+    return $post;
 }
 
+
+sub page_containing_post : ResultSet {
+    my ($self, $post, $posts_per_page) = @_;
+
+    my $position_in_thread = $self->thread_position($post);
+
+    # work out what page the Nth post is on
+    my $page_number = int(($position_in_thread - 1) / $posts_per_page) + 1;
+
+    return $page_number;
+}
+
+
+sub thread_position : ResultSet {
+    my ($self, $post) = @_;
+
+    if (not defined $post) {
+        warn('$post id undefined in call to Parley::Model::ParleyDB::Post->thread_position()');
+        return;
+    }
+
+    # explicitly 'deflate' the creation time, as DBIx::Class (<=v0.06003) doesn't deflate on search()
+    my $position = $self->count(
+        {
+            thread  => $post->thread()->id(),
+            created => {
+                '<='   => DateTime::Format::Pg->format_datetime($post->created())
+            },
+        }
+    );
+
+    return $position;
+}
+
+
 1;
+__END__
+vim: ts=8 sts=4 et sw=4 sr sta
 
