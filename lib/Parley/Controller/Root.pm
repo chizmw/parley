@@ -143,13 +143,22 @@ sub default : Private {
 
 
 # deal with the end of the phase
-sub end : ActionClass('RenderView') {
+sub render : ActionClass('RenderView') {
     my ($self, $c) = @_;
 
     # if we have any error(s) in the stash, automatically show the error page
     if (defined $c->stash->{error}) {
         $c->stash->{template} = 'error/simple';
+        $c->log->error( $c->stash->{error}{message} );
     }
+}
+
+sub end : Private {
+    my ($self, $c) = @_;
+    $c->forward('render');
+
+    # fill in any forms
+    $c->fillform( );
 }
 
 
