@@ -66,6 +66,34 @@ __PACKAGE__->log (Catalyst::Log->new( @{__PACKAGE__->config->{log_levels}} ));
     }
 }
 
+################################################################################
+
+sub is_logged_in {
+    my ($c) = @_;
+
+    if ($c->user) {
+        return 1;
+    }
+
+    return 0;
+}
+
+sub login_if_required {
+    my ($c, $message) = @_;
+
+    if( not $c->is_logged_in($c) ) {
+        # make sure we return here after a successful login
+        $c->session->{after_login} = $c->request->uri();
+        # set an informative message to display on the login screen
+        if (defined $message) {
+            $c->session->{login_message} = $message;
+        }
+        # send the user to the login screen
+        $c->response->redirect( $c->uri_for('/user/login') );
+        return;
+    }
+}
+
 1;
 
 __END__
@@ -83,6 +111,21 @@ Parley - Catalyst based application
 =head1 DESCRIPTION
 
 Catalyst driven forum application
+
+=head1 METHODS
+
+=head2 is_logged_in
+
+Returns 1 or 0 depending on whether there is a logged-in user or not.
+
+=head2 login_if_required($message)
+
+If a user isn't logged in, send them to the login page, optionally setting the
+message for the login box.
+
+Once logged in the user should (by virtue of stored session data, and login
+magic) be redirected to wherever they were trying to view before the required
+login.
 
 =head1 EVIL, LAZY STASH ACCESS
 

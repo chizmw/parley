@@ -3,15 +3,29 @@ package Parley::Controller::Thread;
 use strict;
 use warnings;
 use base 'Catalyst::Controller';
+use Data::SpreadPagination;
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Controller Actions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sub reply : Local {
+    my ($self, $c) = @_;
+
+    # make sure we're logged in
+    $c->login_if_required(q{You must be logged in before you can add a reply.});
+
+    # make sure we're authenticated
+
+    $c->stash->{error}{message} = q{This action isn't completed yet.};
+}
 
 sub view : Local {
     my ($self, $c) = @_;
 
-    # TODO - configure this somewhere, maybe a user preference
-    my $rows_per_page = $c->config->{posts_per_page};
 
     # page to show - either a param, or show the first
-    my $page = $c->request->param('page') || 1;
+    $c->stash->{current_page}= $c->request->param('page') || 1;
 
     # if we have a current_post, view the page with the post on it
     if ($c->_current_post) {
@@ -27,8 +41,8 @@ sub view : Local {
         },
         {
             order_by    => 'created ASC',
-            rows        => $rows_per_page,
-            page        => $page,
+            rows        => $c->config->{posts_per_page},
+            page        => $c->stash->{current_page},
         }
     );
 
@@ -51,33 +65,60 @@ sub view : Local {
     {
         # get the number of people watching the thread
         $self->_thread_watch_count($c);
+
+        # setup the pager
+        $self->_thread_view_pager($c);
     }
 
     1; # return 'true'
+}
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Controller (Private/Helper) Methods
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sub _thread_view_pager {
+    my ($self, $c) = @_;
+
+    $c->stash->{page} = $c->stash->{post_list}->pager();
+
+    # TODO - find a better way to do this if possible
+    # set up Data::SpreadPagination
+    my $pagination = Data::SpreadPagination->new(
+        {
+            totalEntries        => $c->stash->{page}->total_entries(),
+            entriesPerPage      => $c->config->{posts_per_page},
+            currentPage         => $c->stash->{current_page},
+            maxPages            => 4,
+        }
+    );
+    $c->stash->{page_range_spread} = $pagination->pages_in_spread();
 }
 
 sub _thread_watch_count {
     my ($self, $c) = @_;
 
     # how many people are watching the current thread?
-    $c->stash->{watcher_count} = $c->model('ParleyDB')->resultset('ThreadView')->count(
-        {
-            thread  => $c->_current_thread()->id(),
-            watched => 1,
-        }
-    );
+    $c->stash->{watcher_count} =
+        $c->model('ParleyDB')->resultset('ThreadView')->count(
+            {
+                thread  => $c->_current_thread()->id(),
+                watched => 1,
+            }
+        )
+    ;
 }
-
-
 
 sub _watching_thread {
     my ($self, $c) = @_;
     
     # find out if the user is watching the thread, and store it in the stash
-    $c->stash->{watching_thread} = $c->model('ParleyDB')->resultset('ThreadView')->watching_thread(
-        $c->_current_thread(),
-        $c->_authed_user(),
-    );
+    $c->stash->{watching_thread} =
+        $c->model('ParleyDB')->resultset('ThreadView')->watching_thread(
+            $c->_current_thread(),
+            $c->_authed_user(),
+        )
+    ;
 }
 
 sub _update_thread_view {
@@ -94,13 +135,15 @@ sub _update_thread_view {
     $c->log->debug( $last_post_timestamp );
 
     # make a note of when the user last viewed this thread, if a record doesn't already exist
-    my $thread_view = $c->model('ParleyDB')->resultset('ThreadView')->find_or_create(
-        {
-            person      => $c->_authed_user()->id(),
-            thread      => $c->_current_thread()->id(),
-            timestamp   => $last_post_timestamp,
-        },
-    );
+    my $thread_view =
+        $c->model('ParleyDB')->resultset('ThreadView')->find_or_create(
+            {
+                person      => $c->_authed_user()->id(),
+                thread      => $c->_current_thread()->id(),
+                timestamp   => $last_post_timestamp,
+            },
+        )
+    ;
 
     # set the timestamp the time of the last post on the page (unless the
     # existing time is later)
@@ -129,6 +172,8 @@ Catalyst Controller.
 
 =head1 ACTIONS
 
+=head2 reply
+
 =head2 view
 
 This action prepares data in the stash for viewing the current thread.
@@ -137,8 +182,14 @@ This action prepares data in the stash for viewing the current thread.
 
 =head2 _thread_watch_count
 
-Sets C<$c-E<gt>stash-E<gt>{watcher_count}> with the number of people who have a watch
-set for the current thread.
+Sets C<$c-E<gt>stash-E<gt>{watcher_count}> with the number of people who have a
+watch set for the current thread.
+
+=head2 _thread_view_pager
+
+Set-up C<$c-E<gt>stash-E<gt>{page}> and
+C<$c-E<gt>stash-E<gt>{page_range_spread}> for the current thread.
+These are used by the pager in the templates (Page X of Y, etc).
 
 =head2 _watching_thread
 
