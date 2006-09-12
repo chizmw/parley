@@ -581,9 +581,7 @@ color:#900;
                 [% INCLUDE shared/pager_advanced %]
                 </small>
                 <br />
-                <form action="thread/reply?thread=[% current_thread.id %]" method="POST" name="post_actions" class="inline_form">
-                    <input type="submit" value="Reply" name="reply_to_thread" class="small_input_button" />
-                </form>
+                <a href="thread/reply?thread=[% current_thread.id %]">Reply</a>
               </td>
             </tr>
             
@@ -612,26 +610,28 @@ color:#900;
                     <tr>
                       <td align="center">
                         <a href="">
-                          <img class="picborder" src="posts_files/42939_t.jpg" border="0" width="90">
+                          <img class="picborder" src="/static/user_file/[% post.creator.id %]/avatar.jpg" border="0" width="100" height="100" alt="Avatar" />
                         </a>
                       </td>
                     </tr>
                     <tr>
                       <td align="center" bgcolor="#ffffff">
-                        <img src="posts_files/2.gif">
+                        <!-- <img src="posts_files/2.gif" width="1" height="1" alt="2.gif" /> -->
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 
                 <strong>
-                  <a href="">[% post.creator.forum_name %]</a>
+                  <a name="xx[% post.id %]"></a>
+                  <a href="" name="[% post.id %]">[% post.creator.forum_name %]</a>
                 </strong>
                 <br />
                 Posts: 
                 [% post.creator.post_count %]
                 post[% IF (post.creator.post_count != 1) %]s[% END %]
                 <br />
+                [% post.id %]
                 <br />
               </td>
               
@@ -654,9 +654,7 @@ color:#900;
                 <span class="small">[% nicedate(post.created) %]</span>
                 <span class="small_link">
                   <strong>
-                    <form action="thread/reply?post=[% post.id %]" method="POST" name="post_actions" class="inline_form">
-                        <input type="submit" value="Quote" name="quote_post" class="small_input_button" />
-                    </form>
+                    <a href="thread/reply?post=[% post.id %]">Quote</a>
                   </strong>
                 </span>
               </td>
