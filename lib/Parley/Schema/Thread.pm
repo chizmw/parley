@@ -109,8 +109,6 @@ sub last_post_viewed_in_thread :ResultSet {
         }
     );
 
-    warn q{$last_viewed->timestamp TIME IS: } . $last_viewed->timestamp();
-
     # if we don't have a $last_viewed, then return the thread's first post
     if (not defined $last_viewed) {
         warn "thread has never been viewed - returning first post in thread";
