@@ -60,6 +60,25 @@ sub login : Path('/user/login') {
     }
 }
 
+sub logout : Path('/user/logout') {
+    my ($self, $c) = @_;
+
+    # session logout, and remove information we've stashed
+    $c->logout;
+    delete $c->session->{'authed_user'};
+
+    # redisplay the page we were on, or just do the 'default' action
+    my $base    = $c->request->base();
+    my $action  = $c->request->action();
+    # redirect to where we were referred from, unless our referer is our action
+    if ( $c->request->referer() =~ m{\A$base}xms and $c->request->referer() !~ m{$action\z}xms) {
+        $c->response->redirect( $c->request->referer() );
+    }
+    else {
+        $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
+    }
+}
+
 
 
 1;
