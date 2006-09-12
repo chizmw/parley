@@ -11,6 +11,9 @@ use Catalyst qw/
 
     ConfigLoader
 
+    FormValidator
+    FillInForm
+
     Email
     Static::Simple
 
