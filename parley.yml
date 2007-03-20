@@ -2,6 +2,8 @@
 # DO NOT USE TABS FOR INDENTATION OR label/value SEPARATION!!!
 name:         Parley
 default_uri:  /forum/list
+posts_per_page: 10
+replies_have_own_subject: 0
 
 alerts:
     from_name:      'Parley'
@@ -10,18 +12,26 @@ alerts:
 # comment out any log levels you don't want to see in your logs
 # 'info' and 'debug' are common choices for suppresing in a live environment
 log_levels:
-#    - 'info'
+    - 'info'
     - 'debug'
     - 'warn'
     - 'error'
     - 'fatal'
+
+
+
+# emails; perldoc Catalyst::Plugin::Email
+# this passes options as an array :(
+email:
+    - SMTP
+    - localhost
 
 #--
 #-- LINES BELOW THIS SHOULDN'T NEED CHANGING
 #--
 
 # the default view to use
-view:         'Parley::View::TT'
+default_view:         'TT'
 
 # authentiation settings; perldoc Catalyst::Plugin::Authentication::Store::DBIC
 authentication:
@@ -39,11 +49,10 @@ session:
 
 
 # template toolkit options
-template:
+View::TT:
     EVAL_PERL:      '0'
     PRE_PROCESS:    'header'
     POST_PROCESS:   'footer'
     # comment out the following line to enable Template::Timer output in your
     # template source
     CONTEXT:        ''
-

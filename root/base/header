@@ -27,7 +27,7 @@
             [% END %]
         </title>
 		<meta name="author" content="Chisel Wright" />
-        <link rel="stylesheet" title="Default" href="css/default.css" />
+                <link rel="stylesheet" title="Default" href="css/default.css" />
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
         <!-- MARKER -->

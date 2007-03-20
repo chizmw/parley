@@ -1,15 +1,24 @@
 [% USE HTML %]
 [% USE ForumCode %]
 
-[% MACRO nicedate(d) BLOCK %]
-    [%# if a person has preferences, and there's a time_zone option set, use it to
+[%- MACRO nicedate(d) BLOCK %]
+    [%# if a person has preferences, and there's a timezone option set, use it to
         set the TZ used to display the time in nicedate
     %]
-    [% IF c.authed_user.preference.timezone %]
-    [% CALL d.set_time_zone(c.authed_user.preference.timezone) %]
+    [% IF authed_user.preference.timezone %]
+        [% CALL d.set_time_zone(authed_user.preference.timezone) %]
+    [% ELSE %]
+        [% CALL d.set_time_zone('UTC') %]
     [% END %]
 
-    [% d.strftime('%A %d %B %Y at %R') %]
-    [% d.time_zone_short_name() %]
+    [% IF authed_user.preference.time_format %]
+        [% d.strftime(authed_user.preference.time_format.time_string) %]
+        [% IF authed_user.preference.show_tz %]
+            [% d.time_zone_short_name() %]
+        [% END %]
+    [% ELSE %]
+        [% d.strftime('%c') %]
+        [% d.time_zone_short_name() %]
+    [% END %]
 [% END %]
 

@@ -27,7 +27,7 @@ fields below, then click the <em>reset my password</em> button to proceed.
         <input type="password" name="confirm_password" id="confirm_password" size="40" tabindex="4" />
 
         <br />
-        <button type="submit" class="input_button" tabindex="5" />reset my password</button>
+        <button type="submit" class="input_button" tabindex="5" name="reset_password" />reset my password</button>
 
     </fieldset>
 </form>

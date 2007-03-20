@@ -1,35 +1,31 @@
 package Parley::Model::ParleyDB;
-use strict;
 
-use base 'Catalyst::Model::DBIC';
+use strict;
+use base 'Catalyst::Model::DBIC::Schema';
 
 __PACKAGE__->config(
-    dsn           => 'dbi:Pg:dbname=parley',
-    user          => 'parley',
-    password      => undef,
-    options       => {
-        AutoCommit => 1,
-    },
-    relationships => 1,
-
-    debug   => 0,
+    schema_class => 'Parley::Schema',
+    connect_info => [
+        'dbi:Pg:dbname=parley',
+        'parley',
+        
+    ],
 );
 
 =head1 NAME
 
-Parley::Model::ParleyDB - Catalyst DBIC Model
-
+Parley::Model::ParleyDB - Catalyst DBIC Schema Model
 =head1 SYNOPSIS
 
 See L<Parley>
 
 =head1 DESCRIPTION
 
-Catalyst DBIC Model.
+L<Catalyst::Model::DBIC::Schema> Model using schema L<Parley::Schema>
 
 =head1 AUTHOR
 
-Chisel Wright C<< <pause@herlpacker.co.uk> >>
+Chisel Wright,,,
 
 =head1 LICENSE
 

@@ -6,86 +6,85 @@ use base 'Catalyst::Controller';
 
 use List::MoreUtils qw{ uniq };
 use Digest::MD5 qw{ md5_hex };
+use Email::Valid;
 use Readonly;
 use Time::Piece;
 use Time::Seconds;
 
-use Data::FormValidator 4.02;
-use Data::FormValidator::Constraints qw(:closures);
-
-Readonly my $LIFETIME => Time::Seconds::ONE_WEEK;
-our $DFV;
+#use Data::FormValidator 4.02;
+#use Data::FormValidator::Constraints qw(:closures);
 
 # used by DFV
-sub _confirm_equal {
+sub _dfv_constraint_confirm_equal {
+    my $dfv  = shift;
     my $val1 = shift;
     my $val2 = shift;
+
     return ( $val1 eq $val2 );
 }
 
-BEGIN {
-    $DFV = Data::FormValidator->new(
-        {   
-            'signup' => {
-                required => [
-                    qw/
-                        username password confirm_password email confirm_email
-                        first_name last_name forum_name
-                    /
-                ],
+sub _dfv_constraint_valid_email {
+    my $dfv   = shift;
+    my $email = shift;
 
-                field_filters => {
-                    username        => 'trim',
-                    email           => 'trim',
-                    confirm_email   => 'trim',
-                    first_name      => 'trim',
-                    last_name       => 'trim',
-                    forum_name      => 'trim',
-                },
+    return Email::Valid->address($email);
+}
 
-                constraints => {
-                    confirm_password => {
-                        name => 'confirm_password',
-                        constraint  => \&_confirm_equal,
-                        params      => [qw( password confirm_password )],
-                    },
-                    email => {
-                        name => 'email',
-                        constraint_method => email(),
-                    },
-                    confirm_email => {
-                        name => 'confirm_email',
-                        constraint  => \&_confirm_equal,
-                        params      => [qw( email confirm_email )],
-                    },
-                },
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Global class data
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-                msgs => {
-                    constraints => {
-                        confirm_password => q{The passwords do not match},
-                        confirm_email => q{The email addresses do not match},
-                        email => q{You must enter a valid email address},
-                    },
-                    missing => q{One or more required fields are missing},
-                    format => '%s',
-                },
+Readonly my $LIFETIME => Time::Seconds::ONE_WEEK;
+
+my %dfv_profile_for = (
+    'signup' => {
+        required => [ qw(
+                username password confirm_password email confirm_email
+                first_name last_name forum_name
+        ) ],
+
+        filters => [qw(trim)],
+
+        constraint_methods => {
+            confirm_password => {
+                name => 'confirm_password',
+                constraint  => \&_dfv_constraint_confirm_equal,
+                params      => [qw( password confirm_password )],
             },
-        }
-    );
-}
+            email => {
+                name => 'email',
+                constraint_method => \&_dfv_constraint_valid_email,
+                params      => [qw( email )],
+            },
+            Xconfirm_email => {
+                name => 'Xconfirm_email',
+                constraint  => \&_dfv_constraint_confirm_equal,
+                params      => [qw( email confirm_email )],
+            },
 
-sub signup : Path('/user/signup') {
-    my ( $self, $c ) = @_;
-    my (@messages);
+            confirm_email => {
+                name        => q{confirm_email},
+                constraint  => \&_dfv_constraint_confirm_equal,
+                params      => [qw( email confirm_email )],
+            },
 
-    if ($c->req->param('form_submit')) {
-        @messages = $self->_user_signup($c);
-    }
+        },
 
-    if (scalar @messages) {
-        $c->stash->{messages} = \@messages;
-    }
-}
+        msgs => {
+            constraints => {
+                confirm_password => q{The passwords do not match},
+                confirm_email => q{The email addresses do not match},
+                email => q{You must enter a valid email address},
+            },
+            missing => q{One or more required fields are missing},
+            format => '%s',
+        },
+    },
+);
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Controller Actions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 sub authenticate : Path('/user/authenticate') {
     my ($self, $c, $auth_id) = @_;
@@ -97,21 +96,17 @@ sub authenticate : Path('/user/authenticate') {
     }
 
     # fetch the info from the database
-    my $regauth = $c->model('ParleyDB')->table('registration_authentication')->search(
+    my $regauth = $c->model('ParleyDB')->resultset('RegistrationAuthentication')->find(
         {
             registration_authentication_id => $auth_id,
         }
     );
 
     # if we don't have any matches then the id was bogus
-    if (not $regauth->count()) {
+    if (not defined $regauth) {
         $c->stash->{error}{message} = q{Bogus authentication ID};
         return;
     }
-
-    # get the first result
-    # TODO - we should probably ensure there's exactly one result
-    $regauth = $regauth->first;
 
     # TODO
     # if we get this far, we've got a valid ID, so we can yank out their details,
@@ -121,11 +116,11 @@ sub authenticate : Path('/user/authenticate') {
     # as authenticated
 
     # get the person matching the ID
-    $c->stash->{signup_user} = $c->model('ParleyDB')->table('person')->search(
+    $c->stash->{signup_user} = $c->model('ParleyDB')->resultset('Person')->find(
         {
             person_id => $regauth->recipient->person_id(),
         }
-    )->first();
+    );
 
     # get the first (and should be only) match
     $c->log->dumper($c->stash->{signup_user}->{_column_data});
@@ -141,34 +136,34 @@ sub authenticate : Path('/user/authenticate') {
     $c->stash->{template} = 'user/auth_success';
 }
 
-sub _user_signup {
-    my ($self, $c) = @_;
-    my ($results, @messages);
 
-    if ($DFV) {
-        $results = $DFV->check($c->request->parameters(), 'signup');
+sub signup : Path('/user/signup') {
+    my ( $self, $c ) = @_;
+    my (@messages);
+
+    # deal with form submissions
+    if (defined $c->request->method()
+            and $c->request->method() eq 'POST'
+            and defined $c->request->param('form_submit')
+    ) {
+        @messages = $self->_user_signup($c);
     }
 
-    if ($results || !$DFV) {
-        # things are good - insert the information, and send email to new user
-        $c->log->info('DFV OK');
-        @messages = $self->_new_user($c, $results);
+    if (scalar @messages) {
+        $c->stash->{messages} = \@messages;
     }
-    else {
-        # something went wrong
-        $c->log->error('DFV failed');
-        push @messages, map {$_} values %{$results->msgs};
-    }
-
-    return (uniq(sort @messages));
 }
 
-sub _new_user {
-    my ($self, $c, $dfv_results) = @_;
-    my (@messages, $valid_results, $new_auth, $new_person);
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Controller (Private/Helper) Methods
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sub _add_new_user {
+    my ($self, $c) = @_;
+    my ($valid_results, @messages, $new_user);
 
     # less typing
-    $valid_results = $dfv_results->valid;
+    $valid_results = $c->form->valid;
 
     # is the requested username already in use?
     if ($self->_username_exists($c, $valid_results->{username})) {
@@ -183,110 +178,29 @@ sub _new_user {
         push @messages, q{The forum name you have chosen is already in use. Please try a different one.};
     }
 
-    # if we *don't* have any messages, then it's safe to add stuff to the database
-    if (not scalar(@messages)) {
-        # transaction method taken from:
-        #  http://search.cpan.org/~mstrout/DBIx-Class-0.04999_01/lib/DBIx/Class/Manual/Cookbook.pod#Transactions
+    # if we DON'T have any messages, then there were no errors, so we can try
+    # to add the new user
+    if (not scalar @messages) {
+        # make the new user inside a transaction
         eval {
-            # start a transaction
-            $c->model('ParleyDB')->table('authentication')->storage->txn_begin;
-
-            # add authentication
-            $new_auth = $c->model('ParleyDB')->table('authentication')->create(
-                {
-                    username => $valid_results->{username},
-                    password => md5_hex($valid_results->{password}),
-                }
+            $new_user = $c->model('ParleyDB')->schema->txn_do(
+                sub { return $self->_txn_add_new_user($c) }
             );
-            $c->log->dumper( $new_auth->{_column_data}, 'NEW_AUTH');
-
-            # XXX I don't know why we're not getting all fields after the create()
-            # XXX for now, just look up the newly created record ... pants isn't it?
-            $new_auth = $c->model('ParleyDB')->table('authentication')->search(
-                {
-                    username => $valid_results->{username},
-                    password => md5_hex($valid_results->{password}),
-                }
-            )->first();
-            $c->log->dumper( $new_auth->{_column_data}, 'SEARCHED_NEW_AUTH');
-            # make sure we have an authentication_id
-            if (not defined $new_auth->authentication_id()) {
-                # rollback
-                eval { $c->model('ParleyDB')->table('authentication')->storage->txn_rollback };
-                push @messages, q{Authentication ID is not available};
-                die q{Authentication ID is not availablen $new_auth object};
-            }
-
-            # add person
-            $new_person = $c->model('ParleyDB')->table('person')->create(
-                {
-                    first_name      => $valid_results->{first_name},
-                    last_name       => $valid_results->{last_name},
-                    forum_name      => $valid_results->{forum_name},
-                    email           => $valid_results->{email},
-                    authentication  => $new_auth->id(),
-                }
-            );
-            $c->log->debug( "$valid_results->{email} added with auth: " . $new_auth->id() );
-            $c->log->debug( "$valid_results->{email} added with auth: " . $new_auth->authentication_id() );
-
-            # commit everything
-            $c->model('ParleyDB')->table('authentication')->storage->txn_commit;
         };
-        # any errors?
-        if ($@) {
-            # put something in the logs
-            $c->log->error($@);
-            # put something useful for the user to see
-            push @messages, q{Failed to insert new user information};
-            # rollback
-            eval { $c->model('ParleyDB')->table('authentication')->storage->txn_rollback };
-        }
+        # deal with any transaction errors
+        if ($@) {                                   # Transaction failed
+            die "something terrible has happened!"  #
+                if ($@ =~ /Rollback failed/);       # Rollback failed
 
-        # if it was all ok, send the authentication email
-        else {
-            $self->_send_auth_email($c, $new_person);
-            # set the template to show
-            $c->stash->{newdata}  = $new_person;
-            $c->stash->{template} = 'user/auth_emailed';
+            $c->stash->{error}{message} = qq{Database transaction failed: $@};
+            $c->log->error( $@ );
+            return;
         }
     }
 
+
+    # return our error messages (if any)
     return sort(@messages);
-}
-
-
-sub _username_exists {
-    my ($self, $c, $username) = @_;
-    # look for the specified username
-    $c->log->info("Looking for: $username");
-    my $user = $c->model('ParleyDB')->table('authentication')->search(
-        username => $username,
-    );
-    # return the number of matches
-    return $user->count;
-}
-
-sub _email_exists {
-    my ($self, $c, $email) = @_;
-    # look for the specified email
-    $c->log->info("Looking for: $email");
-    my $user = $c->model('ParleyDB')->table('person')->search(
-        email => $email,
-    );
-    # return the number of matches
-    return $user->count;
-}
-
-sub _forumname_exists {
-    my ($self, $c, $forum_name) = @_;
-    # look for the specified forum_name
-    $c->log->info("Looking for: $forum_name");
-    my $user = $c->model('ParleyDB')->table('person')->search(
-        forum_name => $forum_name,
-    );
-    # return the number of matches
-    return $user->count;
 }
 
 sub _create_regauth {
@@ -297,7 +211,7 @@ sub _create_regauth {
     $random = md5_hex(time.(0+{}).$$.rand);
 
     # create an invitation
-    $invitation = $c->model('ParleyDB')->table('registration_authentication')->create(
+    $invitation = $c->model('ParleyDB')->resultset('RegistrationAuthentication')->create(
         {
             'registration_authentication_id'	=> $random,
             'recipient'				=> $person->person_id,
@@ -308,38 +222,149 @@ sub _create_regauth {
     return $invitation;
 }
 
-sub _send_auth_email {
+sub _email_exists {
+    my ($self, $c, $email) = @_;
+    # look for the specified email
+    $c->log->info("Looking for: $email");
+    my $match_count = $c->model('ParleyDB')->resultset('Person')->count(
+        email => $email,
+    );
+    # return the number of matches
+    return $match_count;
+}
+
+sub _forumname_exists {
+    my ($self, $c, $forum_name) = @_;
+    # look for the specified forum_name
+    $c->log->info("Looking for: $forum_name");
+    my $match_count = $c->model('ParleyDB')->resultset('Person')->count(
+        forum_name => $forum_name,
+    );
+    # return the number of matches
+    return $match_count;
+}
+
+sub _new_user_authentication_email {
     my ($self, $c, $person) = @_;
-    my (@messages, $uid, $invitation);
+    my ($invitation, $send_status);
 
     # create a new reg-auth entry
     $invitation = $self->_create_regauth($c, $person);
-    $uid = $invitation->registration_authentication_id();
 
-    # send the email invite
-    $c->log->info('about to send an email');
-    $c->email(
-        header => [
-            From    => Parley::App::Helper->application_email_address($c),
-            To      => $person->email(),
-            Subject => qq{Activate your @{[$c->config->{name}]} registration},
-        ],
-        body => qq[@{[$person->first_name()]},
-Thanks for registering with @{[$c->config->{name}]}.
-To complete your registration please click on the link below.
-
-  @{[$c->req->{base}]}user/authenticate/${uid}
-
-and follow the on-screen instructions.
-
-Regards,
-
-The @{[$c->config->{name}]} team.],
+    # send an email off to the (new) user
+    $send_status = $c->send_email(
+        {
+            template    => q{authentication_email.eml},
+            person      => $person,
+            headers => {
+                from    => $c->application_email_address(),
+                subject => qq{Activate your @{[$c->config->{name}]} registration},
+            },
+            template_data => {
+                regauth => $invitation,
+            },
+        }
     );
-    $c->log->info('email sent - supposedly');
+
+    return $send_status;
 }
+
+sub _user_signup {
+    my ($self, $c) = @_;
+    my ($results, @messages);
+
+    # validate the form data
+    $c->form(
+        $dfv_profile_for{signup}
+    );
+
+    # deal with missing/invalid fields
+    if ($c->form->has_missing()) {
+        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        foreach my $f ( $c->form->missing ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+    }
+    elsif ($c->form->has_invalid()) {
+        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        foreach my $f ( $c->form->invalid ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+    }
+
+    # otherwise the form data is ok...
+    else {
+        @messages = $self->_add_new_user($c, $results);
+    }
+
+    return (uniq(sort @messages));
+}
+
+sub _username_exists {
+    my ($self, $c, $username) = @_;
+    # look for the specified username
+    $c->log->info("Looking for: $username");
+    my $match_count = $c->model('ParleyDB')->resultset('Authentication')->count(
+        username => $username,
+    );
+    # return the number of matches
+    return $match_count;
+}
+
+
+# send notification email
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Functions for database transactions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sub _txn_add_new_user {
+    my ($self, $c) = @_;
+    my ($valid_results, $new_auth, $new_person, $status_ok);
+
+    # less typing
+    $valid_results = $c->form->valid;
+
+    # add authentication record
+    $new_auth = $c->model('ParleyDB')->resultset('Authentication')->create(
+        {
+            username => $c->form->valid->{username},
+            password => md5_hex( $c->form->valid->{password} ),
+        }
+    );
+
+    # add new person
+    $new_person = $c->model('ParleyDB')->resultset('Person')->create(
+        {
+            first_name      => $valid_results->{first_name},
+            last_name       => $valid_results->{last_name},
+            forum_name      => $valid_results->{forum_name},
+            email           => $valid_results->{email},
+            authentication  => $new_auth->id(),
+        }
+    );
+
+    # send an authentication email
+    $status_ok = $self->_new_user_authentication_email( $c, $new_person );
+
+    # if we sent the email OK take them off to a "it worked" type screen
+    if ($status_ok) {
+        $c->stash->{newdata}  = $new_person;
+        $c->stash->{template} = q{user/auth_emailed};
+    }
+}
+
+
 
 1;
 __END__
-vim: ts=8 sts=4 et sw=4 sr sta
 
+=pod
+
+=head1 NAME
+
+Parley::Controller::User::SignUp
+
+=cut
+
+vim: ts=8 sts=4 et sw=4 sr sta

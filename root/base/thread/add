@@ -1,15 +1,16 @@
 <h1>Start A New Topic</h1>
 
-[% IF messages %]
+[% IF view.error.message %]
+    [% view.error.message %]
     <ul>
-        [% FOREACH message IN messages %]
+        [% FOREACH message IN view.error.messages %]
             <li>[% message %]</li>
         [% END %]
     </ul>
 [% END %]
 
 
-<form action="thread/post?forum=[% current_forum.id %]" method="POST" name="new_thread">
+<form action="thread/add?forum=[% current_forum.id %]" method="POST" name="new_thread">
 
 <table>
 

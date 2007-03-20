@@ -1,5 +1,9 @@
 This file documents the revision history for Parley.
 
+    - re-implement, starting from a fresh call to catalyst.pl
+    - use Schema based model
+    - general tidy-up of existing methods
+
     - thread/add: start work on new message notification
     - thread/watch: set/remove a watch on a thread (in preparation for
       notification emails)

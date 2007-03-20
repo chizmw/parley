@@ -4,29 +4,7 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
-use List::MoreUtils qw{ uniq };
-use Digest::MD5 qw{ md5_hex };
-use Readonly;
-use Time::Piece;
-use Time::Seconds;
-
-use Data::FormValidator 4.02;
-use Data::FormValidator::Constraints qw(:closures);
-
-Readonly my $LIFETIME => Time::Seconds::ONE_WEEK;
-our $DFV;
-
-# used by DFV
-sub _confirm_equal {
-    my $val1 = shift;
-    my $val2 = shift;
-    return ( $val1 eq $val2 );
-}
-
-BEGIN {
-    # used to setup $DFV here
-}
-
+# deal with user login requests on user/login
 sub login : Path('/user/login') {
     my ( $self, $c ) = @_;
 
@@ -35,6 +13,7 @@ sub login : Path('/user/login') {
     # if we have a custom message to use ..
     $c->stash->{'login_message'} = delete( $c->session->{login_message} );
 
+    # if we have a username, try to log the user in
     if ( $c->request->param('username') ) {
         # try to log the user in
         my $login_status = $c->login(
@@ -50,18 +29,24 @@ sub login : Path('/user/login') {
             $c->log->debug("base:   $base");
             $c->log->debug("action: $action");
 
+            # if we've stored somewhere to go after we log-in, got there now
             if ( $c->session->{after_login} ) {
                 $c->response->redirect( delete $c->session->{after_login} );
             }
-            # if we've just been through Forgotten Password, don't go back there
+
+            # (else) if we've just been through Forgotten Password, don't go back there
             elsif ($c->request->referer() =~ m{user/password/}) {
                 # go to the default app URL
                 $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
             }
-            # redirect to where we were referred from, unless our referer is our action
+
+            # (else) redirect to where we were referred from, unless our referer is our action
             elsif ( $c->request->referer() =~ m{\A$base}xms and $c->request->referer() !~ m{$action\z}xms) {
+                # go to where we came from
                 $c->response->redirect( $c->request->referer() );
             }
+
+            # (else) if all else fails go to the application's default_uri
             else {
                 $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
             }
@@ -76,7 +61,7 @@ sub login : Path('/user/login') {
 }
 
 sub logout : Path('/user/logout') {
-    my ( $self, $c ) = @_;
+    my ($self, $c) = @_;
 
     # session logout, and remove information we've stashed
     $c->logout;
@@ -95,19 +80,14 @@ sub logout : Path('/user/logout') {
 }
 
 
-1;
-__END__
-vim: ts=8 sts=4 et sw=4 sr sta
 
-=pod
+1;
+
+__END__
 
 =head1 NAME
 
 Parley::Controller::User - Catalyst Controller
-
-=head1 SYNOPSIS
-
-See L<Parley>
 
 =head1 DESCRIPTION
 
@@ -117,7 +97,7 @@ Catalyst Controller.
 
 =head1 AUTHOR
 
-Chisel Wright C<< <pause@herlpacker.co.uk> >>
+Chisel Wright C<< <chisel@herlpacker.co.uk> >>
 
 =head1 LICENSE
 
@@ -126,4 +106,4 @@ it under the same terms as Perl itself.
 
 =cut
 
-1;
+vim: ts=8 sts=4 et sw=4 sr sta

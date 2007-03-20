@@ -4,9 +4,9 @@
 
 [%# different action depending on whether we're adding to a thread or replying to a specific post %]
 [% IF current_post %]
-<form action="thread/post?post=[% current_post.id %]" method="POST" name="new_thread">
+<form action="thread/reply?post=[% current_post.id %]" method="POST" name="new_thread">
 [% ELSE %]
-<form action="thread/post?thread=[% current_thread.id %]" method="POST" name="new_thread">
+<form action="thread/reply?thread=[% current_thread.id %]" method="POST" name="new_thread">
 [% END %]
 
 <!-- The post we're replying to -->
@@ -44,12 +44,14 @@
 
 
 <table>
+  [% IF c.config.replies_have_own_subject %]
   <tr>
     <td> Topic </td>
     <td>
       <input type="text" name="thread_subject" size="60" class="input_text" value="[% current_thread.subject %]" />
     </td>
   </tr>
+  [% END %]
 
   [% IF quote_post %]
   <input type="hidden" name="have_quoted_post" value="1" />

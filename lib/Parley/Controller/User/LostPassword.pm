@@ -10,85 +10,89 @@ use Readonly;
 use Time::Piece;
 use Time::Seconds;
 
-use Data::FormValidator 4.02;
-use Data::FormValidator::Constraints qw(:closures);
-
-Readonly my $LIFETIME => Time::Seconds::ONE_HOUR;
-our $DFV;
-
 # used by DFV
-sub _confirm_equal {
+sub _dfv_constraint_confirm_equal {
+    my $dfv  = shift;
     my $val1 = shift;
     my $val2 = shift;
+
     return ( $val1 eq $val2 );
 }
 
-BEGIN {
-    $DFV = Data::FormValidator->new(
-        {   
-            'password_reset' => {
-                require_some => {
-                    user_details => [
-                        1,
-                        qw/ username email /
-                    ],
-                },
+sub _dfv_constraint_valid_email {
+    my $dfv   = shift;
+    my $email = shift;
 
-                field_filters => {
-                    username  => 'trim',
-                    email     => 'trim',
-                },
-
-                constraints => {
-                    email => {
-                        name => 'email',
-                        constraint_method => email(),
-                    },
-                },
-
-                msgs => {
-                    constraints => {
-                        email => q{You must enter a valid email address},
-                    },
-                    missing => q{One or more required fields are missing},
-                    format => '%s',
-                },
-            },
-
-            'set_new_password' => {
-                required => [
-                    qw/
-                        reset_username
-                        new_password
-                        confirm_password
-                    /
-                ],
-
-                field_filters => {
-                    reset_username      => 'trim',
-                    new_password        => 'trim',
-                    confirm_password    => 'trim',
-                },
-
-                constraints => {
-                    confirm_password => {
-                        name       => 'confirm_password',
-                        constraint => \&_confirm_equal,
-                        params     => [qw(new_password confirm_password)],
-                    },
-                },
-
-                msgs => {
-                    constraints => {
-                        confirm_password => q{The passwords do not match},
-                    },
-                    missing => q{One or more required fields are missing},
-                    format => '%s',
-                },
-            }
-        },
-    );
+    return Email::Valid->address($email);
 }
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Global class data
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Readonly my $LIFETIME => Time::Seconds::ONE_HOUR;
+
+my %dfv_profile_for = (
+    'password_reset' => {
+        require_some => {
+            user_details => [
+                1,
+                qw/ username email /
+            ],
+        },
+
+        filters => [qw(trim)],
+
+        constraint_methods => {
+            email => {
+                name => 'email',
+                constraint_method => \&_dfv_constraint_valid_email,
+                params      => [qw( email )],
+            },
+        },
+
+        msgs => {
+            constraints => {
+                email => q{You must enter a valid email address},
+            },
+            missing => q{One or more required fields are missing},
+            format => '%s',
+        },
+    },
+
+    'set_new_password' => {
+        required => [
+            qw/
+                reset_username
+                new_password
+                confirm_password
+            /
+        ],
+
+        filters => [qw(trim)],
+
+        constraint_methods => {
+            confirm_password => {
+                name => 'confirm_password',
+                constraint  => \&_dfv_constraint_confirm_equal,
+                params      => [qw( new_password confirm_password )],
+            },
+        },
+
+        msgs => {
+            constraints => {
+                confirm_password => q{The passwords do not match},
+            },
+            missing => q{One or more required fields are missing},
+            format => '%s',
+        },
+    }
+);
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Controller Actions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 # nice and easy - catch the url to display the lost password page
 # if we have a form submit, deal with it
@@ -96,7 +100,10 @@ sub lost_password : Path('/user/password/forgotten') {
     my ($self, $c) = @_;
     my ($results, @messages);
 
-    if (defined $c->request->param('pwd_reset_submit')) {
+    if (defined $c->request->method()
+            and $c->request->method() eq 'POST'
+            and defined $c->request->param('pwd_reset_submit')
+    ) {
         @messages = $self->_user_reset($c);
 
         # if we have any validation errors ...
@@ -112,12 +119,14 @@ sub lost_password : Path('/user/password/forgotten') {
     }
 }
 
+
 # this action uses the uid in the URL to work out who's password we are
 # resetting, after a little validation, we can use the new choice of password
 # for the user
 sub reset : Path('/user/password/reset') {
     my ($self, $c, $reset_uid) = @_;
     my ($results, @messages);
+
 
     # we should have the reset UID in the URL
     if (not defined $reset_uid) {
@@ -126,24 +135,17 @@ sub reset : Path('/user/password/reset') {
     }
 
     # fetch the info from the database
-    my $pwd_reset = $c->model('ParleyDB')->table('password_reset')->search(
+    my $pwd_reset = $c->model('ParleyDB')->resultset('PasswordReset')->find(
         {
             password_reset_id => $reset_uid,
         }
     );
 
     # if we don't have any matches then the id was bogus
-    if (not $pwd_reset->count()) {
+    if (not defined $pwd_reset) {
         $c->stash->{error}{message} = q{Bogus password reset ID};
         return;
     }
-
-    # get the first result
-    # TODO - we should probably ensure there's exactly one result
-    $pwd_reset = $pwd_reset->first;
-
-    #$c->log->dumper( $pwd_reset->{_column_data} ); # XXX
-    #$c->log->dumper( $pwd_reset->recipient()->{_column_data} ); # XXX
 
     # put the reset_uid into the stash
     $c->stash->{reset_uid} = $reset_uid;
@@ -151,139 +153,258 @@ sub reset : Path('/user/password/reset') {
     # make user available to template
     $c->stash->{reset_user} = $pwd_reset->recipient();
 
+    # deal with a form submission
+    if (defined $c->request->method()
+            and $c->request->method() eq 'POST'
+            and defined $c->request->param('reset_password')
+    ) {
+        @messages = $self->_reset_password($c, $pwd_reset);
 
-    # do we have a form submit?
-    if ($c->request->method() eq 'POST') {
-        $c->log->debug('Reset form submitted');
-
-        if ($DFV) {
-            $results = $DFV->check($c->request->parameters(), 'set_new_password');
+        # if we have any validation errors ...
+        if (scalar @messages) {
+            $c->stash->{messages} = \@messages;
         }
 
-        if ($results || !$DFV) {
-            # make sure the reset_uid points to a user that matches the username in
-            # the field
-            my $reset_username = $pwd_reset->recipient()->authentication()->username();
-            if ($reset_username eq $results->{valid}{reset_username}) {
-                eval {
-                    # start a transaction
-                    $c->model('ParleyDB')->table('password_reset')->storage->txn_begin;
+        # no messages, means that all should be well, so head off to the
+        # "details in the post" page
+        else {
+            $c->stash->{template} = 'user/lostpassword/reset_success';
+        }
+    }
+}
 
-                    # username is a match, the form is OK ... looks like we're
-                    # ready to update the password
-                    $pwd_reset->recipient()->authentication()->password(
-                        md5_hex($results->{valid}{new_password})
-                    );
-                    $pwd_reset->recipient()->authentication()->authenticated(1);
-                    $pwd_reset->recipient()->authentication()->update();
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Controller (Private/Helper) Methods
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-                    # remove all password_reset records for the current user
-                    $c->model('ParleyDB')->table('password_reset')->search(
-                        {
-                            recipient => $pwd_reset->recipient()->id(),
-                        }
-                    )->delete;
+sub _reset_password {
+    my ($self, $c, $pwd_reset) = @_;
+    my (@messages);
 
-                    # commit everything
-                    $c->model('ParleyDB')->table('password_reset')->storage->txn_commit;
-                };
-                # any errors?
-                if ($@) {
-                    # put something in the logs
-                    $c->log->error($@);
-                    # put something useful for the user to see
-                    push @messages, q{Failed to update database information};
-                    # rollback
-                    eval { $c->model('ParleyDB')->table('password_reset')->storage->txn_rollback };
-                }
-                else {
-                    push @messages, 'Password reset';
-                    $c->stash->{template} = 'user/lostpassword/reset_success';
-                }
-            }
-            else {
-                # silly user - wrong username
-                push @messages, 'Incorrect username supplied';
+    # validate form data
+    $c->form(
+        $dfv_profile_for{set_new_password}
+    );
+
+    # deal with missing/invalid fields
+    if ($c->form->has_missing()) {
+        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        foreach my $f ( $c->form->missing ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+    }
+    elsif ($c->form->has_invalid()) {
+        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        foreach my $f ( $c->form->invalid ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+    }
+
+    # otherwise the form data is ok...
+    else {
+        # less typing ..
+        my $reset_username = $pwd_reset->recipient()->authentication()->username;
+
+        # make sure the username matches
+        if ($reset_username eq $c->form->valid->{reset_username}) {
+            # perform everything in a transaction
+            eval {
+                $c->model('ParleyDB')->schema->txn_do(
+                    sub { return $self->_txn_user_password_update($c, $pwd_reset); }
+                );
+            };
+            # deal with any transaction errors
+            if ($@) {                                   # Transaction failed
+                die "something terrible has happened!"  #
+                    if ($@ =~ /Rollback failed/);       # Rollback failed
+
+                $c->stash->{error}{message} = qq{Database transaction failed: $@};
+                $c->log->error( $@ );
+                return;
             }
         }
         else {
-            # something went wrong
-            $c->log->error('DFV failed');
-            push @messages, uniq(sort(map {$_} values %{$results->msgs}));
+            # incorrect username
+            push @messages, 'Incorrect username supplied';
         }
     }
-    else {
-        # show a page where the user can set a new password
-        # (this defaults to user/lostpassword/reset which is fine)
+
+    return uniq(sort @messages);
+}
+
+sub _send_username_reminder {
+    my ($self, $c, $person) = @_;
+    my ($send_status);
+    
+    # send the email
+    $send_status = $c->send_email(
+        {
+            template    => q{username_reminder.eml},
+            person      => $person,
+            headers => {
+                from    => $c->application_email_address(),
+                subject => qq{Your @{[$c->config->{name}]} username},
+            },
+        }
+    );
+}
+
+sub _user_password_reset {
+    my ($self, $c, $person) = @_;
+    my ($pwd_reset, $send_status);
+
+    # make the update in a transaction
+    eval {
+        $pwd_reset = $c->model('ParleyDB')->schema->txn_do(
+            sub { return $self->_txn_password_reset($c, $person) }
+        );
+    };
+    # deal with any transaction errors
+    if ($@) {                                   # Transaction failed
+        die "something terrible has happened!"  #
+            if ($@ =~ /Rollback failed/);       # Rollback failed
+
+        $c->stash->{error}{message} = qq{Database transaction failed: $@};
+        $c->log->error( $@ );
+        return;
     }
 
-    # if we have any validation errors ...
-    if (scalar @messages) {
-        $c->stash->{messages} = \@messages;
-    }
+    # getting here means that we've created a new password_reset entry,
+    # zapped the current password, and set authenticated=f for the person
 
-    # no messages, means that all should be well
-    else {
-        #$c->stash->{template} = 'user/lostpassword/lost_password_details_sent';
-    }
+    # now send the user an email
+    # send an email off to the (new) user
+    $send_status = $c->send_email(
+        {
+            template    => q{password_reset.eml},
+            person      => $person,
+            headers => {
+                from    => $c->application_email_address(),
+                subject => qq{Reset your @{[$c->config->{name}]} password},
+            },
+            template_data => {
+                pwd_reset => $pwd_reset,
+            },
+        }
+    );
+
+    return $send_status;
 }
 
 sub _user_reset {
     my ($self, $c) = @_;
-    my ($results, @messages);
+    my ($results, @messages, $email_send_status, $send_username_reminder);
 
-    if ($DFV) {
-        $results = $DFV->check($c->request->parameters(), 'password_reset');
+    # validate the form data
+    $c->form(
+        $dfv_profile_for{password_reset}
+    );
+
+    # deal with missing/invalid fields
+    if ($c->form->has_missing()) {
+        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        foreach my $f ( $c->form->missing ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+    }
+    elsif ($c->form->has_invalid()) {
+        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        foreach my $f ( $c->form->invalid ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
     }
 
-    if ($results || !$DFV) {
-        # things are good - we met the basic form requirements
-        $c->log->info('DFV OK');
+    # otherwise the form data is ok...
+    else {
         my ($criteria, $matches, $person);
 
         # make sure we can match user/email supplied
-        if (defined $results->{valid}{username}) {
-            $criteria->{'authentication.username'} = $results->{valid}{username};
+        if (defined $c->form->valid->{username}) {
+            $criteria->{'authentication.username'}
+                = $c->form->valid->{username};
+
+            # make sure we don't send a username reminder
+            $send_username_reminder = 0;
         }
-        elsif (defined $results->{valid}{email}) {
-            $criteria->{'email'} = $results->{valid}{email};
+        elsif (defined $c->form->valid->{email}) {
+            $criteria->{'email'}
+                = $c->form->valid->{email};
+
+            # assume the user used their email address because they couldn't
+            # remember their username, and send them a username reminder email
+            $send_username_reminder = 1;
         }
-        $matches = $c->model('ParleyDB')->table('person')->search(
+        else {
+            push @messages, q{Missing criteria in the database lookup};
+            $c->log->error(q{Lookup criteria missing in _user_reset()});
+            return uniq(sort @messages);
+        }
+        $matches = $c->model('ParleyDB')->resultset('Person')->search(
             $criteria,
             {
                 join => 'authentication',
             }
         );
-        # get the first (and should be only) match
-        $person = $matches->first();
 
-        if (defined $person) {
-            # do the actual password reset
-            @messages = $self->_user_password_reset($c, $person);
+        # make sure we don't have too many matches
+        if ($matches->count > 1) {
+            push @messages, q{Database lookup returned too many records};
+            $c->log->error(q{Looks like the SQL for password reset is a bit borked});
+            $c->log->error(
+                  q{Lookup returned }
+                . $matches->count
+                . q{ record(s)}
+            );
+            $c->log->dumper($criteria);
+            return uniq(sort @messages);
         }
-        else {
+
+        # make sure we don't have too few matches
+        elsif ($matches->count < 1) {
             push @messages, q{There are no users matching that information};
             $c->log->debug(' NO MATCHES ');
         }
-    }
-    else {
-        # something went wrong
-        $c->log->error('DFV failed');
-        push @messages, map {$_} values %{$results->msgs};
+
+        # otherwise, do the work
+        else {
+            # get the first (and should be only) match
+            $person = $matches->first();
+            $c->log->dumper( $person->{_column_data}, 'COLUMN_DATA' );
+
+            # if required, send a username reminder
+            if ($send_username_reminder) {
+                $self->_send_username_reminder($c, $person);
+            }
+
+            # do the actual password reset
+            $email_send_status = $self->_user_password_reset($c, $person);
+            if (not $email_send_status) {
+                push @messages, q{Failed to send password reset email};
+            }
+        }
     }
 
-    return (uniq(sort @messages));
+    return uniq(sort @messages);
 }
 
-sub _create_pwd_reset {
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Functions for database transactions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sub _txn_password_reset {
     my ($self, $c, $person) = @_;
     my ($random, $pwd_reset);
 
-    # if it's good enough for Cozens, it's good enough for me
+    $c->log->dumper( ref $self,     'REF_SELF' );
+    $c->log->dumper( ref $c,        'REF_C' );
+    $c->log->dumper( ref $person,   'REF_PERSON' );
+
+    # if it's good enough for Cozens, it's good enough for me :-)
     $random = md5_hex(time.(0+{}).$$.rand);
 
     # create an invitation
-    $pwd_reset = $c->model('ParleyDB')->table('password_reset')->create(
+    $pwd_reset = $c->model('ParleyDB')->resultset('PasswordReset')->create(
         {
             'password_reset_id' => $random,
             'recipient'		=> $person->person_id,
@@ -291,68 +412,53 @@ sub _create_pwd_reset {
         }
     );
 
+    # as far as I know, no md5_hex value is 'X', so set the hexed password to X
+    # to prevent anyone logging in after a reset request
+    $person->authentication->password('X');
+    # the person is no longer authenticated
+    $person->authentication->authenticated(0);
+    # update the person's record
+    $person->authentication->update();
+
+    # return the new entry in password_reset so it ca be used back up the
+    # chain, e.g. in the email to the user
     return $pwd_reset;
 }
 
-sub _user_password_reset {
-    my ($self, $c, $person) = @_;
-    my (@messages, $pwd_reset, $uid);
+sub _txn_user_password_update {
+    my ($self, $c, $pwd_reset) = @_;
 
-    $c->log->debug( $person->email() );
+    # less typing
+    my $authentication = $pwd_reset->recipient()->authentication();
 
-    # blank the password and make them no longer authenticated
-    eval {
-        # start a transaction
-        $c->model('ParleyDB')->table('authentication')->storage->txn_begin;
+    # update the user's password
+    $authentication->password(
+        md5_hex( $c->form->valid->{new_password} )
+    );
 
-        # create a new entry in the password_reset table
-        $pwd_reset = $self->_create_pwd_reset($c, $person);
-        $uid = $pwd_reset->id();
+    # set the user as authenticated
+    $authentication->authenticated( 1 );
 
-        # make the changes we want
-        $person->authentication->password('X');
-        $person->authentication->authenticated(0);
-        $person->authentication->update();
+    # update authentication information
+    $authentication->update();
 
-        # commit everything
-        $c->model('ParleyDB')->table('authentication')->storage->txn_commit;
-    };
-    # any errors?
-    if ($@) {
-        # put something in the logs
-        $c->log->error($@);
-        # put something useful for the user to see
-        push @messages, q{Failed to update database information};
-        # rollback
-        eval { $c->model('ParleyDB')->table('authentication')->storage->txn_rollback };
-    }
-    else {
-        # send the email with the reset link
-        $c->log->debug('about to send an email');
-        $c->email(
-            header => [
-                From    => Parley::App::Helper->application_email_address($c),
-                To      => $person->email(),
-                Subject => qq{Reset your @{[$c->config->{name}]} password},
-            ],
-            body => qq[@{[$person->first_name()]},
-
-To reset your account password please click on the link below.
-
-@{[$c->req->{base}]}user/password/reset/${uid}
-
-Regards,
-
-The @{[$c->config->{name}]} team.],
-        );
-        $c->log->debug('email sent - supposedly');
-    }
-
-    return @messages;
+    # delete all outstanding reset URLs for the user
+    $c->model('ParleyDB')->resultset('PasswordReset')->search(
+        {
+            recipient => $pwd_reset->recipient()->id()
+        }
+    ) ->delete;
 }
-
 
 1;
 __END__
-vim: ts=8 sts=4 et sw=4 sr sta
 
+=pod
+
+=head1 NAME
+
+Parley::Controller::User::LostPassword
+
+=cut
+
+vim: ts=8 sts=4 et sw=4 sr sta

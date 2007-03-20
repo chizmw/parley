@@ -1,11 +1,11 @@
-package Parley::View::TT;
+package Parley::View::Plain;
 
 use strict;
 use base 'Catalyst::View::TT';
 
 =head1 NAME
 
-Parley::View::TT - Catalyst TT View
+Parley::View::Plain - Catalyst TT View
 
 =head1 SYNOPSIS
 
@@ -17,7 +17,7 @@ Catalyst TT View.
 
 =head1 AUTHOR
 
-Chisel Wright C<< <chisel@herlpacker.co.uk> >>
+Chisel Wright,,,
 
 =head1 LICENSE
 

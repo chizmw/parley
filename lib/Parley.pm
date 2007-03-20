@@ -3,18 +3,16 @@ package Parley;
 use strict;
 use warnings;
 
-#
-# Set flags and add plugins for the application
-#
-#         -Debug: activates the debug mode for very useful log messages
-# Static::Simple: will serve static files from the applications root directory
-#
+use Catalyst::Runtime '5.70';
 use Catalyst qw/
     -Debug
     Dumper
     StackTrace
 
     ConfigLoader
+
+    FormValidator
+    FillInForm
 
     Email
     Static::Simple
@@ -26,170 +24,156 @@ use Catalyst qw/
     Authentication
     Authentication::Store::DBIC
     Authentication::Credential::Password
-
-    Prototype
-    FillInForm
-    DefaultEnd
 /;
 
-use Parley::App::Helper;
-use YAML;
 
-our $VERSION = '0.10-pre';
+our $VERSION = '0.50-pre';
 
-#
-# Configure the application
-#
 __PACKAGE__->config( version => $VERSION );
 __PACKAGE__->setup;
 
 # only show certain log levels in output
 __PACKAGE__->log (Catalyst::Log->new( @{__PACKAGE__->config->{log_levels}} ));
 
+# I'm sure there's a (better) way to do this by overriding set()/get() in Class::Accessor
+{
+    sub set_get {
+        my $c = shift;
+        my $key = shift;
 
-# a function that easily lets us refer to where we're storing authed user
-# information - we had to change it from session to stash with a DBIx::Class
-# upgrade
-sub authed_user {
-    my ($c, $value) = @_;
+        if(@_ == 1) {
+            $c->stash->{$key} = $_[0];
+        }
+        elsif(@_ > 1) {
+            $c->stash->{$key} = [@_];
+        }
 
-    if (defined $value) {
-        $c->stash->{authed_user} = $value;
+        $c->stash->{$key};
     }
 
-    return $c->stash->{authed_user};
+    sub _authed_user {
+        my $c = shift;
+        $c->set_get('authed_user', @_);
+    }
+    sub _current_post {
+        my $c = shift;
+        $c->set_get('current_post', @_);
+    }
+    sub _current_thread {
+        my $c = shift;
+        $c->set_get('current_thread', @_);
+    }
+    sub _current_forum {
+        my $c = shift;
+        $c->set_get('current_forum', @_);
+    }
 }
 
-sub auto : Private {
-    my ($self, $c) = @_;
+################################################################################
 
-    # warn people about the DBIx::Class::Loader issue
-    my $dcl_version = DBIx::Class::Loader->VERSION;
-    if ($dcl_version =~ m{\A0.1[012]\z}) {
-        $c->stash->{error}{message} = qq{
-            <p>You are using a version of DBIx::Class::Loader (v$dcl_version)
-                that is known to not work with this application.</p>
-            <p>This issue has been resolved.</p>
-            <p>Please upgrade to v0.13 or higher</p>
-        };
+
+sub application_email_address {
+    my ($c) = @_;
+
+    my $address = 
+          $c->config->{alerts}{from_name}
+        . q{ <}
+        . $c->config->{alerts}{from_address}
+        . q{>}
+    ;
+
+    return $address;
+}
+
+
+sub is_logged_in {
+    my ($c) = @_;
+
+    if ($c->user) {
+        return 1;
+    }
+
+    return 0;
+}
+
+sub login_if_required {
+    my ($c, $message) = @_;
+
+    if( not $c->is_logged_in($c) ) {
+        # make sure we return here after a successful login
+        $c->session->{after_login} = $c->request->uri();
+        # set an informative message to display on the login screen
+        if (defined $message) {
+            $c->session->{login_message} = $message;
+        }
+        # send the user to the login screen
+        $c->response->redirect( $c->uri_for('/user/login') );
         return;
     }
+}
 
-    # if we have a user ... fetch some info (if we don't already have it)
-    if ( $c->user and not defined $c->authed_user ) {
-        $c->log->info('Fetching user information for ' . $c->user->id);
+sub send_email {
+    my ($c, $options) = @_;
 
-        # get the person info for the username
-        my $results = $c->model('ParleyDB')->table('person')->search(
-            {
-                'authentication.username'   => $c->user->username(),
-            },
-            {
-                join => 'authentication',
-            },
+    # preparing for future expansion, where we intend to build multipart emails
+    # and we'll be using ->{template}{text} and ->{template}{html}
+    if (            exists $options->{template}
+            and not exists $options->{template}{text}
+    ) {
+        $c->log->warn(
+              $options->{template}{text}
+            . q{: plain-text template name should be stored in }
+            . q{->{template}{text} instead of ->{template}}
         );
-        $c->authed_user( $results->first() );
-
-        #####################################################################
-        # cater for database upgrades, and make sure the user has preferences
-        #####################################################################
-        Parley::App::Helper->user_preference_check($c);
+        $options->{template}{text} = $options->{template};
     }
 
+    # send an email off to the new user
+    my $email_status = $c->email(
+        header => [
+            To      => $options->{person}->email(),
+            From    => $options->{headers}{from}      || q{Missing From <chisel@somewhere.com>},
+            Subject => $options->{headers}{subject}   || q{Subject Line Missing},
+        ],
 
-    # do we have a post id in the URL?
-    if (defined $c->req->param('post')) {
-        if (not $c->req->param('post') =~ m{\A\d+\z}) {
-            $c->stash->{error}{message} = 'non-integer post id passed: ['
-                . $c->req->param('post')
-                . ']';
-            return;
-        }
-        #$c->log->debug('[from post #] setting: current_post');
-        $c->stash->{current_post} = $c->model('ParleyDB')->table('post')->search(
-            post_id  => $c->req->param('post'),
-        )->first;
+        body => $c->view('Plain')->render(
+            $c,
+            $options->{template}{text},
+            {
+                additional_template_paths => [ $c->config->{root} . q{/email_templates}],
 
-        # set the current_thread from the current_post
-        #$c->log->debug('[from post #] setting: current_thread');
-        $c->stash->{current_thread} = $c->stash->{current_post}->thread();
+                # automatically make the person data available
+                person => $options->{person},
 
-        # set the current_forum from the current thread
-        #$c->log->debug('[from post #] setting: current_forum');
-        $c->stash->{current_forum} = $c->stash->{current_thread}->forum();
+                # pass through extra TT data
+                %{ $options->{template_data} || {} },
+            }
+        ),
+    );
+
+    # did we get "Message sent" from the email send?
+    if ($email_status eq q{Message sent}) {
+        $c->log->info(
+              q{send_email(}
+            . $options->{person}->email()
+            . q{): }
+            . $email_status
+        );
+
+        return 1;
     }
-
-    # do we have a thread id in the URL?
-    elsif (defined $c->req->param('thread')) {
-        $c->log->debug(qq{thread value is } . $c->request->param('thread'));
-        if (not $c->req->param('thread') =~ m{\A\d+\z}) {
-            $c->stash->{error}{message} = 'non-integer thread id passed: ['
-                . $c->req->param('thread')
-                . ']';
-            return;
-        }
-        #$c->log->debug('[from thread #] setting: current_thread');
-        $c->stash->{current_thread} = $c->model('ParleyDB')->table('thread')->search(
-            thread_id  => $c->req->param('thread'),
-        )->first;
-
-        # set the current_forum from the current thread
-        #$c->log->debug('[from thread #] setting: current_forum');
-        $c->stash->{current_forum} = $c->stash->{current_thread}->forum();
+    else {
+        $c->log->error( $email_status );
+        $c->stash->{error}{message} = q{Sorry, we are currently unable to store your information. Please try again later.};
+        return 0;
     }
-
-    # do we have a forum id in the URL?
-    elsif (defined $c->req->param('forum')) {
-        $c->log->debug(qq{forum value is } . $c->request->param('forum'));
-        if (not $c->req->param('forum') =~ m{\A\d+\z}) {
-            $c->stash->{error}{message} = 'non-integer forum id passed: ['
-                . $c->req->param('forum')
-                . ']';
-            return;
-        }
-        #$c->log->debug('[from forum #] setting: current_forum');
-
-        $c->stash->{current_forum} = $c->model('ParleyDB')->table('forum')->search(
-            forum_id  => $c->req->param('forum'),
-        )->first;
-    }
-
-    return 1;
 }
 
+1;
 
-#
-# Output a friendly welcome message
-#
-sub default : Private {
-    my ( $self, $c ) = @_;
-    $c->response->status(404);
-    $c->response->body( '404 Not Found' );
-}
+__END__
 
-sub index : Private {
-    my ( $self, $c ) = @_;
-    # redirect to the default action
-    $c->response->redirect( $c->uri_for($c->config->{default_uri}) );
-}
-
-# updated to use information from: http://catalyst.perl.org/calendar/2005/8/
-sub end : Private {
-    my ($self, $c) = @_;
-
-    # if we have any error(s) in the stash, automatically show the error page
-    if (defined $c->stash->{error}) {
-        $c->stash->{template} = 'error/simple';
-    }
-
-    # use DefaultEnd magic
-    $self->NEXT::end( $c );
-
-    # (re)populate the form
-    $c->fillform( $c->stash->{formdata} );
-}
-
-
+=pod
 
 =head1 NAME
 
@@ -197,19 +181,126 @@ Parley - Catalyst based application
 
 =head1 SYNOPSIS
 
-    script/forum_server.pl
+    script/parley_server.pl
 
 =head1 DESCRIPTION
 
-Catalyst based application.
+Catalyst driven forum application
 
 =head1 METHODS
 
-=head2 auto
+=head2 application_email_address($c)
+
+=over 4
+
+B<Return Value:> $string
+
+=back
+
+Returns the email address string for the application built from the
+I<from_name> and I<from_address> in the alerts section of parley.yml
+
+=head2 is_logged_in($c)
+
+=over 4
+
+B<Return Value:> 0 or 1
+
+=back
+
+Returns 1 or 0 depending on whether there is a logged-in user or not.
+
+=head2 login_if_required($c,$message)
+
+=over 4
+
+B<Return Value:> Void Context
+
+=back
+
+If a user isn't logged in, send them to the login page, optionally setting the
+message for the login box.
+
+Once logged in the user should (by virtue of stored session data, and login
+magic) be redirected to wherever they were trying to view before the required
+login.
+
+=head2 send_email($c,\%options)
+
+=over 4
+
+B<Return Value:> 0 or 1
+
+=back
+
+Send an email using the render() method in the TT view. \%options should
+contain the following keys:
+
+=over 4
+
+=item headers
+
+Header fields to be passed though to the call to L<Catalyst::Plugin::Email>.
+
+=item person
+
+A Parley::Schema::Person object for the intended recipient of the message.
+
+Or, any object with an email() method, and methods to match
+"S<[% person.foo() %]>"
+methods called in the email template(s).
+
+=item template
+
+Used to store the name of the email template(s) to be sent. I<Currently the
+application only sends plain-text emails, so only one file is specified.>
+
+The text template name should be passed in ->{template}{text}.
+
+The html template name should be passed in ->{template}{html}. (I<Not Implemented>)
+
+=back
+
+=head1 EVIL, LAZY STASH ACCESS
+
+I know someone will look at this at some point and tell me this is evil, but
+I've added some get/set method shortcuts for commonly used stash items.
+
+=over 4
+
+=item $c->_authed_user
+
+get/set value stored in $c->stash->{_authed_user}:
+
+  $c->_authed_user( $some_value );
+
+=item $c->_current_post
+
+get/set value stored in $c->stash->{_current_post}:
+
+  $c->current_post( $some_value );
+
+=item $c->_current_thread
+
+get/set value stored in $c->stash->{_current_thread}:
+
+  $c->_current_thread( $some_value );
+
+=item $c->_current_forum
+
+get/set value stored in $c->stash->{_current_forum}:
+
+  $c->_current_forum( $some_value );
+
+=back
+
+=head1 SEE ALSO
+
+L<Parley::Controller::Root>, L<Catalyst::Plugin::Email>, L<Catalyst>
 
 =head1 AUTHOR
 
-Chisel Wright C<< <pause@herlpacker.co.uk> >>
+Chisel Wright C<< <chisel@herlpacker.co.uk> >>
 
 =head1 LICENSE
 
@@ -218,4 +309,4 @@ it under the same terms as Perl itself.
 
 =cut
 
-1;
+vim: ts=8 sts=4 et sw=4 sr sta

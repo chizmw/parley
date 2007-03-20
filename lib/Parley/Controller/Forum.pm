@@ -4,38 +4,11 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
-=head1 NAME
-
-Parley::Controller::Parley - Catalyst Controller
-
-=head1 SYNOPSIS
-
-See L<Parley>
-
-=head1 DESCRIPTION
-
-Catalyst Controller.
-
-=head1 METHODS
-
-=cut
-
-=head2 default
-
-=cut
-
-sub default : Private {
-    my ( $self, $c ) = @_;
-
-    # Hello World
-    $c->response->body('Parley::Controller::Parley is on Catalyst!');
-}
-
 sub list : Local {
     my ($self, $c) = @_;
-    #$c->response->body('forum list');
 
-    $c->stash->{forum_list} = $c->model('ParleyDB')->table('forum')->search(
+    # get a list of (active) forums
+    $c->stash->{forum_list} = $c->model('ParleyDB')->resultset('Forum')->search(
         {
             active => 1,
         },
@@ -48,9 +21,10 @@ sub list : Local {
 sub view : Local {
     my ($self, $c) = @_;
 
-    $c->stash->{thread_list} = $c->model('ParleyDB')->table('thread')->search(
+    # get a list of (active) threads in a given forum
+    $c->stash->{thread_list} = $c->model('ParleyDB')->resultset('Thread')->search(
         {
-            forum       => $c->stash->{current_forum}->id(),
+            forum       => $c->_current_forum->id(),
             active      => 1,
         },
         {
@@ -58,15 +32,30 @@ sub view : Local {
             order_by    => 'sticky DESC, last_post.created DESC',
         }
     );
-
-    # user permissions
-    $c->stash->{can_lock}  = Parley::App::Helper->can_make_locked($c);
-    $c->stash->{can_stick} = Parley::App::Helper->can_make_sticky($c);
 }
+
+
+1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Parley::Controller::Forum - Catalyst Controller
+
+=head1 DESCRIPTION
+
+Catalyst Controller.
+
+=head1 METHODS
+
+=head2 index 
 
 =head1 AUTHOR
 
-Chisel Wright C<< <pause@herlpacker.co.uk> >>
+Chisel Wright C<< <chisel@herlpacker.co.uk> >>
 
 =head1 LICENSE
 
@@ -75,4 +64,4 @@ it under the same terms as Perl itself.
 
 =cut
 
-1;
+vim: ts=8 sts=4 et sw=4 sr sta
