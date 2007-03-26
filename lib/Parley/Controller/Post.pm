@@ -26,12 +26,16 @@ sub view : Local {
     );
 
     # build the URL to redirect to
-    my $redirect_url = $c->uri_for(
-        '/thread',
-          "view?thread=$thread"
-        . "&page=$page_number"
+    my $redirect_url =
+        $c->uri_for(
+            '/thread/view',
+            {
+                thread  => $thread,
+                page    => $page_number,
+            }
+        )
         . "#" . $c->_current_post->id()
-    );
+    ;
 
     # redirect to the relevant place in the appropriate thread
     $c->log->debug( "post/view: redirecting to $redirect_url" );
