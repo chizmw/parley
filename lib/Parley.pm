@@ -26,7 +26,7 @@ use Catalyst qw/
     Authentication::Credential::Password
 /;
 
-use Parley::Communication::Email qw( :email );
+use Parley::App::Communication::Email qw( :email );
 
 
 our $VERSION = '0.50-pre';
