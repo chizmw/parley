@@ -221,10 +221,11 @@ sub watch :Local {
 
         # build the URL to redirect to
         $redirect_url = $c->uri_for(
-            '/thread',
-            'view?thread='
-            . $c->_current_thread()->id()
-            . "&page=$page_number"
+            '/thread/view',
+            {
+                thread  => $c->_current_thread()->id(),
+                page    => $page_number,
+            }
         );
 
         # redirect to the apropriate place
