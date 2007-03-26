@@ -175,6 +175,29 @@ CREATE TABLE thread_view (
     unique(person, thread)
 );
 
+-- overall it's better to queue outgoing emails, and have a separate process
+-- deal with them
+CREATE TABLE email_queue (
+    email_queue_id      SERIAL      not null        primary key,
+    queued              timestamp with time zone    not null
+                        default CURRENT_TIMESTAMP,
+
+    recipient           integer     not null        references person,
+    cc                  integer                     references person,
+    bcc                 integer                     references person,
+
+    sender              text        not null,
+
+    subject             text        not null,
+    text_content        text        not null,
+    html_content        text,
+
+    -- delivery statuses
+    attempted_delivery  boolean     not null        default False
+);
+
+
+
 
 
 --

@@ -26,6 +26,8 @@ use Catalyst qw/
     Authentication::Credential::Password
 /;
 
+use Parley::Communication::Email qw( :email );
+
 
 our $VERSION = '0.50-pre';
 
@@ -109,63 +111,6 @@ sub login_if_required {
         # send the user to the login screen
         $c->response->redirect( $c->uri_for('/user/login') );
         return;
-    }
-}
-
-sub send_email {
-    my ($c, $options) = @_;
-
-    # preparing for future expansion, where we intend to build multipart emails
-    # and we'll be using ->{template}{text} and ->{template}{html}
-    if (            exists $options->{template}
-            and not exists $options->{template}{text}
-    ) {
-        $c->log->warn(
-              $options->{template}{text}
-            . q{: plain-text template name should be stored in }
-            . q{->{template}{text} instead of ->{template}}
-        );
-        $options->{template}{text} = $options->{template};
-    }
-
-    # send an email off to the new user
-    my $email_status = $c->email(
-        header => [
-            To      => $options->{person}->email(),
-            From    => $options->{headers}{from}      || q{Missing From <chisel@somewhere.com>},
-            Subject => $options->{headers}{subject}   || q{Subject Line Missing},
-        ],
-
-        body => $c->view('Plain')->render(
-            $c,
-            $options->{template}{text},
-            {
-                additional_template_paths => [ $c->config->{root} . q{/email_templates}],
-
-                # automatically make the person data available
-                person => $options->{person},
-
-                # pass through extra TT data
-                %{ $options->{template_data} || {} },
-            }
-        ),
-    );
-
-    # did we get "Message sent" from the email send?
-    if ($email_status eq q{Message sent}) {
-        $c->log->info(
-              q{send_email(}
-            . $options->{person}->email()
-            . q{): }
-            . $email_status
-        );
-
-        return 1;
-    }
-    else {
-        $c->log->error( $email_status );
-        $c->stash->{error}{message} = q{Sorry, we are currently unable to store your information. Please try again later.};
-        return 0;
     }
 }
 

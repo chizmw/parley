@@ -788,7 +788,7 @@ user has already viewed a page containing later posts.
 
 =head1 AUTHOR
 
-Chisel Wright C<< <chisel@herlpacker.co.uk> >>
+Chisel Wright C<< <chiselwright@berlios.de> >>
 
 =head1 LICENSE
 

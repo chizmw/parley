@@ -32,6 +32,10 @@ CREATE TABLE email_queue (
                         default CURRENT_TIMESTAMP,
 
     recipient           integer     not null        references person,
+    cc                  integer                     references person,
+    bcc                 integer                     references person,
+
+    sender              text        not null,
 
     subject             text        not null,
     text_content        text        not null,

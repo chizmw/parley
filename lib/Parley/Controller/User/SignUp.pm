@@ -16,18 +16,30 @@ use Time::Seconds;
 
 # used by DFV
 sub _dfv_constraint_confirm_equal {
-    my $dfv  = shift;
-    my $val1 = shift;
-    my $val2 = shift;
+    my ($attrs)  = @_;
 
-    return ( $val1 eq $val2 );
+    my ($first, $second) = @{ $attrs->{fields} } if $attrs->{fields};
+
+    return sub {
+        my $dfv = shift;
+        my $data = $dfv->get_filtered_data();
+
+        warn $data->{ $first };
+        warn $data->{ $second };
+
+        return ( $data->{$first} eq $data->{$second} );
+    }
 }
 
 sub _dfv_constraint_valid_email {
-    my $dfv   = shift;
-    my $email = shift;
+    my $attrs = @_;
 
-    return Email::Valid->address($email);
+    return sub {
+        my $dfv = shift;
+        my $data = $dfv->get_filtered_data();
+
+        return Email::Valid->address($data->{email});
+    }
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,28 +58,26 @@ my %dfv_profile_for = (
         filters => [qw(trim)],
 
         constraint_methods => {
-            confirm_password => {
-                name => 'confirm_password',
-                constraint  => \&_dfv_constraint_confirm_equal,
-                params      => [qw( password confirm_password )],
-            },
-            email => {
-                name => 'email',
-                constraint_method => \&_dfv_constraint_valid_email,
-                params      => [qw( email )],
-            },
-            Xconfirm_email => {
-                name => 'Xconfirm_email',
-                constraint  => \&_dfv_constraint_confirm_equal,
-                params      => [qw( email confirm_email )],
-            },
+            confirm_password =>
+                _dfv_constraint_confirm_equal(
+                    {
+                        fields => [qw/password confirm_password/],
+                    }
+                ),
 
-            confirm_email => {
-                name        => q{confirm_email},
-                constraint  => \&_dfv_constraint_confirm_equal,
-                params      => [qw( email confirm_email )],
-            },
+            email =>
+                _dfv_constraint_valid_email(
+                    {
+                        fields => [qw/email/],
+                    }
+                ),
 
+            confirm_email =>
+                _dfv_constraint_confirm_equal(
+                    {
+                        fields => [qw/email confirm_email/],
+                    }
+                ),
         },
 
         msgs => {
@@ -140,6 +150,12 @@ sub authenticate : Path('/user/authenticate') {
 sub signup : Path('/user/signup') {
     my ( $self, $c ) = @_;
     my (@messages);
+
+    # logged-in? no need to signup again...
+    if ($c->is_logged_in()) {
+        $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
+        return;
+    }
 
     # deal with form submissions
     if (defined $c->request->method()
@@ -254,7 +270,9 @@ sub _new_user_authentication_email {
     # send an email off to the (new) user
     $send_status = $c->send_email(
         {
-            template    => q{authentication_email.eml},
+            template    => {
+                text    => q{authentication_email.eml},
+            },
             person      => $person,
             headers => {
                 from    => $c->application_email_address(),

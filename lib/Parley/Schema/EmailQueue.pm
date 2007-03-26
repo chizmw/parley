@@ -12,6 +12,17 @@ __PACKAGE__->table("email_queue");
 __PACKAGE__->add_columns(
   "recipient",
   { data_type => "integer", default_value => undef, is_nullable => 0, size => 4 },
+  "cc",
+  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
+  "bcc",
+  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
+  "sender",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
   "subject",
   {
     data_type => "text",
@@ -57,6 +68,8 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("email_queue_id");
 __PACKAGE__->belongs_to("recipient", "Person", { person_id => "recipient" });
+__PACKAGE__->belongs_to("cc", "Person", { person_id => "recipient" });
+__PACKAGE__->belongs_to("bcc", "Person", { person_id => "recipient" });
 
 1;
 

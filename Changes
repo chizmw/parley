@@ -1,5 +1,14 @@
 This file documents the revision history for Parley.
 
+    - update DFV profile for DFV 4.50
+    - logged-in users get bounced from user/signup to the default_uri
+    - moved send_email() out to Parley::Communication::Email
+    - send_email() now uses queue_email() to insert pending emails into
+      database queue instead of sending immediately
+    - consolidate schema and patches
+    - add email_queue table to database and modify
+      Schema::EmailQueue accordingly
+    - fix post/view to work with [new?] uri_for() syntax
     - re-implement, starting from a fresh call to catalyst.pl
     - use Schema based model
     - general tidy-up of existing methods
