@@ -199,7 +199,7 @@ sub watch :Local {
         return;
     }
 
-    # we have a threac_view entry for the user, so update it, and redirect the
+    # we have a thread_view entry for the user, so update it, and redirect the
     # user back to the thread
 
     # update the watched status
