@@ -638,8 +638,6 @@ color:#900;
                 [% post.creator.post_count %]
                 post[% IF (post.creator.post_count != 1) %]s[% END %]
                 <br />
-                [% post.id %]
-                <br />
               </td>
               
               <td class="post" bgcolor="#ffffff" valign="top">
