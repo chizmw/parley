@@ -1,0 +1,21 @@
+<!-- login dialog -->
+<div dojoType="dialog" id="login_dialog" bgColor="#606060" bgOpacity="0.4" toggle="fade" toggleDuration="250">
+    <form action="user/login" method="post" name="login_form" class="login_dialog_form">
+        <fieldset>
+            <label for="username"><b>Username:</b></label>
+            <input type="text" id="username" name="username" style="width: 15em;" class="input_text" />
+            <br />
+            <label for="password"><b>Password:</b></label>
+            <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
+            <br />
+            <button type="submit" value="log in" class="input_button" style="margin-left: 170px;"/>log in</button>
+
+            <p align="right">
+            <a href="user/password/forgotten">Forgotten Password</a>
+            |
+            <a id="login_dialog_hider" href="javascript:;">Close</a><br />
+            </p>
+        </fieldset>
+    </form>
+</div>
+<!-- /login-dialog -->
