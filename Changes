@@ -1,5 +1,11 @@
 This file documents the revision history for Parley.
 
+    - thread-watchers now get an email queued to tell them there's something to
+      read
+    - login_if_required() now uses detach() instead of redirect()
+    - last_post_in_list() [Schema::Post] no longer uses slice()
+    - try to display user avatar image in a [% TRY/CATCH %] block, showing
+      nothing if it fails (i.e. user has no avatar)
     - update DFV profile for DFV 4.50
     - logged-in users get bounced from user/signup to the default_uri
     - moved send_email() out to Parley::Communication::Email

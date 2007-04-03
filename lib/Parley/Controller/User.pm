@@ -12,6 +12,8 @@ sub login : Path('/user/login') {
     $c->stash->{'message'} = 'Please enter your username and password';
     # if we have a custom message to use ..
     $c->stash->{'login_message'} = delete( $c->session->{login_message} );
+    # make sure we use the correct template - we sometimes detach() here
+    $c->stash->{template} = 'user/login';
 
     # if we have a username, try to log the user in
     if ( $c->request->param('username') ) {

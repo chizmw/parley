@@ -5,6 +5,8 @@ use warnings;
 use base 'Catalyst::Controller';
 use Data::SpreadPagination;
 
+use Parley::App::Notification qw( :watch );
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Global class data
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -286,6 +288,9 @@ sub _add_new_reply {
     # set the current post
     $c->_current_post( $new_reply );
 
+    # let interested parties know about the new post
+    notify_watchers( $c, $new_reply );
+
     # view the "next post" in the new thread
     $c->detach('next_post');
 }
@@ -547,6 +552,7 @@ sub _update_thread_view {
     $last_post = $c->model('ParleyDB')->resultset('Post')->last_post_in_list(
         $c->stash->{post_list}
     );
+
     # get the timestamp of the last post
     $last_post_timestamp = $last_post->created();
     $c->log->debug( qq{\$last_post_timestamp = $last_post_timestamp} );

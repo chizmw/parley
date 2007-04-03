@@ -94,24 +94,21 @@ foreach my $datecol (qw/created/) {
 
 
 
-
+# we used to use ->slice() but it sopped working on page #2 (!!)
+# this may be slower [not benchmarked] but it works
 sub last_post_in_list : ResultSet {
     my ($self, $post_list) = @_;
+    my ($current_post);
 
-    my $posts_in_list = $post_list->count();
-    my $splice_position = $posts_in_list - 1;
-
-    # get the last post on the page
-    my $slice = $post_list->slice(
-        $splice_position,
-        $splice_position,
-    );
-
-    if (defined $slice->first()) {
-        return $slice->first();
+    while (my $tmp = $post_list->next()) {
+        # do nothing, we're just iterating the list
+        $current_post = $tmp;
+        #warn qq{LOOP: } . ref($current_post);
     }
-
-    return;
+    # return the current post, which is the last one we saw
+    # i.e. the last one in the list
+    #warn qq{CURRENT: } . ref($current_post);
+    return $current_post;
 }
 
 

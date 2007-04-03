@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use base 'DBIx::Class';
+use DateTime::Format::Pg;
 
 __PACKAGE__->load_components('ResultSetManager', "PK::Auto", "Core");
 __PACKAGE__->table("thread_view");
@@ -86,6 +87,56 @@ sub watching_thread : ResultSet {
     );
 
     return $thread_view->watched();
+}
+
+sub notification_list : ResultSet {
+    my ($self, $post) = @_;
+    my ($schema);
+
+    if (not defined $post) {
+        warn 'undefined value passed as $post in notification_list()';
+        return;
+    }
+
+    # make sure we have full object details
+    # [we don't seem to get all the default column data for a new create()]
+    $schema = $self->result_source()->schema();
+    $post = $schema->resultset('Post')->find(
+        post_id => $post->id()
+    );
+    if (not defined $post) {
+        warn 'failed to re-fetch post in notification_list()';
+        return;
+    }
+
+    # find the list of people to notify about this update
+    my $notification_list = $self->search(
+        {
+            # the thread the post belongs to
+            thread          => $post->thread()->id(),
+            # only interested in records where a person is watching
+            watched         => 1,
+            # and they last viewed the thread before the last post
+            timestamp       => {
+                '<',
+                DateTime::Format::Pg->format_datetime(
+                    $post->created()
+                )
+            },
+            # and they've not been notified
+            last_notified   => [
+                {   '=',    undef   },
+                   \'< timestamp'    ,
+            ],
+            # and they aren't the person that created the post itself
+            person          => {
+                '!=',
+                $post->creator()->id(),
+            },
+        }
+    );
+
+    return $notification_list;
 }
 
 1;
