@@ -1,0 +1,16 @@
+[% person.first_name %],
+
+The thread "[% post.thread.subject %]"
+has received a new reply by [% post.creator.forum_name %].
+
+Click here to continue reading the thread:
+
+ [% c.req.base %]thread/next_post?thread=[% post.thread.id %]
+
+Click here to view the latest post in the thread:
+
+ [% c.req.base %]post/view?post=[% post.id %]
+
+Regards,
+
+The [% c.config.name %] team.
