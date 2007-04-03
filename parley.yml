@@ -56,3 +56,8 @@ View::TT:
     # comment out the following line to enable Template::Timer output in your
     # template source
     CONTEXT:        ''
+
+static:
+    ignore_extensions:
+        - asp
+        - php
