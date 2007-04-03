@@ -1,8 +1,5 @@
 <!-- status bar : start -->
 
-<style type="text/css">
-</style>
-
 <script type="text/javascript">
 	function showLoginBox(start){
         var popUp = dojo.lfx.explode(start, 'loginbox', 250, function(n) {
@@ -12,6 +9,19 @@
         });
         popUp.play();
 	}
+</script>
+
+<!-- dojo dialog-setup -->
+<script type="text/javascript">
+    var login_dialog;
+    function init(e) {
+        login_dialog = dojo.widget.byId("login_dialog");
+        var timer = document.getElementById("login_dialog_timer");
+        login_dialog.setTimerNode(timer);
+        var btn = document.getElementById("login_dialog_hider");
+        login_dialog.setCloseControl(btn);
+    }
+    dojo.addOnLoad(init);
 </script>
 
 <table width="100%">
@@ -39,27 +49,7 @@
                         ]</i>
                         [% ELSE %]
             <i>[
-
-            <!-- loginbox -->
-            <div id="loginbox">
-                <form action="user/login" method="post" name="login_form" class="loginbox">
-                    <fieldset>
-                        <label for="username"><b>Username:</b></label>
-                        <input type="text" id="username" name="username" style="width: 15em;" class="input_text" />
-                        <br />
-                        <label for="password"><b>Password:</b></label>
-                        <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
-                        <br />
-                        <button type="submit" value="log in" class="input_button" style="margin-left: 170px;"/>log in</button>
-
-                        <p>
-                        <a href="user/password/forgotten">Forgotten Password</a>
-                        </p>
-                    </fieldset>
-                </form>
-            </div>
-            <a href="javascript:;" onclick="showLoginBox(this)">Login</a>
-            <!-- loginbox -->
+            <a href="javascript:;" onclick="login_dialog.show(); return false;">Login</a>
             |
             <a href="user/signup">Signup</a>
             ]</i>
@@ -73,22 +63,6 @@
         </tr>
 </table>
 
+[% INCLUDE shared/login_dialog %]
+
 <!-- status bar : end -->
-
-<!--
-<script type="text/javascript">
-var dlg0, dlg1, dlg2, dlg3;
-function init(e) {
-	dlg1 = dojo.widget.byId("dialog1");
-	var timer = document.getElementById("timer1");
-	dlg1.setTimerNode(timer);
-	var btn = document.getElementById("hider1");
-	dlg1.setCloseControl(btn);
-}
-dojo.addOnLoad(init);
-</script>
-
-<div dojoType="dialog" id="dialog1" bgColor="red" bgOpacity="0.1" toggle="fade" toggleDuration="250" lifetime="5000">
-	Disappearing in <span id="timer1">3</span>... <a id="hider1" href="#">[X]</a>
-</div>
--->
