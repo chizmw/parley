@@ -14,6 +14,7 @@ sub queue_email :Export( :email ) {
             recipient       => $options->{recipient}->id()      || 0,
             subject         => $options->{headers}{subject}     || q{Subject Line Missing},
             text_content    => $options->{text_content}         || q{Email Body Text Missing},
+            html_content    => $options->{html_content}         || undef,
         }
     );
     return 1; # success
@@ -59,6 +60,23 @@ sub send_email :Export( :email ) {
         }
     );
 
+    # if we have html_content, prepare that for queueing
+    if (defined $options->{template}{html}) {
+        $html_content = $c->view('Plain')->render(
+            $c,
+            $options->{template}{html},
+            {
+                additional_template_paths => [ $c->config->{root} . q{/email_templates}],
+
+                # automatically make the person data available
+                person => $options->{person},
+
+                # pass through extra TT data
+                %{ $options->{template_data} || {} },
+            }
+        );
+    }
+
     # queue the message
     $email_status = $c->queue_email(
         {
@@ -71,6 +89,7 @@ sub send_email :Export( :email ) {
 
             recipient       => $options->{person},
             text_content    => $text_content,
+            html_content    => $html_content,
         },
     );
 
