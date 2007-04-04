@@ -11,6 +11,9 @@ Click here to view the latest post in the thread:
 
  [% c.req.base %]post/view?post=[% post.id %]
 
+Please note: You will not receive any further notifications for this
+thread until you view the post above or any posts created after it.
+
 Regards,
 
 The [% c.config.name %] team.
