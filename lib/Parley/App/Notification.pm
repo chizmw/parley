@@ -26,6 +26,7 @@ sub notify_watchers :Export( :watch ) {
             {
                 template        => {
                     text    => q{thread_update_notify.eml},
+                    html    => q{thread_update_notify.html},
                 },
                 person          => $thread_view_row->person(),
                 headers         => {
