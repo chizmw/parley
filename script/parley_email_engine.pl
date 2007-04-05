@@ -4,24 +4,25 @@ use strict;
 use warnings;
 
 BEGIN {
+    # use the lib directory relative to ourself
+    use FindBin;
+    use lib "$FindBin::Bin/../lib";
+
+    # for building email(s)
+    use MIME::Lite;
+
+    # since we're going to be a daemon ...
+    use Proc::Daemon;
+    use Proc::PID::File;
+
+    # somewhere to send stuff
+    use Sys::Syslog qw( :DEFAULT :standard :macros );
+
+    # our in to the database ...
+    use Parley::Schema;
 }
 
-# use the lib directory relative to ourself
-use FindBin;
-use lib "$FindBin::Bin/../lib";
-
-# for building email(s)
-use MIME::Lite;
-
-# since we're going to be a daemon ...
-use Proc::Daemon;
-use Proc::PID::File;
-
-# somewhere to send stuff
-use Sys::Syslog qw( :DEFAULT :standard :macros );
-
-# our in to the database ...
-use Parley::Schema;
+use version; our $VERSION = qv('0.0.1');
 
 # whether we should be exiting
 our $exit = 0;
@@ -186,20 +187,31 @@ sub send_email {
     return;
 }
 
+sub _common_mail_options {
+    my $queue_item = shift;
+
+    my %options = (
+        From            => $queue_item->sender(),
+        To              => nice_to_header( $queue_item->recipient() ),
+        Subject         => $queue_item->subject(),
+        'X-Application' => qq{parley_email_engine ($VERSION)},
+    );
+
+    return \%options;
+}
+
+
 sub build_text_email {
     my $queue_item = shift;
     my ($msg);
 
     # create a straight-forward text email
     $msg = MIME::Lite->new(
-        From            => $queue_item->sender(),
-        To              => nice_to_header( $queue_item->recipient() ),
-        Subject         => $queue_item->subject(),
-        'X-Application' => 'parley_email_engine',
-        Encoding        => 'quoted-printable',
+        %{ _common_mail_options($queue_item) },
 
         Type        => 'TEXT',
         Data        => $queue_item->text_content(),
+        Encoding    => 'quoted-printable',
     )
         or die $!;
 
@@ -212,10 +224,7 @@ sub build_multipart_email {
 
     # create the multipart container
     $msg = MIME::Lite->new(
-        From            => $queue_item->sender(),
-        To              => nice_to_header( $queue_item->recipient() ),
-        Subject         => $queue_item->subject(),
-        'X-Application' => 'parley_email_engine',
+        %{ _common_mail_options($queue_item) },
 
         Type    => 'multipart/alternative',
     )
