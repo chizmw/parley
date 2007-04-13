@@ -1,0 +1,75 @@
+<h1>Recently Updated Threads</h1>
+
+[%- IF thread_list.count > 0 %]
+<table>
+[% WHILE (thread = thread_list.next) %]
+    <tr>
+        <td width="36">
+        <!-- interesting things about the thread; sticky, locked, etc -->
+        [%- IF thread.sticky %]
+        <img src="static/images/sticky.png" alt="Sticky" title="Sticky Topic" width="16" height="16" />
+        [%- END %]
+        [%- IF thread.locked %]
+        <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
+        [%- END %]
+        </td>
+
+        <td>
+        <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% ForumCode.escape(thread.subject) %]</a>
+        <br />
+        <span class="forum_mini_pager">
+            [%- IF authed_user || mini_pager %]
+            [
+                [%- IF authed_user %]
+                <a href="thread/next_post?thread=[% thread.id %]">Continue</a>
+                [%- END %]
+            ]
+            [%- END %]
+        </span>
+        <span class="topic_creator">created by
+            <span class="post_creator">[% thread.creator.forum_name %]</span>
+        </span>
+        </td>
+
+        <td>
+        [% nicedate(thread.last_post.created) %]
+        <br />
+        <span class="topic_creator">posted by
+            <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
+        </span>
+        </td>
+
+        <td>
+        <a href="forum/view?forum=[%thread.forum.id%]">[% thread.forum.name %]</a>
+        <br />&nbsp;
+        </td>
+
+        <td>
+            [% IF thread.forum_moderators.can_moderate %]
+            <!-- add/remove sticky -->
+            [% IF thread.sticky %]
+            <a href="admin/sticky?thread=[% thread.id %]&sticky=0">{S-}</a>
+            [% ELSE %]
+            <a href="admin/sticky?thread=[% thread.id %]">{S+}</a>
+            [% END %]
+
+            <!-- add/remove locked -->
+            [% IF thread.locked %]
+            <a href="admin/lock?thread=[% thread.id %]&lock=0">{L-}</a>
+            [% ELSE %]
+            <a href="admin/lock?thread=[% thread.id %]">{L+}</a>
+            [% END %]
+
+            <!-- add/removed active -->
+            [% IF thread.active %]{A-}[% ELSE %]{A+}[% END %]
+            [% ELSE %]
+            &nbsp;
+            [% END %]
+            <br />
+        </td>
+    </tr>
+[% END %]
+</table>
+[% ELSE %]
+  No recent threads to display
+[% END %]
