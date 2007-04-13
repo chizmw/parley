@@ -74,6 +74,13 @@ __PACKAGE__->has_many(
   { "foreign.thread" => "self.thread_id" },
 );
 
+__PACKAGE__->has_many(
+    'forum_moderators',
+    'ForumModerator',
+    {
+        'foreign.forum' => 'self.forum',
+    }
+);
 
 
 foreach my $datecol (qw/created/) {
