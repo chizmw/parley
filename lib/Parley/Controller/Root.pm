@@ -121,6 +121,36 @@ sub auto : Private {
         );
     }
 
+
+    ##################################################
+    # if we are logged in and if we have a current_forum, can the (current)
+    # user moderate it?
+    ##################################################
+    if (defined $c->_authed_user() and defined $c->_current_forum()) {
+        # 'topdog' user can moderate anything
+        if (0 == $c->_authed_user()->id()) {
+            $c->log->debug( q{topdog user moderates anything he wants} );
+            $c->stash->{moderator} = 1;
+        }
+        else {
+            # look up person/forum
+            my $results = $c->model('ParleyDB')->resultset('ForumModerator')->find(
+                {
+                    person  => $c->_authed_user()->id(),
+                    forum   => $c->_current_forum()->id(),
+                },
+                {
+                    key     => 'forum_moderator_person_key',
+                }
+            );
+            # if we found something, they must moderate the current forum
+            if ($results) {
+                $c->log->debug( q{user moderates this forum} );
+                $c->stash->{moderator} = 1;
+            }
+        }
+    }
+
     # let things continue ...
     return 1;
 }
