@@ -197,6 +197,13 @@ CREATE TABLE email_queue (
 );
 
 
+-- a table of person/forum to show who's a moderator
+CREATE TABLE forum_moderator (
+    person              integer     not null    references person,
+    forum               integer     not null    references forum,
+
+    unique(person,forum)
+);
 
 
 
