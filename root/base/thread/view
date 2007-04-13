@@ -581,7 +581,12 @@ color:#900;
                 [% INCLUDE shared/pager_advanced %]
                 </small>
                 <br />
+                [% IF current_thread.locked %]
+                <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
+                Thread Locked
+                [% ELSE %]
                 <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                [% END %]
               </td>
             </tr>
             
@@ -657,11 +662,13 @@ color:#900;
               <td class="postbit" bgcolor="#ebeef2"></td>
               <td class="post" align="right" bgcolor="#ffffff" valign="bottom">
                 <span class="small">[% nicedate(post.created) %]</span>
+                [% UNLESS current_thread.locked %]
                 <span class="small_link">
                   <strong>
                     <a class="button" href="thread/reply?post=[% post.id %]">Quote</a>
                   </strong>
                 </span>
+                [% END %]
               </td>
             </tr>
           </tbody>
@@ -669,6 +676,22 @@ color:#900;
 [% END %]
       </td>
     </tr>
+
+    <tr>
+        <td class="right_align" valign="top">
+        <small>
+        [% INCLUDE shared/pager_advanced %]
+        </small>
+        <br />
+        [% IF current_thread.locked %]
+        <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
+        Thread Locked
+        [% ELSE %]
+        <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+        [% END %]
+        </td>
+    </tr>
+
   </tbody>
 </table>
 
