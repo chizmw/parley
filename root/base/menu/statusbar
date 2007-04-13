@@ -1,16 +1,5 @@
 <!-- status bar : start -->
 
-<script type="text/javascript">
-	function showLoginBox(start){
-        var popUp = dojo.lfx.explode(start, 'loginbox', 250, function(n) {
-            /* there's a timing issue here I think as the focus() only works if we have an alert() before it */
-            var something = dojo.byId('username');
-            something.focus();
-        });
-        popUp.play();
-	}
-</script>
-
 <!-- dojo dialog-setup -->
 <script type="text/javascript">
     var login_dialog;
