@@ -13,6 +13,7 @@ BEGIN;
 CREATE TABLE forum_moderator (
     person              integer     not null    references person,
     forum               integer     not null    references forum,
+    can_moderate        boolean     not null    default true,
 
     unique(person,forum)
 );
