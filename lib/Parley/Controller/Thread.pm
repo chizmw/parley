@@ -77,6 +77,44 @@ sub next_post : Local {
     $c->detach('/post/view');
 }
 
+sub recent : Local {
+    my ($self, $c) = @_;
+    my ($where);
+
+    # only search active forums
+    $where->{active} = 1;
+
+    if (defined $c->_current_forum()) {
+        $where->{forum} = $c->_current_forum->id();
+    }
+
+    # XXX
+    # Trying to achieve:
+    # SELECT me.thread_id, me.locked, me.creator, me.subject, me.active,
+    #   me.forum, me.created, me.last_post, me.sticky, me.post_count,
+    #   me.view_count, forum_moderator.can_moderate
+    # FROM thread me
+    # LEFT JOIN forum_moderator ON ( me.forum = forum_moderator.forum )
+    # JOIN post last_post ON ( last_post.post_id = me.last_post )
+    # ORDER BY sticky DESC, last_post.created DESC;
+
+    # get a list of threads, most recently updated first
+    $c->stash->{thread_list} = $c->model('ParleyDB')->resultset('Thread')->search(
+        $where,
+        {
+            join        => [
+                'last_post',
+                'forum_moderators',
+            ],
+            order_by    => 'last_post.created DESC',
+        }
+    );
+
+    $c->log->debug( $c->stash->{thread_list}->count() );
+
+    return;
+}
+
 sub reply : Local {
     my ($self, $c) = @_;
 
@@ -85,6 +123,13 @@ sub reply : Local {
 
     # make sure we're authenticated
     # XXX
+
+    # can't replay to a locked thread
+    if ($c->_current_thread()->locked()) {
+        #die q{can't reply to a locked thread!};
+        $c->stash->{error}{message} = q{You can't reply to a locked thread};
+        return;
+    };
 
     # if we have a current post, then we're performing a quoted reply
     # (otherwise we should have the thread that we're adding a reply to)
