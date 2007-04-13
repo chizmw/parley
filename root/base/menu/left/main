@@ -1,5 +1,16 @@
+<p>
+    <!-- General Stuff -->
+    <a href="thread/recent">Recent Threads</a>
+</p>
 
-<!-- My -->
+<p>
+    <!-- My -->
 
-<!-- Preferences -->
-<a href="my/preferences">Preferences</a>
+    <!-- Preferences -->
+    <a href="my/preferences">Preferences</a>
+</p>
+
+<p>
+    <!-- Admin -->
+    <a href="admin">Admin</a>
+</p>
