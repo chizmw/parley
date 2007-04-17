@@ -79,16 +79,19 @@ sub next_post : Local {
 
 sub recent : Local {
     my ($self, $c) = @_;
-    my ($where);
+    my ($where, @join);
+
+    # always want to join with last_post table
+    @join = qw(last_post);
 
     # only search active forums
     $where->{active} = 1;
 
+    # if we're only interested in a given forum
     if (defined $c->_current_forum()) {
         $where->{forum} = $c->_current_forum->id();
     }
 
-    # XXX
     # Trying to achieve:
     # SELECT me.thread_id, me.locked, me.creator, me.subject, me.active,
     #   me.forum, me.created, me.last_post, me.sticky, me.post_count,
@@ -97,21 +100,44 @@ sub recent : Local {
     # LEFT JOIN forum_moderator ON ( me.forum = forum_moderator.forum )
     # JOIN post last_post ON ( last_post.post_id = me.last_post )
     # ORDER BY sticky DESC, last_post.created DESC;
+    #
+    # Version 2 of the SQL we're aiming for:
+    #   SELECT  thread_id,post_count,active,sticky,person,can_moderate
+    #   FROM    thread me
+    #       JOIN post last_post
+    #       ON ( last_post.post_id = me.last_post )
+    #
+    #       LEFT JOIN forum_moderator forum_moderators
+    #       ON (    forum_moderators.forum = me.forum
+    #               and
+    #               forum_moderators.person = NULL)
+    #   WHERE ( active = true );
+
+
+    # if we have an authed_user, we can see if they're a moderator for given
+    # threads
+    # XXX
+#    if (defined $c->_authed_user()) {
+#        # limit to person we're authed as
+#        $where->{'forum_moderators.person'} = $c->_authed_user()->id();
+#        # add the new join that's required
+#        push @join, 'forum_moderators';
+#    }
+#    else {
+#        $where->{'forum_moderators.person'} = undef;
+#        push @join, 'forum_moderators';
+#    }
 
     # get a list of threads, most recently updated first
     $c->stash->{thread_list} = $c->model('ParleyDB')->resultset('Thread')->search(
         $where,
         {
-            join        => [
-                'last_post',
-                'forum_moderators',
-            ],
+            join        => \@join,
             order_by    => 'last_post.created DESC',
         }
     );
 
     $c->log->debug( $c->stash->{thread_list}->count() );
-
     return;
 }
 
