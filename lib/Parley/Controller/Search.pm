@@ -4,6 +4,12 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+sub index : Private {
+    my ( $self, $c ) = @_;
+
+    $c->response->body('Matched Parley::Controller::Search in Search.');
+}
+
 =head1 NAME
 
 Parley::Controller::Search - Catalyst Controller
@@ -14,23 +20,11 @@ Catalyst Controller.
 
 =head1 METHODS
 
-=cut
-
-
 =head2 index 
-
-=cut
-
-sub index : Private {
-    my ( $self, $c ) = @_;
-
-    $c->response->body('Matched Parley::Controller::Search in Search.');
-}
-
 
 =head1 AUTHOR
 
-Chisel Wright,,,
+Chisel Wright C<< chiselwright@users.berlios.de> >>
 
 =head1 LICENSE
 
