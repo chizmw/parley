@@ -1,0 +1,28 @@
+<!-- SEARCH DIALOG -->
+<!-- dojo dialog-setup -->
+<script type="text/javascript">
+    var search_dialog;
+    function init_search_dialog(e) {
+        search_dialog = dojo.widget.byId("search_dialog");
+        var timer = document.getElementById("search_dialog_timer");
+        search_dialog.setTimerNode(timer);
+        var btn = document.getElementById("search_dialog_hider");
+        search_dialog.setCloseControl(btn);
+    }
+    dojo.addOnLoad(init_search_dialog);
+</script>
+
+<div dojoType="dialog" id="search_dialog" bgColor="#606060" bgOpacity="0.4" toggle="fade" toggleDuration="250">
+    <form action="search/forum" method="post" name="search_form" class="search_dialog_form">
+        <fieldset>
+            <label for="search_terms"><b>Search For:</b></label>
+            <input type="text" id="search_terms" name="search_terms" style="width: 25em;" class="input_text" />
+            <br />
+
+            <p align="right">
+                <a id="search_dialog_hider" href="javascript:;">Close</a><br />
+            </p>
+        </fieldset>
+    </form>
+</div>
+<!-- SEARCH DIALOG -->

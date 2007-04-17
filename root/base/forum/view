@@ -2,20 +2,7 @@
 
 <p style="font-size: small;">
 <a href="thread/add?forum=[% current_forum.id %]">[Start A New Topic]</a>
-
-<a onclick="new Effect.Appear('searchbox', { duration:0.2 }); $('username').focus(); return false;" href="forum/search">[Search]</a>
-</p>
-<!-- we have to put the div outside the table, otherwise we get trapped inside it! -->
-<div id="searchbox" style="display: none">
-    <form action="user/login" method="post" name="search_form" class="searchbox">
-        <fieldset>
-            <label for="search"><b>Find:</b></label>
-            <input type="text" id="search" name="search" class="input_text" />
-            <button type="submit" value="search" class="input_button" />search</button>
-        </fieldset>
-    </form>
-</div>
-<!-- status bar : end -->
+<a href="javascript:;" onclick="search_dialog.show(); return false;">[Search]</a>
 
 [%- IF thread_list.count > 0 %]
 <table>
@@ -99,3 +86,5 @@
 [% ELSE %]
   No active threads in this forum
 [% END %]
+
+[% INCLUDE shared/search_dialog %]
