@@ -1,4 +1,18 @@
 <!-- login dialog -->
+
+<!-- dojo dialog-setup -->
+<script type="text/javascript">
+    var login_dialog;
+    function init_login_dialog(e) {
+        login_dialog = dojo.widget.byId("login_dialog");
+        var timer = document.getElementById("login_dialog_timer");
+        login_dialog.setTimerNode(timer);
+        var btn = document.getElementById("login_dialog_hider");
+        login_dialog.setCloseControl(btn);
+    }
+    dojo.addOnLoad(init_login_dialog);
+</script>
+
 <div dojoType="dialog" id="login_dialog" bgColor="#606060" bgOpacity="0.4" toggle="fade" toggleDuration="250">
     <form action="user/login" method="post" name="login_form" class="login_dialog_form">
         <fieldset>
