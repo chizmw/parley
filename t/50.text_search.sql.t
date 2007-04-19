@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Data::Dump qw(pp);
 
-use Test::More tests => 36;
+use Test::More tests => 42;
 
 BEGIN {
     use_ok('Text::Search::SQL');
@@ -59,7 +59,7 @@ is( $sp->{search_term}, q{went to mow}, q{search_term is 'went to mow'} );
 my @data = (
     {
         input   => q{isn't},
-        output  => [ q{isn't} ],
+        parse  => [ q{isn't} ],
 
         search_fields   => [ qw/subject/ ],
         sql_where       => [
@@ -68,7 +68,7 @@ my @data = (
     },
     {
         input   => q{went to mow},
-        output  => ['went', 'to', 'mow'],
+        parse  => ['went', 'to', 'mow'],
 
         search_fields   => [ qw/subject/ ],
         sql_where       => [
@@ -77,7 +77,7 @@ my @data = (
     },
     {
         input   => q{"went to" mow},
-        output  => ['went to', 'mow'],
+        parse  => ['went to', 'mow'],
 
         search_fields   => [ qw/subject/ ],
         sql_where       => [
@@ -86,37 +86,37 @@ my @data = (
     },
     {
         input   => q{'went to' mow},
-        output  => [ q{'went}, q{to'}, q{mow} ],
+        parse  => [ q{'went}, q{to'}, q{mow} ],
     },
     {
         input   => q{'went to' "mow a meadow"},
-        output  => [ q{'went}, q{mow a meadow}, q{to'}],
+        parse  => [ q{'went}, q{mow a meadow}, q{to'}],
     },
     {
         input   => q{went to' mow a meadow"},
-        output  => [ q{a}, q{meadow"}, q{mow}, q{to'}, q{went} ],
+        parse  => [ q{a}, q{meadow"}, q{mow}, q{to'}, q{went} ],
     },
     {
         input   => q{went to' mow a "meadow"'},
-        output  => [ q{'}, q{a}, q{meadow}, q{mow}, q{to'}, q{went} ],
+        parse  => [ q{'}, q{a}, q{meadow}, q{mow}, q{to'}, q{went} ],
     },
     {
         input   => q{went to" mow a 'meadow'"},
-        output  => [ q{ mow a 'meadow'}, q{to}, q{went} ],
+        parse  => [ q{ mow a 'meadow'}, q{to}, q{went} ],
     },
     {
         input   => q{isn't it nice to be here?},
-        output  => [ q{isn't}, q{it}, q{nice}, q{to}, q{be}, q{here?} ],
+        parse  => [ q{isn't}, q{it}, q{nice}, q{to}, q{be}, q{here?} ],
     },
     {
         input   => q{"isn't it nice to be here?"},
-        output  => [ q{isn't it nice to be here?} ],
+        parse  => [ q{isn't it nice to be here?} ],
     },
 
     # some tests geared to the returned where data
     {
         input   => q{alpha beta},
-        output  => [ qw(alpha beta) ],
+        parse  => [ qw(alpha beta) ],
 
         search_fields   => [ qw(subject) ],
         sql_where       => [
@@ -125,12 +125,36 @@ my @data = (
     },
     {
         input   => q{alpha beta},
-        output  => [ qw(alpha beta) ],
+        parse  => [ qw(alpha beta) ],
 
         search_fields   => [ qw(subject message) ],
         sql_where       => [
             subject => { '=' => [ qw(alpha beta) ] },
             message => { '=' => [ qw(alpha beta) ] },
+        ],
+    },
+
+    # search type tests
+    {
+        input   => q{haven't},
+        chunks  => [ q{haven't} ],
+        parse   => [ q{%haven't%} ],
+
+        search_fields   => [ qw/subject/ ],
+        search_type     => q{like},
+        sql_where       => [
+            subject => { 'like' => [ q{%haven't%} ] },
+        ],
+    },
+    {
+        input   => q{alpha beta gamma},
+        parse   => [ qw(alpha beta gamma) ],
+
+        search_fields   => [ qw(subject message) ],
+        search_type     => q{like},
+        sql_where       => [
+            subject => { 'like' => [ qw(%alpha% %beta% %gamma%) ] },
+            message => { 'like' => [ qw(%alpha% %beta% %gamma%) ] },
         ],
     },
 );
@@ -139,9 +163,11 @@ my @data = (
 foreach my $data (@data) {
     # _parse_chunks()
     my $chunks = $sp->_parse_chunks( $data->{input} );
+    my $expected = $data->{chunks} || $data->{parse};
+
     is_deeply(
-        [ sort @{ $data->{output} } ],
         [ sort @{ $chunks } ],
+        [ sort @{ $expected } ],
         qq{_parse_chunks: $data->{input}}
     );
 
@@ -152,12 +178,27 @@ foreach my $data (@data) {
 
     # parse()
     $sp->set_search_term( $data->{input} );
+    # if we have a search_type, set it
+    if (defined $data->{search_type}) {
+        $sp->set_search_type( $data->{search_type} );
+        is (
+            $sp->get_search_type(),
+            $data->{search_type},
+            qq{search_type set correctly for $data->{input}}
+        )
+    };
     $sp->parse();
-    is_deeply(
-        $sp->{chunks},
-        $chunks,
-        qq{\$sp->{chunks} matches _parse_chunks($data->{input})}
-    );
+    # if we're not doing a like search, we should have matching chunks
+    if( not defined $data->{search_type}
+            or
+        $data->{search_type} !~ m{\A(?:like|ilike)\z}xms
+    ) {
+        is_deeply(
+            $sp->{chunks},
+            $chunks,
+            qq{\$sp->{chunks} matches _parse_chunks($data->{input})}
+        );
+    }
 
     # where clause
     if (defined $data->{sql_where}) {
