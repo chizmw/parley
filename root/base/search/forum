@@ -1,0 +1,11 @@
+<h1>Search Results</h1>
+
+<h2>Searching for <em>[% search_terms.raw || '[nothing]' %]</em> in <em>[% current_forum.name %]</em></h2>
+
+[% IF search_results %]
+    [% WHILE (result = search_results.next) %]
+    [% result.subject %]<br />
+    [% END %]
+[% ELSE %]
+No results found matching specified terms.
+[% END %]
