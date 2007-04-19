@@ -3,8 +3,9 @@
 <h2>Searching for <em>[% search_terms.raw || '[nothing]' %]</em> in <em>[% current_forum.name %]</em></h2>
 
 [% IF search_results %]
+[% search_results.count %]<br />
     [% WHILE (result = search_results.next) %]
-    [% result.subject %]<br />
+    [% ForumCode.escape(result.subject) || ForumCode.escape(result.thread.subject) %]<br />
     [% END %]
 [% ELSE %]
 No results found matching specified terms.

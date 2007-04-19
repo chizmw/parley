@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+use Text::Search::SQL;
+
 sub index : Private {
     my ( $self, $c ) = @_;
 
@@ -12,7 +14,7 @@ sub index : Private {
 
 sub forum :Local {
     my ($self, $c) = @_;
-    my ($search_terms, $resultset);
+    my ($search_terms, $resultset, $tss, $search_where, $where);
 
     # the search terms
     $search_terms = $c->request->param('search_terms');
@@ -20,12 +22,30 @@ sub forum :Local {
     # save the search terms for the template to display
     $c->stash->{search_terms}{raw} = $search_terms;
 
+    # get a suitable where-clause to use based on the search terms
+    $tss = Text::Search::SQL->new(
+        {
+            search_term     => $search_terms,
+            search_type     => q{ilike},
+            search_fields   => [ qw(subject message) ],
+        }
+    );
+    $tss->parse();
+    $search_where = $tss->get_sql_where();
+    $c->log->dumper( $search_where );
+
+    # build the where clause to pass to our search
+    $where = {
+        thread  => { '>', 0 },
+        # we want to OR the items in $sql_where
+        -or => $search_where,
+    };
+    $c->log->dumper( $where );
+
     # search for any posts in the forum with the search_terms (phrase) in the
     # subject or body
     $resultset = $c->model('ParleyDB')->resultset('Post')->search(
-        {
-            subject     => { 'ilike' => "%$search_terms%" },
-        }
+        $where,
     );
 
     if ($resultset->count() > 0) {
