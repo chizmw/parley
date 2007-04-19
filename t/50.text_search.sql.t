@@ -21,6 +21,8 @@ can_ok('Text::Search::SQL',
         get_search_term
         set_search_fields
         get_search_fields
+        set_search_type
+        get_search_type
         set_chunks
         get_chunks
         set_sql_where
@@ -39,7 +41,11 @@ isa_ok($sp, q{Text::Search::SQL});
 is( $sp->{search_term}, undef, q{undefined search_term} );
 
 # create a new object with a search_term in the call to new
-$sp = Text::Search::SQL->new( { search_term => 'one man' } );
+$sp = Text::Search::SQL->new(
+    {
+        search_term => 'one man'
+    }
+);
 isa_ok($sp, q{Text::Search::SQL});
 
 # calling with no argument means we should have default attributes
@@ -56,27 +62,27 @@ my @data = (
         output  => [ q{isn't} ],
 
         search_fields   => [ qw/subject/ ],
-        sql_where       => {
-            subject => [ q{isn't} ],
-        },
+        sql_where       => [
+            subject => { '=' => [ q{isn't} ] },
+        ],
     },
     {
         input   => q{went to mow},
         output  => ['went', 'to', 'mow'],
 
         search_fields   => [ qw/subject/ ],
-        sql_where       => {
-            subject => [ qw(went to mow) ],
-        },
+        sql_where       => [
+            subject => { '=' => [ qw(went to mow) ] },
+        ],
     },
     {
         input   => q{"went to" mow},
         output  => ['went to', 'mow'],
 
         search_fields   => [ qw/subject/ ],
-        sql_where       => {
-            subject => [ q{went to}, q{mow} ],
-        },
+        sql_where       => [
+            subject => { '=' => [ q{went to}, q{mow} ] },
+        ],
     },
     {
         input   => q{'went to' mow},
@@ -113,19 +119,19 @@ my @data = (
         output  => [ qw(alpha beta) ],
 
         search_fields   => [ qw(subject) ],
-        sql_where       => {
-            subject => [ qw(alpha beta) ],
-        },
+        sql_where       => [
+            subject => { '=' => [ qw(alpha beta) ] },
+        ],
     },
     {
         input   => q{alpha beta},
         output  => [ qw(alpha beta) ],
 
         search_fields   => [ qw(subject message) ],
-        sql_where       => {
-            subject => [ qw(alpha beta) ],
-            message => [ qw(alpha beta) ],
-        },
+        sql_where       => [
+            subject => { '=' => [ qw(alpha beta) ] },
+            message => { '=' => [ qw(alpha beta) ] },
+        ],
     },
 );
 

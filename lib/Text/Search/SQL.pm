@@ -10,6 +10,7 @@ sub new {
 
     my $defaults = {
         search_term     => undef,
+        search_type     => '=',
         search_fields   => [],
     };
 
@@ -46,6 +47,16 @@ sub get_search_term {
     return $self->{search_term};
 }
 
+sub set_search_type {
+    my ($self, $value) = @_;
+
+    $self->{search_type} = $value;
+}
+sub get_search_type {
+    my ($self) = @_;
+    return $self->{search_type};
+}
+
 sub set_search_fields {
     my ($self, $value) = @_;
 
@@ -78,7 +89,9 @@ sub get_sql_where {
 
 sub parse {
     my ($self) = @_;
-    my ($fields);
+    my ($fields, $clauses, $search_type, $chunks);
+
+    $search_type = $self->get_search_type();
 
     # split the search term into its relevant chunks
     $self->set_chunks( $self->_parse_chunks( $self->{search_term} ) );
@@ -90,9 +103,21 @@ sub parse {
         return;
     }
 
-    foreach my $field ( @{$fields} ) {
-        $self->{sql_where}->{ $field } = $self->get_chunks();
+    # get the chunks
+    $chunks = $self->get_chunks();
+    # if we're doing a "like" match, then wrap the terms in %...%
+    if ($search_type =~ m{\A(?:ilike|like)\z}xms) {
+        @{ $chunks } = map (qq{%$_%}, @{ $chunks });
     }
+
+    # build there where-clause
+    foreach my $field ( @{$fields} ) {
+        push @{ $clauses },
+            $field => { $search_type => $chunks }
+        ;
+    }
+
+    $self->{sql_where} = $clauses;
 
     return 1;
 }
