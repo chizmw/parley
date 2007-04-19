@@ -14,6 +14,8 @@
 
 <div dojoType="dialog" id="search_dialog" bgColor="#606060" bgOpacity="0.4" toggle="fade" toggleDuration="250">
     <form action="search/forum" method="post" name="search_form" class="search_dialog_form">
+        <input type="hidden" name="forum" value="[% current_forum %]" />
+
         <fieldset>
             <label for="search_terms"><b>Search For:</b></label>
             <input type="text" id="search_terms" name="search_terms" style="width: 25em;" class="input_text" />
