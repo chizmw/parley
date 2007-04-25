@@ -14,17 +14,31 @@
 
 <div dojoType="dialog" id="search_dialog" bgColor="#606060" bgOpacity="0.4" toggle="fade" toggleDuration="250">
     <form action="search/forum" method="post" name="search_form" class="search_dialog_form">
-        <input type="hidden" name="forum" value="[% current_forum %]" />
-
         <fieldset>
             <label for="search_terms"><b>Search For:</b></label>
             <input type="text" id="search_terms" name="search_terms" style="width: 25em;" class="input_text" />
             <br />
-
-            <p align="right">
-                <a id="search_dialog_hider" href="javascript:;">Close</a><br />
-            </p>
         </fieldset>
+
+        <fieldset>
+            <label for="search_forum"><em>in:</em></label>
+            <select id="search_forum" name="search_forum">
+                [% IF current_forum %]<option value="[% current_forum.id %]">Current Forum</option>[% END %]
+                <option value="">All Forums</option>
+                [% IF available_forums %]
+                [% WHILE (forum = available_forums.next) %]
+                <option value="[% forum.id %]">[% forum.name %]</option>
+                [% END %]
+                [% END %]
+            </select>
+            <br />
+        </fieldset>
+
+        <input type="submit" />
+
+        <p align="right">
+            <a id="search_dialog_hider" href="javascript:;">Close</a><br />
+        </p>
     </form>
 </div>
 <!-- SEARCH DIALOG -->

@@ -1,12 +1,25 @@
 <h1>Search Results</h1>
 
-<h2>Searching for <em>[% search_terms.raw || '[nothing]' %]</em> in <em>[% current_forum.name %]</em></h2>
+<h2>Searching for <em>[% search_terms.raw || '[nothing]' %]</em> in <em>[% search_forum.name || 'all forums' %]</em></h2>
 
 [% IF search_results %]
-[% search_results.count %]<br />
+    <table>
     [% WHILE (result = search_results.next) %]
-    [% ForumCode.escape(result.subject) || ForumCode.escape(result.thread.subject) %]<br />
+    <tr>
+        <td>[% ForumCode.escape(result.subject) || ForumCode.escape(result.thread.subject) %]</td>
+    </tr>
     [% END %]
+
+    <tr>
+        <td class="right_align" valign="top">
+        <small>
+        [% INCLUDE shared/pager_advanced %]
+        </small>
+        </td>
+    </tr>
+
+
+    </table>
 [% ELSE %]
 No results found matching specified terms.
 [% END %]

@@ -18,6 +18,16 @@ __PACKAGE__->config->{namespace} = '';
 sub auto : Private {
     my ($self, $c) = @_;
 
+    # get a list of (all/available) forums
+    $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(
+        {
+            active  => 1,
+        },
+        {
+            order_by    => 'name ASC',
+        }
+    );
+
     ############################################################
     # if we have a user ... fetch some info (if we don't already have it)
     ############################################################

@@ -186,7 +186,6 @@ sub reply : Local {
 sub view : Local {
     my ($self, $c) = @_;
 
-
     # page to show - either a param, or show the first
     $c->stash->{current_page}= $c->request->param('page') || 1;
 
