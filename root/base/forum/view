@@ -61,30 +61,29 @@
     </td>
 
     [% IF moderator %]
-    <td>
-    <!-- add/remove sticky -->
-    [% IF thread.sticky %]
-    <a href="admin/sticky?thread=[% thread.id %]&sticky=0">{S-}</a>
-    [% ELSE %]
-    <a href="admin/sticky?thread=[% thread.id %]">{S+}</a>
-    [% END %]
+        <td>
+            <!-- add/remove sticky -->
+            [% IF thread.sticky %]
+            <a href="admin/sticky?thread=[% thread.id %]&sticky=0">{S-}</a>
+            [% ELSE %]
+            <a href="admin/sticky?thread=[% thread.id %]">{S+}</a>
+            [% END %]
 
-    <!-- add/remove locked -->
-    [% IF thread.locked %]
-    <a href="admin/lock?thread=[% thread.id %]&lock=0">{L-}</a>
-    [% ELSE %]
-    <a href="admin/lock?thread=[% thread.id %]">{L+}</a>
-    [% END %]
+            <!-- add/remove locked -->
+            [% IF thread.locked %]
+            <a href="admin/lock?thread=[% thread.id %]&lock=0">{L-}</a>
+            [% ELSE %]
+            <a href="admin/lock?thread=[% thread.id %]">{L+}</a>
+            [% END %]
 
-    <!-- add/removed active -->
-    [% IF thread.active %]{A-}[% ELSE %]{A+}[% END %]
-    </td>
+            <!-- add/removed active -->
+            [% IF thread.active %]{A-}[% ELSE %]{A+}[% END %]
+        </td>
     [% END %]
-  </tr>
+    </tr>
   [% END %]
 </table>
 [% ELSE %]
   No active threads in this forum
 [% END %]
 
-[% INCLUDE shared/search_dialog %]

@@ -23,12 +23,16 @@
         <fieldset>
             <label for="search_forum"><em>in:</em></label>
             <select id="search_forum" name="search_forum">
-                [% IF current_forum %]<option value="[% current_forum.id %]">Current Forum</option>[% END %]
-                <option value="">All Forums</option>
+                <optgroup label="General">
+                    [% IF current_forum %]<option value="[% current_forum.id %]">Current Forum</option>[% END %]
+                    <option value="">All Forums</option>
+                </optgroup>
                 [% IF available_forums %]
+                <optgroup label="Forums">
                 [% WHILE (forum = available_forums.next) %]
                 <option value="[% forum.id %]">[% forum.name %]</option>
                 [% END %]
+                </optgroup>
                 [% END %]
             </select>
             <br />

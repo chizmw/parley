@@ -14,3 +14,9 @@
     <!-- Admin -->
     <a href="admin">Admin</a>
 </p>
+
+<p>
+    <!-- Searching -->
+    <a href="javascript:;" onclick="search_dialog.show(); return false;">Search</a>
+    [% INCLUDE shared/search_dialog %]
+</p>

@@ -75,6 +75,14 @@
     </td>
   </tr>
 
+  [% IF moderator %]
+  <tr>
+    <td colspan="2" align="right">
+        <input type="checkbox" name="lock_thread" value="1" /> Lock thread after posting
+    </td>
+  </tr>
+  [% END %]
+
   <tr>
     <td colspan="2" style="text-align: center;">
       <input type="submit" value="Add Reply"      name="post_reply"    class="input_button" />

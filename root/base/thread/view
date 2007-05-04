@@ -678,6 +678,26 @@ color:#900;
     </tr>
 
     <tr>
+        [% IF moderator %]
+            <td>
+                <!-- add/remove sticky -->
+                [% IF current_thread.sticky %]
+                <a href="admin/sticky?thread=[% current_thread.id %]&sticky=0">{S-}</a>
+                [% ELSE %]
+                <a href="admin/sticky?thread=[% current_thread.id %]">{S+}</a>
+                [% END %]
+
+                <!-- add/remove locked -->
+                [% IF current_thread.locked %]
+                <a href="admin/lock?thread=[% current_thread.id %]&lock=0">{L-}</a>
+                [% ELSE %]
+                <a href="admin/lock?thread=[% current_thread.id %]">{L+}</a>
+                [% END %]
+
+                <!-- add/removed active -->
+                [% IF current_thread.active %]{A-}[% ELSE %]{A+}[% END %]
+            </td>
+        [% END %]
         <td class="right_align" valign="top">
         <small>
         [% INCLUDE shared/pager_advanced %]

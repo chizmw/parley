@@ -4,9 +4,28 @@
 
 [% IF search_results %]
     <table>
+    <tr>
+        <td>Subject</td>
+        <td>Snippet</td>
+    </tr>
+
     [% WHILE (result = search_results.next) %]
     <tr>
-        <td>[% ForumCode.escape(result.subject) || ForumCode.escape(result.thread.subject) %]</td>
+        <td>
+            <a href="/post/view?post=[% result.id %]">[% ForumCode.escape(result.subject) || ForumCode.escape(result.thread.subject) %]</a>
+        </td>
+        <td>
+            <em>
+            [% context = result.match_context(search_terms.raw) %]
+            [% IF context %]
+            [% context %]
+            [% ELSE %]
+            [% FILTER truncate(60) %]
+            [% result.message %]
+            [% END %]
+            [% END %]
+            </em>
+        </td>
     </tr>
     [% END %]
 
@@ -17,8 +36,6 @@
         </small>
         </td>
     </tr>
-
-
     </table>
 [% ELSE %]
 No results found matching specified terms.
