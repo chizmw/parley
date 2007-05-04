@@ -19,7 +19,13 @@ log_levels:
     - 'error'
     - 'fatal'
 
-
+Model::ParleyDB:
+    schema_class: 'Parley::Schema'
+    connect_info:   
+        - 'dbi:Pg:dbname=parley;host=localhost'
+        - 'parley'
+        - ''
+        - AutoCommit: 1
 
 # emails; perldoc Catalyst::Plugin::Email
 # this passes options as an array :(
