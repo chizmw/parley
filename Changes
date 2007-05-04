@@ -2,6 +2,7 @@ This file documents the revision history for Parley.
 
     - added initial moderator code
     - added moderator actions on forum/thread views (lock/stick)
+    - moderators can lock threads at posting time (lock + reason)
     - raise error when trying to reply to a locked thread (prevent "Evil Hackers" replying)
     - hide Reply and Quote buttons for locked thread
     - added pager and reply button to bottom of thread/view
@@ -9,6 +10,8 @@ This file documents the revision history for Parley.
     - added thread/recent for list of all recently updated threads
     - added thread/recent?forum=X for list of all recently updated threads in a
       given forum
+    - post_count for forums now incremented with new posts
+    - basic search functionality added
 
 0.50    Thu Apr  5 08:31:04 BST 2007
 
