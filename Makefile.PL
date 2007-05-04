@@ -19,14 +19,17 @@ requires 'Catalyst::Plugin::Session::State::Cookie';
 requires 'Catalyst::Plugin::Session::Store::FastMmap';
 requires 'Catalyst::Plugin::StackTrace';
 requires 'Catalyst::Plugin::Static::Simple';
-requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::View::TT';
 requires 'Data::FormValidator' => '4.50';
+requires 'Data::SpreadPagination';
 requires 'DateTime';
 requires 'DateTime::Format::Pg';
 requires 'DateTime::TimeZone';
 requires 'Email::Valid';
+requires 'List::MoreUtils';
 requires 'Perl6::Export::Attrs';
+requires 'Readonly';
+requires 'Text::Context::EitherSide';
 requires 'YAML'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
 catalyst;
