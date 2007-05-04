@@ -4,8 +4,11 @@ package Parley::Schema::Post;
 
 use strict;
 use warnings;
+use Data::Dump qw(pp);
 
 use DateTime::Format::Pg;
+use Text::Context::EitherSide;
+use Text::Search::SQL;
 
 use base 'DBIx::Class';
 
@@ -170,6 +173,29 @@ sub thread_position : ResultSet {
     return $position;
 }
 
+# accessor to use in search results to return context matches
+sub match_context {
+    my $self = shift;
+    my $search_terms = shift;
+    my ($tss, $terms);
+
+    if (not defined $search_terms) {
+        return;
+    }
+
+    $tss = Text::Search::SQL->new(
+        {
+            search_term     => $search_terms,
+        }
+    );
+    $tss->parse();
+    $terms = $tss->get_chunks();
+    warn pp($terms);
+    warn pp($self->message());
+
+    my $context = Text::Context::EitherSide->new( $self->message(), context => 3 );
+    return $context->as_string( @{ $terms } );
+}
 
 1;
 __END__
