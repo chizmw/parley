@@ -22,6 +22,9 @@ requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::View::TT';
 requires 'Data::FormValidator' => '4.50';
+requires 'DateTime';
+requires 'DateTime::Format::Pg';
+requires 'DateTime::TimeZone';
 requires 'Email::Valid';
 requires 'Perl6::Export::Attrs';
 requires 'YAML'; # This should reflect the config file format you've chosen
