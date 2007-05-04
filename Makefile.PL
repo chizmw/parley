@@ -20,6 +20,7 @@ requires 'Catalyst::Plugin::Session::Store::FastMmap';
 requires 'Catalyst::Plugin::StackTrace';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Plugin::Static::Simple';
+requires 'Catalyst::View::TT';
 requires 'Data::FormValidator' => '4.50';
 requires 'Email::Valid';
 requires 'Perl6::Export::Attrs';
