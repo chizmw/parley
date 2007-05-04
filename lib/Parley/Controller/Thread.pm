@@ -25,7 +25,7 @@ my %dfv_profile_for = (
     # DFV validation profile for adding a reply to an existing topic
     new_reply => {
         required    => [qw( thread_message )],
-        optional    => [qw( thread_subject )],
+        optional    => [qw( thread_subject lock_thread )],
         filters     => [qw( trim )],
     },
 );
@@ -479,6 +479,12 @@ sub _increase_post_count {
             $post_count + 1
         );
         $thread->update();
+
+        # increase the number of posts for the forum
+        $thread->forum->post_count(
+            ($thread->forum->post_count() || 0) + 1
+        );
+        $thread->forum->update;
     };
     # deal with any transaction errors
     if ($@) {                                   # Transaction failed
@@ -713,6 +719,13 @@ sub _txn_add_new_reply {
     # update information about the poster (count, etc)
     $self->_update_person_post_info($c, $new_post);
 
+    # would we like to lock the thread?
+    if ($c->form->valid->{lock_thread} and $c->stash->{moderator}) {
+        $c->log->debug( q{locking thread after replying} );
+        $new_post->thread->locked(1);
+        $new_post->thread->update;
+    }
+
     # update the records
     $new_post->update;
 
@@ -750,6 +763,10 @@ sub _txn_add_new_thread {
 
     # we've got one post in our new thread
     $new_thread->post_count( 1 );
+    $new_thread->forum->post_count(
+        ($new_thread->forum->post_count() || 0) + 1
+    );
+
 
     # update information about the most recent forum/thread post
     $self->_update_last_post($c, $new_post);
@@ -759,6 +776,7 @@ sub _txn_add_new_thread {
 
     # update the records
     $new_thread->update;
+    $new_thread->forum->update;
     $new_post->update;
 
     # return the new topic/thread
