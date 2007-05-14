@@ -5,7 +5,7 @@
 
 <!-- Header : Start -->
 <html>
-	<head>
+    <head>
         <base href="[% c.req.base %]" />
         <title>
             [% c.config.name %]
@@ -26,15 +26,12 @@
              : [% current_forum.name %]
             [% END %]
         </title>
-		<meta name="author" content="Chisel Wright" />
-                <link rel="stylesheet" title="Default" href="css/default.css" />
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <meta name="author" content="Chisel Wright" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" title="Default" href="css/common.css" />
+        <link rel="stylesheet" title="Default" href="css/layout23.css" />
 
-        <!-- MARKER -->
-        <script type="text/javascript" src="prototype.js"></script>
-        <script type="text/javascript" src="controls.js"></script>
-        <script type="text/javascript" src="effects.js"></script>
-        <script type="text/javascript" src="dragdrop.js"></script>
+        <link rel="alternate stylesheet" title="Layout 33" href="css/layout33.css" />
 
         <!-- Dojo Magic -->
         <script type="text/javascript" src="/static/magic/dojo.js"></script>
@@ -43,21 +40,15 @@
             dojo.require("dojo.widget.Dialog");
             dojo.require("dojo.widget.Button");
         </script>
-	</head>
+    </head>
 
-	<div id="top">
-	</div>
+    <body>
+        <div id="container">
+            <div id="header">
+                <h1>Header</h1>
+            </div><!-- header div -->
 
-	<div id="statusbar">
-		[% INCLUDE menu/statusbar %]
-	</div>
-
-	<div id="left">
-		[% INCLUDE menu/left/main %]
-	</div>
-
-	<!-- start the main content area -->
-	<div id="middle">
-<body>
-
+            <div id="wrapper">
+                <div id="content">
+                    <p>
 <!-- Header : End -->

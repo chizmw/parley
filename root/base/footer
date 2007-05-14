@@ -1,18 +1,37 @@
 <!-- Footer : Start -->
-	</div>
-	<!-- end the main content -->
+                    </p>
+                </div><!-- content div -->
+            </div><!-- wrapper div -->
 
-<span style="display: block; float: right; margin-right: 20px;">
-  <a href="http://catalystframework.org"><img
-    src="static/images/btn_88x31_powered.png"
-    width="88"
-    height="31"
-    alt="Powered By Catalyst"
-    style="border: none;"
-    /></a>
-</span>
+            <div id="navigation">
+                <p>Navigation</p>
+                [% PROCESS shared/navigation %]
+            </div><!-- navigation div -->
 
-</body>
+            <div id="extra">
+                [% PROCESS shared/user_status %]
+            </div><!-- extra div -->
+
+            <div id="footer">
+                <p>&copy; Chisel Wright 2006-2007. All Rights Reserved.</p>
+            </div><!-- footer div -->
+
+
+            <span style="display: block; float: right; margin-right: 20px;">
+            <a href="http://catalystframework.org"><img
+                src="static/images/btn_88x31_powered.png"
+                width="88"
+                height="31"
+                alt="Powered By Catalyst"
+                style="border: none;"
+                /></a>
+            </span>
+
+            [% INCLUDE shared/login_dialog %]
+            [% INCLUDE shared/search_dialog %]
+        </div><!-- container div -->
+
+    </body>
 </html>
 <!-- Footer : End -->
 
