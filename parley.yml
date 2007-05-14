@@ -60,6 +60,8 @@ View::TT:
     EVAL_PERL:      '0'
     PRE_PROCESS:    'header'
     POST_PROCESS:   'footer'
+    POST_CHOMP:     '1'
+    PRE_CHOMP:      '0'
     # comment out the following line to enable Template::Timer output in your
     # template source
     CONTEXT:        ''
