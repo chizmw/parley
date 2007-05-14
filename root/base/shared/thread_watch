@@ -1,0 +1,17 @@
+<!-- shared/thread_watch -->
+[%- IF authed_user %]
+<div class="thread_watch">
+    <strong>[% watcher_count %] [% IF watcher_count == 1 %]person[% ELSE %]people[% END %] watching this thread.</strong>
+    <br />
+
+    [%- IF watching_thread %]
+        You are watching this thread.
+        (
+        <a href="thread/watch?thread=[% current_thread.id %]&page=[% page.current_page %]&watch=0">Remove Watch</a>
+        )
+    [%- ELSE %]
+        <a href="thread/watch?thread=[% current_thread.id %]&page=[% page.current_page %]">Watch this thread</a>
+    [%- END%]
+</div>
+[%- END %] [%# authed_user block %]
+<!-- end : shared/thread_watch -->
