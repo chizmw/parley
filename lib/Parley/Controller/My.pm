@@ -4,6 +4,33 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Global class data
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+my %dfv_profile_for = (
+    # DFV validation profile for adding a new topic
+    timezone => {
+        require_some => {
+            tz_data => [ 1, qw(use_utc selectZone) ],
+        },
+
+        filters     => [qw( trim )],
+        msgs => {
+            format  => q{%s},
+            missing => q{One or more required fields are missing},
+
+            constraints => {
+                tz_data => 'you must do stuff',
+            },
+        },
+    },
+);
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Controller Actions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 sub auto : Private {
     my ($self, $c) = @_;
     # need to be logged in to perform any 'my' actions
@@ -18,6 +45,16 @@ sub auto : Private {
     #if (not Parley::App::Helper->is_authenticted($c)) {
     #    $c->stash->{error}{message} = q{You need to authenticate your registration before you can start a new topic.};
     #}
+
+
+    # data we always want in the stash for /my
+
+    # what's the current time? then we can show it in the TZ area
+    $c->stash->{current_time} = DateTime->now();
+
+    # fetch timezone categories
+    my $tz_categories = DateTime::TimeZone->all_names();
+    $c->stash->{tz_categories} = $tz_categories;
 
     return 1;
 }
@@ -39,17 +76,47 @@ sub preferences : Local {
         $c->session->{my_pref_came_from} = $c->request->referer();
     }
 
-    # what's the current time? then we can show it in the TZ area
-    $c->stash->{current_time} = DateTime->now();
+    return;
+}
 
-    # fetch timezone categories
-    $tz_categories = DateTime::TimeZone->categories();
-    $c->stash->{tz_categories} = $tz_categories;
+sub update :Path('/my/preferences/update') {
+    my ($self, $c) = @_;
+    # use the my/preferences template
+    $c->stash->{template} = 'my/preferences';
 
+    # are we updating TZ information?
+    # validate the form data
+    $c->form(
+        $dfv_profile_for{timezone}
+    );
+    # deal with missing/invalid fields
+    if ($c->form->has_missing()) {
+        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        foreach my $f ( $c->form->missing ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+    }
+    elsif ($c->form->has_invalid()) {
+        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        foreach my $f ( $c->form->invalid ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+    }
 
+    # otherwise, the form data is ok ...
+    else {
+        $c->log->debug(
+            ref($c->_authed_user()->preference())
+        );
+        $c->response->redirect( $c->uri_for('/my/preferences') );
+    }
 
     return;
 }
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Private Methods
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 =head1 NAME
 

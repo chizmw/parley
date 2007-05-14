@@ -1,67 +1,59 @@
 <h1>Your preferences</h1>
 
+[% IF view.error.message %]
+    [% view.error.message %]
+    <ul>
+        [% FOREACH message IN view.error.messages %]
+            <li>[% message %]</li>
+        [% END %]
+    </ul>
+[% END %]
+
+
 <h2>Timezone</h2>
 
 <p>Select your desired location. This will be used to display times using your local timezone.</p>
 
 <form action="my/preferences/update" method="POST" name="timezone">
-    <table width="550">
-
-    [% IF tz_message %]
-    <tr>
-    <td colspan="2"><b><i>[% tz_message %]</i></b></td>
-    </tr>
-    [% END %]
-
-    <tr>
-        <td>Time formatting example:</td>
-        <td><i>[% nicedate(current_time) %]</i></td>
-    </tr>
-
-    <tr>
-    <td>
-    <select id="selectZone" name="selectZone">
-        <option>[ Select Zone ]</option>
-        [% FOREACH item=tz_categories %]
-        <option value="[% item %]">[% item %]</option>
+    <table width="550" border="1">
+        [% IF tz_message %]
+        <!-- Message to user -->
+        <tr>
+        <td colspan="2"><b><i>[% tz_message %]</i></b></td>
+        </tr>
         [% END %]
-    </select>
-    </td>
 
-    <td>
-    <div id="selectPlace0">
-    <select id="selectPlace" name="selectPlace">
-        [%# if we have selectPlaceData ... %]
-        [% IF selectPlaceData %]
-        [% FOREACH item = selectPlaceData %]
-        <option value="[% item %]">[% item %]</option>
-        [% END %]
-        [% ELSE %]
-        <option>[ Select Zone First ]</option>
-        [% END %]
-    </select>
-    </div>
+        <!-- TZ category list -->
+        <tr>
+            <td>
+                <select id="selectZone" name="selectZone">
+                    <option value="">[ Select Zone ]</option>
+                    [% FOREACH item=tz_categories %]
+                    <option value="[% item %]">[% item %]</option>
+                    [% END %]
+                </select>
+            </td>
 
-    [% c.prototype.observe_field('selectZone',{
-    url    => base _ 'my/preferences/setSelectPlaces',
-    with   => "'zone='+document.getElementById('selectZone').value",
-    update => 'selectPlace0',
-    }) %]
+            <td class="right_align" />
+                <label for="use_utc">Use UTC</label>
+                <input type="checkbox" id="use_utc" name="use_utc" value="1" onChange="toggle_timezone_menus(this)"/>
+            </td>
+        </tr>
 
-    </td>
-    <tr>
-    <td colspan="2" style="text-align: right;">
-    <label for="use_utc">Use UTC</label>
-    <input type="checkbox" id="use_utc" name="use_utc" value="1" onChange="toggle_timezone_menus(this)"/>
-    </td>
-    </tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
 
-    <tr>
-    <td colspan="2" style="text-align: center;">
-      <input type="submit" value="Update" name="update" class="input_button" />
-    </td>
-    </tr>
+        <tr>
+            <td>Time formatting example:</td>
+            <td><i>[% nicedate(current_time) %]</i></td>
+        </tr>
 
+        <tr><td colspan="2">&nbsp;</td></tr>
+
+        <tr>
+            <td colspan="2" style="text-align: center;">
+            <input type="submit" value="Update" name="update" class="input_button" />
+            </td>
+        </tr>
     </table>
 </form>
 
@@ -70,10 +62,10 @@
 
     function toggle_timezone_menus(checkbox) {
         var zone_menu   = document.getElementById('selectZone');
-        var place_menu  = document.getElementById('selectPlace');
+        //var place_menu  = document.getElementById('selectPlace');
 
         zone_menu.disabled  = checkbox.checked;
-        place_menu.disabled = checkbox.checked;
+        //place_menu.disabled = checkbox.checked;
     }
 
     // we want to make sure the menus are disabled if they need to be
