@@ -1,3 +1,115 @@
+<!-- thread/view -->
+
+[% SET dummy_value = post_list.reset %]
+
+<!-- thread subject, locked info, etc -->
+    [% IF 0 %]
+    [% PROCESS shared/threadcrumbs %]
+    [% PROCESS shared/thread_watch %]
+    [% PROCESS shared/pager_advanced %]
+
+    <small>
+    [% IF current_thread.locked %]
+        <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
+        Thread Locked
+    [% ELSE %]
+        <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+    [% END %]
+    </small>
+    [% END %]
+<!-- end : thread subject, locked info, etc -->
+
+<!-- thread contents -->
+<table class="thread_posts">
+    <tbody>
+
+        <tr>
+            <td colspan="2" class="thread_header">
+                [% current_thread.subject %]
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                [% PROCESS shared/thread_watch %]
+            </td>
+            <td>
+                [% PROCESS shared/pager_advanced %]
+            </td>
+        </tr>
+
+    <!-- thread posts -->
+    [% WHILE (post = post_list.next) %]
+        <tr>
+            <td class="user_post_info">
+                <!-- user avatar -->
+                [% avatar_file = c.path_to('root') _ "/static/user_file/${post.creator.id}/avatar.jpg" %]
+                [% TRY %]
+                    [% USE avatar = Image(avatar_file) %]
+                    [% tmp = avatar.attr %]
+                    <img class="picborder" src="/static/user_file/[% post.creator.id %]/avatar.jpg" border="0" [% avatar.attr %] alt="Avatar" />
+                    <br />
+                [% CATCH %]
+                    <!-- No User Avatar -->
+                [% END %]
+                <!-- end : user avatar -->
+
+                [% post.creator.forum_name %]
+                <br />
+                    Posts: 
+                    [% post.creator.post_count %]
+                    post[% IF (post.creator.post_count != 1) %]s[% END %]
+                
+            </td>
+
+            <td class="post">
+                <!-- the body of the post -->
+                <div class="innerpost">
+                    [% IF post.quoted_post %]
+                    <div class="quote">
+                    <strong>[% post.quoted_post.creator.forum_name %] wrote:</strong><br>
+                    [% ForumCode.forumcode(post.quoted_text) %]<br />
+                    </div>
+                    <br />
+                    [% END %]
+                    [% ForumCode.forumcode(post.message) %]<br />
+                </div>
+                <!-- end : the body of the post -->
+
+                <div class="post_info">
+                    [% nicedate(post.created) %]
+                    [% UNLESS current_thread.locked %]
+                        <br />
+                        <br />
+                        <a class="button" href="thread/reply?post=[% post.id %]">Quote</a>
+                        <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                    [% END %]
+                </div>
+            </td>
+        </tr>
+    [% END %]
+    <!-- end : thread posts -->
+    </tbody>
+</table>
+<!-- end : thread contents -->
+
+<!-- post thread info -->
+    [% PROCESS shared/threadcrumbs %]
+    [% PROCESS shared/thread_watch %]
+    [% PROCESS shared/pager_advanced %]
+
+    <small>
+    [% IF current_thread.locked %]
+        <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
+        Thread Locked
+    [% ELSE %]
+        <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+    [% END %]
+    </small>
+<!-- end : post thread info -->
+
+[% IF 0 %]
+<p>
 <table class="maintable" align="center" border="0" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
@@ -176,5 +288,8 @@
 
   </tbody>
 </table>
+</p>
+[% END %] [%# IF 0 %]
 
 
+<!-- end : thread/view -->
