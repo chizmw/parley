@@ -1,0 +1,250 @@
+/* link styling */
+a.nav, a.nav:visited, a.nav:link, a.nav:active {
+    background:         #ccc;
+    border:             solid black 1px;
+    border-style:       outset;
+    display:            block;
+    font-size:          0.8em;
+    font-weight:        bold;
+    list-style-image:   none;
+    list-style-type:    none;
+    margin-left:        20px;
+    margin-top:         0px;
+    padding-bottom:     0.2em;
+    padding-left:       0.5em;
+    padding-top:        0.2em;
+    text-decoration:    none;
+    width:              120px;
+}
+
+h1 {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+h2 {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+a.nav:hover {
+    background:         #000;
+    color:              #fff;
+}
+
+a, a:link, a:visited, a:active {
+    background:         transparent;
+    color:              blue;
+    text-decoration:    none;
+}
+
+table {
+    margin-left:        50px;
+    margin-bottom:      20px;
+    border:             1px solid black;
+}
+
+th {
+    text-align:         left;
+    font-weight:        bold;
+}
+
+td {
+    border:             1px solid #888;
+    padding:            3px;
+}
+
+/* dojo dialog styling - initially taken from dojo demo */
+.dojoDialog {
+    background : #eee;
+    border : 1px solid #999;
+    -moz-border-radius : 5px;
+    padding : 4px;
+}
+
+/* login dialog styling */
+#login_dialog form {  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
+    margin: 0;
+    padding: 0;
+    min-width: 400px;
+    max-width: 600px;
+}
+#login_dialog form fieldset {
+    / * clear: both; note that this clear causes inputs to break to left in ie5.x mac, commented out */
+    border-color: #000;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;        /* padding in fieldset support spotty in IE */
+    margin: 0;
+}
+#login_dialog form label { 
+    display: block;  /* block float the labels to left column, set a width */
+    float: left; 
+    width: 150px; 
+    padding: 0; 
+    margin: 5px 0 0; /* set top margin same as form input - textarea etc. elements */
+    text-align: right; 
+    font-weight: bold;
+    margin-bottom : 0;
+}
+#login_dialog form input, form textarea {
+    /* display: inline; inline display must not be set or will hide submit buttons in IE 5x mac */
+    width:auto;      /* set width of form elements to auto-size, otherwise watch for wrap on resize */
+    margin:5px 0 0 10px; /* set margin on left of form elements rather than right of
+                              label aligns textarea better in IE */
+}
+#login_dialog form p {
+    font-size: 0.8em;
+}
+
+/* style classes */
+
+.right_align {
+    text-align: right;
+    /*background: #f00;*/
+}
+
+
+.forum_link {
+    font-weight:    bold;
+}
+.forum_description {
+    font-size:      0.8em;
+}
+
+.topic_link {
+    font-weight:    bold;
+}
+.topic_creator {
+    display:        block;
+    font-size:      0.8em;
+    /*text-align:     right;*/
+    float: right;
+}
+.forum_mini_pager {
+    display:        block;
+    font-size:      0.8em;
+    /*text-align:     right;*/
+    float: left;
+}
+.topic_last_post {
+    font-size:      0.8em;
+}
+
+.post_subject {
+    font-weight:    bold;
+}
+
+.post_creator {
+    font-weight:    bold;
+    font-style:     italic;
+    font-size:      0.9em;
+}
+
+.post_created {
+    text-align:     right;
+    font-size:      0.8em;
+}
+
+.reply_post_message {
+    width: 100%;
+    background-color: rgb(251,215,194);
+    border: 2px inset #fff;
+}
+
+.post_message {
+    width: 100%;
+    background-color: rgb(251,215,194);
+    border: 2px inset #fff;
+    display: block;
+}
+
+.in_response_to {
+    margin-left:    20px;
+    font-weight:    bold;
+    font-style:     italic;
+    font-size:      0.8em;
+}
+
+.quoted_message {
+        border:         solid black 1pt;
+        background:     #ccc;
+        /*font-family:    "courier new", courier, fixed;*/
+        color:          #000;
+        margin-left:    20px;
+        margin-right:   0px;
+        margin-top:     0px;
+        margin-bottom:  0px;
+        padding:        2px;
+        font-size:      0.9em;
+
+        display: block;
+        overflow: auto;
+}
+
+
+.no_table_border table {
+    border: none;
+}
+.no_table_border td {
+    border: none;
+}
+
+.thread_watch {
+    font-size:          x-small;
+}
+.pager_advanced {
+    font-size:          x-small;
+}
+
+.thread_header {
+    font-weight:        bold;
+    background:         #666;
+    padding:            4px;
+}
+
+.thread_posts {
+    margin-left:        50px;
+    margin-right:       50px;
+    width:              500px;
+}
+
+.post {
+    padding-top:        5px;
+    vertical-align:     top;
+}
+
+.user_post_info {
+    background:         #ccc;
+    font-size:          85%;
+    margin-left:        auto;
+    margin-right:       auto;
+    text-align:         center;
+}
+
+.quote {
+    background-color:   #F9FBFF;
+    border:             1px solid #333;
+    font-size:          95%;
+    margin:             0 0 2px 4px;
+    padding:            6px;
+    width:              85%;
+}
+
+.post_info {
+    font-size:          80%;
+    line-height:        1.1em;
+    margin-top:         10px;
+    margin-bottom:      2px;
+    text-align:         right;
+}
+
+a.button:visited, a.button:link, a.button:active, .button, a.button {
+    border:             2px solid;
+    border-color:       #FC9 #630 #330 #F96;
+    padding:            2px 7px 2px 7px;
+    font:               bold 0.9em verdana,sans-serif;
+    color:              #000;
+    background:         #ccc;
+    text-decoration:    none;
+    margin:             2px;
+}
