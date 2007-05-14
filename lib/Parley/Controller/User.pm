@@ -42,6 +42,12 @@ sub login : Path('/user/login') {
                 $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
             }
 
+            # (else) if we've just been through the Authentication, don't go back there
+            elsif ($c->request->referer() =~ m{user/authenticate/}) {
+                # go to the default app URL
+                $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
+            }
+
             # (else) redirect to where we were referred from, unless our referer is our action
             elsif ( $c->request->referer() =~ m{\A$base}xms and $c->request->referer() !~ m{$action\z}xms) {
                 # go to where we came from
