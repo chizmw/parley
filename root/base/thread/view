@@ -2,23 +2,6 @@
 
 [% SET dummy_value = post_list.reset %]
 
-<!-- thread subject, locked info, etc -->
-    [% IF 0 %]
-    [% PROCESS shared/threadcrumbs %]
-    [% PROCESS shared/thread_watch %]
-    [% PROCESS shared/pager_advanced %]
-
-    <small>
-    [% IF current_thread.locked %]
-        <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
-        Thread Locked
-    [% ELSE %]
-        <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
-    [% END %]
-    </small>
-    [% END %]
-<!-- end : thread subject, locked info, etc -->
-
 <!-- thread contents -->
 <table class="thread_posts">
     <tbody>
@@ -117,23 +100,47 @@
         </tr>
     [% END %]
     <!-- end : thread posts -->
+
+    <!-- post thread info -->
+        <!-- I'd really like to do this without a nested table -->
+        <tr>
+            <td colspan="2">
+                <table class="thread_info">
+                    <tbody>
+                        <tr>
+                            <td width="50%">
+                                [% PROCESS shared/thread_watch %]
+                            </td>
+                            <td width="50%" align="right">
+                                [% PROCESS shared/pager_advanced %]
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%">
+                                <small>
+                                    [% current_thread.view_count %]
+                                    [% IF current_thread.view_count == 1 %]view[% ELSE %]views[% END %].
+                                </small>
+                            </td>
+                            <td width="50%" align="right">
+                                <small>
+                                [% IF current_thread.locked %]
+                                    Thread Locked
+                                    <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
+                                [% ELSE %]
+                                    <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                                [% END %]
+                                </small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <!-- end : nested table evil -->
+    <!-- end : post thread info -->
+
     </tbody>
 </table>
 <!-- end : thread contents -->
-
-<!-- post thread info -->
-    [% PROCESS shared/threadcrumbs %]
-    [% PROCESS shared/thread_watch %]
-    [% PROCESS shared/pager_advanced %]
-
-    <small>
-    [% IF current_thread.locked %]
-        <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
-        Thread Locked
-    [% ELSE %]
-        <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
-    [% END %]
-    </small>
-<!-- end : post thread info -->
-
 <!-- end : thread/view -->
