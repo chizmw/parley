@@ -202,6 +202,34 @@ td {
     padding:            4px;
 }
 
+.search_results {
+    margin-left:        50px;
+    margin-right:       50px;
+    width:              500px;
+}
+
+.user_profile {
+    margin-left:        50px;
+    margin-right:       50px;
+    width:              500px;
+}
+
+.user_profile_key {
+    font-weight:        bold;
+    text-align:         right;
+    vertical-align:     top;
+}
+
+td.user_profile_key {
+    width:              120px;
+}
+
+.user_profile_value {
+    font-weight:        none;
+    text-align:         left;
+    vertical-align:     top;
+}
+
 .thread_posts {
     margin-left:        50px;
     margin-right:       50px;

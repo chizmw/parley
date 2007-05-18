@@ -87,6 +87,27 @@ sub logout : Path('/user/logout') {
     }
 }
 
+sub profile :Local {
+    my ($self, $c) = @_;
+    my ($user_id, $person);
+
+    $user_id = $c->request->param('user');
+    if (defined $user_id) {
+        # make sure we got a sane looking user-id
+        if (not $user_id =~ m{\A\d+\z}) {
+            $c->stash->{error}{message} = 'non-integer user passed';
+            return;
+        }
+
+        # fetch the matching user
+        $c->stash->{profiled_user}
+            = $c->model('ParleyDB::Person')->find( $user_id );
+    }
+    else {
+        $c->stash->{error}{message} = 'No user specified';
+        return;
+    }
+}
 
 
 1;

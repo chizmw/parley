@@ -6,6 +6,20 @@
             <div id="navigation">
                 <p>Navigation</p>
                 [% PROCESS shared/navigation %]
+
+                <p>
+                <a href="javascript:;" onclick="search_dialog.show(); return false;">Search</a>
+                </p>
+
+                <p>
+                <a href="thread/recent">Recently Updated Threads</a>
+                </p>
+
+                [% IF authed_user %]
+                <p>
+                <a href="my/preferences">Preferences</a>
+                </p>
+                [% END %]
             </div><!-- navigation div -->
 
             <div id="extra">

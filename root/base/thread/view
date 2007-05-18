@@ -8,7 +8,7 @@
 
         <tr>
             <td colspan="2" class="thread_header">
-                [% current_thread.subject %]
+                [% ForumCode.escape(current_thread.subject) %]
             </td>
         </tr>
 
@@ -65,9 +65,9 @@
                 [% END %]
                 <!-- end : user avatar -->
 
-                [% post.creator.forum_name %]
+                <a href="user/profile?user=[% post.creator.id %]">[% post.creator.forum_name %]</a>
+
                 <br />
-                    Posts: 
                     [% post.creator.post_count %]
                     post[% IF (post.creator.post_count != 1) %]s[% END %]
                 

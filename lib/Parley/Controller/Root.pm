@@ -199,6 +199,7 @@ sub end : Private {
 
     # fill in any forms
     $c->fillform( );
+    $c->fillform( $c->stash->{formdata} );
 }
 
 

@@ -76,6 +76,16 @@ sub preferences : Local {
         $c->session->{my_pref_came_from} = $c->request->referer();
     }
 
+    # formfill/stash data
+    if ('UTC' eq $c->_authed_user()->preference()->timezone()) {
+        $c->stash->{formdata}{use_utc} = 1;
+    }
+    else {
+        $c->stash->{formdata}{selectZone}
+            = $c->_authed_user()->preference()->timezone();
+        $c->log->dumper( $c->stash->{formdata} );
+    }
+
     return;
 }
 
@@ -108,6 +118,19 @@ sub update :Path('/my/preferences/update') {
         $c->log->debug(
             ref($c->_authed_user()->preference())
         );
+
+        # store preference values
+        if ($c->form->valid('use_utc')) {
+            $c->_authed_user()->preference()->timezone('UTC');
+        }
+        else {
+            $c->_authed_user()->preference()->timezone(
+                $c->form->valid('selectZone')
+            );
+        }
+        # store changes
+        $c->_authed_user()->preference()->update();
+
         $c->response->redirect( $c->uri_for('/my/preferences') );
     }
 

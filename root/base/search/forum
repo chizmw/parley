@@ -3,10 +3,11 @@
 <h2>Searching for <em>[% search_terms.raw || '[nothing]' %]</em> in <em>[% search_forum.name || 'all forums' %]</em></h2>
 
 [% IF search_results %]
-    <table>
+
+    <table class="search_results">
     <tr>
-        <td>Subject</td>
-        <td>Snippet</td>
+        <th>Subject</th>
+        <th>Snippet</th>
     </tr>
 
     [% WHILE (result = search_results.next) %]
@@ -30,7 +31,7 @@
     [% END %]
 
     <tr>
-        <td class="right_align" valign="top">
+        <td class="right_align" valign="top" colspan="2">
         <small>
         [% INCLUDE shared/pager_advanced %]
         </small>

@@ -338,7 +338,7 @@ sub _username_exists {
 
 sub _txn_add_new_user {
     my ($self, $c) = @_;
-    my ($valid_results, $new_auth, $new_person, $status_ok);
+    my ($valid_results, $new_auth, $new_person, $new_preference, $status_ok);
 
     # less typing
     $valid_results = $c->form->valid;
@@ -361,6 +361,17 @@ sub _txn_add_new_user {
             authentication  => $new_auth->id(),
         }
     );
+
+    # add (default) prefs for new person
+    $new_preference = $c->model('ParleyDB')->resultset('Preference')->create(
+        {
+            # default everything
+            show_tz => 1,
+        }
+    );
+    # and link to the new person
+    $new_person->preference( $new_preference->id() );
+
 
     # send an authentication email
     $status_ok = $self->_new_user_authentication_email( $c, $new_person );
