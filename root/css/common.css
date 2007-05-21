@@ -292,3 +292,29 @@ a.button:visited, a.button:link, a.button:active, .button, a.button {
     text-decoration:    none;
     margin:             2px;
 }
+
+
+
+
+
+form input, form textarea {
+    /* display: inline; inline display must not be set or will hide submit buttons in IE 5x mac */
+    width:auto;      /* set width of form elements to auto-size, otherwise watch for wrap on resize */
+    margin:5px 0 0 10px; /* set margin on left of form elements rather than right of
+                              label aligns textarea better in IE */
+}
+
+form input#reset {
+    margin-left:0px; /* set margin-left back to zero on reset button (set above) */
+}
+
+form label { 
+    display: block;  /* block float the labels to left column, set a width */
+    float: left;
+    width: 150px;
+    padding: 0;
+    margin: 5px 0 0; /* set top margin same as form input - textarea etc. elements */
+    text-align: right;
+    font-weight: bold;
+}
+
