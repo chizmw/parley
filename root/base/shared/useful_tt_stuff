@@ -14,11 +14,11 @@
     [% IF authed_user.preference.time_format %]
         [% d.strftime(authed_user.preference.time_format.time_string) %]
         [% IF authed_user.preference.show_tz %]
-            &nbsp;[% d.time_zone_short_name() %]
+            [% d.time_zone_short_name() %]
         [% END %]
     [% ELSE %]
         [% d.strftime('%c') %]
-        &nbsp;[% d.time_zone_short_name() %]
+        [% d.time_zone_short_name() %]
     [% END %]
 [% END %]
 

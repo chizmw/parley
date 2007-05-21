@@ -14,6 +14,9 @@ my %dfv_profile_for = (
         require_some => {
             tz_data => [ 1, qw(use_utc selectZone) ],
         },
+        optional => [
+            qw( show_tz time_format ),
+        ],
 
         filters     => [qw( trim )],
         msgs => {
@@ -56,6 +59,16 @@ sub auto : Private {
     my $tz_categories = DateTime::TimeZone->all_names();
     $c->stash->{tz_categories} = $tz_categories;
 
+    # fetch time formats
+    $c->stash->{time_formats} =
+        $c->model('ParleyDB')->resultset('PreferenceTimeString')->search(
+            {},     # fetch everything
+            {
+                order_by    => 'sample',    # order by the "preview/sample" string
+            }
+        );
+
+
     return 1;
 }
 
@@ -83,8 +96,15 @@ sub preferences : Local {
     else {
         $c->stash->{formdata}{selectZone}
             = $c->_authed_user()->preference()->timezone();
-        $c->log->dumper( $c->stash->{formdata} );
     }
+    # time format
+    if (defined $c->_authed_user()->preference()->time_format()) {
+        $c->stash->{formdata}{time_format} =
+            $c->_authed_user()->preference()->time_format()->id();
+    }
+    # show tz?
+    $c->stash->{formdata}{show_tz}
+        = $c->_authed_user()->preference()->show_tz();
 
     return;
 }
@@ -93,6 +113,10 @@ sub update :Path('/my/preferences/update') {
     my ($self, $c) = @_;
     # use the my/preferences template
     $c->stash->{template} = 'my/preferences';
+
+    # return to the right tab
+    # XXX $c->stash->{show_tab} = 'tab_time';
+    # XXX we lose this info when we redirect
 
     # are we updating TZ information?
     # validate the form data
@@ -119,7 +143,7 @@ sub update :Path('/my/preferences/update') {
             ref($c->_authed_user()->preference())
         );
 
-        # store preference values
+        # tz preference value
         if ($c->form->valid('use_utc')) {
             $c->_authed_user()->preference()->timezone('UTC');
         }
@@ -128,6 +152,19 @@ sub update :Path('/my/preferences/update') {
                 $c->form->valid('selectZone')
             );
         }
+        # time_format preference
+        if (defined $c->form->valid('time_format')) {
+            $c->_authed_user()->preference()->time_format(
+                $c->form->valid('time_format')
+            )
+        }
+        else {
+            $c->_authed_user()->preference()->time_format( undef );
+        }
+        # show_tz
+        $c->_authed_user()->preference()->show_tz(
+            ($c->form->valid('show_tz') || 0)
+        );
         # store changes
         $c->_authed_user()->preference()->update();
 

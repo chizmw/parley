@@ -1,0 +1,55 @@
+<!-- preferences : tab_you -->
+
+<table class="user_profile">
+    <tbody>
+        <tr>
+            <td width="25%">
+                First Name:
+            </td>
+
+            <td>
+                <div class="inlineEdit" dojoType="inlineEditBox" >
+                [% authed_user.first_name %]
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="25%">
+                Last Name:
+            </td>
+
+            <td>
+                <div class="inlineEdit" dojoType="inlineEditBox" >
+                [% authed_user.last_name %]
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="25%">
+                Forum Name:
+            </td>
+
+            <td>
+                <div class="inlineEdit" dojoType="inlineEditBox" >
+                [% authed_user.forum_name %]
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="25%">
+                Email Address
+            </td>
+
+            <td>
+                <div class="inlineEdit" dojoType="inlineEditBox" >
+                [% authed_user.email %]
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- (end) preferences : tab_you -->

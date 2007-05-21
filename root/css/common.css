@@ -53,6 +53,10 @@ td {
     padding:            3px;
 }
 
+.dojoTabPaneWrapper {
+  padding : 10px 10px 10px 10px;
+}
+
 /* dojo dialog styling - initially taken from dojo demo */
 .dojoDialog {
     background : #eee;

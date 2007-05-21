@@ -39,6 +39,15 @@
             dojo.require("dojo.lfx.*");         // animations and eye candy
             dojo.require("dojo.widget.Dialog");
             dojo.require("dojo.widget.Button");
+
+            dojo.require("dojo.widget.TabContainer");
+            dojo.require("dojo.widget.LinkPane");
+            dojo.require("dojo.widget.ContentPane");
+            dojo.require("dojo.widget.LayoutContainer");
+
+            dojo.require("dojo.widget.InlineEditBox");
+            dojo.require("dojo.event.*");
+            dojo.hostenv.writeIncludes();
         </script>
     </head>
 
