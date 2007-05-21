@@ -10,7 +10,7 @@
 [% END %]
 
 <p>
-<div id="mainTabContainer" dojoType="TabContainer" style="width: 100%; height: 300px" selectedTab="[% show_pref_tab || 'tab_you' %]" >
+<div id="mainTabContainer" dojoType="TabContainer" style="width: 100%; height: 300px" selectedTab="[% c.flash.show_pref_tab || 'tab_you' %]" >
     <div id="tab_you" dojoType="ContentPane" label="Your Details">
         [% PROCESS my/tab_you %]
     </div>

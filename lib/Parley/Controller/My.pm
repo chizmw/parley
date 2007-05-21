@@ -115,8 +115,8 @@ sub update :Path('/my/preferences/update') {
     $c->stash->{template} = 'my/preferences';
 
     # return to the right tab
-    # XXX $c->stash->{show_tab} = 'tab_time';
-    # XXX we lose this info when we redirect
+    # use session flash, or we lose the info with the redirect
+    $c->flash->{show_pref_tab} = 'tab_time';
 
     # are we updating TZ information?
     # validate the form data
