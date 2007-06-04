@@ -85,7 +85,11 @@ sub preferences : Local {
     my ($tz_categories);
 
     # where did we come from? it would be nice to return there when we're done
-    if ($c->request->referer() !~ m{/my/preferences}xms) {
+    if (
+        defined $c->request->referer()
+            and 
+        $c->request->referer() !~ m{/my/preferences}xms
+    ) {
         $c->session->{my_pref_came_from} = $c->request->referer();
     }
 
@@ -105,6 +109,21 @@ sub preferences : Local {
     # show tz?
     $c->stash->{formdata}{show_tz}
         = $c->_authed_user()->preference()->show_tz();
+
+    # watched threads
+    my $watches = $c->model('ParleyDB')->resultset('ThreadView')->search(
+        {
+            person      => $c->_authed_user()->id(),
+            watched     => 1,
+        },
+        {
+            order_by    => 'last_post.created DESC',
+            join        => {
+                'thread' => 'last_post',
+            },
+        }
+    );
+    $c->stash->{thread_watches} = $watches;
 
     return;
 }
@@ -173,6 +192,7 @@ sub update :Path('/my/preferences/update') {
 
     return;
 }
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Private Methods

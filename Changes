@@ -1,5 +1,14 @@
 This file documents the revision history for Parley.
 
+0.53
+
+    - improved preference screen (time, watch info)
+    - preferences are now in a tabbed container
+    - tidied up CSS and layout
+    - added more missing dependencies to Makefile.PL
+    - person preference data now created at sign-up time
+    - added more time/TZ options for user
+
 0.52    Fri May  4 19:00:32 BST 2007
 
     - added DB configuration to parley.yml

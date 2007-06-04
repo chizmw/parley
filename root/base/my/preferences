@@ -14,8 +14,13 @@
     <div id="tab_you" dojoType="ContentPane" label="Your Details">
         [% PROCESS my/tab_you %]
     </div>
+
     <div id="tab_time" dojoType="ContentPane" label="Time">
         [% PROCESS my/tab_time %]
+    </div>
+
+    <div id="tab_watch" dojoType="ContentPane" label="Thread Watches">
+        [% PROCESS my/tab_watch %]
     </div>
 </div>
 

@@ -206,6 +206,12 @@ td {
     padding:            4px;
 }
 
+.thread_watches {
+    margin-left:        50px;
+    margin-right:       50px;
+    width:              500px;
+}
+
 .search_results {
     margin-left:        50px;
     margin-right:       50px;

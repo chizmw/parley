@@ -10,7 +10,7 @@
         ]</i>
     [% ELSE %]
         <i>[
-        <a href="javascript:;" onclick="login_dialog.show(); return false;">Login</a>
+        <a href="javascript:;" onclick="login_dialog.show(); dojo.byId('username').focus(); return false;">Login</a>
         |
         <a href="user/signup">Signup</a>
         ]</i>

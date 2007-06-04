@@ -27,14 +27,17 @@
             [% END %]
         </title>
         <meta name="author" content="Chisel Wright" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" title="Default" href="css/common.css" />
-        <link rel="stylesheet" title="Default" href="css/layout23.css" />
+        <link rel="shortcut icon" href="[% c.request.base %]/favicon.ico" type="image/x-icon" />
+        <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/common.css" />
+        <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/layout23.css" />
 
-        <link rel="alternate stylesheet" title="Layout 33" href="css/layout33.css" />
+        <link type="text/css" rel="alternate stylesheet" title="Layout 33" href="[% c.request.base %]/css/layout33.css" />
 
         <!-- Dojo Magic -->
-        <script type="text/javascript" src="/static/magic/dojo.js"></script>
+        <script type="text/javascript">
+            var djConfig = { isDebug: true };
+        </script>
+        <script type="text/javascript" src="[% c.request.base %]/static/magic/dojo.js"></script>
         <script type="text/javascript">
             dojo.require("dojo.lfx.*");         // animations and eye candy
             dojo.require("dojo.widget.Dialog");
