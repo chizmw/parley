@@ -689,6 +689,7 @@ sub _txn_add_new_reply {
             subject     => $c->form->valid->{thread_subject},
             message     => $c->form->valid->{thread_message},
             creator     => $c->_authed_user->id(),
+            ip_addr     => $c->request->address(),
         }
     );
 
