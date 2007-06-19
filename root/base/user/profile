@@ -1,0 +1,58 @@
+<!-- user/profile -->
+<h1>User Profile</h1>
+[% IF profiled_user %]
+
+<table class="user_profile">
+    <tbody>
+        <tr>
+            <!-- user avatar -->
+            [% avatar_file = c.path_to('root') _ "/static/user_file/${profiled_user.id}/avatar.jpg" %]
+            [% TRY %]
+                [% USE avatar = Image(avatar_file) %]
+                [% tmp = avatar.attr %]
+                <td rowspan="4">
+                    <img class="picborder" src="/static/user_file/[% profiled_user.id %]/avatar.jpg" border="0" [% avatar.attr %] alt="Avatar" />
+                    <br />
+                </td>
+            [% CATCH %]
+                <!-- No User Avatar -->
+            [% END %]
+            <!-- end : user avatar -->
+            <td class="user_profile_key">
+                Nickname:
+            </td>
+            <td class="user_profile_value">
+                [% profiled_user.forum_name %]
+            </td>
+        </tr>
+
+        <tr>
+            <td class="user_profile_key">
+                Posts made:
+            </td>
+            <td class="user_profile_value">
+                [% profiled_user.post_count %]
+            </td>
+        </tr>
+
+        <tr>
+            <td class="user_profile_key">
+                Last Post:
+            </td>
+            <td class="user_profile_value">
+                [% IF profiled_user.last_post %]
+                <a href="thread/view?thread=[% profiled_user.last_post.thread.id %]">[% ForumCode.escape(profiled_user.last_post.thread.subject) %]</a>
+                <br />
+                [% nicedate(profiled_user.last_post.created) %]
+                [% ELSE %]
+                Never Posted
+                [% END %]
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+[% ELSE %]
+<p>Can't locate a profile for requested user</p>
+[% END %]
+<!-- end : user/profile -->
