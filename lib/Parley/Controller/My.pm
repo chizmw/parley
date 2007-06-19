@@ -93,6 +93,11 @@ sub preferences : Local {
         $c->session->{my_pref_came_from} = $c->request->referer();
     }
 
+    # show a specific tab?
+    if (defined $c->request->param('tab')) {
+        $c->flash->{show_pref_tab} ||= 'tab_' . $c->request->param('tab');
+    }
+
     # formfill/stash data
     if ('UTC' eq $c->_authed_user()->preference()->timezone()) {
         $c->stash->{formdata}{use_utc} = 1;
