@@ -1,0 +1,13 @@
+<!-- preferences : notification tab -->
+
+<table class="prefs_notification">
+    <tbody>
+        <tr>
+            <td>
+                <input type="checkbox" name="notify_thread_watch" />
+                Email notification for watched threads
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- (end) preferences : notification tab -->

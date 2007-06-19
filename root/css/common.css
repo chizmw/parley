@@ -224,6 +224,12 @@ td {
     width:              500px;
 }
 
+.prefs_notification {
+    margin-left:        50px;
+    margin-right:       50px;
+    width:              500px;
+}
+
 .user_profile_key {
     font-weight:        bold;
     text-align:         right;

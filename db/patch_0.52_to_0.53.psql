@@ -19,6 +19,11 @@ ALTER TABLE post
     ADD COLUMN  ip_addr     inet
 ;
 
+-- new fields in preference table
+ALTER TABLE preference
+    ADD COLUMN  notify_thread_watch boolean default False
+;
+
 -- patch ends here --
 
 COMMIT;

@@ -22,6 +22,10 @@
     <div id="tab_watch" dojoType="ContentPane" label="Thread Watches">
         [% PROCESS my/tab_watch %]
     </div>
+
+    <div id="tab_notify" dojoType="ContentPane" label="Notifications">
+        [% PROCESS my/tab_notifications %]
+    </div>
 </div>
 
 [% IF c.session.my_pref_came_from %]

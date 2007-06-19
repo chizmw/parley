@@ -45,7 +45,9 @@ CREATE TABLE preference (
     timezone        text        not null
             default 'UTC',
     time_format     integer     references preference_time_string,
-    show_tz         boolean     default True
+    show_tz         boolean     default True,
+
+    notify_thread_watch     boolean     default False
 );
 
 CREATE TABLE person (

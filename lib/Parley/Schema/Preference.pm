@@ -36,6 +36,12 @@ __PACKAGE__->add_columns(
     default_value => 'true',
     size => 1,
   },
+
+  'notify_thread_watch' => {
+    data_type => 'boolean',
+    default_value => 'false',
+    size => 1,
+  },
 );
 __PACKAGE__->set_primary_key("preference_id");
 __PACKAGE__->has_many(
