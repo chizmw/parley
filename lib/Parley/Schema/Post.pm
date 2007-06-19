@@ -65,6 +65,13 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 8,
   },
+
+  ip_addr => {
+    data_type => "inet",
+    default_value => undef,
+    is_nullable => 1,
+    size => 8,
+  },
 );
 __PACKAGE__->set_primary_key("post_id");
 __PACKAGE__->has_many("threads", "Thread", { "foreign.last_post" => "self.post_id" });
