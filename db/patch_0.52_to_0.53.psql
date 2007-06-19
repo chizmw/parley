@@ -14,6 +14,11 @@ INSERT INTO preference_time_string (time_string, sample) VALUES ('%a, %d %b; %R'
 INSERT INTO preference_time_string (time_string, sample) VALUES ('%R, %b %d', '18:15, Jul 13');
 INSERT INTO preference_time_string (time_string, sample) VALUES ('%R, %b %d ''%y', '18:15, Jul 13 \'06');
 
+-- new post field (to capture IP of poster)
+ALTER TABLE post
+    ADD COLUMN  ip_addr     inet
+;
+
 -- patch ends here --
 
 COMMIT;

@@ -125,7 +125,10 @@ CREATE TABLE post (
     created         timestamp with time zone
                     default CURRENT_TIMESTAMP,
     creator         integer     not null
-                    references person
+                    references person,
+
+    ip_addr         ip
+
 );
 
 -- add ReplyTo information for post
