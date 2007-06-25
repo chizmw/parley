@@ -130,7 +130,7 @@ CREATE TABLE post (
     creator         integer     not null
                     references person,
 
-    ip_addr         ip
+    ip_addr         inet
 
 );
 
