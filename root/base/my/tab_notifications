@@ -4,8 +4,14 @@
     <tbody>
         <tr>
             <td>
-                <input type="checkbox" name="notify_thread_watch" />
-                Email notification for watched threads
+                <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %] disabled="true" />
+                Automatically add watches for new posts
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="notify_thread_watch" value="1" [% IF authed_user.preference.notify_thread_watch %]checked="checked" [% END %] disabled="true" />
+                Recieve email notification for watched threads
             </td>
         </tr>
     </tbody>
