@@ -181,6 +181,7 @@ sub update :Path('/my/preferences/update') {
         $c->flash->{show_pref_tab} = 'tab_time';
 
         $self->_process_form_time_format( $c );
+        $c->response->redirect( $c->uri_for('/my/preferences') );
     }
     # are we updating notification preferences?
     elsif ('notifications' eq $form_name) {
@@ -189,6 +190,7 @@ sub update :Path('/my/preferences/update') {
         $c->flash->{show_pref_tab} = 'tab_notify';
 
         $self->_process_form_notifications( $c );
+        $c->response->redirect( $c->uri_for('/my/preferences') );
     }
 
     # otherwise we haven't decided how to handle the specified form ...
@@ -250,6 +252,7 @@ sub _process_form_notifications {
     # store changes
     $c->_authed_user()->preference()->update;
 
+    #$c->response->redirect( $c->uri_for('/my/preferences') );
     return;
 }
 
@@ -257,54 +260,40 @@ sub _process_form_notifications {
 sub _process_form_time_format {
     my ($self, $c) = @_;
 
-    # deal with missing/invalid fields
-    if ($c->form->has_missing()) {
-        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
-        foreach my $f ( $c->form->missing ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
-        }
-    }
-    elsif ($c->form->has_invalid()) {
-        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
-        foreach my $f ( $c->form->invalid ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
-        }
+    if (not $self->_form_data_valid($c)) {
+        return;
     }
 
-    # otherwise, the form data is ok ...
+    $c->log->debug(
+        ref($c->_authed_user()->preference())
+    );
+
+    # tz preference value
+    if ($c->form->valid('use_utc')) {
+        $c->_authed_user()->preference()->timezone('UTC');
+    }
     else {
-        $c->log->debug(
-            ref($c->_authed_user()->preference())
+        $c->_authed_user()->preference()->timezone(
+            $c->form->valid('selectZone')
         );
-
-        # tz preference value
-        if ($c->form->valid('use_utc')) {
-            $c->_authed_user()->preference()->timezone('UTC');
-        }
-        else {
-            $c->_authed_user()->preference()->timezone(
-                $c->form->valid('selectZone')
-            );
-        }
-        # time_format preference
-        if (defined $c->form->valid('time_format')) {
-            $c->_authed_user()->preference()->time_format(
-                $c->form->valid('time_format')
-            )
-        }
-        else {
-            $c->_authed_user()->preference()->time_format( undef );
-        }
-        # show_tz
-        $c->_authed_user()->preference()->show_tz(
-            ($c->form->valid('show_tz') || 0)
-        );
-        # store changes
-        $c->_authed_user()->preference()->update();
-
-        $c->response->redirect( $c->uri_for('/my/preferences') );
     }
+    # time_format preference
+    if (defined $c->form->valid('time_format')) {
+        $c->_authed_user()->preference()->time_format(
+            $c->form->valid('time_format')
+        )
+    }
+    else {
+        $c->_authed_user()->preference()->time_format( undef );
+    }
+    # show_tz
+    $c->_authed_user()->preference()->show_tz(
+        ($c->form->valid('show_tz') || 0)
+    );
+    # store changes
+    $c->_authed_user()->preference()->update();
 
+    #$c->response->redirect( $c->uri_for('/my/preferences') );
     return;
 }
 
