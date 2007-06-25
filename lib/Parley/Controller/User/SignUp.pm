@@ -371,7 +371,7 @@ sub _txn_add_new_user {
     );
     # and link to the new person
     $new_person->preference( $new_preference->id() );
-
+    $new_person->update;
 
     # send an authentication email
     $status_ok = $self->_new_user_authentication_email( $c, $new_person );
