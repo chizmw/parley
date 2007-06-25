@@ -1,4 +1,4 @@
-[% IF thread_watches %]
+[% IF thread_watches > 0 %]
     <table class="thread_watches">
         <tbody>
             <tr>
