@@ -34,11 +34,19 @@
       <!--
       <input type="submit" value="Preview Topic"  name="preview_topic"      class="input_button" />
       -->
+      <!--
       <input type="reset"  value="Reset Form"     name="reset_topic"        class="input_button" />
       <input type="submit" value="Cancel"         name="cancel_new_topic"   class="input_button" />
+      -->
     </td>
   </tr>
 
+  <tr>
+    <td colspan="2" align="right">
+        <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %]/>
+        Add a Thread Watch
+    </td>
+  </tr>
 </table>
 
 </form>

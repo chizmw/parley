@@ -21,7 +21,8 @@ ALTER TABLE post
 
 -- new fields in preference table
 ALTER TABLE preference
-    ADD COLUMN  notify_thread_watch boolean default False
+    ADD COLUMN  notify_thread_watch boolean default False,
+    ADD COLUMN  watch_on_post       boolean default True
 ;
 
 -- patch ends here --

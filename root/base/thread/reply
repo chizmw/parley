@@ -82,6 +82,12 @@
     </td>
   </tr>
   [% END %]
+  <tr>
+    <td colspan="2" align="right">
+        <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %]/>
+        Add a Thread Watch
+    </td>
+  </tr>
 
   <tr>
     <td colspan="2" style="text-align: center;">

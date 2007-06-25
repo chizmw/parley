@@ -42,6 +42,12 @@ __PACKAGE__->add_columns(
     default_value => 'false',
     size => 1,
   },
+
+  'watch_on_post' => {
+    data_type => 'boolean',
+    default_value => 'false',
+    size => 1,
+  },
 );
 __PACKAGE__->set_primary_key("preference_id");
 __PACKAGE__->has_many(

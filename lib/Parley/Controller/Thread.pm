@@ -15,6 +15,7 @@ my %dfv_profile_for = (
     # DFV validation profile for adding a new topic
     new_topic => {
         required    => [qw( thread_subject thread_message )],
+        optional    => [qw( watch_on_post )],
         filters     => [qw( trim )],
         msgs => {
             format  => q{%s},
@@ -25,7 +26,7 @@ my %dfv_profile_for = (
     # DFV validation profile for adding a reply to an existing topic
     new_reply => {
         required    => [qw( thread_message )],
-        optional    => [qw( thread_subject lock_thread )],
+        optional    => [qw( thread_subject lock_thread watch_on_post )],
         filters     => [qw( trim )],
     },
 );
@@ -47,7 +48,7 @@ sub add : Local {
     if (defined $c->request->method() and $c->request->method() eq 'POST') {
         $self->_add_new_thread($c);
     }
-    # other wise we continue merrily on our way, and simply display the
+    # otherwise we continue merrily on our way, and simply display the
     # thread/add page
     else {
         # thread/add template shown automagically
@@ -150,7 +151,7 @@ sub reply : Local {
     # make sure we're authenticated
     # XXX
 
-    # can't replay to a locked thread
+    # can't reply to a locked thread
     if ($c->_current_thread()->locked()) {
         #die q{can't reply to a locked thread!};
         $c->stash->{error}{message} = q{You can't reply to a locked thread};
@@ -727,6 +728,25 @@ sub _txn_add_new_reply {
         $new_post->thread->update;
     }
 
+    # would we like to set a thread watch at the time of posting?
+    if ($c->form->valid->{watch_on_post}) {
+        $c->log->debug( q{Auto-add thread watch on new post} );
+        my $thread_view =
+            $c->model('ParleyDB')->resultset('ThreadView')->find(
+                {
+                    person      => $c->_authed_user()->id(),
+                    thread      => $c->_current_thread()->id(),
+                },
+            )
+        ;
+        if (defined $thread_view) {
+            $c->log->debug( q{Adding Watch} );
+            #$thread_view->timestamp( $new_post->created() );
+            $thread_view->watched( 1 );
+            $thread_view->update;
+        }
+    }
+
     # update the records
     $new_post->update;
 
@@ -768,6 +788,20 @@ sub _txn_add_new_thread {
         ($new_thread->forum->post_count() || 0) + 1
     );
 
+    # if the poster wants to add a watch we need to create the ThreadView record here
+    # (it's a new thread so they can't have viewed it yet)
+    if ($c->form->valid->{watch_on_post}) {
+        $c->log->debug( q{Auto-add thread watch on new thread} );
+        my $thread_view =
+            $c->model('ParleyDB')->resultset('ThreadView')->create(
+                {
+                    person      => $c->_authed_user()->id(),
+                    thread      => $new_thread->id(),
+                    watched     => 1,
+                },
+            )
+        ;
+    }
 
     # update information about the most recent forum/thread post
     $self->_update_last_post($c, $new_post);

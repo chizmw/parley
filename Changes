@@ -2,6 +2,10 @@ This file documents the revision history for Parley.
 
 0.53
 
+    - automatically add thread-watch on new thread/post
+      (checkbox value defaults to appropriate pref value for user)
+    - added a basic profile page for users
+    - store the IP address of each post author
     - improved preference screen (time, watch info)
     - preferences are now in a tabbed container
     - tidied up CSS and layout
