@@ -95,7 +95,7 @@ __PACKAGE__->has_many("people", "Person", { "foreign.last_post" => "self.post_id
 
 
 
-foreach my $datecol (qw/created/) {
+foreach my $datecol (qw/created edited/) {
     __PACKAGE__->inflate_column($datecol, {
         inflate => sub { DateTime::Format::Pg->parse_datetime(shift); },
         deflate => sub { DateTime::Format::Pg->format_datetime(shift); },

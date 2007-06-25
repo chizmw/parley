@@ -89,9 +89,23 @@
 
                 <div class="post_info">
                     [% nicedate(post.created) %]
+                    [% IF post.edited %]
+                    <br /><span class="post_edited_alert">Edited: [% nicedate(post.edited) %]</span>
+                    [% END %]
+                    <br />
+                    [% IF post.ip_addr %]
+                        [% IF moderator %]
+                            Posted from: [% post.ip_addr %]
+                        [% ELSE %]
+                            IP Logged
+                        [% END %]
+                    [% END %]
                     [% UNLESS current_thread.locked %]
                         <br />
                         <br />
+                        [% IF authed_user.id == post.creator.id %]
+                        <a class="button" href="post/edit?post=[% post.id %]">Edit</a>
+                        [% END %]
                         <a class="button" href="thread/reply?post=[% post.id %]">Quote</a>
                         <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
                     [% END %]

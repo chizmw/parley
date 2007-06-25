@@ -3,11 +3,90 @@ package Parley::Controller::Post;
 use strict;
 use warnings;
 use base 'Catalyst::Controller';
+use DateTime;
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Global class data
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+my %dfv_profile_for = (
+    # DFV validation profile for adding a new topic
+    edit_post => {
+        required    => [qw( post_message )],
+        filters     => [qw( trim )],
+        msgs => {
+            format  => q{%s},
+            missing => q{One or more required fields are missing},
+        },
+    },
+);
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Controller Actions
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sub edit : Local {
+    my ($self, $c) = @_;
+
+    # if we don't have a post param, then return with an error
+    unless (defined $c->_current_post) {
+        $c->stash->{error}{message} = q{Incomplete URL};
+        return;
+    }
+
+    # you need to be logged in to edit a post
+    # (although non-logged users shouldn't see an edit link, you never know
+    # what people will make-up or bookmark)
+    $c->login_if_required(q{You must be logged in before you can edit your posts.});
+
+    # you can only edit you own posts
+    # (unless you're a moderator, but we don't do that yet)
+    if ($c->_authed_user()->id() != $c->_current_post()->creator()->id()) {
+        $c->stash->{error}{message} = q{You can only edit posts you have made};
+        return;
+    }
+
+    # you can't edit a locked post
+    elsif ($c->_current_post->thread->locked) {
+        $c->stash->{error}{message} = q{You can't edit locked posts};
+        return;
+    }
+
+    # process the form submission
+    else {
+        # validate the form data
+        $c->form(
+            $dfv_profile_for{edit_post}
+        );
+        # deal with missing/invalid fields
+        if ($c->form->has_missing()) {
+            $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+            foreach my $f ( $c->form->missing ) {
+                push @{ $c->stash->{view}{error}{messages} }, $f;
+            }
+        }
+        elsif ($c->form->has_invalid()) {
+            $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+            foreach my $f ( $c->form->invalid ) {
+                push @{ $c->stash->{view}{error}{messages} }, $f;
+            }
+        }
+        # otherwise; everything seems fine - edit the post
+        else {
+            # update the post with the new information
+            $c->_current_post->message( $c->form->valid->{post_message} );
+
+            # set the edited time
+            $c->_current_post->edited( DateTime->now() );
+
+            # store the updates in the db
+            $c->_current_post->update();
+
+            # view the (updated) post
+            $c->detach('/post/view');
+        }
+    }
+}
 
 sub view : Local {
     my ($self, $c) = @_;
