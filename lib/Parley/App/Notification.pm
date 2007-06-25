@@ -21,6 +21,13 @@ sub notify_watchers :Export( :watch ) {
         $c->log->debug( q{NOTIFY: } . $thread_view_row->person()->id() );
         $c->log->debug( q{NOTIFY: } . $thread_view_row->person()->forum_name() );
 
+        # DO NOT notify people that have the 'notify_thread_watch' preference set to false
+        if (not $thread_view_row->person()->preference()->notify_thread_watch()) {
+            $c->log->debug( q{NOTIFY: DO NOT NOTIFY PERSON (preference.notify_thread_watch=false)} );
+            next;
+        }
+        $c->log->debug( q{NOTIFY: NOTIFY PERSON (preference.notify_thread_watch=true)} );
+
         # send email
         $send_status = $c->send_email(
             {
