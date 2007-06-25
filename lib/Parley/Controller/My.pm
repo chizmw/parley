@@ -9,8 +9,15 @@ use base 'Catalyst::Controller';
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 my %dfv_profile_for = (
-    # DFV validation profile for adding a new topic
-    timezone => {
+    # DFV validation profile for preferences
+    time_format => {
+        # make sure we get *something* for checkboxes
+        # (which don't submit anything at all when unchecked)
+        defaults => {
+            use_utc     => 0,
+            show_tz     => 0,
+        },
+
         require_some => {
             tz_data => [ 1, qw(use_utc selectZone) ],
         },
@@ -27,6 +34,22 @@ my %dfv_profile_for = (
                 tz_data => 'you must do stuff',
             },
         },
+    },
+
+    notifications => {
+        # make sure we get *something* for checkboxes
+        # (which don't submit anything at all when unchecked)
+        defaults => {
+            watch_on_post       => 0,
+            notify_thread_watch => 0,
+        },
+
+        required => [
+            qw(
+                watch_on_post
+                notify_thread_watch
+            )
+        ],
     },
 );
 
@@ -135,18 +158,105 @@ sub preferences : Local {
 
 sub update :Path('/my/preferences/update') {
     my ($self, $c) = @_;
+    my $form_name = $c->request->param('form_name');
+
     # use the my/preferences template
     $c->stash->{template} = 'my/preferences';
 
-    # return to the right tab
-    # use session flash, or we lose the info with the redirect
-    $c->flash->{show_pref_tab} = 'tab_time';
+    # make sure the form name matches something we have a DFV profile for
+    if (not exists $dfv_profile_for{ $form_name }) {
+        $c->stash->{error}{message} = "no such form: $form_name";
+        return;
+    }
 
-    # are we updating TZ information?
-    # validate the form data
+    # validate the specified form
     $c->form(
-        $dfv_profile_for{timezone}
+        $dfv_profile_for{ $form_name }
     );
+
+    # are we updating TZ preferences?
+    if ('time_format' eq $form_name) {
+        # return to the right tab
+        # use session flash, or we lose the info with the redirect
+        $c->flash->{show_pref_tab} = 'tab_time';
+
+        $self->_process_form_time_format( $c );
+    }
+    # are we updating notification preferences?
+    elsif ('notifications' eq $form_name) {
+        # return to the right tab
+        # use session flash, or we lose the info with the redirect
+        $c->flash->{show_pref_tab} = 'tab_notify';
+
+        $self->_process_form_notifications( $c );
+    }
+
+    # otherwise we haven't decided how to handle the specified form ...
+    else {
+        $c->stash->{error}{message} = "don't know how to handle: $form_name";
+        return;
+    }
+
+    return;
+}
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Private Methods
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sub _form_data_valid {
+    my ($self, $c) = @_;
+
+    # deal with missing/invalid fields
+    if ($c->form->has_missing()) {
+        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        foreach my $f ( $c->form->missing ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+
+        return; # invalid form data
+    }
+    elsif ($c->form->has_invalid()) {
+        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        foreach my $f ( $c->form->invalid ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+
+        return; # invalid form data
+    }
+
+    # otherwise, the form data is ok ...
+    return 1;
+}
+
+sub _process_form_notifications {
+    my ($self, $c) = @_;
+
+    if (not $self->_form_data_valid($c)) {
+        return;
+    }
+
+    # Automatically add watches for new posts?
+    $c->_authed_user()->preference()->watch_on_post(
+        $c->form->valid('watch_on_post')
+    );
+
+    # Receive email notification for watched threads
+    $c->_authed_user()->preference()->notify_thread_watch(
+        $c->form->valid('notify_thread_watch')
+    );
+
+    # store changes
+    $c->_authed_user()->preference()->update;
+
+    return;
+}
+
+
+sub _process_form_time_format {
+    my ($self, $c) = @_;
+
     # deal with missing/invalid fields
     if ($c->form->has_missing()) {
         $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
@@ -197,11 +307,6 @@ sub update :Path('/my/preferences/update') {
 
     return;
 }
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Private Methods
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 =head1 NAME
 

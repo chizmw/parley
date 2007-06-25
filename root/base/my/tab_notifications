@@ -1,19 +1,30 @@
 <!-- preferences : notification tab -->
 
-<table class="prefs_notification">
-    <tbody>
-        <tr>
-            <td>
-                <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %] disabled="true" />
-                Automatically add watches for new posts
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" name="notify_thread_watch" value="1" [% IF authed_user.preference.notify_thread_watch %]checked="checked" [% END %] disabled="true" />
-                Recieve email notification for watched threads
-            </td>
-        </tr>
-    </tbody>
-</table>
+<form action="my/preferences/update" method="POST" name="notifications">
+    <input type="hidden" name="form_name" value="notifications">
+    <table class="prefs_notification">
+        <tbody>
+            <tr>
+                <td>
+                    <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %] />
+                    Automatically add watches for new posts
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="notify_thread_watch" value="1" [% IF authed_user.preference.notify_thread_watch %]checked="checked" [% END %] />
+                    Receive email notification for watched threads
+                </td>
+            </tr>
+
+            <tr><td colspan="2">&nbsp;</td></tr>
+
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                <input type="submit" value="Update" name="update" class="input_button" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
 <!-- (end) preferences : notification tab -->

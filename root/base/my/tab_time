@@ -1,7 +1,8 @@
 <!-- preferences : time tab -->
 <p>Select your desired location. This will be used to display times using your local timezone.</p>
 
-<form action="my/preferences/update" method="POST" name="timezone">
+<form action="my/preferences/update" method="POST" name="time_format">
+    <input type="hidden" name="form_name" value="time_format">
     <table width="550" border="1">
         [% IF tz_message %]
         <!-- Message to user -->
