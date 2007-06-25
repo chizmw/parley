@@ -30,6 +30,8 @@ requires 'Email::Valid';
 requires 'List::MoreUtils';
 requires 'MIME::Lite';
 requires 'Perl6::Export::Attrs';
+requires 'Proc::Daemon';
+requires 'Proc::PID::File';
 requires 'Readonly';
 requires 'Text::Context::EitherSide';
 requires 'YAML'; # This should reflect the config file format you've chosen
