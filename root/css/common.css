@@ -162,6 +162,10 @@ td {
     display: block;
 }
 
+.innerpost {
+    overflow:       auto;
+}
+
 .in_response_to {
     margin-left:    20px;
     font-weight:    bold;
@@ -281,6 +285,8 @@ td.user_profile_key {
     margin-left:        auto;
     margin-right:       auto;
     text-align:         center;
+    vertical-align:     top;
+    width:              100px;
 }
 
 .quote {
