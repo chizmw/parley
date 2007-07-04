@@ -152,21 +152,42 @@ sub _lists {
             <br\s*?/>
         )?
     }
-    {'<ul>' . _list_elements($1) . '</ul>'}xmsge;
+    {_list_elements($1)}xmsge;
 }
 
 sub _list_elements {
     my ($text) = @_;
 
-    $text =~ s{
-        \[\*\]
-        \s*
-        (.+?)
-        <br\s*?/>
-        \s*
+    # ordered lists
+    if (
+        $text =~ s{
+            \[\*\]
+            \s*
+            (.+?)
+            <br\s*?/>
+            \s*
+        }
+        {<li>$1</li>}xmsg
+    ) {
+        return qq{<ul>$text</ul>};
     }
-    {<li>$1</li>}xmsg;
 
+    # ordered lists
+    if (
+        $text =~ s{
+            \[1\]
+            \s*
+            (.+?)
+            <br\s*?/>
+            \s*
+        }
+        {<li>$1</li>}xmsg
+    ) {
+        return qq{<ol>$text</ol>};
+    }
+
+
+    # otherwise, just return what we were given
     return $text;
 }
 

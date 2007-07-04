@@ -173,6 +173,15 @@ And another:
             [/list]},
             out     => q{<ul><li>Red</li><li>Blue</li><li>Yellow</li></ul>},
         },
+        # ordered
+        {
+            in      => q{[list]
+            [1]Red
+            [1]Blue
+            [1]Yellow
+            [/list]},
+            out     => q{<ol><li>Red</li><li>Blue</li><li>Yellow</li></ol>},
+        },
     );
 
     # test count is a fixed number of tests + the length of the @tests array
