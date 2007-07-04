@@ -8,11 +8,6 @@ db/patch_0.09_to_0.10.psql
 db/patch_0.50_to_0.51.psql
 db/patch_0.52_to_0.53.psql
 doc/parley-qs.html
-html/default.css
-html/index.html
-html/index_gala.html
-html/layout23.css
-html/layout33.css
 inc/Module/AutoInstall.pm
 inc/Module/Install.pm
 inc/Module/Install/AutoInstall.pm
