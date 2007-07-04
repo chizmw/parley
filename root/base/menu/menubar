@@ -37,10 +37,28 @@
     [% END %]
 </div>
 
+<div dojoType="PopupMenu2" widgetId="menu_moderate">
+    [% IF current_thread.locked %]
+	<div dojoType="MenuItem2" caption="Unlock Thread" onClick="document.location.href='admin/lock?thread=[%current_thread.id%]&lock=0';" [% thread_disabled %]></div>
+    [% ELSE %]
+	<div dojoType="MenuItem2" caption="Lock Thread" onClick="document.location.href='admin/lock?thread=[%current_thread.id%]';" [% thread_disabled %]></div>
+    [% END %]
+
+    [% IF current_thread.sticky %]
+	<div dojoType="MenuItem2" caption="Unstick Thread" onClick="document.location.href='admin/sticky?thread=[%current_thread.id%]&sticky=0';" [% thread_disabled %]></div>
+    [% ELSE %]
+	<div dojoType="MenuItem2" caption="Stick Thread" onClick="document.location.href='admin/sticky?thread=[%current_thread.id%]';" [% thread_disabled %]></div>
+    [% END %]
+</div>
+
 <div dojoType="MenuBar2">
 	<div dojoType="MenuBarItem2" caption="Go To ..."    submenuId="menu_go"></div>
 	<div dojoType="MenuBarItem2" caption="Forum"        submenuId="menu_forum"></div>
 	<div dojoType="MenuBarItem2" caption="Thread"       submenuId="menu_thread"></div>
+    <div dojoType="MenuBarItem2" caption="Search"       onClick="search_dialog.show();"></div>
 	<div dojoType="MenuBarItem2" caption="Me"           submenuId="menu_my"></div>
+    [% IF moderator %]
+	<div dojoType="MenuBarItem2" caption="Moderate"     submenuId="menu_moderate"></div>
+    [% END %]
 </div>
 <!-- end :menubar -->
