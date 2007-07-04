@@ -1,11 +1,4 @@
 <!-- start : menubar -->
-<style type="text/css">
-	.dojoMenuBar2 {
-		border-top:1px solid #d4d4d4;
-        background: green;
-	}
-</style>
-
 <div dojoType="PopupMenu2" widgetId="menu_go">
 	<div dojoType="MenuItem2" caption="Main Page"></div>
 	<div dojoType="MenuItem2" caption="Recently Updated Threads"></div>
@@ -34,7 +27,6 @@
 <div dojoType="PopupMenu2" widgetId="menu_my">
 	<div dojoType="MenuItem2" caption="My Preferences"></div>
 	<div dojoType="MenuItem2" caption="Logout"></div>
-	<!--<a href="/" dojoType="MenuItem2" caption="Logout">Foo</a>-->
 </div>
 
 <div dojoType="PopupMenu2" widgetId="submenu1" contextMenuForWindow="true">

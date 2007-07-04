@@ -37,11 +37,11 @@ a, a:link, a:visited, a:active {
     text-decoration:    none;
 }
 
-table {
+/*table {
     margin-left:        50px;
     margin-bottom:      20px;
     border:             1px solid black;
-}
+}*/
 
 th {
     text-align:         left;
@@ -52,6 +52,15 @@ td {
     border:             1px solid #888;
     padding:            3px;
 }
+
+/* start : dojo menu styling */
+.dojoMenuBar2 {
+    border-top:1px solid #d4d4d4;
+}
+.dojoPopupMenu2 td {
+    border: none;
+}
+/* end : dojo menu styling */
 
 .dojoTabPaneWrapper {
   padding : 10px 10px 10px 10px;
