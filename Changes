@@ -1,7 +1,6 @@
 This file documents the revision history for Parley.
 
-0.53
-
+0.53    Wed Jul  4 08:55:12 BST 2007
     - added a basic profile page for users
     - added more missing dependencies to Makefile.PL
     - added more time/TZ options for user
