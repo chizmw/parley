@@ -2,17 +2,23 @@ This file documents the revision history for Parley.
 
 0.53
 
-    - reimplemented post/edit (lost in the 0.5 rewrite)
+    - added a basic profile page for users
+    - added more missing dependencies to Makefile.PL
+    - added more time/TZ options for user
     - automatically add thread-watch on new thread/post
       (checkbox value defaults to appropriate pref value for user)
-    - added a basic profile page for users
-    - store the IP address of each post author
+    - fixed output when no threads are watched (Watches in Preferences)
+    - fix for bug with person.preference not being set when new user is created
     - improved preference screen (time, watch info, notifications)
-    - preferences are now in a tabbed container
-    - tidied up CSS and layout
-    - added more missing dependencies to Makefile.PL
+    - improved Template::Plugin::ForumCode (markup and docs)
+    - improve form handling for prefs
     - person preference data now created at sign-up time
-    - added more time/TZ options for user
+    - preferences are now in a tabbed container
+    - reimplemented post/edit
+    - reimplemented post/edit (lost in the 0.5 rewrite)
+    - schema tweaks and fixes
+    - store the IP address of each post author
+    - tidied up CSS and layout
 
 0.52    Fri May  4 19:00:32 BST 2007
 
