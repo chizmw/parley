@@ -1,0 +1,7 @@
+^Makefile$
+^Parley.*gz$
+^Parley.*tar$
+swp$
+\.old$
+base.messy
+^blib
