@@ -137,15 +137,37 @@ sub _lists {
     my ($self, $textref) = @_;
 
     $$textref =~ s{
-        \[list]
+        \[list\]
+        (?:
+            \s*
+            (?:
+                <br\s*?/>
+            )?
+            \s*
+        )
         (.+?)
-        \[/list]
+        \[/list\]
+        [\s]*
+        (?:
+            <br\s*?/>
+        )?
     }
-    {<li>$1</li>}xmsg;
+    {'<ul>' . _list_elements($1) . '</ul>'}xmsge;
 }
 
 sub _list_elements {
-    my ($textref);
+    my ($text) = @_;
+
+    $text =~ s{
+        \[\*\]
+        \s*
+        (.+?)
+        <br\s*?/>
+        \s*
+    }
+    {<li>$1</li>}xmsg;
+
+    return $text;
 }
 
 1;

@@ -163,16 +163,16 @@ And another:
         },
 
 
-#        # lists
-#        # unordered
-#        {
-#            in      => q{[list]
-#            [*]Red
-#            [*]Blue
-#            [*]Yellow
-#            [/list]},
-#            out     => q{<ul><li>Red</li><li>Blue</li><li>Yellow</li></ul>},
-#        },
+        # lists
+        # unordered
+        {
+            in      => q{[list]
+            [*]Red
+            [*]Blue
+            [*]Yellow
+            [/list]},
+            out     => q{<ul><li>Red</li><li>Blue</li><li>Yellow</li></ul>},
+        },
     );
 
     # test count is a fixed number of tests + the length of the @tests array
