@@ -12,6 +12,7 @@ This file documents the revision history for Parley.
     - improved preference screen (time, watch info, notifications)
     - improved Template::Plugin::ForumCode (markup and docs)
     - improve form handling for prefs
+    - navigation is now through the dojo menu widget; #navigation and #extra areas are now empty
     - person preference data now created at sign-up time
     - preferences are now in a tabbed container
     - reimplemented post/edit
