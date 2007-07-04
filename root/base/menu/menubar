@@ -1,68 +1,46 @@
 <!-- start : menubar -->
+[% IF NOT current_forum %][% SET forum_disabled='disabled="true"' %][% END %]
+[% IF NOT current_thread %][% SET thread_disabled='disabled="true"' %][% END %]
+
 <div dojoType="PopupMenu2" widgetId="menu_go">
-	<div dojoType="MenuItem2" caption="Main Page"></div>
-	<div dojoType="MenuItem2" caption="Recently Updated Threads"></div>
+	<div dojoType="MenuItem2" caption="Main Page" onClick="document.location.href = '[% c.request.base %]';"></div>
+	<div dojoType="MenuItem2" caption="Recently Updated Threads" onClick="document.location.href = 'thread/recent';"></div>
+    <div dojoType="MenuSeparator2"></div>
 
     [% IF current_forum %]
-	<div dojoType="MenuItem2" caption="[% current_forum.name %]"></div>
+	<div dojoType="MenuItem2" caption="[% current_forum.name %] forum" onClick="document.location.href = 'forum/view?forum=[%current_forum.id%]';"></div>
     [% ELSE %]
-	<div dojoType="MenuItem2" caption="No Forum" disabled="true"></div>
+	<div dojoType="MenuItem2" caption="Forum List" onClick="document.location.href = 'forum/view';"></div>
     [% END %]
 </div>
 
-
 <div dojoType="PopupMenu2" widgetId="menu_forum">
-	<div dojoType="MenuItem2" caption="Create New Thread"></div>
+	<div dojoType="MenuItem2" [%forum_disabled%] caption="Create New Thread" onClick="document.location.href = 'thread/add?forum=[%current_forum.id%]';"></div>
 </div>
 
 <div dojoType="PopupMenu2" widgetId="menu_thread">
-	<div dojoType="MenuItem2" caption="Add Reply"></div>
+	<div dojoType="MenuItem2" [%thread_disabled%] caption="Add Reply" onClick="document.location.href = 'thread/reply?thread=[%current_thread.id%]';"></div>
     [%- IF watching_thread %]
-	<div dojoType="MenuItem2" caption="Add Watch"></div>
+	<div dojoType="MenuItem2" [%thread_disabled%] caption="Remove Watch" onClick="document.location.href = 'thread/watch?thread=[% current_thread.id %]&page=[% page.current_page %]&watch=0';"></div>
     [%- ELSE %]
-	<div dojoType="MenuItem2" caption="Remove Watch"></div>
+	<div dojoType="MenuItem2" [%thread_disabled%] caption="Add Watch" onClick="document.location.href = 'thread/watch?thread=[% current_thread.id %]&page=[% page.current_page %]&watch=1'"></div>
     [%- END %]
 </div>
 
 <div dojoType="PopupMenu2" widgetId="menu_my">
-	<div dojoType="MenuItem2" caption="My Preferences"></div>
-	<div dojoType="MenuItem2" caption="Logout"></div>
-</div>
-
-<div dojoType="PopupMenu2" widgetId="submenu1" contextMenuForWindow="true">
-	<div dojoType="MenuItem2" caption="Enabled Item" onClick="alert('Hello world');"></div>
-	<div dojoType="MenuItem2" caption="Disabled Item" disabled="true"></div>
-	<div dojoType="MenuSeparator2"></div>
-    <div dojoType="MenuItem2" iconSrc="static/magic/src/widget/templates/buttons/cut.gif" caption="Cut" accelKey="Ctrl+C"
-		onClick="alert('not actually cutting anything, just a test!')"></div>
-    <div dojoType="MenuItem2" iconSrc="static/magic/src/widget/templates/buttons/copy.gif" caption="Copy" accelKey="Ctrl+X"
-		onClick="alert('not actually copying anything, just a test!')"></div>
-    <div dojoType="MenuItem2" iconSrc="static/magic/src/widget/templates/buttons/paste.gif" caption="Paste" accelKey="Ctrl+V"
-		onClick="alert('not actually pasting anything, just a test!')"></div>
-	<div dojoType="MenuSeparator2"></div>
-	<div dojoType="MenuItem2" caption="Enabled Submenu" submenuId="submenu2"></div>
-
-	<div dojoType="MenuItem2" caption="Disabled Submenu" submenuId="submenu2" disabled="true"></div>
-</div>
-
-<div dojoType="PopupMenu2" widgetId="submenu2">
-	<div dojoType="MenuItem2" caption="Submenu Item One" onClick="alert('Submenu 1!')"></div>
-	<div dojoType="MenuItem2" caption="Submenu Item Two" onClick="alert('Submenu 2!')"></div>
+    [% IF authed_user %]
+	<div dojoType="MenuItem2" caption="My Preferences" onClick="document.location.href = 'my/preferences';"></div>
+	<div dojoType="MenuItem2" caption="Logout" onClick="document.location.href = 'user/logout';"></div>
+    [% ELSE %]
+	<div dojoType="MenuItem2" caption="Login" onClick="login_dialog.show(); dojo.byId('username').focus(); return false;"></div>
+	<div dojoType="MenuItem2" caption="Register" onClick="document.location.href = 'user/signup';"></div>
+    [% END %]
 </div>
 
 <div dojoType="MenuBar2">
-	<div dojoType="MenuBarItem2" caption="Go To ..." submenuId="menu_go"></div>
-
-    [% IF current_forum %]
-	<div dojoType="MenuBarItem2" caption="Forum" submenuId="menu_forum"></div>
-    [% END %]
-
-    [% IF current_thread %]
-	<div dojoType="MenuBarItem2" caption="Thread" submenuId="menu_thread"></div>
-    [% END %]
-
-    [% IF authed_user %]
-	<div dojoType="MenuBarItem2" caption="Me" submenuId="menu_my"></div>
-    [% END %]
+	<div dojoType="MenuBarItem2" caption="Go To ..."    submenuId="menu_go"></div>
+	<div dojoType="MenuBarItem2" caption="Forum"        submenuId="menu_forum"></div>
+	<div dojoType="MenuBarItem2" caption="Thread"       submenuId="menu_thread"></div>
+	<div dojoType="MenuBarItem2" caption="Me"           submenuId="menu_my"></div>
 </div>
 <!-- end :menubar -->
