@@ -59,8 +59,14 @@ sub _simple_tags {
     # deal with acceptable [x]...[/x] markup
     foreach my $tag (@{ $self->{simple_tags} }) {
         # we should be able to combine these two into one
-        $$textref =~ s{\[$tag\]}{<$tag>}g;
-        $$textref =~ s{\[/$tag\]}{</$tag>}g;
+        #$$textref =~ s{\[$tag\]}{<$tag>}g;
+        #$$textref =~ s{\[/$tag\]}{</$tag>}g;
+        $$textref =~ s{
+            \[($tag)\]
+            (.+?)
+            \[/$tag\]
+        }
+        {<$1>$2</$1>}xmsg;
     }
 }
 
@@ -118,7 +124,7 @@ sub _colouring {
 
     # deal with colouring
     $$textref =~ s{
-        \[color
+        \[(colou?r)
         =
         (
               red | orange | yellow | green | blue
@@ -128,9 +134,9 @@ sub _colouring {
         )
         \]
         (.+?)
-        \[/color\]
+        \[/\1\]
     }
-    {<span style="color: $1">$2</span>}ixmsg;
+    {<span style="color: $2">$3</span>}ixmsg;
 }
 
 sub _lists {
@@ -240,16 +246,50 @@ Make the text between the markers I<underlined>.
 
 Make the text between the markers I<italicised>.
 
-=item B<[url]>...B<[/url]>
+=item B<[url]>http://...B<[/url]>
 
-Make the text between the markers into a HTML link. If you
+Make the text between the markers into a I<HTML link>. If you
 would like to give the link a name, use the following format:
 
-S<[url B<name="...">]...[/url]>
+S<[url B<name="...">]http://...[/url]>
+
+=item B<[img]>http://...B<[/img]>
+
+Insert an I<image>, specified by the URL between the markers.
+
+=item B<[colour=I<code>]>...B<[/colour]>
+
+Make a block of text appear in the I<colour> specified by I<code>.
+
+I<code> can be any of the named colours: red, orange, yellow, green, blue, black, white.
+
+I<code> may also be a #RGB value in either the #XYZ or #XXYYZZ format.
+
+For the sake of international relations C<< [color=I<code>]...[/color] >> may aslo be used.
+
+=item B<[list]>...B<[/list]>
+
+Create an ordered or unordered list of items. To create an I<unordered list> use B<[*]> to
+mark the start of each list item. To create an I<ordered list> use B<[1]> to mark the start
+of each list item.
+
+  e.g. an unordered list
+   [list]
+   [*]apple
+   [*]orange
+   [*]banana
+   [/list]
+
+  e.g. an ordered list
+   [list]
+   [1]first
+   [2]second
+   [3]third
+   [/list]
 
 =back
 
-=head1 METHODS
+=head1 PUBLIC METHODS
 
 =head2 new
 
@@ -261,7 +301,7 @@ The transformation function
 
 =head1 AUTHOR
 
-Chisel Wright C<< <pause@herlpacker.co.uk> >>
+Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 =head1 LICENSE
 

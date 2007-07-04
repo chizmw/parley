@@ -23,6 +23,10 @@ BEGIN {
             in  => '[b]foo[/b]',
             out => '<b>foo</b>',
         },
+        {
+            in  => '[b]foo',
+            out => '[b]foo',
+        },
         # **foo** bold magic
         {
             in  => '**foo**',
@@ -145,6 +149,23 @@ And another:
 
 
         # colouring
+        {
+            in      => q{[colour=red]Red Text[/colour]},
+            out     => q{<span style="color: red">Red Text</span>},
+        },
+        {
+            in      => q{[colour=#FF0000]Red Text[/colour]},
+            out     => q{<span style="color: #FF0000">Red Text</span>},
+        },
+        {
+            in      => q{[colour=#F00]Red Text[/colour]},
+            out     => q{<span style="color: #F00">Red Text</span>},
+        },
+        {
+            in      => q{[colour=OrAnge]OrAnge Text[/colour]},
+            out     => q{<span style="color: OrAnge">OrAnge Text</span>},
+        },
+        # coloring - for the Merkins
         {
             in      => q{[color=red]Red Text[/color]},
             out     => q{<span style="color: red">Red Text</span>},
