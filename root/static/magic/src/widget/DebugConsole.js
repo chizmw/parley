@@ -8,15 +8,16 @@
 		http://dojotoolkit.org/community/licensing.shtml
 */
 
+
+
 dojo.provide("dojo.widget.DebugConsole");
 dojo.require("dojo.widget.Widget");
+dojo.require("dojo.widget.*");
+dojo.require("dojo.widget.FloatingPane");
+dojo.widget.defineWidget("dojo.widget.DebugConsole", dojo.widget.FloatingPane, {fillInTemplate:function () {
+	dojo.widget.DebugConsole.superclass.fillInTemplate.apply(this, arguments);
+	this.containerNode.id = "debugConsoleClientPane";
+	djConfig.isDebug = true;
+	djConfig.debugContainerId = this.containerNode.id;
+}});
 
-dojo.widget.DebugConsole= function(){
-	dojo.widget.Widget.call(this);
-
-	this.widgetType = "DebugConsole";
-	this.isContainer = true;
-}
-dojo.inherits(dojo.widget.DebugConsole, dojo.widget.Widget);
-dojo.widget.tags.addParseTreeHandler("dojo:debugconsole");
-dojo.requireAfterIf("html", "dojo.widget.html.DebugConsole");

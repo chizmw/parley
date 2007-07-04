@@ -8,181 +8,158 @@
 		http://dojotoolkit.org/community/licensing.shtml
 */
 
+
+
 dojo.provide("dojo.xml.Parse");
-
 dojo.require("dojo.dom");
-
-//TODO: determine dependencies
-// currently has dependency on dojo.xml.DomUtil nodeTypes constants...
-
-/* generic method for taking a node and parsing it into an object
-
-TODO: WARNING: This comment is wrong!
-
-For example, the following xml fragment
-
-<foo bar="bar">
-	<baz xyzzy="xyzzy"/>
-</foo>
-
-can be described as:
-
-dojo.???.foo = {}
-dojo.???.foo.bar = {}
-dojo.???.foo.bar.value = "bar";
-dojo.???.foo.baz = {}
-dojo.???.foo.baz.xyzzy = {}
-dojo.???.foo.baz.xyzzy.value = "xyzzy"
-
-*/
-// using documentFragment nomenclature to generalize in case we don't want to require passing a collection of nodes with a single parent
-dojo.xml.Parse = function(){
-
-	function getDojoTagName (node) {
-		var tagName = node.tagName;
-		if (tagName.substr(0,5).toLowerCase() != "dojo:") {
-			
-			if (tagName.substr(0,4).toLowerCase() == "dojo") {
-				// FIXME: this assuumes tag names are always lower case
-				return "dojo:" + tagName.substring(4).toLowerCase();
+dojo.xml.Parse = function () {
+	var isIE = ((dojo.render.html.capable) && (dojo.render.html.ie));
+	function getTagName(node) {
+		try {
+			return node.tagName.toLowerCase();
+		}
+		catch (e) {
+			return "";
+		}
+	}
+	function getDojoTagName(node) {
+		var tagName = getTagName(node);
+		if (!tagName) {
+			return "";
+		}
+		if ((dojo.widget) && (dojo.widget.tags[tagName])) {
+			return tagName;
+		}
+		var p = tagName.indexOf(":");
+		if (p >= 0) {
+			return tagName;
+		}
+		if (tagName.substr(0, 5) == "dojo:") {
+			return tagName;
+		}
+		if (dojo.render.html.capable && dojo.render.html.ie && node.scopeName != "HTML") {
+			return node.scopeName.toLowerCase() + ":" + tagName;
+		}
+		if (tagName.substr(0, 4) == "dojo") {
+			return "dojo:" + tagName.substring(4);
+		}
+		var djt = node.getAttribute("dojoType") || node.getAttribute("dojotype");
+		if (djt) {
+			if (djt.indexOf(":") < 0) {
+				djt = "dojo:" + djt;
 			}
-		
-			// allow lower-casing
-			var djt = node.getAttribute("dojoType") || node.getAttribute("dojotype");
-			if (djt) { return "dojo:" + djt.toLowerCase(); }
-			
-			if (node.getAttributeNS && node.getAttributeNS(dojo.dom.dojoml,"type")) {
-				return "dojo:" + node.getAttributeNS(dojo.dom.dojoml,"type").toLowerCase();
-			}
-			try {
-				// FIXME: IE really really doesn't like this, so we squelch
-				// errors for it
-				djt = node.getAttribute("dojo:type");
-			} catch (e) { /* FIXME: log? */ }
-
-			if (djt) { return "dojo:"+djt.toLowerCase(); }
-		
-			if (!dj_global["djConfig"] || !djConfig["ignoreClassNames"]) {
-				// FIXME: should we make this optionally enabled via djConfig?
-				var classes = node.className||node.getAttribute("class");
-				// FIXME: following line, without check for existence of classes.indexOf
-				// breaks firefox 1.5's svg widgets
-				if (classes && classes.indexOf && classes.indexOf("dojo-") != -1) {
-					var aclasses = classes.split(" ");
-					for(var x=0; x<aclasses.length; x++){
-						if (aclasses[x].length > 5 && aclasses[x].indexOf("dojo-") >= 0) {
-							return "dojo:"+aclasses[x].substr(5).toLowerCase();
-						}
+			return djt.toLowerCase();
+		}
+		djt = node.getAttributeNS && node.getAttributeNS(dojo.dom.dojoml, "type");
+		if (djt) {
+			return "dojo:" + djt.toLowerCase();
+		}
+		try {
+			djt = node.getAttribute("dojo:type");
+		}
+		catch (e) {
+		}
+		if (djt) {
+			return "dojo:" + djt.toLowerCase();
+		}
+		if ((dj_global["djConfig"]) && (!djConfig["ignoreClassNames"])) {
+			var classes = node.className || node.getAttribute("class");
+			if ((classes) && (classes.indexOf) && (classes.indexOf("dojo-") != -1)) {
+				var aclasses = classes.split(" ");
+				for (var x = 0, c = aclasses.length; x < c; x++) {
+					if (aclasses[x].slice(0, 5) == "dojo-") {
+						return "dojo:" + aclasses[x].substr(5).toLowerCase();
 					}
 				}
 			}
-		
 		}
-		return tagName.toLowerCase();
+		return "";
 	}
-
-	this.parseElement = function(node, hasParentNodeSet, optimizeForDojoML, thisIdx){
-
-        // if parseWidgets="false" don't search inside this node for widgets
-        if (node.getAttribute("parseWidgets") == "false") {
-            return {};
-        }
-
-		// TODO: make this namespace aware
+	this.parseElement = function (node, hasParentNodeSet, optimizeForDojoML, thisIdx) {
+		var tagName = getTagName(node);
+		if (isIE && tagName.indexOf("/") == 0) {
+			return null;
+		}
+		try {
+			var attr = node.getAttribute("parseWidgets");
+			if (attr && attr.toLowerCase() == "false") {
+				return {};
+			}
+		}
+		catch (e) {
+		}
+		var process = true;
+		if (optimizeForDojoML) {
+			var dojoTagName = getDojoTagName(node);
+			tagName = dojoTagName || tagName;
+			process = Boolean(dojoTagName);
+		}
 		var parsedNodeSet = {};
-
-		var tagName = getDojoTagName(node);
 		parsedNodeSet[tagName] = [];
-		if((!optimizeForDojoML)||(tagName.substr(0,4).toLowerCase()=="dojo")){
-			var attributeSet = parseAttributes(node);
-			for(var attr in attributeSet){
-				if((!parsedNodeSet[tagName][attr])||(typeof parsedNodeSet[tagName][attr] != "array")){
+		var pos = tagName.indexOf(":");
+		if (pos > 0) {
+			var ns = tagName.substring(0, pos);
+			parsedNodeSet["ns"] = ns;
+			if ((dojo.ns) && (!dojo.ns.allow(ns))) {
+				process = false;
+			}
+		}
+		if (process) {
+			var attributeSet = this.parseAttributes(node);
+			for (var attr in attributeSet) {
+				if ((!parsedNodeSet[tagName][attr]) || (typeof parsedNodeSet[tagName][attr] != "array")) {
 					parsedNodeSet[tagName][attr] = [];
 				}
 				parsedNodeSet[tagName][attr].push(attributeSet[attr]);
 			}
-	
-			// FIXME: we might want to make this optional or provide cloning instead of
-			// referencing, but for now, we include a node reference to allow
-			// instantiated components to figure out their "roots"
 			parsedNodeSet[tagName].nodeRef = node;
 			parsedNodeSet.tagName = tagName;
-			parsedNodeSet.index = thisIdx||0;
+			parsedNodeSet.index = thisIdx || 0;
 		}
-	
 		var count = 0;
-		var tcn, i = 0, nodes = node.childNodes;
-		while(tcn = nodes[i++]){
-			switch(tcn.nodeType){
-				case  dojo.dom.ELEMENT_NODE: // element nodes, call this function recursively
-					count++;
-					var ctn = getDojoTagName(tcn);
-					if(!parsedNodeSet[ctn]){
-						parsedNodeSet[ctn] = [];
-					}
-					parsedNodeSet[ctn].push(this.parseElement(tcn, true, optimizeForDojoML, count));
-					if(	(tcn.childNodes.length == 1)&&
-						(tcn.childNodes.item(0).nodeType == dojo.dom.TEXT_NODE)){
-						parsedNodeSet[ctn][parsedNodeSet[ctn].length-1].value = tcn.childNodes.item(0).nodeValue;
-					}
-					break;
-				case  dojo.dom.TEXT_NODE: // if a single text node is the child, treat it as an attribute
-					if(node.childNodes.length == 1) {
-						parsedNodeSet[tagName].push({ value: node.childNodes.item(0).nodeValue });
-					}
-					break;
-				default: break;
-				/*
-				case  dojo.dom.ATTRIBUTE_NODE: // attribute node... not meaningful here
-					break;
-				case  dojo.dom.CDATA_SECTION_NODE: // cdata section... not sure if this would ever be meaningful... might be...
-					break;
-				case  dojo.dom.ENTITY_REFERENCE_NODE: // entity reference node... not meaningful here
-					break;
-				case  dojo.dom.ENTITY_NODE: // entity node... not sure if this would ever be meaningful
-					break;
-				case  dojo.dom.PROCESSING_INSTRUCTION_NODE: // processing instruction node... not meaningful here
-					break;
-				case  dojo.dom.COMMENT_NODE: // comment node... not not sure if this would ever be meaningful 
-					break;
-				case  dojo.dom.DOCUMENT_NODE: // document node... not sure if this would ever be meaningful
-					break;
-				case  dojo.dom.DOCUMENT_TYPE_NODE: // document type node... not meaningful here
-					break;
-				case  dojo.dom.DOCUMENT_FRAGMENT_NODE: // document fragment node... not meaningful here
-					break;
-				case  dojo.dom.NOTATION_NODE:// notation node... not meaningful here
-					break;
-				*/
+		for (var i = 0; i < node.childNodes.length; i++) {
+			var tcn = node.childNodes.item(i);
+			switch (tcn.nodeType) {
+			  case dojo.dom.ELEMENT_NODE:
+				var ctn = getDojoTagName(tcn) || getTagName(tcn);
+				if (!parsedNodeSet[ctn]) {
+					parsedNodeSet[ctn] = [];
+				}
+				parsedNodeSet[ctn].push(this.parseElement(tcn, true, optimizeForDojoML, count));
+				if ((tcn.childNodes.length == 1) && (tcn.childNodes.item(0).nodeType == dojo.dom.TEXT_NODE)) {
+					parsedNodeSet[ctn][parsedNodeSet[ctn].length - 1].value = tcn.childNodes.item(0).nodeValue;
+				}
+				count++;
+				break;
+			  case dojo.dom.TEXT_NODE:
+				if (node.childNodes.length == 1) {
+					parsedNodeSet[tagName].push({value:node.childNodes.item(0).nodeValue});
+				}
+				break;
+			  default:
+				break;
 			}
 		}
-		//return (hasParentNodeSet) ? parsedNodeSet[node.tagName] : parsedNodeSet;
 		return parsedNodeSet;
-	}
-
-	/* parses a set of attributes on a node into an object tree */
-	function parseAttributes(node) {
-		// TODO: make this namespace aware
+	};
+	this.parseAttributes = function (node) {
 		var parsedAttributeSet = {};
 		var atts = node.attributes;
-		// TODO: should we allow for duplicate attributes at this point...
-		// would any of the relevant dom implementations even allow this?
-		var attnode, i=0;
-		while(attnode=atts[i++]) {
-			if((dojo.render.html.capable)&&(dojo.render.html.ie)){
-				if(!attnode){ continue; }
-				if(	(typeof attnode == "object")&&
-					(typeof attnode.nodeValue == 'undefined')||
-					(attnode.nodeValue == null)||
-					(attnode.nodeValue == '')){ 
-					continue; 
+		var attnode, i = 0;
+		while ((attnode = atts[i++])) {
+			if (isIE) {
+				if (!attnode) {
+					continue;
+				}
+				if ((typeof attnode == "object") && (typeof attnode.nodeValue == "undefined") || (attnode.nodeValue == null) || (attnode.nodeValue == "")) {
+					continue;
 				}
 			}
-			var nn = (attnode.nodeName.indexOf("dojo:") == -1) ? attnode.nodeName : attnode.nodeName.split("dojo:")[1];
-			parsedAttributeSet[nn] = { 
-				value: attnode.nodeValue 
-			};
+			var nn = attnode.nodeName.split(":");
+			nn = (nn.length == 2) ? nn[1] : attnode.nodeName;
+			parsedAttributeSet[nn] = {value:attnode.nodeValue};
 		}
 		return parsedAttributeSet;
-	}
-}
+	};
+};
+

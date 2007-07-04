@@ -8,32 +8,10 @@
 		http://dojotoolkit.org/community/licensing.shtml
 */
 
+
+
 dojo.provide("dojo.animation.Timer");
-dojo.require("dojo.lang.func");
+dojo.require("dojo.lang.timing.Timer");
+dojo.deprecated("dojo.animation.Timer is now dojo.lang.timing.Timer", "0.5");
+dojo.animation.Timer = dojo.lang.timing.Timer;
 
-dojo.animation.Timer = function(intvl){
-	var timer = null;
-	this.isRunning = false;
-	this.interval = intvl;
-
-	this.onTick = function(){};
-	this.onStart = null;
-	this.onStop = null;
-
-	this.setInterval = function(ms){
-		if (this.isRunning) window.clearInterval(timer);
-		this.interval = ms;
-		if (this.isRunning) timer = window.setInterval(dojo.lang.hitch(this, "onTick"), this.interval);
-	};
-
-	this.start = function(){
-		if (typeof this.onStart == "function") this.onStart();
-		this.isRunning = true;
-		timer = window.setInterval(this.onTick, this.interval);
-	};
-	this.stop = function(){
-		if (typeof this.onStop == "function") this.onStop();
-		this.isRunning = false;
-		window.clearInterval(timer);
-	};
-};

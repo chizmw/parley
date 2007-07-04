@@ -8,10 +8,16 @@
 		http://dojotoolkit.org/community/licensing.shtml
 */
 
+
+
 dojo.provide("dojo.widget.LinkPane");
-
 dojo.require("dojo.widget.*");
-dojo.requireAfterIf("html", "dojo.widget.html.LinkPane");
-dojo.widget.tags.addParseTreeHandler("dojo:LinkPane");
+dojo.require("dojo.widget.ContentPane");
+dojo.require("dojo.html.style");
+dojo.widget.defineWidget("dojo.widget.LinkPane", dojo.widget.ContentPane, {templateString:"<div class=\"dojoLinkPane\"></div>", fillInTemplate:function (args, frag) {
+	var source = this.getFragNodeRef(frag);
+	this.label += source.innerHTML;
+	var source = this.getFragNodeRef(frag);
+	dojo.html.copyStyle(this.domNode, source);
+}});
 
-// NOTE: there's no stub file for this widget

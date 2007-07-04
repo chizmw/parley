@@ -8,276 +8,258 @@
 		http://dojotoolkit.org/community/licensing.shtml
 */
 
+
+
 dojo.provide("dojo.widget.Manager");
 dojo.require("dojo.lang.array");
 dojo.require("dojo.lang.func");
 dojo.require("dojo.event.*");
-
-// Manager class
-dojo.widget.manager = new function(){
+dojo.widget.manager = new function () {
 	this.widgets = [];
 	this.widgetIds = [];
-	
-	// map of widgetId-->widget for widgets without parents (top level widgets)
 	this.topWidgets = {};
-
 	var widgetTypeCtr = {};
 	var renderPrefixCache = [];
-
 	this.getUniqueId = function (widgetType) {
-		return widgetType + "_" + (widgetTypeCtr[widgetType] != undefined ?
-			++widgetTypeCtr[widgetType] : widgetTypeCtr[widgetType] = 0);
-	}
-
-	this.add = function(widget){
-		dojo.profile.start("dojo.widget.manager.add");
+		var widgetId;
+		do {
+			widgetId = widgetType + "_" + (widgetTypeCtr[widgetType] != undefined ? ++widgetTypeCtr[widgetType] : widgetTypeCtr[widgetType] = 0);
+		} while (this.getWidgetById(widgetId));
+		return widgetId;
+	};
+	this.add = function (widget) {
 		this.widgets.push(widget);
-		// Opera9 uses ID (caps)
-		if(!widget.extraArgs["id"]){
+		if (!widget.extraArgs["id"]) {
 			widget.extraArgs["id"] = widget.extraArgs["ID"];
 		}
-		// FIXME: the rest of this method is very slow!
-		if(widget.widgetId == ""){
-			if(widget["id"]){
+		if (widget.widgetId == "") {
+			if (widget["id"]) {
 				widget.widgetId = widget["id"];
-			}else if(widget.extraArgs["id"]){
-				widget.widgetId = widget.extraArgs["id"];
-			}else{
-				widget.widgetId = this.getUniqueId(widget.widgetType);
+			} else {
+				if (widget.extraArgs["id"]) {
+					widget.widgetId = widget.extraArgs["id"];
+				} else {
+					widget.widgetId = this.getUniqueId(widget.ns + "_" + widget.widgetType);
+				}
 			}
 		}
-		if(this.widgetIds[widget.widgetId]){
-			dojo.debug("widget ID collision on ID: "+widget.widgetId);
+		if (this.widgetIds[widget.widgetId]) {
+			dojo.debug("widget ID collision on ID: " + widget.widgetId);
 		}
 		this.widgetIds[widget.widgetId] = widget;
-		// Widget.destroy already calls removeById(), so we don't need to
-		// connect() it here
-		dojo.profile.end("dojo.widget.manager.add");
-	}
-
-	this.destroyAll = function(){
-		for(var x=this.widgets.length-1; x>=0; x--){
-			try{
-				// this.widgets[x].destroyChildren();
+	};
+	this.destroyAll = function () {
+		for (var x = this.widgets.length - 1; x >= 0; x--) {
+			try {
 				this.widgets[x].destroy(true);
 				delete this.widgets[x];
-			}catch(e){ }
+			}
+			catch (e) {
+			}
 		}
-	}
-
-	// FIXME: we should never allow removal of the root widget until all others
-	// are removed!
-	this.remove = function(widgetIndex){
-		var tw = this.widgets[widgetIndex].widgetId;
-		delete this.widgetIds[tw];
-		this.widgets.splice(widgetIndex, 1);
-	}
-	
-	// FIXME: suboptimal performance
-	this.removeById = function(id) {
-		for (var i=0; i<this.widgets.length; i++){
-			if(this.widgets[i].widgetId == id){
+	};
+	this.remove = function (widgetIndex) {
+		if (dojo.lang.isNumber(widgetIndex)) {
+			var tw = this.widgets[widgetIndex].widgetId;
+			delete this.topWidgets[tw];
+			delete this.widgetIds[tw];
+			this.widgets.splice(widgetIndex, 1);
+		} else {
+			this.removeById(widgetIndex);
+		}
+	};
+	this.removeById = function (id) {
+		if (!dojo.lang.isString(id)) {
+			id = id["widgetId"];
+			if (!id) {
+				dojo.debug("invalid widget or id passed to removeById");
+				return;
+			}
+		}
+		for (var i = 0; i < this.widgets.length; i++) {
+			if (this.widgets[i].widgetId == id) {
 				this.remove(i);
 				break;
 			}
 		}
-	}
-
-	this.getWidgetById = function(id){
-		return this.widgetIds[id];
-	}
-
-	this.getWidgetsByType = function(type){
+	};
+	this.getWidgetById = function (id) {
+		if (dojo.lang.isString(id)) {
+			return this.widgetIds[id];
+		}
+		return id;
+	};
+	this.getWidgetsByType = function (type) {
 		var lt = type.toLowerCase();
+		var getType = (type.indexOf(":") < 0 ? function (x) {
+			return x.widgetType.toLowerCase();
+		} : function (x) {
+			return x.getNamespacedType();
+		});
 		var ret = [];
-		dojo.lang.forEach(this.widgets, function(x){
-			if(x.widgetType.toLowerCase() == lt){
+		dojo.lang.forEach(this.widgets, function (x) {
+			if (getType(x) == lt) {
 				ret.push(x);
 			}
 		});
 		return ret;
-	}
-
-	this.getWidgetsOfType = function (id) {
-		dojo.deprecated("getWidgetsOfType", "use getWidgetsByType", "0.4");
-		return dojo.widget.manager.getWidgetsByType(id);
-	}
-
-	this.getWidgetsByFilter = function(unaryFunc, onlyOne){
+	};
+	this.getWidgetsByFilter = function (unaryFunc, onlyOne) {
 		var ret = [];
-		dojo.lang.every(this.widgets, function(x){
-			if(unaryFunc(x)){
+		dojo.lang.every(this.widgets, function (x) {
+			if (unaryFunc(x)) {
 				ret.push(x);
-				if(onlyOne){return false;}
+				if (onlyOne) {
+					return false;
+				}
 			}
 			return true;
 		});
 		return (onlyOne ? ret[0] : ret);
-	}
-
-	this.getAllWidgets = function() {
+	};
+	this.getAllWidgets = function () {
 		return this.widgets.concat();
-	}
-
-	//	added, trt 2006-01-20
-	this.getWidgetByNode = function(/* DOMNode */ node){
-		var w=this.getAllWidgets();
-		for (var i=0; i<w.length; i++){
-			if (w[i].domNode==node){
+	};
+	this.getWidgetByNode = function (node) {
+		var w = this.getAllWidgets();
+		node = dojo.byId(node);
+		for (var i = 0; i < w.length; i++) {
+			if (w[i].domNode == node) {
 				return w[i];
 			}
 		}
 		return null;
-	}
-
-	// shortcuts, baby
+	};
 	this.byId = this.getWidgetById;
 	this.byType = this.getWidgetsByType;
 	this.byFilter = this.getWidgetsByFilter;
 	this.byNode = this.getWidgetByNode;
-
-	// map of previousally discovered implementation names to constructors
 	var knownWidgetImplementations = {};
-
-	// support manually registered widget packages
 	var widgetPackages = ["dojo.widget"];
-	for (var i=0; i<widgetPackages.length; i++) {
-		// convenience for checking if a package exists (reverse lookup)
+	for (var i = 0; i < widgetPackages.length; i++) {
 		widgetPackages[widgetPackages[i]] = true;
 	}
-
-	this.registerWidgetPackage = function(pname) {
-		if(!widgetPackages[pname]){
+	this.registerWidgetPackage = function (pname) {
+		if (!widgetPackages[pname]) {
 			widgetPackages[pname] = true;
 			widgetPackages.push(pname);
 		}
-	}
-	
-	this.getWidgetPackageList = function() {
-		return dojo.lang.map(widgetPackages, function(elt) { return(elt!==true ? elt : undefined); });
-	}
-	
-	this.getImplementation = function(widgetName, ctorObject, mixins){
-		// try and find a name for the widget
-		var impl = this.getImplementationName(widgetName);
-		if(impl){ 
-			// var tic = new Date();
-			var ret = new impl(ctorObject);
-			// dojo.debug(new Date() - tic);
+	};
+	this.getWidgetPackageList = function () {
+		return dojo.lang.map(widgetPackages, function (elt) {
+			return (elt !== true ? elt : undefined);
+		});
+	};
+	this.getImplementation = function (widgetName, ctorObject, mixins, ns) {
+		var impl = this.getImplementationName(widgetName, ns);
+		if (impl) {
+			var ret = ctorObject ? new impl(ctorObject) : new impl();
 			return ret;
 		}
+	};
+	function buildPrefixCache() {
+		for (var renderer in dojo.render) {
+			if (dojo.render[renderer]["capable"] === true) {
+				var prefixes = dojo.render[renderer].prefixes;
+				for (var i = 0; i < prefixes.length; i++) {
+					renderPrefixCache.push(prefixes[i].toLowerCase());
+				}
+			}
+		}
 	}
-
-	this.getImplementationName = function(widgetName){
-		/*
-		 * This is the overly-simplistic implemention of getImplementation (har
-		 * har). In the future, we are going to want something that allows more
-		 * freedom of expression WRT to specifying different specializations of
-		 * a widget.
-		 *
-		 * Additionally, this implementation treats widget names as case
-		 * insensitive, which does not necessarialy mesh with the markup which
-		 * can construct a widget.
-		 */
-
+	var findImplementationInModule = function (lowerCaseWidgetName, module) {
+		if (!module) {
+			return null;
+		}
+		for (var i = 0, l = renderPrefixCache.length, widgetModule; i <= l; i++) {
+			widgetModule = (i < l ? module[renderPrefixCache[i]] : module);
+			if (!widgetModule) {
+				continue;
+			}
+			for (var name in widgetModule) {
+				if (name.toLowerCase() == lowerCaseWidgetName) {
+					return widgetModule[name];
+				}
+			}
+		}
+		return null;
+	};
+	var findImplementation = function (lowerCaseWidgetName, moduleName) {
+		var module = dojo.evalObjPath(moduleName, false);
+		return (module ? findImplementationInModule(lowerCaseWidgetName, module) : null);
+	};
+	this.getImplementationName = function (widgetName, ns) {
 		var lowerCaseWidgetName = widgetName.toLowerCase();
-
-		var impl = knownWidgetImplementations[lowerCaseWidgetName];
-		if(impl){
+		ns = ns || "dojo";
+		var imps = knownWidgetImplementations[ns] || (knownWidgetImplementations[ns] = {});
+		var impl = imps[lowerCaseWidgetName];
+		if (impl) {
 			return impl;
 		}
-
-		// first store a list of the render prefixes we are capable of rendering
-		if(!renderPrefixCache.length){
-			for(var renderer in dojo.render){
-				if(dojo.render[renderer]["capable"] === true){
-					var prefixes = dojo.render[renderer].prefixes;
-					for(var i = 0; i < prefixes.length; i++){
-						renderPrefixCache.push(prefixes[i].toLowerCase());
-					}
-				}
-			}
-			// make sure we don't HAVE to prefix widget implementation names
-			// with anything to get them to render
-			renderPrefixCache.push("");
+		if (!renderPrefixCache.length) {
+			buildPrefixCache();
 		}
-
-		// look for a rendering-context specific version of our widget name
-		for(var i = 0; i < widgetPackages.length; i++){
-			var widgetPackage = dojo.evalObjPath(widgetPackages[i]);
-			if(!widgetPackage) { continue; }
-
-			for (var j = 0; j < renderPrefixCache.length; j++) {
-				if (!widgetPackage[renderPrefixCache[j]]) { continue; }
-				for (var widgetClass in widgetPackage[renderPrefixCache[j]]) {
-					if (widgetClass.toLowerCase() != lowerCaseWidgetName) { continue; }
-					knownWidgetImplementations[lowerCaseWidgetName] =
-						widgetPackage[renderPrefixCache[j]][widgetClass];
-					return knownWidgetImplementations[lowerCaseWidgetName];
-				}
-			}
-
-			for (var j = 0; j < renderPrefixCache.length; j++) {
-				for (var widgetClass in widgetPackage) {
-					if (widgetClass.toLowerCase() !=
-						(renderPrefixCache[j] + lowerCaseWidgetName)) { continue; }
-	
-					knownWidgetImplementations[lowerCaseWidgetName] =
-						widgetPackage[widgetClass];
-					return knownWidgetImplementations[lowerCaseWidgetName];
-				}
+		var nsObj = dojo.ns.get(ns);
+		if (!nsObj) {
+			dojo.ns.register(ns, ns + ".widget");
+			nsObj = dojo.ns.get(ns);
+		}
+		if (nsObj) {
+			nsObj.resolve(widgetName);
+		}
+		impl = findImplementation(lowerCaseWidgetName, nsObj.module);
+		if (impl) {
+			return (imps[lowerCaseWidgetName] = impl);
+		}
+		nsObj = dojo.ns.require(ns);
+		if ((nsObj) && (nsObj.resolver)) {
+			nsObj.resolve(widgetName);
+			impl = findImplementation(lowerCaseWidgetName, nsObj.module);
+			if (impl) {
+				return (imps[lowerCaseWidgetName] = impl);
 			}
 		}
-		
-		throw new Error('Could not locate "' + widgetName + '" class');
-	}
-
-	// FIXME: does it even belong in this name space?
-	// NOTE: this method is implemented by DomWidget.js since not all
-	// hostenv's would have an implementation.
-	/*this.getWidgetFromPrimitive = function(baseRenderType){
-		dojo.unimplemented("dojo.widget.manager.getWidgetFromPrimitive");
-	}
-
-	this.getWidgetFromEvent = function(nativeEvt){
-		dojo.unimplemented("dojo.widget.manager.getWidgetFromEvent");
-	}*/
-
-	// Catch window resize events and notify top level widgets
-	this.resizing=false;
-	this.onWindowResized = function(){
-		if(this.resizing){
-			return;	// duplicate event
+		dojo.deprecated("dojo.widget.Manager.getImplementationName", "Could not locate widget implementation for \"" + widgetName + "\" in \"" + nsObj.module + "\" registered to namespace \"" + nsObj.name + "\". " + "Developers must specify correct namespaces for all non-Dojo widgets", "0.5");
+		for (var i = 0; i < widgetPackages.length; i++) {
+			impl = findImplementation(lowerCaseWidgetName, widgetPackages[i]);
+			if (impl) {
+				return (imps[lowerCaseWidgetName] = impl);
+			}
 		}
-		try{
-			this.resizing=true;
-			for(var id in this.topWidgets){
+		throw new Error("Could not locate widget implementation for \"" + widgetName + "\" in \"" + nsObj.module + "\" registered to namespace \"" + nsObj.name + "\"");
+	};
+	this.resizing = false;
+	this.onWindowResized = function () {
+		if (this.resizing) {
+			return;
+		}
+		try {
+			this.resizing = true;
+			for (var id in this.topWidgets) {
 				var child = this.topWidgets[id];
-				if(child.checkSize ){
+				if (child.checkSize) {
 					child.checkSize();
 				}
-			};
-		}catch(e){
-		}finally{
-			this.resizing=false;
+			}
 		}
+		catch (e) {
+		}
+		finally {
+			this.resizing = false;
+		}
+	};
+	if (typeof window != "undefined") {
+		dojo.addOnLoad(this, "onWindowResized");
+		dojo.event.connect(window, "onresize", this, "onWindowResized");
 	}
-	if(typeof window != "undefined") {
-		dojo.addOnLoad(this, 'onWindowResized');							// initial sizing
-		dojo.event.connect(window, 'onresize', this, 'onWindowResized');	// window resize
-	}
-
-	// FIXME: what else?
 };
-
-(function(){
+(function () {
 	var dw = dojo.widget;
 	var dwm = dw.manager;
 	var h = dojo.lang.curry(dojo.lang, "hitch", dwm);
-	var g = function(oldName, newName){
-		dw[(newName||oldName)] = h(oldName);
-	}
-	// copy the methods from the default manager (this) to the widget namespace
+	var g = function (oldName, newName) {
+		dw[(newName || oldName)] = h(oldName);
+	};
 	g("add", "addWidget");
 	g("destroyAll", "destroyAllWidgets");
 	g("remove", "removeWidget");
@@ -289,18 +271,18 @@ dojo.widget.manager = new function(){
 	g("getWidgetsByType", "byType");
 	g("getWidgetsByFilter", "byFilter");
 	g("getWidgetByNode", "byNode");
-	dw.all = function(n){
+	dw.all = function (n) {
 		var widgets = dwm.getAllWidgets.apply(dwm, arguments);
-		if(arguments.length > 0) {
+		if (arguments.length > 0) {
 			return widgets[n];
 		}
 		return widgets;
-	}
+	};
 	g("registerWidgetPackage");
 	g("getImplementation", "getWidgetImplementation");
 	g("getImplementationName", "getWidgetImplementationName");
-
 	dw.widgets = dwm.widgets;
 	dw.widgetIds = dwm.widgetIds;
 	dw.root = dwm.root;
 })();
+

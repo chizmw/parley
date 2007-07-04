@@ -8,19 +8,13 @@
 		http://dojotoolkit.org/community/licensing.shtml
 */
 
+
+
 dojo.provide("dojo.widget.ShowAction");
-
 dojo.require("dojo.widget.*");
-dojo.require("dojo.lang.common");
+dojo.widget.defineWidget("dojo.widget.ShowAction", dojo.widget.HtmlWidget, {on:"", action:"fade", duration:350, from:"", to:"", auto:"false", postMixInProperties:function () {
+	if (dojo.render.html.opera) {
+		this.action = this.action.split("/").pop();
+	}
+}});
 
-dojo.widget.ShowAction = function(){}
-dojo.lang.extend(dojo.widget.ShowAction, {
-	on: "",
-	action: "",
-	duration: 0,
-	from: "",
-	to: "",
-	auto: "false"
-});
-
-dojo.requireAfterIf("html", "dojo.widget.html.ShowAction");
