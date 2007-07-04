@@ -1,0 +1,76 @@
+<!-- start : menubar -->
+<style type="text/css">
+	.dojoMenuBar2 {
+		border-top:1px solid #d4d4d4;
+        background: green;
+	}
+</style>
+
+<div dojoType="PopupMenu2" widgetId="menu_go">
+	<div dojoType="MenuItem2" caption="Main Page"></div>
+	<div dojoType="MenuItem2" caption="Recently Updated Threads"></div>
+
+    [% IF current_forum %]
+	<div dojoType="MenuItem2" caption="[% current_forum.name %]"></div>
+    [% ELSE %]
+	<div dojoType="MenuItem2" caption="No Forum" disabled="true"></div>
+    [% END %]
+</div>
+
+
+<div dojoType="PopupMenu2" widgetId="menu_forum">
+	<div dojoType="MenuItem2" caption="Create New Thread"></div>
+</div>
+
+<div dojoType="PopupMenu2" widgetId="menu_thread">
+	<div dojoType="MenuItem2" caption="Add Reply"></div>
+    [%- IF watching_thread %]
+	<div dojoType="MenuItem2" caption="Add Watch"></div>
+    [%- ELSE %]
+	<div dojoType="MenuItem2" caption="Remove Watch"></div>
+    [%- END %]
+</div>
+
+<div dojoType="PopupMenu2" widgetId="menu_my">
+	<div dojoType="MenuItem2" caption="My Preferences"></div>
+	<div dojoType="MenuItem2" caption="Logout"></div>
+	<!--<a href="/" dojoType="MenuItem2" caption="Logout">Foo</a>-->
+</div>
+
+<div dojoType="PopupMenu2" widgetId="submenu1" contextMenuForWindow="true">
+	<div dojoType="MenuItem2" caption="Enabled Item" onClick="alert('Hello world');"></div>
+	<div dojoType="MenuItem2" caption="Disabled Item" disabled="true"></div>
+	<div dojoType="MenuSeparator2"></div>
+    <div dojoType="MenuItem2" iconSrc="static/magic/src/widget/templates/buttons/cut.gif" caption="Cut" accelKey="Ctrl+C"
+		onClick="alert('not actually cutting anything, just a test!')"></div>
+    <div dojoType="MenuItem2" iconSrc="static/magic/src/widget/templates/buttons/copy.gif" caption="Copy" accelKey="Ctrl+X"
+		onClick="alert('not actually copying anything, just a test!')"></div>
+    <div dojoType="MenuItem2" iconSrc="static/magic/src/widget/templates/buttons/paste.gif" caption="Paste" accelKey="Ctrl+V"
+		onClick="alert('not actually pasting anything, just a test!')"></div>
+	<div dojoType="MenuSeparator2"></div>
+	<div dojoType="MenuItem2" caption="Enabled Submenu" submenuId="submenu2"></div>
+
+	<div dojoType="MenuItem2" caption="Disabled Submenu" submenuId="submenu2" disabled="true"></div>
+</div>
+
+<div dojoType="PopupMenu2" widgetId="submenu2">
+	<div dojoType="MenuItem2" caption="Submenu Item One" onClick="alert('Submenu 1!')"></div>
+	<div dojoType="MenuItem2" caption="Submenu Item Two" onClick="alert('Submenu 2!')"></div>
+</div>
+
+<div dojoType="MenuBar2">
+	<div dojoType="MenuBarItem2" caption="Go To ..." submenuId="menu_go"></div>
+
+    [% IF current_forum %]
+	<div dojoType="MenuBarItem2" caption="Forum" submenuId="menu_forum"></div>
+    [% END %]
+
+    [% IF current_thread %]
+	<div dojoType="MenuBarItem2" caption="Thread" submenuId="menu_thread"></div>
+    [% END %]
+
+    [% IF authed_user %]
+	<div dojoType="MenuBarItem2" caption="Me" submenuId="menu_my"></div>
+    [% END %]
+</div>
+<!-- end :menubar -->
