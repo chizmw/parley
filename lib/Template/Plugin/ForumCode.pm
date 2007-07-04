@@ -5,7 +5,7 @@ use warnings;
 use base qw{ Template::Plugin };
 use base qw{ Template::Plugin::HTML };
 
-our $VERSION = '0.01_01';
+use version; our $VERSION = qv('0.0.1');
 
 sub new {
     my ($class, $context, @args) = @_;
