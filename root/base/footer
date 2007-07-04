@@ -4,8 +4,10 @@
             </div><!-- wrapper div -->
 
             <div id="navigation">
+            <p> &nbsp; </p>
+            <!--
                 <p>Navigation</p>
-                [% PROCESS shared/navigation %]
+                [%# PROCESS shared/navigation %]
 
                 <p>
                 <a href="javascript:;" onclick="search_dialog.show(); return false;">Search</a>
@@ -20,10 +22,12 @@
                 <a href="my/preferences">Preferences</a>
                 </p>
                 [% END %]
+                -->
             </div><!-- navigation div -->
 
             <div id="extra">
-                [% PROCESS shared/user_status %]
+            <p> &nbsp; </p>
+                [%# PROCESS shared/user_status %]
             </div><!-- extra div -->
 
             <div id="footer">
