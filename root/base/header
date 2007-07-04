@@ -12,7 +12,7 @@
 
             [%# Show version if we're debugging %]
             [% IF c.debug %]
-            - [% c.config.version %]
+            ([% c.config.version %])
             [% END %]
 
             [%# Show custom page title if we have one %]
