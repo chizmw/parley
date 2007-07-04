@@ -22,7 +22,7 @@ sub new {
     $new_obj->{replacements} = [
         {   from => '__',       to => 'u'   },
         {   from => '\*\*',     to => 'b'   },
-        {   from => '\/\/',     to => 'i'   },
+        #{   from => '\/\/',     to => 'i'   },
     ];
 
     return $new_obj;
