@@ -9,7 +9,7 @@ not an identical implementation of BBCode it has it's own name
 <h2>Simple Formatting</h2>
 
 <h3>Bold, Italic and Underline</h3>
-<ul>
+<ul class="help">
     <li>
         To make a section of text appear in <b>bold</b> use
         <code>[b]...[/b]</code>:
@@ -42,11 +42,62 @@ not an identical implementation of BBCode it has it's own name
     </li>
 </ul>
 
+<h3>Making Lists</h3>
+<p>There are two types of list, ordered - the items are numbered, and unordered - the
+items are bulleted. Lists are always enclosed by <code>[list]...[/list]</code> markers.
+The type of list you create is dependant on whether you use <code>[1]</code> or <code>[*]</code>
+for list items.
+</p>
+<ul class="help">
+    <li>
+        To create an <em>ordered list</em> use <code>[1]</code>
+        to mark list items.
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[list]<br />
+                [1]first<br />
+                [1]second<br />
+                [1]third<br />
+        [/list]</code></q>
+        <br />
+        produces:
+        [% ForumCode.forumcode('[list]
+        [1]first
+        [1]second
+        [1]third
+        [/list]') %]
+    </li>
+    <li>
+        To create an <em>unordered list</em> use <code>[*]</code>
+        to mark list items.
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[list]<br />
+                [*]apple<br />
+                [*]orange<br />
+                [*]banana<br />
+        [/list]</code></q>
+        <br />
+        produces:
+        [% ForumCode.forumcode('[list]
+        [*]apple
+        [*]orange
+        [*]banana
+        [/list]') %]
+    </li>
+</ul>
+<p><b>NOTE:</b> Separating elements with line-breaks is required.
+<q><code>[list] [*]apple [*]orange [*]banana [/list]</code></q> will output:<br />
+[% ForumCode.forumcode('[list] [*]apple [*]orange [*]banana [/list]') %]
+</p>
+
 <h3>Linking to external resources</h3>
 <p>The forum software does NOT automatically hunt out all text resembling URLs
 to turn them into clickable links. If you want a clickable link in a post
 you need to use the [url]...[/url] code:</p>
-<ul>
+<ul class="help">
     <li>
         To make a URL appear as a clickable link use
         <code>[url]http://...[/url]</code>:
@@ -61,7 +112,7 @@ you need to use the [url]...[/url] code:</p>
 
 <p>You may also make a section of text appear as a named link by
 using the "name=..." attribute in the code block:</p>
-<ul>
+<ul class="help">
     <li>
         To make a URL appear as a names clickable link use
         <code>[url <em>name="XXX"</em>]http://...[/url]</code>:
@@ -75,7 +126,7 @@ using the "name=..." attribute in the code block:</p>
 </ul>
 
 <p>As well as inserting clickable links, you may also insert images into posts.</p>
-<ul>
+<ul class="help">
     <li>
         To make an image appear in a posting use
         <code>[img]...[/img]</code>:
@@ -97,5 +148,46 @@ using the "name=..." attribute in the code block:</p>
         produces
         <br />
         [% ForumCode.forumcode("[img title='Powered by Catalyst' width='50']${c.request.base}static/images/btn_88x31_powered.png[/img]") %]
+    </li>
+</ul>
+
+<h3>Colouring</h3>
+<p>One surefire way to annoy people to the point where they'd like to remove
+your internal organs with a spoon is to use lots of unnecessary colours in your posts.
+The ForumCode to invoke this reaction is
+<code>[colour=<em>code</em>]...[/colour]</code>. In the spirit of furthering international
+relations, those of you with a preference for American spellings may use <code>[color=<em>code</em>]...[/color]</code>.
+</p>
+<p><code><em>code</em></code> can be any of the following: red, orange, yellow, green, blue, black, white.</p>
+<p><code><em>code</em></code> can also be any #RGB or #RRGGBB HTML colour values.</p>
+
+<em>e.g.</em>
+<ul class="help">
+    <li>
+        <q><code>[colour=red]Red Text[/colour]</code></q>
+        produces
+        [% ForumCode.forumcode('[colour=red]Red Text[/colour]') %]
+    </li>
+    <li>
+        <q><code>[colour=#f00]Red Text[/colour]</code></q>
+        produces
+        [% ForumCode.forumcode('[colour=#f00]Red Text[/colour]') %]
+    </li>
+    <li>
+        <q><code>[colour=#ff0000]Red Text[/colour]</code></q>
+        produces
+        [% ForumCode.forumcode('[colour=#ff0000]Red Text[/colour]') %]
+    </li>
+    <li>
+        <q><code>[colour=blue]Blue Text[/colour]</code></q>
+        produces
+        [% ForumCode.forumcode('[colour=blue]Blue Text[/colour]') %]
+    </li>
+    <li>
+        <q><code>[colour=white]White Text[/colour]</code></q>
+        produces
+        [% ForumCode.forumcode('[colour=white]White Text[/colour]') %]
+        <br />(white-on-white text, useful for novice spies; highlight the
+        line to see the white-on-white text)
     </li>
 </ul>

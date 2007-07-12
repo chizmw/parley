@@ -368,3 +368,8 @@ a[href $='.pdf']{
     padding-left: 20px;
     background:   transparent url(/static/images/filetypes/pdf.png) no-repeat center left;
 }
+
+
+.help li {
+    margin-top:     5px;
+}
