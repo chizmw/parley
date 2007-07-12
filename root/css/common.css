@@ -351,3 +351,14 @@ form label {
     font-weight: bold;
 }
 
+
+
+a[href $='.jpg']{
+    padding-left: 20px;
+    background:   transparent url(/static/images/filetypes/image.png) no-repeat center left;
+}
+
+a[href $='.pdf']{
+    padding-left: 20px;
+    background:   transparent url(/static/images/filetypes/pdf.png) no-repeat center left;
+}

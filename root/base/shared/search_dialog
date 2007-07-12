@@ -28,6 +28,7 @@
                     <option value="">All Forums</option>
                 </optgroup>
                 [% IF available_forums %]
+                [% SET dummy=available_forums.reset %]
                 <optgroup label="Forums">
                 [% WHILE (forum = available_forums.next) %]
                 <option value="[% forum.id %]">[% forum.name %]</option>

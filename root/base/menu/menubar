@@ -22,9 +22,9 @@
 <div dojoType="PopupMenu2" widgetId="menu_thread">
 	<div dojoType="MenuItem2" [%thread_disabled%] caption="Add Reply" onClick="document.location.href='thread/reply?thread=[%current_thread.id%]';"></div>
     [%- IF watching_thread %]
-	<div dojoType="MenuItem2" [%thread_disabled%] caption="Remove Watch" onClick="document.location.href='thread/watch?thread=[% current_thread.id %]&page=[% page.current_page %]&watch=0';"></div>
+	<div dojoType="MenuItem2" [%thread_disabled%] caption="Remove Watch" onClick="document.location.href='thread/watch?thread=[% current_thread.id %]&amp;page=[% page.current_page %]&amp;watch=0';"></div>
     [%- ELSE %]
-	<div dojoType="MenuItem2" [%thread_disabled%] caption="Add Watch" onClick="document.location.href='thread/watch?thread=[% current_thread.id %]&page=[% page.current_page %]&watch=1'"></div>
+	<div dojoType="MenuItem2" [%thread_disabled%] caption="Add Watch" onClick="document.location.href='thread/watch?thread=[% current_thread.id %]&amp;page=[% page.current_page %]&amp;watch=1'"></div>
     [%- END %]
 </div>
 
@@ -41,13 +41,13 @@
 
 <div dojoType="PopupMenu2" widgetId="menu_moderate">
     [% IF current_thread.locked %]
-	<div dojoType="MenuItem2" caption="Unlock Thread" onClick="document.location.href='admin/lock?thread=[%current_thread.id%]&lock=0';" [% thread_disabled %]></div>
+	<div dojoType="MenuItem2" caption="Unlock Thread" onClick="document.location.href='admin/lock?thread=[%current_thread.id%]&amp;lock=0';" [% thread_disabled %]></div>
     [% ELSE %]
 	<div dojoType="MenuItem2" caption="Lock Thread" onClick="document.location.href='admin/lock?thread=[%current_thread.id%]';" [% thread_disabled %]></div>
     [% END %]
 
     [% IF current_thread.sticky %]
-	<div dojoType="MenuItem2" caption="Unstick Thread" onClick="document.location.href='admin/sticky?thread=[%current_thread.id%]&sticky=0';" [% thread_disabled %]></div>
+	<div dojoType="MenuItem2" caption="Unstick Thread" onClick="document.location.href='admin/sticky?thread=[%current_thread.id%]&amp;sticky=0';" [% thread_disabled %]></div>
     [% ELSE %]
 	<div dojoType="MenuItem2" caption="Stick Thread" onClick="document.location.href='admin/sticky?thread=[%current_thread.id%]';" [% thread_disabled %]></div>
     [% END %]
