@@ -26,6 +26,7 @@ lib/Parley/App/Communication/Email.pm
 lib/Parley/App/Notification.pm
 lib/Parley/Controller/Admin.pm
 lib/Parley/Controller/Forum.pm
+lib/Parley/Controller/Help.pm
 lib/Parley/Controller/My.pm
 lib/Parley/Controller/Post.pm
 lib/Parley/Controller/Root.pm
@@ -145,6 +146,8 @@ root/static/images/btn_88x31_built_shadow.png
 root/static/images/btn_88x31_powered.png
 root/static/images/btn_88x31_powered_shadow.png
 root/static/images/catalyst_logo.png
+root/static/images/filetypes/image.png
+root/static/images/filetypes/pdf.png
 root/static/images/locked.png
 root/static/images/sticky.png
 root/static/images/unread_posts.gif
@@ -1421,6 +1424,7 @@ t/04_forumcode.t
 t/50.text_search.sql.t
 t/controller_Admin.t
 t/controller_Forum.t
+t/controller_Help.t
 t/controller_My.t
 t/controller_Post.t
 t/controller_Search.t
