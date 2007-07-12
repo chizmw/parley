@@ -283,8 +283,8 @@ of each list item.
   e.g. an ordered list
    [list]
    [1]first
-   [2]second
-   [3]third
+   [1]second
+   [1]third
    [/list]
 
 =back
