@@ -62,5 +62,6 @@
     [% IF moderator %]
 	<div dojoType="MenuBarItem2" caption="Moderate"     submenuId="menu_moderate"></div>
     [% END %]
+	<div dojoType="MenuBarItem2" caption="Help" onClick="document.location.href='help';"></div>
 </div>
 <!-- end :menubar -->

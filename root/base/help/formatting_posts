@@ -1,0 +1,101 @@
+<h1>Formatting Posts</h1>
+
+<p>Allowing raw HTML markup in posts leads to a very special
+world of pain. With that in mind a form of markup inspired by
+BBCode [<b>link?</b>] was developed for this project. As it's
+not an identical implementation of BBCode it has it's own name
+- <i>ForumCode</i></p>
+
+<h2>Simple Formatting</h2>
+
+<h3>Bold, Italic and Underline</h3>
+<ul>
+    <li>
+        To make a section of text appear in <b>bold</b> use
+        <code>[b]...[/b]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[b]This is bold text[/b]</code></q>
+        produces
+        [% ForumCode.forumcode('[b]This is bold text[/b]') %]
+    </li>
+    <li>
+        To make a section of text appear in <em>italics</em> use
+        <code>[i]...[/i]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[i]This is emphasised text[/i]</code></q>
+        produces
+        [% ForumCode.forumcode('[i]This is emphasised text[/i]') %]
+    </li>
+    <li>
+        To make a section of text appear <em>underlined</em> use
+        <code>[u]...[/u]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[u]This is emphasised text[/u]</code></q>
+        produces
+        [% ForumCode.forumcode('[u]This is underlined text[/u]') %]
+    </li>
+</ul>
+
+<h3>Linking to external resources</h3>
+<p>The forum software does NOT automatically hunt out all text resembling URLs
+to turn them into clickable links. If you want a clickable link in a post
+you need to use the [url]...[/url] code:</p>
+<ul>
+    <li>
+        To make a URL appear as a clickable link use
+        <code>[url]http://...[/url]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[url]http://google.com/[/url]</code></q>
+        produces
+        [% ForumCode.forumcode('[url]http://google.com/[/url]') %]
+    </li>
+</ul>
+
+<p>You may also make a section of text appear as a named link by
+using the "name=..." attribute in the code block:</p>
+<ul>
+    <li>
+        To make a URL appear as a names clickable link use
+        <code>[url <em>name="XXX"</em>]http://...[/url]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[url name="Google"]http://google.com/[/url]</code></q>
+        produces
+        [% ForumCode.forumcode('[url name="Google"]http://google.com/[/url]') %]
+    </li>
+</ul>
+
+<p>As well as inserting clickable links, you may also insert images into posts.</p>
+<ul>
+    <li>
+        To make an image appear in a posting use
+        <code>[img]...[/img]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[img][%c.request.base%]static/images/btn_88x31_powered.png[/img]</code></q>
+        produces
+        <br />
+        [% ForumCode.forumcode("[img]${c.request.base}static/images/btn_88x31_powered.png[/img]") %]
+    </li>
+    <li>
+        You may also include extra attributes such as
+        <code>title=</code>, <code>alt=</code>, etc.
+        Research the HTML &lt;img&gt; tag [<b>link?</b>]
+        for the full list of attributes.
+        <br />
+        <q><code>[img title='Powered by Catalyst' width='50'][%c.request.base%]static/images/btn_88x31_powered.png[/img]</code></q>
+        produces
+        <br />
+        [% ForumCode.forumcode("[img title='Powered by Catalyst' width='50']${c.request.base}static/images/btn_88x31_powered.png[/img]") %]
+    </li>
+</ul>

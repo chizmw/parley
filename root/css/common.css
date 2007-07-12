@@ -25,6 +25,12 @@ h2 {
     font-size: 1em;
     font-weight: bold;
 }
+h3 {
+    font-size: 1em;
+    font-weight: bold;
+    font-style:     italic;
+}
+
 
 a.nav:hover {
     background:         #000;
