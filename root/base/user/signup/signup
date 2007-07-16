@@ -9,7 +9,7 @@
     </ul>
 [% END %]
 
-<table>
+<table class="signup">
 	<form action="user/signup" method="POST" name="signup_form">
 		<tr>
 			<td colspan="2">
@@ -66,6 +66,8 @@
 			<td colspan="2">
 				Your email address will not be passed on to any third parties.
 				It will be used to send an activation link for the new account.
+                If you request thread update alerts this address will also be used
+                for the notification emails.
 			</td>
 		</tr>
 
@@ -118,6 +120,14 @@
 			<td>
 				<input type="text" id="forum_name" name="forum_name" size="40" class="input_text" />
 				[% form_error.field_error_forum_name %]
+			</td>
+		</tr>
+		<tr>
+            <td>&nbsp;</td>
+			<td style="text-align:justify;">
+            Your <em>Forum Name</em> will be displayed with all postings you make on the forums.
+            Forum names are all unique, so when two "John Smith"s register, only one will appear
+            as "John Smith" when posting. (Sorry other John Smith!)
 			</td>
 		</tr>
 
