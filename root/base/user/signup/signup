@@ -9,8 +9,8 @@
     </ul>
 [% END %]
 
-<table class="signup">
-	<form action="user/signup" method="POST" name="signup_form">
+<form action="user/signup" method="post" name="signup_form">
+    <table class="signup">
 		<tr>
 			<td colspan="2">
 				Complete the form below to create a new user account.
@@ -37,8 +37,8 @@
 				<label for="username">Desired username:</label>
 			</td>
 			<td>
-				<input type="text" id="username" name="username" class="input_text" />
-				[% form_error.field_error_username %]
+				<input type="text" id="new_username" name="new_username" class="input_text" />
+				[% form_error.field_error_new_username %]
 			</td>
 		</tr>
 
@@ -47,8 +47,8 @@
 				<label for="password">Desired password:</label>
 			</td>
 			<td>
-				<input type="password" id="password" name="password" class="input_text" />
-				[% form_error.field_error_password %]
+				<input type="password" id="new_password" name="new_password" class="input_text" />
+				[% form_error.field_error_new_password %]
 			</td>
 		</tr>
 
@@ -136,5 +136,5 @@
 				<input type="submit" name="form_submit" value="Sign Up" class="input_button" />
 			</td>
 		</tr>
-	</form>
-</table>
+    </table>
+</form>

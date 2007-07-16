@@ -51,7 +51,7 @@ Readonly my $LIFETIME => Time::Seconds::ONE_WEEK;
 my %dfv_profile_for = (
     'signup' => {
         required => [ qw(
-                username password confirm_password email confirm_email
+                new_username new_password confirm_password email confirm_email
                 first_name last_name forum_name
         ) ],
 
@@ -61,7 +61,7 @@ my %dfv_profile_for = (
             confirm_password =>
                 _dfv_constraint_confirm_equal(
                     {
-                        fields => [qw/password confirm_password/],
+                        fields => [qw/new_password confirm_password/],
                     }
                 ),
 
@@ -182,7 +182,7 @@ sub _add_new_user {
     $valid_results = $c->form->valid;
 
     # is the requested username already in use?
-    if ($self->_username_exists($c, $valid_results->{username})) {
+    if ($self->_username_exists($c, $valid_results->{new_username})) {
         push @messages, q{The username you have chosen is already in use. Please try a different one.};
     }
     # is the requested email address already in use?
@@ -346,8 +346,8 @@ sub _txn_add_new_user {
     # add authentication record
     $new_auth = $c->model('ParleyDB')->resultset('Authentication')->create(
         {
-            username => $c->form->valid->{username},
-            password => md5_hex( $c->form->valid->{password} ),
+            username => $c->form->valid->{new_username},
+            password => md5_hex( $c->form->valid->{new_password} ),
         }
     );
 
