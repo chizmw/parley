@@ -12,7 +12,7 @@
     <th>Last Post</th>
     <th>Replies</th>
     <th>Views</th>
-    [% IF moderator %]<th>Actions</th>[% END %]
+    [% IF 0 && moderator %]<th>Actions</th>[% END %]
   </tr>
   [%- WHILE (thread = thread_list.next) %]
   <tr>
@@ -60,7 +60,7 @@
       [% thread.view_count %]
     </td>
 
-    [% IF moderator %]
+    [% IF 0 && moderator %]
         <td>
             <!-- add/remove sticky -->
             [% IF thread.sticky %]
