@@ -119,7 +119,10 @@ td {
 
 .right_align {
     text-align: right;
-    /*background: #f00;*/
+}
+
+.center_align {
+    text-align: center;
 }
 
 

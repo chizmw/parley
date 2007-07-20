@@ -307,6 +307,58 @@ sub watch :Local {
     }
 }
 
+sub watches : Local {
+    my ($self, $c) = @_;
+
+    # make sure we're logged in
+    $c->login_if_required(q{You must be logged in before you can view your watched threads});
+
+    # watched threads
+    my $watches = $c->model('ParleyDB')->resultset('ThreadView')->search(
+        {
+            person      => $c->_authed_user()->id(),
+            watched     => 1,
+        },
+        {
+            order_by    => 'last_post.created DESC',
+            join        => {
+                'thread' => 'last_post',
+            },
+        }
+    );
+    $c->stash->{thread_watches} = $watches;
+
+    # if we've got a list of threads to stop watching ...
+    if (my @thread_ids = $c->request->param('stop_watching')) {
+        $c->log->debug( q{stop_watching parameter found} );
+        foreach my $thread_id ( @thread_ids ) {
+            # get the ThreadView so we can update it
+            my $thread_view = $c->model('ParleyDB')->resultset('ThreadView')->find(
+                {
+                    person  => $c->_authed_user()->id(),
+                    thread  => $thread_id,
+                }
+            );
+
+            # if we couldn't find a thread view, then something odd is happening -
+            # logged in users should always have a thread_view entry
+            if (not defined $thread_view) {
+                $c->stash->{error}{message} = q{Failed to watch requested thread};
+                $c->log->error(q{User doesn't have a thread_view entry});
+                return;
+            }
+
+            # we have a thread_view entry for the user, so update it
+
+            # update the watched status
+            $thread_view->watched( 0 );
+            $thread_view->update();
+        }
+    }
+
+    return;
+}
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Controller (Private/Helper) Methods
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

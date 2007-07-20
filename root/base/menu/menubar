@@ -31,6 +31,7 @@
 <div dojoType="PopupMenu2" widgetId="menu_my">
     [% IF authed_user %]
 	<div dojoType="MenuItem2" caption="My Preferences" onClick="document.location.href='my/preferences';"></div>
+    <div dojoType="MenuItem2" caption="My Watched Threads" onClick="document.location.href='thread/watches';"></div>
 	<div dojoType="MenuItem2" caption="My Profile" onClick="document.location.href='user/profile?user=[%authed_user.id%]';"></div>
 	<div dojoType="MenuItem2" caption="Logout" onClick="document.location.href='user/logout';"></div>
     [% ELSE %]
