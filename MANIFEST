@@ -83,6 +83,10 @@ root/base/footer
 root/base/forum/list
 root/base/forum/view
 root/base/header
+root/base/help/contents
+root/base/help/faq
+root/base/help/formatting_posts
+root/base/help/unknown
 root/base/menu/left/main
 root/base/menu/menubar
 root/base/menu/statusbar
@@ -108,6 +112,7 @@ root/base/thread/add
 root/base/thread/recent
 root/base/thread/reply
 root/base/thread/view
+root/base/thread/watches
 root/base/user/auth_emailed
 root/base/user/auth_success
 root/base/user/login
