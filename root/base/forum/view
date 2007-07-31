@@ -1,10 +1,14 @@
 <h1>[% current_forum.name %] : List Of Active Threads</h1>
 
+<!-- NO LONGER NEEDED - IT'S PART OF THE MENUS NOW
 <p style="font-size: small;">
 <a href="thread/add?forum=[% current_forum.id %]">[Start A New Topic]</a>
 <a href="javascript:;" onclick="search_dialog.show(); return false;">[Search]</a>
+-->
+
 
 [%- IF thread_list.count > 0 %]
+[% PROCESS shared/pager_advanced %]
 <table>
   <tr>
     <th>&nbsp;</th>
@@ -83,6 +87,7 @@
     </tr>
   [% END %]
 </table>
+[% PROCESS shared/pager_advanced %]
 [% ELSE %]
   No active threads in this forum
 [% END %]

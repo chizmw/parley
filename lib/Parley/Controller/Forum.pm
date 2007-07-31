@@ -21,6 +21,9 @@ sub list : Local {
 sub view : Local {
     my ($self, $c) = @_;
 
+    # page to show - either a param, or show the first
+    $c->stash->{current_page}= $c->request->param('page') || 1;
+
     # get a list of (active) threads in a given forum
     $c->stash->{thread_list} = $c->model('ParleyDB')->resultset('Thread')->search(
         {
@@ -30,8 +33,38 @@ sub view : Local {
         {
             join        => 'last_post',
             order_by    => 'sticky DESC, last_post.created DESC',
+            # pager information
+            rows        => $c->config->{threads_per_page},
+            page        => $c->stash->{current_page},
         }
     );
+
+    # setup the pager
+    $self->_forum_view_pager($c);
+}
+
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Controller (Private/Helper) Methods
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sub _forum_view_pager {
+    my ($self, $c) = @_;
+
+    $c->stash->{page} = $c->stash->{thread_list}->pager();
+
+    # TODO - find a better way to do this if possible
+    # set up Data::SpreadPagination
+    my $pagination = Data::SpreadPagination->new(
+        {
+            totalEntries        => $c->stash->{page}->total_entries(),
+            entriesPerPage      => $c->config->{threads_per_page},
+            currentPage         => $c->stash->{current_page},
+            maxPages            => 4,
+        }
+    );
+    $c->stash->{page_range_spread} = $pagination->pages_in_spread();
 }
 
 
