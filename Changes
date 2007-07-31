@@ -1,6 +1,8 @@
 This file documents the revision history for Parley.
 
+    - fix bug where we don't store IP for thread/add (first post)
     - added paging to forum/view page
+    - added paging to thread/recent page
     - added thread/watches; moving functionality out of my/preferences
     - added initial help pages
     - more UI, layout and CSS modifications
