@@ -1,9 +1,9 @@
 [% IF page %]
 <div class="pager_advanced">
     [% IF current_thread %]
-    [% url_extra_args = '&thread=' _ current_thread.id %]
+    [% url_extra_args = '&amp;thread=' _ current_thread.id %]
     [% ELSIF current_forum %]
-    [% url_extra_args = '&forum=' _ current_forum.id %]
+    [% url_extra_args = '&amp;forum=' _ current_forum.id %]
     [% END %]
 
     Page [% page.current_page %] of [% page.last_page %]
