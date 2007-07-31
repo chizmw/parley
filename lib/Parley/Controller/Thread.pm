@@ -82,6 +82,9 @@ sub recent : Local {
     my ($self, $c) = @_;
     my ($where, @join);
 
+    # page to show - either a param, or show the first
+    $c->stash->{current_page}= $c->request->param('page') || 1;
+
     # always want to join with last_post table
     @join = qw(last_post);
 
@@ -135,8 +138,14 @@ sub recent : Local {
         {
             join        => \@join,
             order_by    => 'last_post.created DESC',
+
+            rows        => $c->config->{threads_per_page},
+            page        => $c->stash->{current_page},
         }
     );
+
+    # setup the pager
+    $self->_prepare_pager($c, $c->stash->{thread_list});
 
     $c->log->debug( $c->stash->{thread_list}->count() );
     return;
@@ -237,7 +246,8 @@ sub view : Local {
         $self->_thread_watch_count($c);
 
         # setup the pager
-        $self->_thread_view_pager($c);
+        #$self->_thread_view_pager($c);
+        $self->_prepare_pager($c, $c->stash->{post_list});
     }
 
     1; # return 'true'
@@ -583,23 +593,22 @@ sub _increase_thread_view_count {
     }
 }
 
-sub _thread_view_pager {
-    my ($self, $c) = @_;
+sub _prepare_pager {
+    my ($self, $c, $list) = @_;
 
-    $c->stash->{page} = $c->stash->{post_list}->pager();
+    $c->stash->{page} = $list->pager();
 
-    # TODO - find a better way to do this if possible
-    # set up Data::SpreadPagination
     my $pagination = Data::SpreadPagination->new(
         {
             totalEntries        => $c->stash->{page}->total_entries(),
-            entriesPerPage      => $c->config->{posts_per_page},
-            currentPage         => $c->stash->{current_page},
+            entriesPerPage      => $c->stash->{page}->entries_per_page(),
+            currentPage         => $c->stash->{page}->current_page(),
             maxPages            => 4,
         }
     );
     $c->stash->{page_range_spread} = $pagination->pages_in_spread();
 }
+
 
 sub _thread_watch_count {
     my ($self, $c) = @_;

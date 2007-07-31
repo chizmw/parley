@@ -1,6 +1,7 @@
 <h1>Recently Updated Threads</h1>
 
 [%- IF thread_list.count > 0 %]
+[% PROCESS shared/pager_advanced %]
 <table>
 [% WHILE (thread = thread_list.next) %]
     <tr>
