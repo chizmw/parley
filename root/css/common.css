@@ -1,3 +1,16 @@
+div#userinfo_box {
+    position:       absolute;
+    top:            0;
+    right:          0;
+    height:         70px;
+    width:          200px;
+    border:         none;
+    background:     #eee;
+    padding-top:    3px;
+    padding-right:  10px;
+    text-align:     right;
+}
+
 /* link styling */
 a.nav, a.nav:visited, a.nav:link, a.nav:active {
     background:         #ccc;
@@ -42,12 +55,6 @@ a, a:link, a:visited, a:active {
     color:              blue;
     text-decoration:    none;
 }
-
-/*table {
-    margin-left:        50px;
-    margin-bottom:      20px;
-    border:             1px solid black;
-}*/
 
 th {
     text-align:         left;
@@ -225,40 +232,82 @@ td {
     font-size:          x-small;
 }
 
+.interval_ago {
+    display:            block;
+    text-align:         right;
+    font-size:          x-small;
+}
+
 .thread_header {
     font-weight:        bold;
     background:         #666;
     padding:            4px;
 }
 
+.forum_list {
+    margin-left:        auto;
+    margin-right:       auto;
+    width:              80%;
+}
+.forum_list td {
+    vertical-align:     top;
+    border:             none;
+    border:             1px dashed #ddd;
+}
+
+.forum_view {
+    margin-left:        auto;
+    margin-right:       auto;
+    width:              80%;
+}
+.forum_view td {
+    vertical-align:     top;
+    border:             none;
+    border:             1px dashed #ddd;
+}
+
+.recently_updated {
+    margin-left:        auto;
+    margin-right:       auto;
+    width:              80%;
+}
+.recently_updated td {
+    vertical-align:     top;
+    border:             1px dashed #ddd;
+}
+
 .thread_watches {
-    margin-left:        50px;
-    margin-right:       50px;
-    width:              500px;
+    margin-left:        auto;
+    margin-right:       auto;
+    width:              80%;
+}
+.thread_watches td {
+    vertical-align:     top;
+    border:             1px dashed #ddd;
 }
 
 .search_results {
-    margin-left:        50px;
-    margin-right:       50px;
-    width:              500px;
+    margin-left:        auto;
+    margin-right:       auto;
+    width:              80%;
 }
 
 .signup {
-    margin-left:        50px;
-    margin-right:       50px;
-    width:              500px;
+    margin-left:        auto;
+    margin-right:       auto;
+    width:              80%;
 }
 
 .user_profile {
-    margin-left:        50px;
-    margin-right:       50px;
-    width:              500px;
+    margin-left:        auto;
+    margin-right:       auto;
+    width:              80%;
 }
 
 .prefs_notification {
-    margin-left:        50px;
-    margin-right:       50px;
-    width:              500px;
+    margin-left:        auto;
+    margin-right:       auto;
+    width:              80%;
 }
 
 .user_profile_key {
@@ -278,9 +327,9 @@ td.user_profile_key {
 }
 
 .thread_posts {
-    margin-left:        50px;
-    margin-right:       50px;
-    width:              600px;
+    margin-left:        auto;
+    margin-right:       auto;
+    width:              80%;
 }
 
 .thread_info {
