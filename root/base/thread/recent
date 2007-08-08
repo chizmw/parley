@@ -2,7 +2,7 @@
 
 [%- IF thread_list.count > 0 %]
 [% PROCESS shared/pager_advanced %]
-<table>
+<table class="recently_updated">
 [% WHILE (thread = thread_list.next) %]
     <tr>
         <td width="36">
@@ -34,6 +34,9 @@
 
         <td>
         [% nicedate(thread.last_post.created) %]
+        <br /><span class="interval_ago">
+            [% thread.last_post.interval_ago %] ago
+            </span>
         <br />
         <span class="topic_creator">posted by
             <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
