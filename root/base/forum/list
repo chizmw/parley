@@ -1,6 +1,7 @@
 <h1>Forum List</h1>
 
-<table>
+<table class="forum_list">
+<tbody>
     <tr>
         <th>Forum</th>
         <th>Last Post</th>
@@ -31,4 +32,5 @@
         </td>
     </tr>
     [% END %]
+</tbody>
 </table>
