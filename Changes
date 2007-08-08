@@ -1,5 +1,6 @@
 This file documents the revision history for Parley.
 
+    - added "<interval> ago" to post information displayed in thread/view
     - fix bug where we don't store IP for thread/add (first post)
     - added paging to forum/view page
     - added paging to thread/recent page
