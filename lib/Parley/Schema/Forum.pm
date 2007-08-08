@@ -48,5 +48,26 @@ __PACKAGE__->add_unique_constraint("forum_name_key", ["name"]);
 __PACKAGE__->has_many("threads", "Thread", { "foreign.forum" => "self.forum_id" });
 __PACKAGE__->belongs_to("last_post", "Post", { post_id => "last_post" });
 
+sub moderators {
+    my $self = shift;
+    my ($schema, $results, @modlist);
+
+    $schema = $self->result_source()->schema();
+
+    # get all forum_moderators for a given forum
+    $results = $schema->resultset('ForumModerator')->search(
+        {
+            forum           => $self->id(),
+            can_moderate    => 1,
+        },
+    );
+
+    while (my $res = $results->next()) {
+        push @modlist, $res->person();
+    }
+
+    return \@modlist;
+}
+
 1;
 

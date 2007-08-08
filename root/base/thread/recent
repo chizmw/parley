@@ -46,7 +46,7 @@
         </td>
 
         <td>
-            [% IF thread.forum_moderators.can_moderate %]
+            [% IF 0 && thread.forum_moderators.can_moderate %]
             <!-- add/remove sticky -->
             [% IF thread.sticky %]
             <a href="admin/sticky?thread=[% thread.id %]&sticky=0">{S-}</a>

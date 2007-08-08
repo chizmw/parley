@@ -86,7 +86,14 @@
     [% END %]
     </tr>
   [% END %]
+    <tr>
+        <td colspan="5">
+            [% PROCESS shared/moderator_list %]
+        </td>
+    </tr>
 </table>
+
+
 [% PROCESS shared/pager_advanced %]
 [% ELSE %]
   No active threads in this forum

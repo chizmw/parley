@@ -154,6 +154,11 @@
         </tr>
         <!-- end : nested table evil -->
     <!-- end : post thread info -->
+    <tr>
+        <td colspan="2">
+            [% PROCESS shared/moderator_list %]
+        </td>
+    </tr>
 
     </tbody>
 </table>

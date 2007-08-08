@@ -221,6 +221,9 @@ td {
 .pager_advanced {
     font-size:          x-small;
 }
+.moderator_list {
+    font-size:          x-small;
+}
 
 .thread_header {
     font-weight:        bold;
