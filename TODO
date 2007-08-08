@@ -1,4 +1,5 @@
 TODO LIST
 
+ - install Proc::Daemon (etc) for email script
  - factor out DFV "equality" functions
  - factor out interval_ago() and _time_string()
