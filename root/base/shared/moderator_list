@@ -1,0 +1,8 @@
+[% IF current_forum %]
+    <div class="moderator_list">
+        <strong>Forum Moderators:</strong>
+        [% FOR m IN current_forum.moderators %]
+        <a href="user/profile?user=[%m.id%]">[% m.forum_name %]</a>[% UNLESS loop.last() %], [% END %]
+        [% END %]
+    </div>
+[% END %]
