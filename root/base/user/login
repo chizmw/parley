@@ -15,6 +15,12 @@
 
         <br />
         <button type="submit" class="input_button" tabindex="3" />log in</button>
+
+            <p align="right">
+            <a href="user/password/forgotten">Forgotten Password</a>
+            |
+            <a href="user/signup">Signup</a>
+            </p>
     </fieldset>
 </form>
 

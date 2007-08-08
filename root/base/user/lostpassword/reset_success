@@ -1,2 +1,2 @@
 Your password has been set to the value you entered. You may now 
-<a href="javascript:;" onclick="showLoginBox(this)">login</a>
+<a href="javascript:;" onclick="login_dialog.show();">login</a>

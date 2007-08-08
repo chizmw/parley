@@ -12,18 +12,30 @@ use Time::Seconds;
 
 # used by DFV
 sub _dfv_constraint_confirm_equal {
-    my $dfv  = shift;
-    my $val1 = shift;
-    my $val2 = shift;
+    my ($attrs)  = @_;
 
-    return ( $val1 eq $val2 );
+    my ($first, $second) = @{ $attrs->{fields} } if $attrs->{fields};
+
+    return sub {
+        my $dfv = shift;
+        my $data = $dfv->get_filtered_data();
+
+        warn $data->{ $first };
+        warn $data->{ $second };
+
+        return ( $data->{$first} eq $data->{$second} );
+    }
 }
 
 sub _dfv_constraint_valid_email {
-    my $dfv   = shift;
-    my $email = shift;
+    my $attrs = @_;
 
-    return Email::Valid->address($email);
+    return sub {
+        my $dfv = shift;
+        my $data = $dfv->get_filtered_data();
+
+        return Email::Valid->address($data->{email});
+    }
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,11 +56,12 @@ my %dfv_profile_for = (
         filters => [qw(trim)],
 
         constraint_methods => {
-            email => {
-                name => 'email',
-                constraint_method => \&_dfv_constraint_valid_email,
-                params      => [qw( email )],
-            },
+            confirm_email =>
+                _dfv_constraint_confirm_equal(
+                    {
+                        fields => [qw/email confirm_email/],
+                    }
+                ),
         },
 
         msgs => {
@@ -72,11 +85,12 @@ my %dfv_profile_for = (
         filters => [qw(trim)],
 
         constraint_methods => {
-            confirm_password => {
-                name => 'confirm_password',
-                constraint  => \&_dfv_constraint_confirm_equal,
-                params      => [qw( new_password confirm_password )],
-            },
+            confirm_password =>
+                _dfv_constraint_confirm_equal(
+                    {
+                        fields => [qw/new_password confirm_password/],
+                    }
+                ),
         },
 
         msgs => {
