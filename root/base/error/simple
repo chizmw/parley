@@ -5,3 +5,19 @@ The following error message was returned by the application:
 
 <blockquote>[% error.message %]</blockquote>
 </p>
+
+<!-- offer the user the chance to return somewhere interesting -->
+[% IF current_thread || current_forum %]
+<ul>
+    [% IF current_thread %]
+    [% IF authed_user %]
+    <li>Continue reading: <a href="thread/next_post?thread=[%current_thread.id%]">[%current_thread.subject%]</a></li>
+    [% END %]
+    <li>Return to: <a href="thread/view?thread=[%current_thread.id%]">[%current_thread.subject%]</a></li>
+    [% END %]
+
+    [% IF current_forum %]
+    <li>View all <a href="forum/view?forum=[%current_forum.id%]">[%current_forum.name%]</a> threads</li>
+    [% END %]
+</ul>
+[% END %]
