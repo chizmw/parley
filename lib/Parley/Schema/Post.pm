@@ -6,6 +6,7 @@ use strict;
 use warnings;
 use Data::Dump qw(pp);
 
+use DateTime;
 use DateTime::Format::Pg;
 use Text::Context::EitherSide;
 use Text::Search::SQL;
@@ -202,6 +203,40 @@ sub match_context {
 
     my $context = Text::Context::EitherSide->new( $self->message(), context => 3 );
     return $context->as_string( @{ $terms } );
+}
+
+sub interval_ago {
+    my $self = shift;
+    my ($now, $duration, $longest_duration);
+
+    # get now as a DT object
+    $now = DateTime->now();
+
+    # the difference between now and the post time
+    $duration = $now - $self->created();
+
+    # we use the largest unit to give an idea of how long ago the post was made
+    foreach my $unit (qw[years months days hours minutes seconds]) {
+        if ($longest_duration = $duration->in_units($unit)) {
+            return _time_string($longest_duration, $unit);
+        }
+    };
+
+    # we should get *something* in the loop above, but just in case
+    return '0 seconds';
+}
+
+
+sub _time_string {
+    my ($duration, $unit) = @_;
+
+    # DateTime::Duration uses plural names for units
+    # so if we have ONE we need to return the singular
+    if (1 == $duration) {
+        $unit =~ s{s\z}{};
+    }
+
+    return "$duration $unit";
 }
 
 1;

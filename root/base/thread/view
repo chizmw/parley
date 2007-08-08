@@ -89,6 +89,7 @@
 
                 <div class="post_info">
                     [% nicedate(post.created) %]
+                    <br />[% post.interval_ago %] ago
                     [% IF post.edited %]
                     <br /><span class="post_edited_alert">Edited: [% nicedate(post.edited) %]</span>
                     [% END %]
