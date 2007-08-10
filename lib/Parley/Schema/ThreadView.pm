@@ -8,6 +8,8 @@ use warnings;
 use base 'DBIx::Class';
 use DateTime::Format::Pg;
 
+use Parley::App::DateTime qw( :interval );
+
 __PACKAGE__->load_components('ResultSetManager', "PK::Auto", "Core");
 __PACKAGE__->table("thread_view");
 __PACKAGE__->add_columns(
@@ -142,33 +144,11 @@ sub notification_list : ResultSet {
 sub interval_ago {
     my $self = shift;
     my ($now, $duration, $longest_duration);
-warn "ThreadView::interval_ago()";
-    # get now as a DT object
-    $now = DateTime->now();
 
-    # the difference between now and the post time
-    $duration = $now - $self->timestamp();
-
-    # we use the largest unit to give an idea of how long ago the post was made
-    foreach my $unit (qw[years months days hours minutes seconds]) {
-        if ($longest_duration = $duration->in_units($unit)) {
-            return _time_string($longest_duration, $unit);
-        }
-    };
-
-    # we should get *something* in the loop above, but just in case
-    return '0 seconds';
-}
-sub _time_string {
-    my ($duration, $unit) = @_;
-
-    # DateTime::Duration uses plural names for units
-    # so if we have ONE we need to return the singular
-    if (1 == $duration) {
-        $unit =~ s{s\z}{};
-    }
-
-    return "$duration $unit";
+    my $interval_string = interval_ago_string(
+        $self->timestamp()
+    );
+    return $interval_string;
 }
 
 1;
