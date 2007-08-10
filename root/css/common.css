@@ -372,6 +372,7 @@ td.user_profile_key {
     margin:             0 0 2px 4px;
     padding:            6px;
     width:              85%;
+    overflow:           auto;
 }
 
 .post_info {
