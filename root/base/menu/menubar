@@ -37,6 +37,7 @@
     [% ELSE %]
 	<div dojoType="MenuItem2" caption="Login" onClick="login_dialog.show(); dojo.byId('username').focus(); return false;"></div>
 	<div dojoType="MenuItem2" caption="Register" onClick="document.location.href='user/signup';"></div>
+	<div dojoType="MenuItem2" caption="Password Reminder" onClick="document.location.href='user/password/forgotten';"></div>
     [% END %]
 </div>
 

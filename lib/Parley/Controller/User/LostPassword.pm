@@ -10,7 +10,7 @@ use Readonly;
 use Time::Piece;
 use Time::Seconds;
 
-use Parley::App::DFV qw( :constraints );
+use Parley::App::DFV qw( :constraints :validation );
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Global class data
@@ -146,11 +146,11 @@ sub reset : Path('/user/password/reset') {
             and $c->request->method() eq 'POST'
             and defined $c->request->param('reset_password')
     ) {
-        @messages = $self->_reset_password($c, $pwd_reset);
+        $self->_reset_password($c, $pwd_reset);
 
         # if we have any validation errors ...
-        if (scalar @messages) {
-            $c->stash->{messages} = \@messages;
+        if (exists $c->stash->{view}{error}{messages}) {
+            # we may want to Do Stuff when there are errors
         }
 
         # no messages, means that all should be well, so head off to the
@@ -159,6 +159,7 @@ sub reset : Path('/user/password/reset') {
             $c->stash->{template} = 'user/lostpassword/reset_success';
         }
     }
+    # fall through and show the form
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -168,30 +169,36 @@ sub reset : Path('/user/password/reset') {
 sub _reset_password {
     my ($self, $c, $pwd_reset) = @_;
     my (@messages);
+    $c->log->debug('_reset_password()');
 
     # validate form data
     $c->form(
         $dfv_profile_for{set_new_password}
     );
+    if (not $self->form_data_valid($c)) {
+        $c->log->error( q{INVALID FORM DATA} );
+        return;
+    }
 
-    # deal with missing/invalid fields
-    if ($c->form->has_missing()) {
-        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
-        foreach my $f ( $c->form->missing ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
-        }
-    }
-    elsif ($c->form->has_invalid()) {
-        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
-        foreach my $f ( $c->form->invalid ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
-        }
-    }
+#    # deal with missing/invalid fields
+#    if ($c->form->has_missing()) {
+#        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+#        foreach my $f ( $c->form->missing ) {
+#            push @{ $c->stash->{view}{error}{messages} }, $f;
+#        }
+#    }
+#    elsif ($c->form->has_invalid()) {
+#        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+#        foreach my $f ( $c->form->invalid ) {
+#            push @{ $c->stash->{view}{error}{messages} }, $f;
+#        }
+#    }
 
     # otherwise the form data is ok...
-    else {
+#    else {
         # less typing ..
         my $reset_username = $pwd_reset->recipient()->authentication()->username;
+        $c->log->debug( "password reset for: $reset_username" );
 
         # make sure the username matches
         if ($reset_username eq $c->form->valid->{reset_username}) {
@@ -215,9 +222,10 @@ sub _reset_password {
             # incorrect username
             push @messages, 'Incorrect username supplied';
         }
-    }
+#    }
 
-    return uniq(sort @messages);
+#    return uniq(sort @messages);
+    return 1;
 }
 
 sub _send_username_reminder {
@@ -227,7 +235,9 @@ sub _send_username_reminder {
     # send the email
     $send_status = $c->send_email(
         {
-            template    => q{username_reminder.eml},
+            template    => {
+                text    => q{username_reminder.eml},
+            },
             person      => $person,
             headers => {
                 from    => $c->application_email_address(),
@@ -264,7 +274,9 @@ sub _user_password_reset {
     # send an email off to the (new) user
     $send_status = $c->send_email(
         {
-            template    => q{password_reset.eml},
+            template    => {
+                text    => q{password_reset.eml},
+            },
             person      => $person,
             headers => {
                 from    => $c->application_email_address(),
@@ -350,14 +362,14 @@ sub _user_reset {
         # make sure we don't have too few matches
         elsif ($matches->count < 1) {
             push @messages, q{There are no users matching that information};
-            $c->log->debug(' NO MATCHES ');
+            #$c->log->debug(' NO MATCHES ');
         }
 
         # otherwise, do the work
         else {
             # get the first (and should be only) match
             $person = $matches->first();
-            $c->log->dumper( $person->{_column_data}, 'COLUMN_DATA' );
+            #$c->log->dumper( $person->{_column_data}, 'COLUMN_DATA' );
 
             # if required, send a username reminder
             if ($send_username_reminder) {

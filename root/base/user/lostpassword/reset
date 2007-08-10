@@ -4,10 +4,10 @@ To reset your password enter your username and your desired password in the
 fields below, then click the <em>reset my password</em> button to proceed.
 
     <fieldset>
-        [%- IF messages %]
+        [%- IF view.error.messages %]
         <p>
             <ul>
-                [% FOREACH message IN messages %]
+                [% FOREACH message IN view.error.messages %]
                     <li>[% message %]</li>
                 [% END %]
             </ul>

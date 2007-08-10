@@ -15,9 +15,6 @@ sub dfv_constraint_confirm_equal :Export( :constraints ) {
         my $dfv = shift;
         my $data = $dfv->get_filtered_data();
 
-        warn $data->{ $first };
-        warn $data->{ $second };
-
         return ( $data->{$first} eq $data->{$second} );
     }
 }
@@ -31,6 +28,31 @@ sub dfv_constraint_valid_email :Export( :constraints ) {
 
         return Email::Valid->address($data->{email});
     }
+}
+
+sub form_data_valid :Export( :validation ) {
+    my ($self, $c) = @_;
+
+    # deal with missing/invalid fields
+    if ($c->form->has_missing()) {
+        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        foreach my $f ( $c->form->missing ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+
+        return; # invalid form data
+    }
+    elsif ($c->form->has_invalid()) {
+        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        foreach my $f ( $c->form->invalid ) {
+            push @{ $c->stash->{view}{error}{messages} }, $f;
+        }
+
+        return; # invalid form data
+    }
+
+    # otherwise, the form data is ok ...
+    return 1;
 }
 
 1;
