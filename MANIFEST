@@ -21,8 +21,11 @@ inc/Module/Install/Metadata.pm
 inc/Module/Install/Scripts.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
+interval.pl
 lib/Parley.pm
 lib/Parley/App/Communication/Email.pm
+lib/Parley/App/DateTime.pm
+lib/Parley/App/DFV.pm
 lib/Parley/App/Notification.pm
 lib/Parley/Controller/Admin.pm
 lib/Parley/Controller/Forum.pm
@@ -101,6 +104,7 @@ root/base/search/forum
 root/base/shared/autocomplete_style
 root/base/shared/focus_username_js
 root/base/shared/login_dialog
+root/base/shared/moderator_list
 root/base/shared/navigation
 root/base/shared/pager_advanced
 root/base/shared/search_dialog
@@ -1438,4 +1442,5 @@ t/controller_User.t
 t/model_ParleyDB.t
 t/view_Plain.t
 t/view_TT.t
+TODO
 watch.sql
