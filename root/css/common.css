@@ -395,7 +395,16 @@ a.button:visited, a.button:link, a.button:active, .button, a.button {
 
 
 
-
+form {  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  /*min-width: 500px;*/
+  max-width: 600px;
+  width: 560px;
+  /*background: red;*/
+}
 
 form input, form textarea {
     /* display: inline; inline display must not be set or will hide submit buttons in IE 5x mac */

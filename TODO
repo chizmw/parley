@@ -1,5 +1,7 @@
 TODO LIST
 
- - install Proc::Daemon (etc) for email script
- - factor out DFV "equality" functions
- - factor out interval_ago() and _time_string()
+  - fix CSS for <fieldset>s
+  - factor out error setting, handling and displaying
+D - install Proc::Daemon (etc) for email script
+D - factor out DFV "equality" functions
+D - factor out interval_ago() and _time_string()
