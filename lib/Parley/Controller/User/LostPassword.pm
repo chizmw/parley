@@ -10,33 +10,7 @@ use Readonly;
 use Time::Piece;
 use Time::Seconds;
 
-# used by DFV
-sub _dfv_constraint_confirm_equal {
-    my ($attrs)  = @_;
-
-    my ($first, $second) = @{ $attrs->{fields} } if $attrs->{fields};
-
-    return sub {
-        my $dfv = shift;
-        my $data = $dfv->get_filtered_data();
-
-        warn $data->{ $first };
-        warn $data->{ $second };
-
-        return ( $data->{$first} eq $data->{$second} );
-    }
-}
-
-sub _dfv_constraint_valid_email {
-    my $attrs = @_;
-
-    return sub {
-        my $dfv = shift;
-        my $data = $dfv->get_filtered_data();
-
-        return Email::Valid->address($data->{email});
-    }
-}
+use Parley::App::DFV qw( :constraints );
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Global class data
@@ -57,7 +31,7 @@ my %dfv_profile_for = (
 
         constraint_methods => {
             confirm_email =>
-                _dfv_constraint_confirm_equal(
+                dfv_constraint_confirm_equal(
                     {
                         fields => [qw/email confirm_email/],
                     }
@@ -86,7 +60,7 @@ my %dfv_profile_for = (
 
         constraint_methods => {
             confirm_password =>
-                _dfv_constraint_confirm_equal(
+                dfv_constraint_confirm_equal(
                     {
                         fields => [qw/new_password confirm_password/],
                     }
