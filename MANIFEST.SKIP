@@ -2,7 +2,9 @@
 ^Parley.*gz$
 ^Parley.*tar$
 swp$
+tmp$
 \.old$
 base.messy
 ^blib
 ^html
+Parley-0.*
