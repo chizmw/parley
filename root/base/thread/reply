@@ -25,7 +25,9 @@
   
   <tr>
     <td colspan="3" class="reply_post_message">
+      <div class="innerpost">
       [% FILTER html_line_break %][% HTML.escape(responding_to_post.message) %][% END %]
+      </div>
     </td>
   </tr>
 </table>
