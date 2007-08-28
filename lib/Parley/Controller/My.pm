@@ -253,7 +253,6 @@ sub _process_form_notifications {
     # store changes
     $c->_authed_user()->preference()->update;
 
-    #$c->response->redirect( $c->uri_for('/my/preferences') );
     return;
 }
 
@@ -313,17 +312,39 @@ sub saveHandler : Local {
         'Forum Name' => {
             'resultset'     => 'Person',
             'db_column'     => 'forum_name',
+            'is_unique'     => 1,
         },
     );
 
     if (exists $field_map{$fieldname}) {
         my $resultset = $field_map{$fieldname}->{resultset};
         my $db_column = $field_map{$fieldname}->{db_column};
+        my $is_unique = $field_map{$fieldname}->{is_unique} || 0;
 
         # get the user we're authed as
         my $person = $c->model('ParleyDB')->resultset($resultset)->find(
             $c->_authed_user()->id()
         );
+        # it would be nice to deduce this from the schema, but hey ..
+        # .. this'll do for now
+        if ($is_unique) {
+            # make sure the value isn't already in use
+            my $count = $c->model('ParleyDB')->resultset($resultset)->count(
+                {
+                    $db_column => $c->request->param('value'),
+                }
+            );
+            if ($count) {
+                $c->response->body(
+                      q{<p>'}
+                    . $c->request->param('value')
+                    . q{' has already been used by another user.</p>}
+                );
+                return;
+            };
+        }
+
+        # perform the update
         eval {
             # update the relevant field
             $person->update(
@@ -332,6 +353,7 @@ sub saveHandler : Local {
                 }
             );
         };
+        # check for errors
         if ($@) {
             parley_warn($c, $@);
             $c->response->body(qq{<p>ERROR: $@</p>});
@@ -351,17 +373,6 @@ sub saveHandler : Local {
     else {
         $c->response->body(q{<p>Unknown field name</p>});
     }
-
-    #$c->forward( $c->view('Plain') );
-
-#    $c->response->body(
-#        "<p>This is <em>content</em>: "
-#        . $c->req->param('ovalue')
-#        . " -> "
-#        . $c->req->param('value')
-#        . " - "
-#        . $c->req->param('fieldname')
-#        . "</p>");
 }
 
 =head1 NAME
