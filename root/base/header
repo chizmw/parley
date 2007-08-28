@@ -73,4 +73,12 @@
 
             <div id="wrapper">
                 <div id="content">
+
+                    [% IF view.error.messages %]
+                    <div class="error_messages">
+                        [% FOREACH msg IN view.error.messages %]
+                        [% msg %]<br />
+                        [% END %]
+                    </div>
+                    [% END %]
 <!-- Header : End -->

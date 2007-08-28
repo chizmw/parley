@@ -444,3 +444,16 @@ a[href $='.pdf']{
 .help li {
     margin-top:     5px;
 }
+
+.error_messages {
+    width:              80%;
+    margin-top:         10px;
+    margin-bottom:      10px;
+    margin-left:        auto;
+    margin-right:       auto;
+    border:             2px solid black;
+    color:              white;
+    background-color:   red;
+    font-weight:        bold;
+    padding:            5px;
+}
