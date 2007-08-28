@@ -1,5 +1,32 @@
 <!-- preferences : tab_you -->
 
+<script type="text/javascript">
+    function saveHandler(newVal, oldVal, fld) {
+        // do something
+        var kw = {
+            url:  "[% base %]my/saveHandler",
+            method: "post",
+            //formNode: dojo.byId("form"),
+            content: { value: newVal, ovalue: oldVal, fieldname: fld },
+            load: function(type, data) {
+                dojo.byId("result").innerHTML = data;
+            }
+        };
+        dojo.io.bind(kw);
+    }
+    function init() {
+        var fields = new Array;
+        fields = [ 'FirstName', 'LastName', 'ForumName' ];
+        for(i = 0; i < fields.length; i++){
+            var editable = dojo.widget.byId(fields[i]);
+            editable.onSave = saveHandler;
+        }
+    }
+    dojo.addOnLoad(init);
+</script>
+
+<div id="result">&nbsp;</div>
+
 <table class="user_profile">
     <tbody>
         <tr>
@@ -8,7 +35,7 @@
             </td>
 
             <td>
-                <div class="inlineEdit" dojoType="inlineEditBox" >
+                <div id="FirstName" name="First Name" class="inlineEdit" dojoType="inlineEditBox" >
                 [% authed_user.first_name %]
                 </div>
             </td>
@@ -20,7 +47,7 @@
             </td>
 
             <td>
-                <div class="inlineEdit" dojoType="inlineEditBox" >
+                <div id="LastName" name="Last Name" class="inlineEdit" dojoType="inlineEditBox" >
                 [% authed_user.last_name %]
                 </div>
             </td>
@@ -32,7 +59,7 @@
             </td>
 
             <td>
-                <div class="inlineEdit" dojoType="inlineEditBox" >
+                <div id="ForumName" name="Forum Name" class="inlineEdit" dojoType="inlineEditBox" >
                 [% authed_user.forum_name %]
                 </div>
             </td>
@@ -44,7 +71,7 @@
             </td>
 
             <td>
-                <div class="inlineEdit" dojoType="inlineEditBox" >
+                <div id="EmailAddress" name="EmailAddress">
                 [% authed_user.email %]
                 </div>
             </td>

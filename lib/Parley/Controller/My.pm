@@ -1,8 +1,9 @@
 package Parley::Controller::My;
-
 use strict;
 use warnings;
 use base 'Catalyst::Controller';
+
+use Parley::App::Error qw( :methods );
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Global class data
@@ -293,8 +294,74 @@ sub _process_form_time_format {
     # store changes
     $c->_authed_user()->preference()->update();
 
-    #$c->response->redirect( $c->uri_for('/my/preferences') );
     return;
+}
+
+sub saveHandler : Local {
+    my ($self, $c) = @_;
+    my $fieldname = $c->request->param('fieldname');
+
+    my %field_map = (
+        'First Name' => {
+            'resultset'     => 'Person',
+            'db_column'     => 'first_name',
+        },
+        'Last Name' => {
+            'resultset'     => 'Person',
+            'db_column'     => 'last_name',
+        },
+        'Forum Name' => {
+            'resultset'     => 'Person',
+            'db_column'     => 'forum_name',
+        },
+    );
+
+    if (exists $field_map{$fieldname}) {
+        my $resultset = $field_map{$fieldname}->{resultset};
+        my $db_column = $field_map{$fieldname}->{db_column};
+
+        # get the user we're authed as
+        my $person = $c->model('ParleyDB')->resultset($resultset)->find(
+            $c->_authed_user()->id()
+        );
+        eval {
+            # update the relevant field
+            $person->update(
+                {
+                    $db_column => $c->request->param('value'),
+                }
+            );
+        };
+        if ($@) {
+            parley_warn($c, $@);
+            $c->response->body(qq{<p>ERROR: $@</p>});
+        }
+        else {
+            $c->response->body(
+                  q{<p>Updated }
+                . $fieldname
+                . q{ from '}
+                . $c->request->param('ovalue')
+                . q{' to '}
+                . $c->request->param('value')
+                . q{'</p>}
+            );
+        }
+    }
+    else {
+        $c->response->body(q{<p>Unknown field name</p>});
+    }
+
+    #$c->forward( $c->view('Plain') );
+
+#    $c->response->body(
+#        "<p>This is <em>content</em>: "
+#        . $c->req->param('ovalue')
+#        . " -> "
+#        . $c->req->param('value')
+#        . " - "
+#        . $c->req->param('fieldname')
+#        . "</p>");
 }
 
 =head1 NAME
