@@ -11,6 +11,7 @@ use Time::Piece;
 use Time::Seconds;
 
 use Parley::App::DFV qw( :constraints :validation );
+use Parley::App::Error qw( :methods );
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Global class data
@@ -95,8 +96,9 @@ sub lost_password : Path('/user/password/forgotten') {
         @messages = $self->_user_reset($c);
 
         # if we have any validation errors ...
-        if (scalar @messages) {
-            $c->stash->{messages} = \@messages;
+        #if (exists $c->stash->{view}{error}{messages}) {
+        if (has_errors($c)) {
+            # we may wish to Do Stuff here
         }
 
         # no messages, means that all should be well, so head off to the
@@ -118,7 +120,8 @@ sub reset : Path('/user/password/reset') {
 
     # we should have the reset UID in the URL
     if (not defined $reset_uid) {
-        $c->stash->{error}{message} = q{Incomplete password reset URL};
+        parley_warn($c, q{Incomplete password reset URL});
+        #$c->stash->{error}{message} = q{Incomplete password reset URL};
         return;
     }
 
@@ -149,7 +152,8 @@ sub reset : Path('/user/password/reset') {
         $self->_reset_password($c, $pwd_reset);
 
         # if we have any validation errors ...
-        if (exists $c->stash->{view}{error}{messages}) {
+        #if (exists $c->stash->{view}{error}{messages}) {
+        if (has_errors($c)) {
             # we may want to Do Stuff when there are errors
         }
 
@@ -180,51 +184,36 @@ sub _reset_password {
         return;
     }
 
-#    # deal with missing/invalid fields
-#    if ($c->form->has_missing()) {
-#        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
-#        foreach my $f ( $c->form->missing ) {
-#            push @{ $c->stash->{view}{error}{messages} }, $f;
-#        }
-#    }
-#    elsif ($c->form->has_invalid()) {
-#        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
-#        foreach my $f ( $c->form->invalid ) {
-#            push @{ $c->stash->{view}{error}{messages} }, $f;
-#        }
-#    }
-
     # otherwise the form data is ok...
-#    else {
-        # less typing ..
-        my $reset_username = $pwd_reset->recipient()->authentication()->username;
-        $c->log->debug( "password reset for: $reset_username" );
 
-        # make sure the username matches
-        if ($reset_username eq $c->form->valid->{reset_username}) {
-            # perform everything in a transaction
-            eval {
-                $c->model('ParleyDB')->schema->txn_do(
-                    sub { return $self->_txn_user_password_update($c, $pwd_reset); }
-                );
-            };
-            # deal with any transaction errors
-            if ($@) {                                   # Transaction failed
-                die "something terrible has happened!"  #
-                    if ($@ =~ /Rollback failed/);       # Rollback failed
+    # less typing ..
+    my $reset_username = $pwd_reset->recipient()->authentication()->username;
+    $c->log->debug( "password reset for: $reset_username" );
 
-                $c->stash->{error}{message} = qq{Database transaction failed: $@};
-                $c->log->error( $@ );
-                return;
-            }
+    # make sure the username matches
+    if ($reset_username eq $c->form->valid->{reset_username}) {
+        # perform everything in a transaction
+        eval {
+            $c->model('ParleyDB')->schema->txn_do(
+                sub { return $self->_txn_user_password_update($c, $pwd_reset); }
+            );
+        };
+        # deal with any transaction errors
+        if ($@) {                                   # Transaction failed
+            die "something terrible has happened!"  #
+                if ($@ =~ /Rollback failed/);       # Rollback failed
+
+            $c->stash->{error}{message} = qq{Database transaction failed: $@};
+            $c->log->error( $@ );
+            return;
         }
-        else {
-            # incorrect username
-            push @messages, 'Incorrect username supplied';
-        }
-#    }
+    }
+    else {
+        # incorrect username
+        push @messages, 'Incorrect username supplied';
+        parley_warn($c, q{Incorrect username supplied});
+    }
 
-#    return uniq(sort @messages);
     return 1;
 }
 
@@ -299,23 +288,27 @@ sub _user_reset {
     $c->form(
         $dfv_profile_for{password_reset}
     );
+    if (not $self->form_data_valid($c)) {
+        $c->log->error( q{INVALID FORM DATA} );
+        return;
+    }
 
-    # deal with missing/invalid fields
-    if ($c->form->has_missing()) {
-        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
-        foreach my $f ( $c->form->missing ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
-        }
-    }
-    elsif ($c->form->has_invalid()) {
-        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
-        foreach my $f ( $c->form->invalid ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
-        }
-    }
+#    # deal with missing/invalid fields
+#    if ($c->form->has_missing()) {
+#        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+#        foreach my $f ( $c->form->missing ) {
+#            push @{ $c->stash->{view}{error}{messages} }, $f;
+#        }
+#    }
+#    elsif ($c->form->has_invalid()) {
+#        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+#        foreach my $f ( $c->form->invalid ) {
+#            push @{ $c->stash->{view}{error}{messages} }, $f;
+#        }
+#    }
 
     # otherwise the form data is ok...
-    else {
+#    else {
         my ($criteria, $matches, $person);
 
         # make sure we can match user/email supplied
@@ -335,9 +328,11 @@ sub _user_reset {
             $send_username_reminder = 1;
         }
         else {
-            push @messages, q{Missing criteria in the database lookup};
+            #push @messages, q{Missing criteria in the database lookup};
+            parley_warn($c, q{Missing criteria in the database lookup});
             $c->log->error(q{Lookup criteria missing in _user_reset()});
-            return uniq(sort @messages);
+            #return uniq(sort @messages);
+            return;
         }
         $matches = $c->model('ParleyDB')->resultset('Person')->search(
             $criteria,
@@ -348,7 +343,8 @@ sub _user_reset {
 
         # make sure we don't have too many matches
         if ($matches->count > 1) {
-            push @messages, q{Database lookup returned too many records};
+            #push @messages, q{Database lookup returned too many records};
+            parley_warn($c, q{Database lookup returned too many records});
             $c->log->error(q{Looks like the SQL for password reset is a bit borked});
             $c->log->error(
                   q{Lookup returned }
@@ -356,7 +352,8 @@ sub _user_reset {
                 . q{ record(s)}
             );
             $c->log->dumper($criteria);
-            return uniq(sort @messages);
+            #return uniq(sort @messages);
+            return;
         }
 
         # make sure we don't have too few matches
@@ -382,9 +379,10 @@ sub _user_reset {
                 push @messages, q{Failed to send password reset email};
             }
         }
-    }
+#    }
 
-    return uniq(sort @messages);
+        #return uniq(sort @messages);
+    return 1;
 }
 
 
