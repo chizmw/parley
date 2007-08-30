@@ -3,6 +3,9 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+use Graphics::Magick;
+use Image::Size qw( html_imgsize imgsize );
+
 use Parley::App::Error qw( :methods );
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -49,6 +52,14 @@ my %dfv_profile_for = (
             qw(
                 watch_on_post
                 notify_thread_watch
+            )
+        ],
+    },
+
+    user_avatar => {
+        required => [
+            qw(
+                avatar_file
             )
         ],
     },
@@ -166,7 +177,7 @@ sub update :Path('/my/preferences/update') {
 
     # make sure the form name matches something we have a DFV profile for
     if (not exists $dfv_profile_for{ $form_name }) {
-        $c->stash->{error}{message} = "no such form: $form_name";
+        parley_warn($c, qq{no such form: $form_name});
         return;
     }
 
@@ -176,13 +187,13 @@ sub update :Path('/my/preferences/update') {
     );
 
     # are we updating TZ preferences?
+    my $ok_update;
     if ('time_format' eq $form_name) {
         # return to the right tab
         # use session flash, or we lose the info with the redirect
         $c->flash->{show_pref_tab} = 'tab_time';
 
-        $self->_process_form_time_format( $c );
-        $c->response->redirect( $c->uri_for('/my/preferences') );
+        $ok_update = $self->_process_form_time_format( $c );
     }
     # are we updating notification preferences?
     elsif ('notifications' eq $form_name) {
@@ -190,14 +201,28 @@ sub update :Path('/my/preferences/update') {
         # use session flash, or we lose the info with the redirect
         $c->flash->{show_pref_tab} = 'tab_notify';
 
-        $self->_process_form_notifications( $c );
-        $c->response->redirect( $c->uri_for('/my/preferences') );
+        $ok_update = $self->_process_form_notifications( $c );
+    }
+    # are we updating the avatar
+    elsif ('user_avatar' eq $form_name) {
+        # return to the right tab
+        # use session flash, or we lose the info with the redirect
+        $c->flash->{show_pref_tab} = 'tab_avatar';
+
+        $ok_update = $self->_process_form_avatar( $c );
     }
 
     # otherwise we haven't decided how to handle the specified form ...
     else {
         $c->stash->{error}{message} = "don't know how to handle: $form_name";
         return;
+    }
+
+    if ($ok_update) {
+        $c->response->redirect( $c->uri_for('/my/preferences') );
+    }
+    else {
+        $c->stash->{template} = 'my/preferences';
     }
 
     return;
@@ -213,23 +238,120 @@ sub _form_data_valid {
 
     # deal with missing/invalid fields
     if ($c->form->has_missing()) {
-        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        parley_warn($c, q{You must fill in all the required fields});
         foreach my $f ( $c->form->missing ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
+            parley_warn($c, $f);
         }
 
         return; # invalid form data
     }
     elsif ($c->form->has_invalid()) {
-        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        parley_warn($c, q{One or more fields are invalid});
         foreach my $f ( $c->form->invalid ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
+            parley_warn($c, $f);
         }
 
         return; # invalid form data
     }
 
     # otherwise, the form data is ok ...
+    return 1;
+}
+
+
+sub upload : Global {
+    my ($self, $c) = @_;
+
+    if ( $c->request->parameters->{form_submit} eq 'yes' ) {
+
+        if ( my $upload = $c->request->upload('avatar_file') ) {
+
+            my $filename = $upload->filename;
+            my $target   = "/tmp/upload/$filename";
+
+            unless ( $upload->link_to($target) || $upload->copy_to($target) ) {
+                die( "Failed to copy '$filename' to '$target': $!" );
+            }
+        }
+    }
+
+    #$c->stash->{template} = 'file_upload.html';
+    $c->stash->{template} = 'my/preferences';
+}
+
+
+sub _process_form_avatar {
+    my ($self, $c) = @_;
+    my ($upload);
+    $c->log->debug('_process_form_avatar');
+
+    if (not $self->_form_data_valid($c)) {
+        $c->log->debug('form data is not valid');
+        return;
+    }
+
+    $c->log->info( $c->request->param('avatar_file') );
+    
+    if ( $upload = $c->request->upload('avatar_file') ) {
+        $c->log->debug( ref($upload) );
+        $c->log->debug( $upload->filename );
+        $c->log->debug( $upload->type );
+        $c->log->debug( $upload->size );
+
+        # reject files that are too large
+        if ($upload->size > 20480 ) {
+            parley_warn($c, q{File size too large. File must be no larger than 20K});
+            $c->log->info(q{File size too large. File must be no larger than 20K});
+            return;
+        }
+
+        # reject anything that doesn't appear to be an image
+        if ($upload->type !~ m{\Aimage/}xms) {
+            parley_warn(
+                $c,
+                  q{Uploaded file does not appear to be an image file [}
+                . $upload->type
+                . q{]}
+            );
+            return;
+        }
+
+        # store the file (but don't make it active yet)
+        my $filename    = $upload->filename;
+        my $target_dir  =   $c->path_to('root')
+                          . q{/static/user_file/}
+                          . $c->_authed_user->id();
+        my $target      = $target_dir . q{/} . $filename;
+
+        # create the directory if it doesn't exist
+        if (not -d $target_dir) {
+            mkdir $target_dir;
+            if (not -d $target_dir) {
+                parley_warn($c, q{Failed to create destination directory.  Unable to store upload.});
+                $c->log->error( qq{$target_dir - $!} );
+                return;
+            }
+        }
+
+        # save the file for processing
+        if ( not $upload->link_to($target) and not $upload->copy_to($target) ) {
+            parley_warn($c, q{Failed to store upload.});
+            $c->log->error( qq{$target - $!} );
+            return;
+        }
+        $c->log->info($target);
+
+        # check the image dimensions, and if it's too large, scale it down to
+        # something we accept, also convert it to a JPG
+        _convert_and_scale_image($target);
+
+        # finally replace the existing avatar
+        if (not rename($target, $target_dir . q{/avatar.jpg})) {
+            parley_warn($c, q{Failed to replace existing avatar image});
+            parley_warn($c, $!);
+        }
+    }
+
     return 1;
 }
 
@@ -374,6 +496,52 @@ sub saveHandler : Local {
     else {
         $c->response->body(q{<p>Unknown field name</p>});
     }
+}
+
+sub _convert_and_scale_image {
+    my ($file) = @_;
+    my $options = {
+        'width'  => 100,
+        'height' => 150,
+    };
+
+    # get the image dimensions
+    my ($width, $height) = imgsize($file);
+
+    # create a new image mangling object
+    my $img = Graphics::Magick->new()
+        or die $!;
+
+    # read in the image file
+    $img->Read($file);
+
+    if ($width > $options->{width} or $height > $options->{height}) {
+        # scale the longest side - if it's square, scale by height
+        if ($width > $height) {
+            # scale down by width
+            warn('# scale down by width');
+            $img->Resize(
+                geometry => $options->{width}
+            );
+        }
+        elsif ($height >= $width) {
+            # scale down by height
+            warn('# scale down by height');
+            $img->Resize(
+                geometry => q{x} . $options->{height}
+            );
+        }
+    }
+
+    # make sure we're a JPEG
+#    $img->Convert(
+#        type => 'jpg',
+#    );
+
+    # write out the scaled image
+    $img->Write($file);
+
+    return;
 }
 
 =head1 NAME

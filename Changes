@@ -1,5 +1,6 @@
 This file documents the revision history for Parley.
 
+    - users can now upload an avatar image (from my/preferences)
     - properly fixed Password Reset process
     - added database updating for edit-fields on "Your Details" in
       my/preferences

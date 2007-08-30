@@ -27,6 +27,8 @@ requires 'DateTime';
 requires 'DateTime::Format::Pg';
 requires 'DateTime::TimeZone';
 requires 'Email::Valid';
+requires 'Graphics::Magick';
+requires 'Image::Size';
 requires 'List::MoreUtils';
 requires 'MIME::Lite';
 requires 'Perl6::Export::Attrs';

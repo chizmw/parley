@@ -303,6 +303,9 @@ td {
     margin-right:       auto;
     width:              80%;
 }
+.user_profile td {
+    vertical-align:     top;
+}
 
 .prefs_notification {
     margin-left:        auto;

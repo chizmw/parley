@@ -1,0 +1,36 @@
+<!-- preferences : tab_you -->
+
+<form action="my/preferences/update" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="form_name" value="user_avatar">
+    <table class="user_profile">
+        <thead>
+            <tr>
+                <td width="150" align="center">
+                    Current Avatar
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td width="150" align="center">
+                    [% INCLUDE shared/user_avatar person=authed_user %]
+                </td>
+                <td>
+                    Change your avatar image by selecting a file and clicking
+                    the Upload button below:
+                    <br />
+
+                    <input type="file" id="avatar_file" name="avatar_file" />
+
+                    <input type="submit" value="Upload" style="float: right;"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+<!-- (end) preferences : tab_you -->
