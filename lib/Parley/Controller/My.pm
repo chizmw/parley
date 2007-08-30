@@ -335,6 +335,7 @@ sub saveHandler : Local {
                 }
             );
             if ($count) {
+                #die('foo');
                 $c->response->body(
                       q{<p>'}
                     . $c->request->param('value')
