@@ -1,8 +1,11 @@
 TODO LIST
 
+  - application logo
+  - extra forumcode markup: quote/pre/code
+  - proper moderator support/management
   - message preview before posting
   - proper/better validation error hadling for AJAX field updates
-  - user profile image uploads
+D - user profile image uploads
   - fix CSS for <fieldset>s
 D - factor out error setting, handling and displaying
 D - install Proc::Daemon (etc) for email script
