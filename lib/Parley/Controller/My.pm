@@ -339,17 +339,11 @@ sub _process_form_avatar {
             $c->log->error( qq{$target - $!} );
             return;
         }
-        $c->log->info($target);
+        $c->log->info($target, $target_dir);
 
         # check the image dimensions, and if it's too large, scale it down to
         # something we accept, also convert it to a JPG
-        _convert_and_scale_image($target);
-
-        # finally replace the existing avatar
-        if (not rename($target, $target_dir . q{/avatar.jpg})) {
-            parley_warn($c, q{Failed to replace existing avatar image});
-            parley_warn($c, $!);
-        }
+        _convert_and_scale_image($target, $target_dir);
     }
 
     return 1;
@@ -457,7 +451,6 @@ sub saveHandler : Local {
                 }
             );
             if ($count) {
-                #die('foo');
                 $c->response->body(
                       q{<p>'}
                     . $c->request->param('value')
@@ -499,7 +492,7 @@ sub saveHandler : Local {
 }
 
 sub _convert_and_scale_image {
-    my ($file) = @_;
+    my ($file, $destdir) = @_;
     my $options = {
         'width'  => 100,
         'height' => 150,
@@ -533,13 +526,8 @@ sub _convert_and_scale_image {
         }
     }
 
-    # make sure we're a JPEG
-#    $img->Convert(
-#        type => 'jpg',
-#    );
-
     # write out the scaled image
-    $img->Write($file);
+    $img->Write($destdir . q{/avatar.jpg});
 
     return;
 }
