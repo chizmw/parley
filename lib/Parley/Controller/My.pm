@@ -4,6 +4,7 @@ use warnings;
 use base 'Catalyst::Controller';
 
 use Graphics::Magick;
+use JSON;
 use Image::Size qw( html_imgsize imgsize );
 
 use Parley::App::Error qw( :methods );
@@ -414,7 +415,14 @@ sub _process_form_time_format {
 
 sub saveHandler : Local {
     my ($self, $c) = @_;
+    my ($return_data, $json);
     my $fieldname = $c->request->param('fieldname');
+
+    $c->response->content_type('text/json');
+
+    $return_data->{old_value} = $c->request->param('ovalue');
+    $return_data->{fieldname} = $fieldname;
+    $return_data->{fieldname} =~ s{\s+}{}g;
 
     my %field_map = (
         'First Name' => {
@@ -451,11 +459,15 @@ sub saveHandler : Local {
                 }
             );
             if ($count) {
-                $c->response->body(
+                $return_data->{message} =
                       q{<p>'}
                     . $c->request->param('value')
                     . q{' has already been used by another user.</p>}
-                );
+                ;
+                $return_data->{updated} = 0;
+                $json = objToJson($return_data);
+                $c->response->body( $json );
+                $c->log->info( $json );
                 return;
             };
         }
@@ -472,10 +484,14 @@ sub saveHandler : Local {
         # check for errors
         if ($@) {
             parley_warn($c, $@);
-            $c->response->body(qq{<p>ERROR: $@</p>});
+            $return_data->{message} = qq{<p>ERROR: $@</p>};
+            $return_data->{updated} = 0;
+            $json = objToJson($return_data);
+            $c->response->body( $json );
+            return;
         }
         else {
-            $c->response->body(
+            $return_data->{message} =
                   q{<p>Updated }
                 . $fieldname
                 . q{ from '}
@@ -483,12 +499,23 @@ sub saveHandler : Local {
                 . q{' to '}
                 . $c->request->param('value')
                 . q{'</p>}
-            );
+            ;
+            $return_data->{updated} = 1;
+            $json = objToJson($return_data);
+            $c->log->info( $json );
+            $c->response->body( $json );
+            return;
         }
     }
     else {
-        $c->response->body(q{<p>Unknown field name</p>});
+        $return_data->{message} = q{<p>Unknown field name</p>};
+        $return_data->{updated} = 0;
+        $json = objToJson($return_data);
+        $c->response->body( $json );
+        return;
     }
+
+    return;
 }
 
 sub _convert_and_scale_image {

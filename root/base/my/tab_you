@@ -6,15 +6,18 @@
         var kw = {
             url:  "[% base %]my/saveHandler",
             method: "post",
+            mimetype: "text/json",
             formNode: dojo.byId("form"),
             content: { value: newVal, ovalue: oldVal, fieldname: fld },
             load: function(type, data) {
-                dojo.byId("result").innerHTML = data;
+                dojo.byId("result").innerHTML = data.message;
+                if (data.updated != 1) {
+                    dojo.byId( data.fieldname ).innerHTML = data.old_value;
+                }
             },
             error: function(type, error){
                 document.getElementById("result").innerHTML = error.message;
             },
-            mimetype: "text/plain"
         };
         dojo.io.bind(kw);
     }
