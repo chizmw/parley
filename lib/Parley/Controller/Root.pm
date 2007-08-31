@@ -146,8 +146,9 @@ sub auto : Private {
             # look up person/forum
             my $results = $c->model('ParleyDB')->resultset('ForumModerator')->find(
                 {
-                    person  => $c->_authed_user()->id(),
-                    forum   => $c->_current_forum()->id(),
+                    person          => $c->_authed_user()->id(),
+                    forum           => $c->_current_forum()->id(),
+                    can_moderate    => 1,
                 },
                 {
                     key     => 'forum_moderator_person_key',

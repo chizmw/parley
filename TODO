@@ -1,8 +1,10 @@
 TODO LIST
 
   - application logo
+  - sane T&C management
   - extra forumcode markup: quote/pre/code
   - proper moderator support/management
+  - IP/user reporting
   - message preview before posting
   - proper/better validation error hadling for AJAX field updates
 D - user profile image uploads
