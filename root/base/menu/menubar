@@ -35,7 +35,8 @@
 	<div dojoType="MenuItem2" caption="My Profile" onClick="document.location.href='user/profile?user=[%authed_user.id%]';"></div>
 	<div dojoType="MenuItem2" caption="Logout" onClick="document.location.href='user/logout';"></div>
     [% ELSE %]
-	<div dojoType="MenuItem2" caption="Login" onClick="login_dialog.show(); dojo.byId('username').focus(); return false;"></div>
+	<!--<div dojoType="MenuItem2" caption="Login" onClick="login_dialog.show(); dojo.byId('username').focus(); return false;"></div>-->
+	<div dojoType="MenuItem2" caption="Login" onClick="YAHOO.parley.login.login_dialog.show();"></div>
 	<div dojoType="MenuItem2" caption="Register" onClick="document.location.href='user/signup';"></div>
 	<div dojoType="MenuItem2" caption="Password Reminder" onClick="document.location.href='user/password/forgotten';"></div>
     [% END %]

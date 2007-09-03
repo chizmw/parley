@@ -1,19 +1,65 @@
-<!-- login dialog -->
-
-<!-- dojo dialog-setup -->
+<!-- login dialog (YUI) -->
 <script type="text/javascript">
-    var login_dialog;
-    function init_login_dialog(e) {
-        login_dialog = dojo.widget.byId("login_dialog");
-        var timer = document.getElementById("login_dialog_timer");
-        login_dialog.setTimerNode(timer);
-        var btn = document.getElementById("login_dialog_hider");
-        login_dialog.setCloseControl(btn);
-    }
-    dojo.addOnLoad(init_login_dialog);
-</script>
+YAHOO.namespace("parley.login");
 
-<div dojoType="dialog" id="login_dialog" bgColor="#606060" bgOpacity="0.4" toggle="fade" toggleDuration="250">
+function init() {
+	// Define various event handlers for Dialog
+	var handleSubmit = function() {
+		this.submit();
+	};
+	var handleCancel = function() {
+		this.cancel();
+	};
+	var handleSuccess = function(o) {
+        console.log('Success');
+	};
+	var handleFailure = function(o) {
+		alert("Submission failed: " + o.status);
+	};
+
+	// Instantiate the Dialog
+	YAHOO.parley.login.login_dialog = new YAHOO.widget.Dialog(
+        'login_dialog', 
+        {
+            postmethod : 'form',
+            fixedcenter : true,
+            visible : false, 
+            modal: true,
+            constraintoviewport : true,
+            buttons : [
+                { text:'Submit', handler:handleSubmit, isDefault:true },
+                { text:'Cancel', handler:handleCancel }
+            ]
+        }
+    );
+	
+	// Validate the entries in the form to require that both first and last name are entered
+	YAHOO.parley.login.login_dialog.validate = function() {
+		var data = this.getData();
+		if (data.username == "" || data.password == "") {
+			alert("Please enter your username and password.");
+			return false;
+		} else {
+			return true;
+		}
+	};
+
+	// Wire up the success and failure handlers
+	YAHOO.parley.login.login_dialog.callback = { success: handleSubmit,
+												 failure: handleFailure };
+	
+	// Render the Dialog
+	YAHOO.parley.login.login_dialog.render();
+
+	//YAHOO.util.Event.addListener("show", "click", YAHOO.parley.login.login_dialog.show, YAHOO.parley.login.login_dialog, true);
+	//YAHOO.util.Event.addListener("hide", "click", YAHOO.example.container.login_dialog.hide, YAHOO.example.container.login_dialog, true);
+}
+
+YAHOO.util.Event.onDOMReady(init);
+</script>
+<div id="login_dialog">
+<div class="hd">Please enter your information</div>
+<div class="bd">
     <form action="user/login" method="post" name="login_form" class="login_dialog_form">
         <fieldset>
             <label for="username"><b>Username:</b></label>
@@ -21,8 +67,10 @@
             <br />
             <label for="password"><b>Password:</b></label>
             <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
+            <!--
             <br />
             <button type="submit" value="log in" class="input_button" style="margin-left: 170px;">log in</button>
+            -->
 
             <p align="right">
             <a href="user/password/forgotten">Forgotten Password</a>
@@ -32,4 +80,5 @@
         </fieldset>
     </form>
 </div>
-<!-- /login-dialog -->
+</div>
+<!-- (end) login dialog (YUI) -->
