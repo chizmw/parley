@@ -9,24 +9,31 @@
     </ul>
 [% END %]
 
-<p>
-<div id="mainTabContainer" dojoType="TabContainer" style="width: 100%; height: 300px" selectedChild="[% c.flash.show_pref_tab || 'tab_you' %]" >
-    <div id="tab_you" dojoType="ContentPane" label="Your Details">
-        [% PROCESS my/tab_you %]
-    </div>
+<div id="demo" class="yui-navset">
+    [% tab_info = [
+            { label => 'Your Details',       tab_name => 'tab_you' },
+            { label => 'Time',               tab_name => 'tab_time' },
+            { label => 'Notifications',      tab_name => 'tab_notifications' },
+            { label => 'Avatar',             tab_name => 'tab_avatar' },
+       ]
+    %]
+    [% SET selected_tab = c.flash.show_pref_tab || 'tab_you' %]
 
-    <div id="tab_time" dojoType="ContentPane" label="Time">
-        [% PROCESS my/tab_time %]
-    </div>
+    <ul class="yui-nav">
+    [% FOR tab IN tab_info %]
+        <li[% IF tab.tab_name == selected_tab %] class="selected"[%END%]><a href="#[% tab.tab_name %]"><em>[% tab.label %]</em></a></li>
+    [% END %]
+    </ul>            
 
-    <div id="tab_notify" dojoType="ContentPane" label="Notifications">
-        [% PROCESS my/tab_notifications %]
-    </div>
-
-    <div id="tab_avatar" dojoType="ContentPane" label="Avatar">
-        [% PROCESS my/tab_avatar %]
+    <div class="yui-content">
+    [% FOR tab IN tab_info %]
+        <div id="[% tab.tab_name %]"><p>[% PROCESS "my/${tab.tab_name}" %]</p></div>
+    [% END %]
     </div>
 </div>
+<script type="text/javascript">
+    var tabView = new YAHOO.widget.TabView('demo');
+</script>
 
 [% IF c.session.my_pref_came_from %]
 <p>
