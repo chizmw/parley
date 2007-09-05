@@ -1,6 +1,6 @@
 <!-- menubar (YUI) -->
-[%- IF NOT current_forum  %][% SET  forum_disabled='disabled="true"' %][% END %]
-[%- IF NOT current_thread %][% SET thread_disabled='disabled="true"' %][% END %]
+[%- IF NOT current_forum  %][% SET  forum_disabled=' disabled' %][% END %]
+[%- IF NOT current_thread %][% SET thread_disabled=' disabled' %][% END %]
 <!-- Page-specific script -->
 <script type="text/javascript">
     // Initialize and render the menu bar when it is available in the DOM
@@ -35,21 +35,21 @@
                 <div id="menu_forum" class="yuimenu">
                     <div class="bd">                                        
                         <ul>
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="forum/view?forum=[%current_forum.id%]">View Threads</a></li>
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="thread/add?forum=[%current_forum.id%]">Create New Thread</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel[%forum_disabled%]" href="[%IF forum_disabled%]#[%ELSE%]forum/view?forum=[%current_forum.id%][%END%]">View Threads</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel[%forum_disabled%]" href="[%IF forum_disabled%]#[%ELSE%]thread/add?forum=[%current_forum.id%][%END%]">Create New Thread</a></li>
                         </ul>
                     </div>
                 </div>                                        
             </li>
             <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Thread</a>
-                <div id="menu_forum" class="yuimenu">
+                <div id="menu_thread" class="yuimenu">
                     <div class="bd">                                        
                         <ul>
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="thread/reply?thread=[%current_thread.id%]">Add Reply</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel[%thread_disabled%]" href="[%IF thread_disabled%]#[%ELSE%]thread/reply?thread=[%current_thread.id%][%END%]">Add Reply</a></li>
                             [%- IF watching_thread %]
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="thread/watch?thread=[% current_thread.id %]&amp;page=[% page.current_page %]&amp;watch=0">Remove Watch</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel[%thread_disabled%]" href="[%IF thread_disabled%]#[%ELSE%]thread/watch?thread=[%current_thread.id%]&amp;page=[%page.current_page%]&amp;watch=0[%END%]">Remove Watch</a></li>
                             [%- ELSE %]
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="thread/watch?thread=[% current_thread.id %]&amp;page=[% page.current_page %]&amp;watch=1">Add Watch</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel[%thread_disabled%]" href="[%IF thread_disabled%]#[%ELSE%]thread/watch?thread=[%current_thread.id%]&amp;page=[%page.current_page%]&amp;watch=1[%END%]">Add Watch</a></li>
                             [%- END %]
                         </ul>
                     </div>
