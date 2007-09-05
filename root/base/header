@@ -56,11 +56,30 @@
         <!-- YUI ajax magick -->
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/fonts/fonts-min.css" />
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/button/assets/skins/sam/button.css" />
+        <!--
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/container/assets/skins/sam/container.css" />
+        -->
+        <!--
+        <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/reset-fonts-grids/reset-fonts-grids.css" />
+        <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/reset-fonts-grids/reset-fonts-grids.css">
+        -->
+        <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/menu/assets/skins/sam/menu.css" />
+
+
+        <!-- CSS for Menu -->
+        <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/menu/assets/skins/sam/menu.css"> 
+
+        <!-- Dependency source files -->
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/container/container_core.js"></script>
+
+        <!-- Menu source file -->
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/menu/menu.js"></script>
+
+
         <script type="text/javascript" src="[%c.request.base%]/static/yui/utilities/utilities.js"></script>
         <script type="text/javascript" src="[%c.request.base%]/static/yui/button/button-beta.js"></script>
         <script type="text/javascript" src="[%c.request.base%]/static/yui/container/container.js"></script>
-
     </head>
 
     <body class="yui-skin-sam">
@@ -77,8 +96,8 @@
                 <em>Guest User</em>
                 [% END %]
             </div>
-        [% PROCESS menu/menubar %]
 
+            [% PROCESS menu/menubar %]
 
             <div id="wrapper">
                 <div id="content">

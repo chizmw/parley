@@ -50,27 +50,21 @@ function init() {
 	
 	// Render the Dialog
 	YAHOO.parley.login.login_dialog.render();
-
-	//YAHOO.util.Event.addListener("show", "click", YAHOO.parley.login.login_dialog.show, YAHOO.parley.login.login_dialog, true);
-	//YAHOO.util.Event.addListener("hide", "click", YAHOO.example.container.login_dialog.hide, YAHOO.example.container.login_dialog, true);
 }
 
 YAHOO.util.Event.onDOMReady(init);
 </script>
+
 <div id="login_dialog">
 <div class="hd">Please enter your information</div>
 <div class="bd">
     <form action="user/login" method="post" name="login_form" class="login_dialog_form">
         <fieldset>
             <label for="username"><b>Username:</b></label>
-            <input type="text" id="username" name="username" style="width: 15em;" class="input_text" />
+            <input type="text" id="username" name="username" style="width: 16em;" class="input_text" />
             <br />
             <label for="password"><b>Password:</b></label>
             <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
-            <!--
-            <br />
-            <button type="submit" value="log in" class="input_button" style="margin-left: 170px;">log in</button>
-            -->
 
             <p align="right">
             <a href="user/password/forgotten">Forgotten Password</a>

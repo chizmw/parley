@@ -1,70 +1,110 @@
-<!-- start : menubar -->
-[% IF NOT current_forum %][% SET forum_disabled='disabled="true"' %][% END %]
-[% IF NOT current_thread %][% SET thread_disabled='disabled="true"' %][% END %]
+<!-- menubar (YUI) -->
+[%- IF NOT current_forum  %][% SET  forum_disabled='disabled="true"' %][% END %]
+[%- IF NOT current_thread %][% SET thread_disabled='disabled="true"' %][% END %]
+<!-- Page-specific script -->
+<script type="text/javascript">
+    // Initialize and render the menu bar when it is available in the DOM
+    YAHOO.util.Event.onContentReady("parley_navbar", function () {
+        var oMenuBar = new YAHOO.widget.MenuBar("parley_navbar", { autosubmenudisplay: false, hidedelay: 750, lazyload: true });
+        oMenuBar.render();
+    });
+</script>
 
-<div dojoType="PopupMenu2" widgetId="menu_go">
-	<div dojoType="MenuItem2" caption="Main Page" onClick="document.location.href='[% c.request.base %]';"></div>
-	<div dojoType="MenuItem2" caption="Forum Summary" onClick="document.location.href='forum/list';"></div>
-	<div dojoType="MenuItem2" caption="Recently Updated Threads" onClick="document.location.href='thread/recent';"></div>
+<!-- start: stack grids here -->
+<div id="parley_navbar" class="yuimenubar yuimenubarnav">
+    <div class="bd">
+        <ul class="first-of-type">
+            <li class="yuimenubaritem first-of-type"><a class="yuimenubaritemlabel" href="#">Go</a>
+                <div id="menu_go" class="yuimenu">
+                    <div class="bd">                                        
+                        <ul>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]">Main Page</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]/forum/list">Forum Summary</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]/thread/recent">Recently Update Threads</a></li>
+                        </ul>
 
-    <div dojoType="MenuSeparator2"></div>
-    [% WHILE (forum = available_forums.next) %]
-	<div dojoType="MenuItem2" caption="[% forum.name %]" onClick="document.location.href='forum/view?forum=[%forum.id%]';"></div>
-    [% END %]
+                        <ul>
+                            [% WHILE (forum = available_forums.next) %]
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="forum/view?forum=[%forum.id%]">[% forum.name %]</a></li>
+                            [% END %]
+                        </ul>
+                    </div>
+                </div>                                        
+            </li>
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Forum</a>
+                <div id="menu_forum" class="yuimenu">
+                    <div class="bd">                                        
+                        <ul>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="forum/view?forum=[%current_forum.id%]">View Threads</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="thread/add?forum=[%current_forum.id%]">Create New Thread</a></li>
+                        </ul>
+                    </div>
+                </div>                                        
+            </li>
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Thread</a>
+                <div id="menu_forum" class="yuimenu">
+                    <div class="bd">                                        
+                        <ul>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="thread/reply?thread=[%current_thread.id%]">Add Reply</a></li>
+                            [%- IF watching_thread %]
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="thread/watch?thread=[% current_thread.id %]&amp;page=[% page.current_page %]&amp;watch=0">Remove Watch</a></li>
+                            [%- ELSE %]
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="thread/watch?thread=[% current_thread.id %]&amp;page=[% page.current_page %]&amp;watch=1">Add Watch</a></li>
+                            [%- END %]
+                        </ul>
+                    </div>
+                </div>                                        
+            </li>
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Me</a>
+                <div id="menu_my" class="yuimenu">
+                    <div class="bd">                                        
+                        [% IF authed_user %]
+                        <ul>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="my/preferences">My Preferences</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="thread/watches">My Watched Threads</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="user/profile?user=[%authed_user.id%]">My Profile</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="user/logout">Logout</a></li>
+                        </ul>
+                        [% ELSE %]
+                        <ul>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="javascript:YAHOO.parley.login.login_dialog.show();">Login</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="user/signup">Register</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="user/password/forgotten">Password Reminder</a></li>
+                        </ul>
+                        [% END %]
+                    </div>
+                </div>                                        
+            </li>
+            [% IF moderator %]
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Moderate</a>
+                <div id="menu_moderate" class="yuimenu">
+                    <div class="bd">                                        
+                        <ul>
+                            [% IF current_thread.locked %]
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="admin/lock?thread=[%current_thread.id%]&amp;lock=0">Unlock Thread</a></li>
+                            [% ELSE %]
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="admin/lock?thread=[%current_thread.id%]&amp;lock=1">Lock Thread</a></li>
+                            [% END %]
+
+                            [% IF current_thread.sticky %]
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="admin/lock?thread=[%current_thread.id%]&amp;sticky=0">Unstick Thread</a></li>
+                            [% ELSE %]
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="admin/lock?thread=[%current_thread.id%]&amp;sticky=1">Stick Thread</a></li>
+                            [% END %]
+                        </ul>
+                    </div>
+                </div>                                        
+            </li>
+            [% END %]
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Help</a>
+                <div id="menu_help" class="yuimenu">
+                    <div class="bd">                                        
+                        <ul>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="help">Contents</a></li>
+                        </ul>
+                    </div>
+                </div>                                        
+            </li>
+        </ul>            
+    </div>
 </div>
-
-<div dojoType="PopupMenu2" widgetId="menu_forum">
-	<div dojoType="MenuItem2" [%forum_disabled%] caption="View Threads" onClick="document.location.href='forum/view?forum=[%current_forum.id%]';"></div>
-    <div dojoType="MenuSeparator2"></div>
-	<div dojoType="MenuItem2" [%forum_disabled%] caption="Create New Thread" onClick="document.location.href = 'thread/add?forum=[%current_forum.id%]';"></div>
-</div>
-
-<div dojoType="PopupMenu2" widgetId="menu_thread">
-	<div dojoType="MenuItem2" [%thread_disabled%] caption="Add Reply" onClick="document.location.href='thread/reply?thread=[%current_thread.id%]';"></div>
-    [%- IF watching_thread %]
-	<div dojoType="MenuItem2" [%thread_disabled%] caption="Remove Watch" onClick="document.location.href='thread/watch?thread=[% current_thread.id %]&amp;page=[% page.current_page %]&amp;watch=0';"></div>
-    [%- ELSE %]
-	<div dojoType="MenuItem2" [%thread_disabled%] caption="Add Watch" onClick="document.location.href='thread/watch?thread=[% current_thread.id %]&amp;page=[% page.current_page %]&amp;watch=1'"></div>
-    [%- END %]
-</div>
-
-<div dojoType="PopupMenu2" widgetId="menu_my">
-    [% IF authed_user %]
-	<div dojoType="MenuItem2" caption="My Preferences" onClick="document.location.href='my/preferences';"></div>
-    <div dojoType="MenuItem2" caption="My Watched Threads" onClick="document.location.href='thread/watches';"></div>
-	<div dojoType="MenuItem2" caption="My Profile" onClick="document.location.href='user/profile?user=[%authed_user.id%]';"></div>
-	<div dojoType="MenuItem2" caption="Logout" onClick="document.location.href='user/logout';"></div>
-    [% ELSE %]
-	<!--<div dojoType="MenuItem2" caption="Login" onClick="login_dialog.show(); dojo.byId('username').focus(); return false;"></div>-->
-	<div dojoType="MenuItem2" caption="Login" onClick="YAHOO.parley.login.login_dialog.show();"></div>
-	<div dojoType="MenuItem2" caption="Register" onClick="document.location.href='user/signup';"></div>
-	<div dojoType="MenuItem2" caption="Password Reminder" onClick="document.location.href='user/password/forgotten';"></div>
-    [% END %]
-</div>
-
-<div dojoType="PopupMenu2" widgetId="menu_moderate">
-    [% IF current_thread.locked %]
-	<div dojoType="MenuItem2" caption="Unlock Thread" onClick="document.location.href='admin/lock?thread=[%current_thread.id%]&amp;lock=0';" [% thread_disabled %]></div>
-    [% ELSE %]
-	<div dojoType="MenuItem2" caption="Lock Thread" onClick="document.location.href='admin/lock?thread=[%current_thread.id%]';" [% thread_disabled %]></div>
-    [% END %]
-
-    [% IF current_thread.sticky %]
-	<div dojoType="MenuItem2" caption="Unstick Thread" onClick="document.location.href='admin/sticky?thread=[%current_thread.id%]&amp;sticky=0';" [% thread_disabled %]></div>
-    [% ELSE %]
-	<div dojoType="MenuItem2" caption="Stick Thread" onClick="document.location.href='admin/sticky?thread=[%current_thread.id%]';" [% thread_disabled %]></div>
-    [% END %]
-</div>
-
-<div dojoType="MenuBar2">
-	<div dojoType="MenuBarItem2" caption="Go To ..."    submenuId="menu_go"></div>
-	<div dojoType="MenuBarItem2" caption="Forum"        submenuId="menu_forum"></div>
-	<div dojoType="MenuBarItem2" caption="Thread"       submenuId="menu_thread"></div>
-    <div dojoType="MenuBarItem2" caption="Search"       onClick="search_dialog.show();"></div>
-	<div dojoType="MenuBarItem2" caption="Me"           submenuId="menu_my"></div>
-    [% IF moderator %]
-	<div dojoType="MenuBarItem2" caption="Moderate"     submenuId="menu_moderate"></div>
-    [% END %]
-	<div dojoType="MenuBarItem2" caption="Help" onClick="document.location.href='help';"></div>
-</div>
-<!-- end :menubar -->
