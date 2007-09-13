@@ -1,8 +1,25 @@
-/* Heavily borrowed from the example at:
+/*
+   Heavily borrowed from the example at:
 
      http://blog.davclass.com/
 
-   Chisel Wright <chisel@herlpacker.co.uk>
+   Objectified and extended by:
+
+     Chisel Wright <chisel@herlpacker.co.uk>
+*/
+
+/*
+    Example usage:
+
+    <script type="text/javascript" src="/path/to/Editable.js"></script>
+    <script type="text/javascript">
+        // create a new object
+        var E  = new YAHOO.widget.EditableElement;
+        // override the default callback()
+        E.callback = function(){ console.log('my callback called') };
+        // initialise the widget
+        E.init();
+    </script>
 */
 
 (function () {
@@ -17,6 +34,8 @@
             min_input_size  : 0,
             save_on_enter   : true,
             clear_on_escape : true,
+            save_button     : true,
+            cancel_button   : true
         };
         this.clicked  = false;
         this.contents = false;
@@ -50,10 +69,14 @@
             }
         };
 
+
+        // if I new javascript better I probably wouldn't have to
+        // write my own max() function
         this._max = function(x,y) {
             if (x>y) { return x; }
             return y;
         };
+
 
         this.triggered = function(ev) {
             this.check();
@@ -89,6 +112,8 @@
 
         this.create_input_field = function() {
             this.input = YU.Dom.generateId();
+
+            // create a new element for the input
             new_input  = document.createElement('input');
             min_size   = this._max(this.contents.length, this.config.min_size);
             with (new_input) {
@@ -101,9 +126,17 @@
             this.clicked.innerHTML = '';
             this.clicked.appendChild(new_input);
 
-            this.create_save_button();
-            this.create_cancel_button();
+            // show the save button
+            if (this.config.save_button) {
+                this.create_save_button();
+            }
 
+            // show the cancel button
+            if (this.config.cancel_button) {
+                this.create_cancel_button();
+            }
+
+            // select the newly created input field
             new_input.select();
         };
 
@@ -200,6 +233,8 @@
         };
 
 
+        // a default callback() function; you'll want to assign your own in
+        // the object you create
         this.callback = function() {
             alert('default callback() called');
         };
