@@ -14,7 +14,9 @@
         this.config = {
             class_name      : 'editable',
             trigger         : 'click',
-            min_input_size  : 0
+            min_input_size  : 0,
+            save_on_enter   : true,
+            clear_on_escape : true,
         };
         this.clicked  = false;
         this.contents = false;
@@ -31,13 +33,19 @@
                         this.triggered,
                         this,
                         true);
-                    YU.Event.addListener(
-                        _items[i],
-                        'keyup',
-                        this.onKeyUp,
-                        this,
-                        true
-                    );
+
+                    /* if we need to handle any key events */
+                    if (   this.config.save_on_enter
+                        || this.config.clear_on_escape
+                    ) {
+                        YU.Event.addListener(
+                            _items[i],
+                            'keyup',
+                            this.onKeyUp,
+                            this,
+                            true
+                        );
+                    }
                 }
             }
         };
@@ -60,12 +68,16 @@
 
             switch (keyCode) {
                 case 13: // enter key
-                    this.check();
+                    if (this.config.save_on_enter) {
+                        this.check();
+                    }
                     break;
 
                 case 27: // enter key
-                    // ideally we'd reset the box to its original value here
-                    this.reset_input_field();
+                    if (this.config.save_on_enter) {
+                        // ideally we'd reset the box to its original value here
+                        this.reset_input_field();
+                    }
                     break;
 
                 default:
@@ -93,16 +105,6 @@
             this.create_cancel_button();
 
             new_input.select();
-            // Add event listeners
-            /*
-            YU.Event.addListener(
-                new_input,
-                'blur',
-                this.reset_input_field,
-                this,
-                true
-            );
-            */
         };
 
 
@@ -162,16 +164,21 @@
 
         this.clear_input = function() {
             if (this.input) {
-                if (YU.Dom.get(this.input).value.length > 0) {
+                var input_value = YU.Dom.get(this.input).value;
+
+                if (input_value.length > 0) {
                     this.clean_input();
-                    this.contents_new = YU.Dom.get(this.input).value;
-                    this.clicked.innerHTML = this.contents_new;
-                } else {
+                    this.contents_new = input_value;
+                }
+                else {
                     this.contents_new = '[removed]';
-                    this.clicked.innerHTML = this.contents_new;
+                }
+                this.clicked.innerHTML = this.contents_new;
+
+                if (this.contents_new != this.contents) {
+                    this.callback();
                 }
             }
-            this.callback();
             this.clicked  = false;
             this.contents = false;
             this.input    = false;
@@ -191,6 +198,7 @@
                 this.clear_input();
             }
         };
+
 
         this.callback = function() {
             alert('default callback() called');
