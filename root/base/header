@@ -31,28 +31,6 @@
         <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/common.css" />
         <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/layout27.css" />
 
-        <!-- Dojo Magic -->
-        <script type="text/javascript">
-            var djConfig = { isDebug: true };
-        </script>
-        <script type="text/javascript" src="[% c.request.base %]/static/magic/dojo.js"></script>
-        <script type="text/javascript">
-            dojo.require("dojo.widget.Menu2");
-            dojo.require("dojo.lfx.*");         // animations and eye candy
-            dojo.require("dojo.widget.Dialog");
-            dojo.require("dojo.widget.Button");
-
-            dojo.require("dojo.widget.TabContainer");
-            dojo.require("dojo.widget.LinkPane");
-            dojo.require("dojo.widget.ContentPane");
-            dojo.require("dojo.widget.LayoutContainer");
-
-
-            dojo.require("dojo.widget.InlineEditBox");
-            dojo.require("dojo.event.*");
-            dojo.hostenv.writeIncludes();
-        </script>
-
         <!-- YUI ajax magick -->
 
         <!-- CSS -->
