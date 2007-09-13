@@ -4,8 +4,7 @@
 <!-- Page-specific script -->
 <script type="text/javascript">
     // Initialize and render the menu bar when it is available in the DOM
-    YAHOO.util.Event.onContentReady("parley_navbar", function () {
-        var oMenuBar = new YAHOO.widget.MenuBar("parley_navbar", { autosubmenudisplay: false, hidedelay: 750, lazyload: true });
+    YAHOO.util.Event.onContentReady("parley_navbar", function () { var oMenuBar = new YAHOO.widget.MenuBar("parley_navbar", { autosubmenudisplay: true, hidedelay: 750, lazyload: true });
         oMenuBar.render();
     });
 </script>
