@@ -55,6 +55,10 @@
                     </div>
                 </div>                                        
             </li>
+
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="javascript:YAHOO.parley.search.search_dialog.show();">Search</a>
+            </li>
+
             <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Me</a>
                 <div id="menu_my" class="yuimenu">
                     <div class="bd">                                        
@@ -96,7 +100,7 @@
                 </div>                                        
             </li>
             [% END %]
-            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Help</a>
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="help">Help</a>
                 <div id="menu_help" class="yuimenu">
                     <div class="bd">                                        
                         <ul>
