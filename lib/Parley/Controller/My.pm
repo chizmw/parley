@@ -424,15 +424,15 @@ sub saveHandler : Local {
     $return_data->{fieldname} =~ s{\s+}{}g;
 
     my %field_map = (
-        'First Name' => {
+        'FirstName' => {
             'resultset'     => 'Person',
             'db_column'     => 'first_name',
         },
-        'Last Name' => {
+        'LastName' => {
             'resultset'     => 'Person',
             'db_column'     => 'last_name',
         },
-        'Forum Name' => {
+        'ForumName' => {
             'resultset'     => 'Person',
             'db_column'     => 'forum_name',
             'is_unique'     => 1,
