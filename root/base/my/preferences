@@ -9,7 +9,7 @@
     </ul>
 [% END %]
 
-<div id="demo" class="yui-navset">
+<div id="demo" class="yui-navset" style="max-width: 80%; margin-left: auto; margin-right: auto;">
     [% tab_info = [
             { label => 'Your Details',       tab_name => 'tab_you' },
             { label => 'Time',               tab_name => 'tab_time' },
@@ -25,7 +25,7 @@
     [% END %]
     </ul>            
 
-    <div class="yui-content">
+    <div class="yui-content" style="min-height: 200px;">
     [% FOR tab IN tab_info %]
         <div id="[% tab.tab_name %]"><p>[% PROCESS "my/${tab.tab_name}" %]</p></div>
     [% END %]

@@ -200,7 +200,7 @@ sub update :Path('/my/preferences/update') {
     elsif ('notifications' eq $form_name) {
         # return to the right tab
         # use session flash, or we lose the info with the redirect
-        $c->flash->{show_pref_tab} = 'tab_notify';
+        $c->flash->{show_pref_tab} = 'tab_notifications';
 
         $ok_update = $self->_process_form_notifications( $c );
     }
@@ -276,7 +276,6 @@ sub upload : Global {
         }
     }
 
-    #$c->stash->{template} = 'file_upload.html';
     $c->stash->{template} = 'my/preferences';
 }
 
@@ -370,7 +369,7 @@ sub _process_form_notifications {
     # store changes
     $c->_authed_user()->preference()->update;
 
-    return;
+    return 1;
 }
 
 
@@ -410,7 +409,7 @@ sub _process_form_time_format {
     # store changes
     $c->_authed_user()->preference()->update();
 
-    return;
+    return 1;
 }
 
 sub saveHandler : Local {
