@@ -216,6 +216,33 @@ CREATE TABLE forum_moderator (
 );
 
 
+-- a table to contain site terms & conditions
+CREATE TABLE terms (
+    id              serial      primary key,
+    created         timestamp with time zone
+                    default CURRENT_TIMESTAMP
+                    not null,
+
+    content         text        not null,
+
+    change_summary  text
+);
+-- keep track of who agreed to what, and when
+CREATE TABLE terms_agreed (
+    id              serial      primary key,
+
+    person_id       integer     not null
+                    references person(person_id),
+    terms_id        integer     not null
+                    references terms(id),
+
+    accepted_on     timestamp with time zone
+                    default CURRENT_TIMESTAMP
+                    not null,
+
+    UNIQUE(person_id, terms_id)
+);
+
 
 --
 -- some default stuff
