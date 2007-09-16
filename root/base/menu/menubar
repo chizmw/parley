@@ -19,7 +19,7 @@
                         <ul>
                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]">Main Page</a></li>
                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]/forum/list">Forum Summary</a></li>
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]/thread/recent">Recently Update Threads</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]/thread/recent">Recently Updated Threads</a></li>
                         </ul>
 
                         <ul>
