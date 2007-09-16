@@ -9,7 +9,7 @@
     </ul>
 [% END %]
 
-<div id="demo" class="yui-navset" style="max-width: 80%; margin-left: auto; margin-right: auto;">
+<div id="tabbed_prefs" class="yui-navset" style="max-width: 80%; margin-left: auto; margin-right: auto;">
     [% tab_info = [
             { label => 'Your Details',       tab_name => 'tab_you' },
             { label => 'Time',               tab_name => 'tab_time' },
@@ -32,7 +32,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    var tabView = new YAHOO.widget.TabView('demo');
+    var tabView = new YAHOO.widget.TabView('tabbed_prefs');
 </script>
 
 [% IF c.session.my_pref_came_from %]
