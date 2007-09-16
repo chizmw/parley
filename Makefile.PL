@@ -28,7 +28,7 @@ requires 'DateTime::Format::Pg';
 requires 'DateTime::TimeZone';
 requires 'Email::Valid';
 requires 'Graphics::Magick';
-rewuires 'HTML::FillInForm' => '1.07';
+requires 'HTML::FillInForm' => '1.07';
 requires 'Image::Size';
 requires 'JSON';
 requires 'List::MoreUtils';
