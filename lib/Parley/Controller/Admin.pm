@@ -94,7 +94,7 @@ Catalyst Controller.
 
 =head1 AUTHOR
 
-Chisel Wright C<< <chiselwright@berlios.de> >>
+Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 =head1 LICENSE
 

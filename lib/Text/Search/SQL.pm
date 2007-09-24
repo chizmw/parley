@@ -159,6 +159,6 @@ Text::Search::SQL - split search terms into something that can be used with DBIx
 
 =head1 AUTHOR
 
-Chisel Wright C< <<chisel.wright@users.berlios.de>> >
+Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 =cut

@@ -4,8 +4,8 @@
 <!-- Page-specific script -->
 <script type="text/javascript">
     // Initialize and render the menu bar when it is available in the DOM
-    YAHOO.util.Event.onContentReady("parley_navbar", function () { var oMenuBar = new YAHOO.widget.MenuBar("parley_navbar", { autosubmenudisplay: true, hidedelay: 750, lazyload: true });
-        oMenuBar.render();
+    YAHOO.util.Event.onContentReady("parley_navbar", function () { var
+    oMenuBar = new YAHOO.widget.MenuBar("parley_navbar", { autosubmenudisplay: false, hidedelay: 250, lazyload: true }); oMenuBar.render();
     });
 </script>
 
@@ -99,7 +99,7 @@
                 </div>                                        
             </li>
             [% END %]
-            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="help">Help</a>
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Help</a>
                 <div id="menu_help" class="yuimenu">
                     <div class="bd">                                        
                         <ul>

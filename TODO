@@ -6,7 +6,7 @@ TODO LIST
   - proper moderator support/management
   - IP/user reporting
   - message preview before posting
-  - proper/better validation error hadling for AJAX field updates
+D - proper/better validation error hadling for AJAX field updates
 D - user profile image uploads
   - fix CSS for <fieldset>s
 D - factor out error setting, handling and displaying

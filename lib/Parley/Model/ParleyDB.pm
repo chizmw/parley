@@ -25,7 +25,7 @@ L<Catalyst::Model::DBIC::Schema> Model using schema L<Parley::Schema>
 
 =head1 AUTHOR
 
-Chisel Wright,,,
+Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 =head1 LICENSE
 

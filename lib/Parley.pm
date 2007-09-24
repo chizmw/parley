@@ -3,8 +3,6 @@ package Parley;
 use strict;
 use warnings;
 
-our $VERSION = '0.56';
-
 use Catalyst::Runtime '5.70';
 use Catalyst qw/
     -Debug
@@ -29,6 +27,8 @@ use Catalyst qw/
 /;
 
 use Parley::App::Communication::Email qw( :email );
+
+our $VERSION = '0.57_01';
 
 __PACKAGE__->config( version => $VERSION );
 __PACKAGE__->setup;
@@ -244,7 +244,7 @@ L<Parley::Controller::Root>, L<Catalyst::Plugin::Email>, L<Catalyst>
 
 =head1 AUTHOR
 
-Chisel Wright C<< <chisel@herlpacker.co.uk> >>
+Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 =head1 LICENSE
 

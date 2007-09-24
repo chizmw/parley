@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+use Parley::App::Terms qw( :terms );
+
 #
 # Sets the actions in this controller to be registered with no prefix
 # so they function identically to actions created in MyApp.pm
@@ -27,30 +29,6 @@ sub auto : Private {
             order_by    => 'name ASC',
         }
     );
-
-    ############################################################
-    # if we have a user ... fetch some info (if we don't already have it)
-    ############################################################
-    if ( $c->user and not defined $c->_authed_user ) {
-        $c->log->info('Fetching user information for ' . $c->user->id);
-
-        # get the person info for the username
-        my $row = $c->model('ParleyDB')->resultset('Person')->find(
-            {
-                'authentication.username'   => $c->user->username(),
-            },
-            {
-                join => 'authentication',
-            },
-        );
-        $c->_authed_user( $row );
-
-        #####################################################################
-        # cater for database upgrades, and make sure the user has preferences
-        #####################################################################
-        #Parley::App::Helper->user_preference_check($c);
-    }
-
 
     ##################################################
     # do we have a post id in the URL?
@@ -131,6 +109,33 @@ sub auto : Private {
         );
     }
 
+    ############################################################
+    # if we have a user ... fetch some info (if we don't already have it)
+    ############################################################
+    if ( $c->user and not defined $c->_authed_user ) {
+        #$c->log->info('Fetching user information for ' . $c->user->id);
+
+        # get the person info for the username
+        my $row = $c->model('ParleyDB')->resultset('Person')->find(
+            {
+                'authentication.username'   => $c->user->username(),
+            },
+            {
+                join => 'authentication',
+            },
+        );
+        $c->_authed_user( $row );
+
+        # make sure they've agreed to any (new) T&Cs
+        my $status = terms_check($c, $c->_authed_user);
+        if (not $status) {
+            $c->res->body('need to accept');
+            $c->log->debug('User needs to accept T&Cs');
+            return 0;
+        }
+    }
+
+
 
     ##################################################
     # if we are logged in and if we have a current_forum, can the (current)
@@ -139,7 +144,7 @@ sub auto : Private {
     if (defined $c->_authed_user() and defined $c->_current_forum()) {
         # 'topdog' user can moderate anything
         if (0 == $c->_authed_user()->id()) {
-            $c->log->debug( q{topdog user moderates anything he wants} );
+            #$c->log->debug( q{topdog user moderates anything he wants} );
             $c->stash->{moderator} = 1;
         }
         else {
@@ -156,7 +161,7 @@ sub auto : Private {
             );
             # if we found something, they must moderate the current forum
             if ($results) {
-                $c->log->debug( q{user moderates this forum} );
+                #$c->log->debug( q{user moderates this forum} );
                 $c->stash->{moderator} = 1;
             }
         }
@@ -245,7 +250,7 @@ parley.yml
 
 =head1 AUTHOR
 
-Chisel Wright C<< <chisel@herlpacker.co.uk> >>
+Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 =head1 LICENSE
 

@@ -35,6 +35,16 @@ CREATE TABLE terms_agreed (
     UNIQUE(person_id, terms_id)
 );
 
+
+-- insert a default set of terms
+INSERT INTO terms (content) VALUES ('[b]Parley Terms and Conditions[/b]
+[list]
+[1]Be nice
+[1]Don''t be an idiot
+[1][b]Be nice[/b]
+[/list]'
+);
+
 -- patch ends here --
 
 COMMIT;
