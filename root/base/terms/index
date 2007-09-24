@@ -1,0 +1,18 @@
+[% IF latest_terms %]
+    <h1>Terms and Conditions</h1>
+    <div class="site_terms">
+        [% ForumCode.forumcode(latest_terms.content) %]
+        <div style="text-align: right;">
+        Last Modified: [% nicedate(latest_terms.created) %]
+        </div>
+    </div>
+
+    [% IF latest_terms.change_summary %]
+    <h1>Summary of Changes</h1>
+    <div class="site_terms">
+        [% ForumCode.forumcode(latest_terms.change_summary) %]
+    </div>
+    [% END %]
+[% ELSE %]
+This site has no Terms and Conditions to view.
+[% END %]
