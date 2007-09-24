@@ -1,6 +1,9 @@
-<!--
-<h1>Reply to: [% current_thread.subject %]</h1>
--->
+<div id="logger"></div>
+<h1>
+[% current_forum.name %]
+&nbsp;:&nbsp;
+[% current_thread.subject %]
+</h1>
 
 [%# different action depending on whether we're adding to a thread or replying to a specific post %]
 [% IF current_post %]
@@ -31,8 +34,6 @@
     </td>
   </tr>
 </table>
-    
-<p>Please enter your reply in the form below:</p>
 
 [% IF messages %]
 <p>
@@ -43,6 +44,9 @@
     </ul>
 </p>
 [% END %]
+
+    
+<p>Please enter your reply in the form below:</p>
 
 
 <table>
@@ -70,16 +74,18 @@
   </tr>
   [% END %]
 
-  <tr>
+  <tr valign="top">
     <td> Message </td>
     <td>
-      <textarea name="thread_message" cols="60" rows="20" class="input_text" /></textarea>
+        <div id="message_container"></div>
+        <textarea name="thread_message" id="thread_message" cols="60" rows="20" class="input_text" /></textarea>
     </td>
   </tr>
 
   <tr>
     <td colspan="2" style="text-align: center;">
-      <input type="submit" value="Add Reply"      name="post_reply"    class="input_button" />
+      <input type="button" value="Preview"   name="post_reply" class="input_button" id="message_preview" />
+      <input type="submit" value="Add Reply" name="post_reply" class="input_button" />
     </td>
   </tr>
 
@@ -98,3 +104,153 @@
   </tr>
 </table>
 </form>
+
+<style type="text/css">
+	.yui-overlay { position:absolute;background:#ccc;border:1px dotted
+    black;padding:none;margin:none;overflow:auto; }
+</style>
+
+<!-- message preview majick -->
+<script type="text/javascript">
+    (function () {
+        ParleyMessagePreview = function() {
+            var Dom         = YAHOO.util.Dom,
+                YU          = YAHOO.util;
+
+            this.config = {
+                trigger     : 'message_preview',
+                user_input  : 'thread_message',
+                container   : 'message_container',
+                trigger_evt : 'click'
+            };
+            this.message_source  = false;
+            this.message_preview = false;
+
+            this.handleSuccess = function(o) {
+                var data = eval('(' + o.responseText + ')');
+                var obj = o.argument.obj;
+
+                if (data.formatted) {
+                    obj.previewElId = YU.Dom.generateId();
+
+                    /*
+                    var previewEl   = document.createElement('div');
+                    with (previewEl) {
+                        //setAttribute('id', obj.previewElId);
+                        setAttribute('id', 'my_damn_thing');
+                        innerHTML = data.formatted;
+                    }
+                    console.log('created: ', previewEl.id);
+                    */
+                    obj.user_input.style.visibility     = 'hidden';
+                    /*
+                    with (obj.container.style) {
+                        position        = 'absolute';
+                        width           = obj.user_input.clientWidth  + 'px';
+                        height          = obj.user_input.clientHeight + 'px';
+                        border          = 'none';
+                        marginLeft      = obj.user_input.offsetLeft   + 'px';
+                        marginTop       = obj.user_input.offsetTop    + 'px';
+                    }
+                    */
+
+                    var pWidth          = obj.user_input.clientWidth,
+                        pHeight         = obj.user_input.clientHeight,
+                        pLeft           = obj.user_input.offsetLeft,
+                        pTop            = obj.user_input.offsetTop;
+
+                    obj.preview_overlay = new YAHOO.widget.Overlay(
+                        "preview_overlay",
+                        {
+                            context:        [obj.config.user_input, 'tl', 'tl'],
+                            visible:        true,
+                            width:          obj.user_input.clientWidth  + 'px',
+                            height:         obj.user_input.clientHeight + 'px'
+                        }
+                    );
+                    obj.preview_overlay.setBody(data.formatted);
+                    obj.preview_overlay.render(document.body);
+
+                    //obj.container.appendChild(previewEl);
+
+                    // update the button
+                    obj.trigger.value = 'Edit';
+
+                    YU.Event.removeListener( obj.trigger, 'click' );
+                    YU.Event.addListener(
+                        obj.trigger,
+                        obj.config.trigger_evt,
+                        obj.edit,
+                        obj,
+                        true
+                    );
+
+                }
+            };
+            this.handleFailure = function(o) {
+                console.log('failure');
+            };
+
+            this.edit = function() {
+                console.log('RESET!');
+                // update the button
+                this.trigger.value = 'Preview';
+
+                //console.log('want to kill: ', this.previewElId);
+
+                //console.log('ElId:   ', YU.Dom.get( this.previewElId ));
+                //console.log('El:     ', this.previewEl);
+
+                this.user_input.style.visibility     = 'visible';
+
+                //var thingy = YU.Dom.get('my_damn_thing');
+                //this.container.removeChild( thingy );
+                this.preview_overlay.hide();
+
+
+                YU.Event.removeListener( this.trigger, 'click' );
+                YU.Event.addListener(
+                    this.trigger,
+                    this.config.trigger_evt,
+                    this.preview,
+                    this,
+                    true
+                );
+            };
+
+            this.preview = function() {
+                console.log('PREVIEW!')
+                var request = YU.Connect.asyncRequest(
+                    'POST',
+                    '[%base%]post/preview',
+                    {
+                        success: this.handleSuccess,
+                        failure: this.handleFailure,
+                        argument: {
+                            obj: this
+                        }
+                    },
+                    'msg_source=' + this.user_input.value
+                );
+            };
+
+            this.init = function() {
+                this.container  = Dom.get( this.config.container );
+                this.user_input = Dom.get( this.config.user_input );
+                this.trigger    = Dom.get( this.config.trigger );
+
+                YU.Event.addListener(
+                    this.trigger,
+                    this.config.trigger_evt,
+                    this.preview,
+                    this,
+                    true
+                );
+            };
+        };
+    })();
+
+    var Foo = new ParleyMessagePreview();
+    Foo.init();
+</script>
+<!-- (end) message preview majick -->

@@ -176,7 +176,8 @@ td {
 
 .reply_post_message {
     width: 100%;
-    background-color: rgb(251,215,194);
+    //background-color: rgb(251,215,194);
+    background-color: #ddd;
     border: 2px inset #fff;
 }
 

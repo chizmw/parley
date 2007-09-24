@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 use DateTime;
+use JSON;
+use Template::Plugin::ForumCode;
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Global class data
@@ -119,6 +121,24 @@ sub view : Local {
     # redirect to the relevant place in the appropriate thread
     $c->log->debug( "post/view: redirecting to $redirect_url" );
     $c->response->redirect( $redirect_url );
+    return;
+}
+
+sub preview : Local {
+    my ($self, $c) = @_;
+    my $tt_forum = Template::Plugin::ForumCode->new();
+
+    my $json = objToJson(
+        {
+            'formatted' =>
+                $tt_forum->forumcode(
+                    $c->request->param('msg_source')
+                )
+        }
+    );
+    $c->log->debug( $json );
+
+    $c->response->body( $json );
     return;
 }
 
