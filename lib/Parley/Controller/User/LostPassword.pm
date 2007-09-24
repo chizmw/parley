@@ -173,7 +173,6 @@ sub reset : Path('/user/password/reset') {
 sub _reset_password {
     my ($self, $c, $pwd_reset) = @_;
     my (@messages);
-    $c->log->debug('_reset_password()');
 
     # validate form data
     $c->form(
@@ -188,7 +187,6 @@ sub _reset_password {
 
     # less typing ..
     my $reset_username = $pwd_reset->recipient()->authentication()->username;
-    $c->log->debug( "password reset for: $reset_username" );
 
     # make sure the username matches
     if ($reset_username eq $c->form->valid->{reset_username}) {
@@ -212,6 +210,7 @@ sub _reset_password {
         # incorrect username
         push @messages, 'Incorrect username supplied';
         parley_warn($c, q{Incorrect username supplied});
+        return;
     }
 
     return 1;
@@ -293,95 +292,76 @@ sub _user_reset {
         return;
     }
 
-#    # deal with missing/invalid fields
-#    if ($c->form->has_missing()) {
-#        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
-#        foreach my $f ( $c->form->missing ) {
-#            push @{ $c->stash->{view}{error}{messages} }, $f;
-#        }
-#    }
-#    elsif ($c->form->has_invalid()) {
-#        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
-#        foreach my $f ( $c->form->invalid ) {
-#            push @{ $c->stash->{view}{error}{messages} }, $f;
-#        }
-#    }
-
     # otherwise the form data is ok...
-#    else {
-        my ($criteria, $matches, $person);
+    my ($criteria, $matches, $person);
 
-        # make sure we can match user/email supplied
-        if (defined $c->form->valid->{username}) {
-            $criteria->{'authentication.username'}
-                = $c->form->valid->{username};
+    # make sure we can match user/email supplied
+    if (defined $c->form->valid->{username}) {
+        $criteria->{'authentication.username'}
+            = $c->form->valid->{username};
 
-            # make sure we don't send a username reminder
-            $send_username_reminder = 0;
-        }
-        elsif (defined $c->form->valid->{email}) {
-            $criteria->{'email'}
-                = $c->form->valid->{email};
+        # make sure we don't send a username reminder
+        $send_username_reminder = 0;
+    }
+    elsif (defined $c->form->valid->{email}) {
+        $criteria->{'email'}
+            = $c->form->valid->{email};
 
-            # assume the user used their email address because they couldn't
-            # remember their username, and send them a username reminder email
-            $send_username_reminder = 1;
-        }
-        else {
-            #push @messages, q{Missing criteria in the database lookup};
-            parley_warn($c, q{Missing criteria in the database lookup});
-            $c->log->error(q{Lookup criteria missing in _user_reset()});
-            #return uniq(sort @messages);
-            return;
-        }
-        $matches = $c->model('ParleyDB')->resultset('Person')->search(
-            $criteria,
-            {
-                join => 'authentication',
-            }
-        );
-
-        # make sure we don't have too many matches
-        if ($matches->count > 1) {
-            #push @messages, q{Database lookup returned too many records};
-            parley_warn($c, q{Database lookup returned too many records});
-            $c->log->error(q{Looks like the SQL for password reset is a bit borked});
-            $c->log->error(
-                  q{Lookup returned }
-                . $matches->count
-                . q{ record(s)}
-            );
-            $c->log->dumper($criteria);
-            #return uniq(sort @messages);
-            return;
-        }
-
-        # make sure we don't have too few matches
-        elsif ($matches->count < 1) {
-            push @messages, q{There are no users matching that information};
-            #$c->log->debug(' NO MATCHES ');
-        }
-
-        # otherwise, do the work
-        else {
-            # get the first (and should be only) match
-            $person = $matches->first();
-            #$c->log->dumper( $person->{_column_data}, 'COLUMN_DATA' );
-
-            # if required, send a username reminder
-            if ($send_username_reminder) {
-                $self->_send_username_reminder($c, $person);
-            }
-
-            # do the actual password reset
-            $email_send_status = $self->_user_password_reset($c, $person);
-            if (not $email_send_status) {
-                push @messages, q{Failed to send password reset email};
-            }
-        }
-#    }
-
+        # assume the user used their email address because they couldn't
+        # remember their username, and send them a username reminder email
+        $send_username_reminder = 1;
+    }
+    else {
+        #push @messages, q{Missing criteria in the database lookup};
+        parley_warn($c, q{Missing criteria in the database lookup});
+        $c->log->error(q{Lookup criteria missing in _user_reset()});
         #return uniq(sort @messages);
+        return;
+    }
+    $matches = $c->model('ParleyDB')->resultset('Person')->search(
+        $criteria,
+        {
+            join => 'authentication',
+        }
+    );
+
+    # make sure we don't have too many matches
+    if ($matches->count > 1) {
+        #push @messages, q{Database lookup returned too many records};
+        parley_warn($c, q{Database lookup returned too many records});
+        $c->log->error(q{Looks like the SQL for password reset is a bit borked});
+        $c->log->error(
+                q{Lookup returned }
+            . $matches->count
+            . q{ record(s)}
+        );
+        $c->log->dumper($criteria);
+        #return uniq(sort @messages);
+        return;
+    }
+
+    # make sure we don't have too few matches
+    elsif ($matches->count < 1) {
+        parley_warn($c, q{There are no users matching that information});
+    }
+
+    # otherwise, do the work
+    else {
+        # get the first (and should be only) match
+        $person = $matches->first();
+
+        # if required, send a username reminder
+        if ($send_username_reminder) {
+            $self->_send_username_reminder($c, $person);
+        }
+
+        # do the actual password reset
+        $email_send_status = $self->_user_password_reset($c, $person);
+        if (not $email_send_status) {
+            parley_warn($c, q{Failed to send password reset email});
+        }
+    }
+
     return 1;
 }
 
