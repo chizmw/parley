@@ -1,11 +1,20 @@
 TODO LIST
 
+  - show more forum/thread information
+  - see if it's possible to display the forum-name as the first
+    entry for the popup menu
+  - show more info in the recently update threads page; number of views/posts
+  - Minimising clicks - After password reset
+    "After the password reset has been accepted a page indicating that change
+    was successful appears with link to login. How about triggering the usual
+    enter password page saying the same thing so remove the need to click."
   - application logo
-  - sane T&C management
+  - advanced search page
+D - sane T&C management
   - extra forumcode markup: quote/pre/code
   - proper moderator support/management
   - IP/user reporting
-  - message preview before posting
+D - message preview before posting
 D - proper/better validation error hadling for AJAX field updates
 D - user profile image uploads
   - fix CSS for <fieldset>s
