@@ -77,7 +77,6 @@
   <tr valign="top">
     <td> Message </td>
     <td>
-        <div id="message_container"></div>
         <textarea name="thread_message" id="thread_message" cols="60" rows="20" class="input_text" /></textarea>
     </td>
   </tr>
@@ -106,7 +105,7 @@
 </form>
 
 <style type="text/css">
-	.yui-overlay { position:absolute;background:transparent;border:none;padding:none;margin:none;overflow:auto; }
+	.yui-overlay { position:absolute;background:transparent;border:none;padding:none;margin:none; }
 </style>
 
 <!-- message preview majick -->
@@ -149,8 +148,10 @@
                             height:         obj.user_input.clientHeight + 'px'
                         }
                     );
+
                     obj.preview_overlay.setBody(data.formatted);
                     obj.preview_overlay.render(document.body);
+                    Dom.get('preview_overlay').style.overflow = 'auto';
 
 
                     // update the button
