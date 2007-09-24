@@ -106,8 +106,7 @@
 </form>
 
 <style type="text/css">
-	.yui-overlay { position:absolute;background:#ccc;border:1px dotted
-    black;padding:none;margin:none;overflow:auto; }
+	.yui-overlay { position:absolute;background:transparent;border:none;padding:none;margin:none;overflow:auto; }
 </style>
 
 <!-- message preview majick -->
@@ -133,27 +132,9 @@
                 if (data.formatted) {
                     obj.previewElId = YU.Dom.generateId();
 
-                    /*
-                    var previewEl   = document.createElement('div');
-                    with (previewEl) {
-                        //setAttribute('id', obj.previewElId);
-                        setAttribute('id', 'my_damn_thing');
-                        innerHTML = data.formatted;
-                    }
-                    console.log('created: ', previewEl.id);
-                    */
                     obj.user_input.style.visibility     = 'hidden';
-                    /*
-                    with (obj.container.style) {
-                        position        = 'absolute';
-                        width           = obj.user_input.clientWidth  + 'px';
-                        height          = obj.user_input.clientHeight + 'px';
-                        border          = 'none';
-                        marginLeft      = obj.user_input.offsetLeft   + 'px';
-                        marginTop       = obj.user_input.offsetTop    + 'px';
-                    }
-                    */
 
+                    /* create a panel to show the preview in */
                     var pWidth          = obj.user_input.clientWidth,
                         pHeight         = obj.user_input.clientHeight,
                         pLeft           = obj.user_input.offsetLeft,
@@ -171,7 +152,6 @@
                     obj.preview_overlay.setBody(data.formatted);
                     obj.preview_overlay.render(document.body);
 
-                    //obj.container.appendChild(previewEl);
 
                     // update the button
                     obj.trigger.value = 'Edit';
@@ -192,21 +172,11 @@
             };
 
             this.edit = function() {
-                console.log('RESET!');
                 // update the button
                 this.trigger.value = 'Preview';
 
-                //console.log('want to kill: ', this.previewElId);
-
-                //console.log('ElId:   ', YU.Dom.get( this.previewElId ));
-                //console.log('El:     ', this.previewEl);
-
                 this.user_input.style.visibility     = 'visible';
-
-                //var thingy = YU.Dom.get('my_damn_thing');
-                //this.container.removeChild( thingy );
-                this.preview_overlay.hide();
-
+                this.preview_overlay.destroy();
 
                 YU.Event.removeListener( this.trigger, 'click' );
                 YU.Event.addListener(
@@ -219,7 +189,6 @@
             };
 
             this.preview = function() {
-                console.log('PREVIEW!')
                 var request = YU.Connect.asyncRequest(
                     'POST',
                     '[%base%]post/preview',
@@ -230,7 +199,7 @@
                             obj: this
                         }
                     },
-                    'msg_source=' + this.user_input.value
+                    'msg_source=' + escape(this.user_input.value)
                 );
             };
 
@@ -250,7 +219,7 @@
         };
     })();
 
-    var Foo = new ParleyMessagePreview();
-    Foo.init();
+    var MessagePreview = new ParleyMessagePreview();
+    MessagePreview.init();
 </script>
 <!-- (end) message preview majick -->
