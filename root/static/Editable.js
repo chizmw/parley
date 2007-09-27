@@ -91,25 +91,26 @@
             return y;
         };
 
+        this.step_up = function(el) {
+            if (el) {
+                var tmpEl = el;
+                while (tmpEl.className != this.config.class_name) {
+                    tmpEl = tmpEl.parentNode;
+                }
+                if (tmpEl) {
+                    el = tmpEl;
+                }
+            }
+            return el;
+        }
 
         this.triggered = function(ev) {
-            if (!  this.check() ) {
+            if (! this.check() ) {
                 return;
             }
 
             this.clicked = YU.Event.getTarget(ev);
-            if (this.clicked) {
-                var clicked = this.clicked;
-                while (
-                    (clicked.className != this.config.class_name)
-                ) {
-                    clicked = clicked.parentNode;
-                }
-
-                if (clicked) {
-                    this.clicked = clicked;
-                }
-            }
+            this.clicked = this.step_up(this.clicked);
 
             this.contents = this.clicked.innerHTML;
             this.create_input_field();
@@ -203,7 +204,7 @@
             new_save_input   = document.createElement('input');
             with (new_save_input) {
                 setAttribute('type', 'button');
-                setAttribute('id', this.input);
+                setAttribute('id', this.save_input);
                 value = 'Save';
                 className = 'editable_input';
             }
@@ -226,7 +227,7 @@
             new_cancel_input   = document.createElement('input');
             with (new_cancel_input) {
                 setAttribute('type', 'button');
-                setAttribute('id', this.input);
+                setAttribute('id', this.cancel_input);
                 value = 'Cancel';
                 className = 'editable_input';
             }
@@ -245,9 +246,9 @@
 
         this.reset_input_field = function() {
             this.clicked.innerHTML = this.contents;
-            this.clicked  = false;
-            this.contents = false;
-            this.input    = false;
+            this.clicked  = undefined;
+            this.contents = undefined;
+            this.input    = undefined;
         };
 
 
@@ -265,12 +266,13 @@
                 this.clicked.innerHTML = this.contents_new;
 
                 if (this.contents_new != this.contents) {
-                    this.callback();
+                    var el = this.step_up(this.clicked);
+                    this.callback(el);
                 }
             }
-            this.clicked  = false;
-            this.contents = false;
-            this.input    = false;
+            this.clicked  = undefined;
+            this.contents = undefined;
+            this.input    = undefined;
         };
 
 
@@ -283,10 +285,17 @@
 
 
         this.check = function(ev) {
-            if (this.clicked) {
+            if (!ev) {
+                if (this.clicked == undefined) {
+                    return true;
+                }
                 return false;
             }
-            return true;
+            if (this.clicked) {
+                clicked = YU.Event.getTarget(ev);
+                this.clear_input();
+                return true;
+            }
         };
 
 
