@@ -8,6 +8,8 @@
 
         <tr>
             <td colspan="2" class="thread_header">
+                <a href="forum/view?forum=[% current_forum.id %]">[% ForumCode.escape(current_forum.name) %]</a>
+                &nbsp;:&nbsp;
                 [% ForumCode.escape(current_thread.subject) %]
             </td>
         </tr>
@@ -38,7 +40,11 @@
                                     Thread Locked
                                     <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
                                 [% ELSE %]
-                                    <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                                    <span class="yui-button yui-link-button">
+                                        <span class="first-child">
+                                            <a href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                                        </span>
+                                    </span>
                                 [% END %]
                                 </small>
                             </td>
@@ -105,10 +111,22 @@
                         <br />
                         <br />
                         [% IF authed_user.id == post.creator.id %]
-                        <a class="button" href="post/edit?post=[% post.id %]">Edit</a>
+                        <span class="yui-button yui-link-button">
+                            <span class="first-child">
+                                <a href="post/edit?post=[% post.id %]">Edit</a>
+                            </span>
+                        </span>
                         [% END %]
-                        <a class="button" href="thread/reply?post=[% post.id %]">Quote</a>
-                        <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                        <span class="yui-button yui-link-button">
+                            <span class="first-child">
+                                <a href="thread/reply?post=[% post.id %]">Quote</a>
+                            </span>
+                        </span>
+                        <span class="yui-button yui-link-button">
+                            <span class="first-child">
+                                <a href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                            </span>
+                        </span>
                     [% END %]
                 </div>
             </td>
@@ -143,7 +161,11 @@
                                     Thread Locked
                                     <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
                                 [% ELSE %]
-                                    <a class="button" href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                                    <span class="yui-button yui-link-button">
+                                        <span class="first-child">
+                                            <a href="thread/reply?thread=[% current_thread.id %]">Reply</a>
+                                        </span>
+                                    </span>
                                 [% END %]
                                 </small>
                             </td>

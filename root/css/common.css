@@ -245,6 +245,10 @@ td {
     padding:            4px;
 }
 
+.thread_header a {
+    color:              #ccc;
+}
+
 .forum_list {
     margin-left:        auto;
     margin-right:       auto;

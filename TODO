@@ -1,9 +1,10 @@
 TODO LIST
 
+  - update avatar update response to force a No-Cache?
   - show more forum/thread information
   - see if it's possible to display the forum-name as the first
     entry for the popup menu
-  - show more info in the recently update threads page; number of views/posts
+D - show more info in the recently update threads page; number of views/posts
   - Minimising clicks - After password reset
     "After the password reset has been accepted a page indicating that change
     was successful appears with link to login. How about triggering the usual
