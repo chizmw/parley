@@ -47,9 +47,9 @@
             textarea_cols   : 50            // default colums to use if we're
                                             // working with a textarea
         };
-        this.clicked  = false;
-        this.contents = false;
-        this.input    = false;
+        this.clicked  = undefined;
+        this.contents = undefined;
+        this.input    = undefined;
 
         // set up the object to monitor relevant DOM elements
         this.init = function() {
@@ -93,9 +93,24 @@
 
 
         this.triggered = function(ev) {
-            this.check();
+            if (!  this.check() ) {
+                return;
+            }
+
             this.clicked = YU.Event.getTarget(ev);
-            this.clicked = YU.Dom.get( this.elID );
+            if (this.clicked) {
+                var clicked = this.clicked;
+                while (
+                    (clicked.className != this.config.class_name)
+                ) {
+                    clicked = clicked.parentNode;
+                }
+
+                if (clicked) {
+                    this.clicked = clicked;
+                }
+            }
+
             this.contents = this.clicked.innerHTML;
             this.create_input_field();
         };
@@ -269,8 +284,9 @@
 
         this.check = function(ev) {
             if (this.clicked) {
-                this.clear_input();
+                return false;
             }
+            return true;
         };
 
 
