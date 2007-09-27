@@ -9,3 +9,5 @@ base.messy
 ^html
 Parley-0.*
 .*user_file.*
+^dist
+^pm_to_blib
