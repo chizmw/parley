@@ -91,6 +91,12 @@
             return y;
         };
 
+        /* when working with a <textarea /> this.clicked can be a node
+           _inside_ the node we're monitoring, e.g. if you click on a
+           <i>...</i> portion of the text.
+           We want to edit the whole block, so we step up to the first node we
+           find that has a className matching this.config.class_name
+        */
         this.step_up = function(el) {
             if (el) {
                 var tmpEl = el;
