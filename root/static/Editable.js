@@ -25,17 +25,27 @@
 (function () {
     YAHOO.widget.EditableElement = function() {
         var Dom             = YAHOO.util.Dom,
-            CustomEvent     = YAHOO.util.CustomEvent,
             YU              = YAHOO.util;
 
         this.config = {
-            class_name      : 'editable',
-            trigger         : 'click',
-            min_input_size  : 0,
-            save_on_enter   : true,
-            clear_on_escape : true,
-            save_button     : true,
-            cancel_button   : true
+            class_name      : 'editable',   // the default classname to make editable
+            trigger         : 'click',      // or 'doubleclick'
+            input_type      : 'text',       // or 'textarea'
+
+            //min_input_size  : 0,
+
+            save_on_enter   : true,         // does the enter key trigger a Save?
+            clear_on_escape : true,         // does the escape key trigger a Cancel?
+
+            linebreak       : false,        // insert a linebreak before the buttons?
+
+            save_button     : true,         // show a Save button?
+            cancel_button   : true,         // show a Cancel button?
+
+            textarea_rows   : 6,            // default rows to use if we're
+                                            // working with a textarea
+            textarea_cols   : 50            // default colums to use if we're
+                                            // working with a textarea
         };
         this.clicked  = false;
         this.contents = false;
@@ -46,6 +56,10 @@
             _items = Dom.getElementsByClassName(this.config.class_name);
             if (_items.length > 0) {
                 for (i = 0; i < _items.length; i++) {
+                    // make sure the item has an id
+                    this.elID = YU.Dom.generateId(_items[i]);
+
+                    // add the (double-)click listener
                     YU.Event.addListener(
                         _items[i],
                         this.config.trigger,
@@ -80,7 +94,8 @@
 
         this.triggered = function(ev) {
             this.check();
-            this.clicked = YU.Event.getTarget(ev, true);
+            this.clicked = YU.Event.getTarget(ev);
+            this.clicked = YU.Dom.get( this.elID );
             this.contents = this.clicked.innerHTML;
             this.create_input_field();
         };
@@ -113,18 +128,44 @@
         this.create_input_field = function() {
             this.input = YU.Dom.generateId();
 
-            // create a new element for the input
-            new_input  = document.createElement('input');
-            min_size   = this._max(this.contents.length, this.config.min_size);
-            with (new_input) {
-                setAttribute('type', 'text');
-                setAttribute('id', this.input);
-                value = this.contents;
-                setAttribute('size', min_size);
-                className = 'editable_input';
+            /*
+             * Create a 'input type="text"' element
+             */
+            if (this.config.input_type == 'text') {
+                // create a new element for the input
+                new_input  = document.createElement('input');
+                min_size   = this._max(this.contents.length, this.config.min_size);
+                with (new_input) {
+                    setAttribute('type', 'text');
+                    setAttribute('id', this.input);
+                    value = this.contents;
+                    setAttribute('size', min_size);
+                    className = 'editable_input';
+                }
             }
+            /*
+             * Create a 'textarea' element
+             */
+            else if (this.config.input_type == 'textarea') {
+                new_input  = document.createElement('textarea');
+                with (new_input) {
+                    setAttribute('id', this.input);
+                    value = this.contents;
+                    className = 'editable_input';
+
+                    setAttribute('rows', this.config.textarea_rows);
+                    setAttribute('cols', this.config.textarea_cols);
+                }
+            }
+
             this.clicked.innerHTML = '';
             this.clicked.appendChild(new_input);
+
+            // insert a line-break before the buttons
+            if (this.config.linebreak) {
+                newline = document.createElement('br');
+                this.clicked.appendChild(newline);
+            }
 
             // show the save button
             if (this.config.save_button) {
