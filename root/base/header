@@ -36,8 +36,6 @@
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/fonts/fonts-min.css" />
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/button/assets/skins/sam/button.css" />
-        <!--
-        -->
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/container/assets/skins/sam/container.css" />
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/menu/assets/skins/sam/menu.css" /> 
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/tabview/assets/skins/sam/tabview.css" />
