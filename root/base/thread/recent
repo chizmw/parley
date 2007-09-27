@@ -47,6 +47,12 @@
         <a href="forum/view?forum=[%thread.forum.id%]">[% thread.forum.name %]</a>
         <br />&nbsp;
         </td>
+        
+        <td align="right">
+        [% thread.view_count %] views<br />
+        <br />
+        [% thread.post_count %] posts<br />
+        </td>
 
         <td>
             [% IF 0 && thread.forum_moderators.can_moderate %]
