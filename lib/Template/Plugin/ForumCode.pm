@@ -337,7 +337,6 @@ templates.
   /* Example CSS */
 
   .forumcode_code {
-    background-color:   #eee;
     font-family:        monospace;
     border:             1px solid #333;
     font-size:          95%;
@@ -346,7 +345,7 @@ templates.
     width:              85%;
     overflow:           auto;
 
-    color:              #fff;
+    color:              #ff0;
     background-color:   #333;
     border:             1px solid #666;
   }
