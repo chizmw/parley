@@ -450,7 +450,23 @@ a[href $='.pdf']{
 
 
 .help li {
-    margin-top:     5px;
+    margin-top:         25px;
+    margin-right:       25px;
+    list-style-type:    none;
+    border-left:        2px solid #666;
+    padding-top:        5px;
+    padding-bottom:     5px;
+    padding-left:       10px;
+    background-color:   #ddd;
+}
+.help li ul li, .help li ol li{
+    margin-top:         5px;
+    list-style-type:    disc;
+    border-left:        none;
+    padding-left:       none;
+    padding-top:        none;
+    padding-bottom:     none;
+    background-color:   transparent;
 }
 
 .error_messages {

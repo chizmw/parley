@@ -234,7 +234,7 @@ relations, those of you with a preference for American spellings may use <code>[
         <q><code>[colour=white]White Text[/colour]</code></q>
         produces
         [% ForumCode.forumcode('[colour=white]White Text[/colour]') %]
-        <br />(white-on-white text, useful for novice spies; highlight the
+        <br />(usually white-on-white text, useful for novice spies; highlight the
         line to see the white-on-white text)
     </li>
 </ul>
