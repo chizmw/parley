@@ -16,7 +16,7 @@
         </td>
 
         <td>
-        <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% ForumCode.escape(thread.subject) %]</a>
+        <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% ForumCode.escape(thread.subject) |truncate(45) %]</a>
         <br />
         <span class="forum_mini_pager">
             [%- IF authed_user || mini_pager %]
