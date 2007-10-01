@@ -474,3 +474,48 @@ a[href $='.pdf']{
     padding:            5px;
     border:             1px solid #666;
 }
+
+
+
+/* ForumCode styles */
+.forumcode_code {
+    font-family:        monospace;
+    border:             1px solid #333;
+    font-size:          95%;
+    margin:             15px 20px 15px 20px;
+    padding:            6px;
+    width:              85%;
+    overflow:           auto;
+
+    color:              #ff0;
+    background-color:   #333;
+    border:             1px solid #666;
+}
+
+.forumcode_pre {
+    background-color:   transparent;
+    font-family:        monospace;
+    border:             1px dashed #333;
+    font-size:          95%;
+    margin:             15px 20px 15px 20px;
+    padding:            6px;
+    width:              85%;
+    overflow:           auto;
+}
+
+.forumcode_quote {
+    background-color:   #eee;
+    font-family:        monospace;
+    font-style:         italic;
+    border:             1px dotted #333;
+    font-size:          95%;
+    margin:             15px 20px 15px 20px;
+    padding:            6px;
+    width:              85%;
+    overflow:           auto;
+}
+
+.forumcode_quoting {
+    font-weight:        bold;
+    margin-bottom:      3px;
+}
