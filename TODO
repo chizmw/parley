@@ -1,10 +1,11 @@
 TODO LIST
 
+  - add Message Preview to Create New Thred page (thread/add)
   - add missing link to <img> tag to help/formatting_posts
   - add missing link to BBCode to help/formatting_posts
   - update avatar update response to force a No-Cache?
-  - show more forum/thread information
-  - see if it's possible to display the forum-name as the first
+D - show more forum/thread information
+D - see if it's possible to display the forum-name as the first
     entry for the popup menu
 D - show more info in the recently update threads page; number of views/posts
   - Minimising clicks - After password reset
