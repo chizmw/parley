@@ -4,6 +4,12 @@ This file documents the revision history for Parley.
     - added T&Cs to application
     - added "Accept T&C" functionality (for logged in users)
     - fixed error handling for unknown user in pwd reset
+    - added extra ForumCode markup: pre, code, quote
+    - upgrade YUI to 2.3.1 (from 2.3.0)
+    - some fixes and improvements for Editable.js
+    - display extra information in Recent Posts list
+    - show forum name on thread/view page
+    - added (inline) message prview to new post/reply page
 
 0.56    Fri Sep 14 08:44:05 BST 2007
     - replaced Dojo toolkit with YUI toolkit
