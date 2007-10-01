@@ -1,7 +1,7 @@
 <h1>Watched Threads</h1>
 
 [% IF thread_watches > 0 %]
-<form method="post">
+<form method="post" style="width:98%;max-width:none;">
     <table class="thread_watches">
         <tbody>
             <tr>
@@ -22,7 +22,7 @@
                 </td>
                 <td>
                     <a href="thread/view?thread=[% thread.id %]">
-                    [% ForumCode.escape(watch.thread.subject) %]
+                    [% ForumCode.escape(watch.thread.subject) |truncate(45) %]
                     </a>
                     <br />
                     <span class="forum_mini_pager">
