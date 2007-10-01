@@ -93,6 +93,53 @@ for list items.
 [% ForumCode.forumcode('[list] [*]apple [*]orange [*]banana [/list]') %]
 </p>
 
+<h3>Blocks and quoting</h3>
+<p>At times it can be useful to have blocks in a post that stand out in some
+way, or are a fixed width font - for posting code examples. This is where
+[pre]...[/pre], [code]...[/code] and [quote]...[/quote] come into play.</p>
+
+<ul class="help">
+    <li>
+        To mark a block of code as 'preformatted' use
+        <code>[pre]...[/pre]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[pre]Something interesting[/pre]</code></q>
+        produces
+        [% ForumCode.forumcode('[pre]Something interesting[/pre]') %]
+    </li>
+    <li>
+        To mark a block of code as 'code' use
+        <code>[code]...[/code]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[code]my $tt_forum  = Template::Plugin::ForumCode->new();[/code]</code></q>
+        produces
+        [% ForumCode.forumcode('[code]my $tt_forum  = Template::Plugin::ForumCode->new();[/code]') %]
+    </li>
+    <li>
+        To mark a block of code as 'quoted' use
+        <code>[quote]...[/quote]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[quote]Something someone said in an earlier post[/quote]</code></q>
+        produces
+        [% ForumCode.forumcode('[quote]Something someone said in an earlier post[/quote]') %]
+    </li>
+    <li>To specify the author of the quoted block use
+        <code>[quote quoting="name"]...[/quote]</code>:
+        <br />
+        <em>e.g.</em>
+        <br />
+        <q><code>[quote quoting="Chisel"]Something Chisel said in an earlier post[/quote]</code></q>
+        produces
+        [% ForumCode.forumcode('[quote quoting="Chisel"]Something Chisel said in an earlier post[/quote]') %]
+    </li>
+</ul>
+
 <h3>Linking to external resources</h3>
 <p>The forum software does NOT automatically hunt out all text resembling URLs
 to turn them into clickable links. If you want a clickable link in a post
