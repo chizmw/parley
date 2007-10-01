@@ -22,7 +22,6 @@ sub new {
     $new_obj->{replacements} = [
         {   from => '__',       to => 'u'   },
         {   from => '\*\*',     to => 'b'   },
-        #{   from => '\/\/',     to => 'i'   },
     ];
 
     return $new_obj;
@@ -43,6 +42,8 @@ sub forumcode {
     $self->_lists           ( \$text );
     $self->_url_links       ( \$text );
     $self->_images          ( \$text );
+    $self->_styled_block    ( \$text );
+    $self->_quoted_block    ( \$text );
     
     return $text;
 }
@@ -197,6 +198,37 @@ sub _list_elements {
     return $text;
 }
 
+sub _styled_block {
+    my ($self, $textref) = @_;
+
+    $$textref =~ s{
+        \[(code|pre|quote)\]
+        (.+?)
+        \[/\1\]
+    }
+    {<div class="forumcode_$1">$2</div>}xmsg;
+}
+
+# this deals with the extended case of [quote] where we have the quoting=
+# attribute
+sub _quoted_block {
+    my ($self, $textref) = @_;
+
+    $$textref =~ s{
+        \[
+            (quote)
+            \s+
+            quoting=
+            &quot;
+            (.+?)
+            &quot;
+        \]
+        (.+?)
+        \[/\1\]
+    }
+    {<div class="forumcode_$1"><div class="forumcode_quoting">Quoting $2:</div>$3</div>}xmsg;
+}
+
 1;
 __END__
 vim: ts=8 sts=4 et sw=4 sr sta
@@ -209,12 +241,21 @@ Template::Plugin::ForumCode - class for "ForumCode" filter
 
 =head1 SYNOPSIS
 
+Standard usage in a Template Toolkit file:
+
   # load the TT module
   [% USE ForumCode %]
 
   # ForumCodify some text
   [% ForumCode.forumcode('[b]bold[/u] [u]underlined[/u] [i]italic[/i]') %]
   [% ForumCode.forumcode('**bold** __underlined__') %]
+
+Usage in a perl module:
+
+  use Template::Plugin::ForumCode;
+
+  my $tt_forum  = Template::Plugin::ForumCode->new();
+  my $formatted = $tt_forum->forumcode($text);
 
 =head1 DESCRIPTION
 
@@ -286,6 +327,80 @@ of each list item.
    [1]second
    [1]third
    [/list]
+
+=item B<[code]>...B<[/code]>
+
+Marks a block of text with the CSS I<forumcode_code> class.
+How this displays is dependant on the CSS definitions in your application
+templates.
+
+  /* Example CSS */
+
+  .forumcode_code {
+    background-color:   #eee;
+    font-family:        monospace;
+    border:             1px solid #333;
+    font-size:          95%;
+    margin:             15px 20px 15px 20px;
+    padding:            6px;
+    width:              85%;
+    overflow:           auto;
+  }
+
+=item B<[pre]>...B<[/pre]>
+
+Marks a block of text with the CSS I<forumcode_pre> class.
+How this displays is dependant on the CSS definitions in your application
+templates.
+
+  /* Example CSS */
+
+  .forumcode_pre {
+    background-color:   transparent;
+    font-family:        monospace;
+    font-size:          95%;
+    margin:             15px 20px 15px 20px;
+    padding:            6px;
+    width:              85%;
+    overflow:           auto;
+
+    color:              #fff;
+    background-color:   #333;
+    border:             1px solid #666;
+  }
+
+=item B<[quote]>...B<[/quote]>
+
+Marks a block of text with the CSS I<forumcode_pre> class.
+How this displays is dependant on the CSS definitions in your application
+templates.
+
+You may specify the name of ther person you are quoting using the following
+addition to the markup:
+
+S<[quote B<quoting="...">]Lorem ipsum ...[/quote]>
+
+The quoted text will be prefixed with B<Quoting Name:>.
+This extra output will be wrapped in with the CSS I<forumcode_quoting> class.
+
+  /* Example CSS */
+
+  .forumcode_quote {
+    background-color:   #eee;
+    font-family:        monospace;
+    font-style:         italic;
+    border:             1px dotted #333;
+    font-size:          95%;
+    margin:             15px 20px 15px 20px;
+    padding:            6px;
+    width:              85%;
+    overflow:           auto;
+  }
+
+  .forumcode_quoting {
+    font-weight:        bold;
+    margin-bottom:      3px;
+  }
 
 =back
 

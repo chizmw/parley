@@ -203,6 +203,17 @@ And another:
             [/list]},
             out     => q{<ol><li>Red</li><li>Blue</li><li>Yellow</li></ol>},
         },
+
+        # 'code' style
+        {
+            in      => q{[code]#!/usr/bin/env perl[/code]},
+            out     => q{<div class="forumcode_code">#!/usr/bin/env perl</div>},
+        },
+        #{<div class="forumcode_$1"><div class="forumcode_quoting">$2</div>$3</div>}xmsg;
+        {
+            in      => q{[quote quoting="Joe"]quote markup test[/quote]},
+            out     => q{<div class="forumcode_quote"><div class="forumcode_quoting">Quoting Joe:</div>quote markup test</div>},
+        },
     );
 
     # test count is a fixed number of tests + the length of the @tests array
