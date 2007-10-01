@@ -157,10 +157,16 @@ sub reset : Path('/user/password/reset') {
             # we may want to Do Stuff when there are errors
         }
 
-        # no messages, means that all should be well, so head off to the
-        # "details in the post" page
+        # no messages, means that all should be well
         else {
-            $c->stash->{template} = 'user/lostpassword/reset_success';
+            # set an informative message to display on the login screen
+            $c->session->{login_message} = q{
+                Your password has been set to the new value you entered.
+                Please log-in using your username and your <b>new</b> password.
+            };
+            # send the user to the login screen
+            $c->detach( '/user/login' );
+            return;
         }
     }
     # fall through and show the form
