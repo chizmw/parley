@@ -1,27 +1,27 @@
 TODO LIST
 
-D - add Message Preview to Create New Thread page (thread/add)
   - add missing link to <img> tag to help/formatting_posts
   - add missing link to BBCode to help/formatting_posts
   - update avatar update response to force a No-Cache?
-D - show more forum/thread information
-D - see if it's possible to display the forum-name as the first
-    entry for the popup menu
-D - show more info in the recently update threads page; number of views/posts
   - Minimising clicks - After password reset
     "After the password reset has been accepted a page indicating that change
     was successful appears with link to login. How about triggering the usual
     enter password page saying the same thing so remove the need to click."
   - application logo
   - advanced search page
-D - sane T&C management
-D - extra forumcode markup: quote/pre/code
   - proper moderator support/management
   - IP/user reporting
+  - fix CSS for <fieldset>s
+D - add Message Preview to Create New Thread page (thread/add)
+D - show more forum/thread information
+D - see if it's possible to display the forum-name as the first
+    entry for the popup menu
+D - show more info in the recently update threads page; number of views/posts
+D - sane T&C management
+D - extra forumcode markup: quote/pre/code
 D - message preview before posting
 D - proper/better validation error hadling for AJAX field updates
 D - user profile image uploads
-  - fix CSS for <fieldset>s
 D - factor out error setting, handling and displaying
 D - install Proc::Daemon (etc) for email script
 D - factor out DFV "equality" functions
