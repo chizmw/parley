@@ -345,6 +345,10 @@ templates.
     padding:            6px;
     width:              85%;
     overflow:           auto;
+
+    color:              #fff;
+    background-color:   #333;
+    border:             1px solid #666;
   }
 
 =item B<[pre]>...B<[/pre]>
@@ -359,14 +363,11 @@ templates.
     background-color:   transparent;
     font-family:        monospace;
     font-size:          95%;
+    border:             1px dashed #333;
     margin:             15px 20px 15px 20px;
     padding:            6px;
     width:              85%;
     overflow:           auto;
-
-    color:              #fff;
-    background-color:   #333;
-    border:             1px solid #666;
   }
 
 =item B<[quote]>...B<[/quote]>
