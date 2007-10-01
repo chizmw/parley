@@ -21,7 +21,7 @@
                     [% END %]
                 </td>
                 <td>
-                    <a href="thread/view?thread=[% thread.id %]">
+                    <a href="thread/view?thread=[% thread.id %]" class="topic_link">
                     [% ForumCode.escape(watch.thread.subject) |truncate(45) %]
                     </a>
                     <br />
