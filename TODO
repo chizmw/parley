@@ -1,5 +1,6 @@
 TODO LIST
 
+  - add missing link to <img> tag to help/formatting_posts
   - update avatar update response to force a No-Cache?
   - show more forum/thread information
   - see if it's possible to display the forum-name as the first
@@ -12,7 +13,7 @@ D - show more info in the recently update threads page; number of views/posts
   - application logo
   - advanced search page
 D - sane T&C management
-  - extra forumcode markup: quote/pre/code
+D - extra forumcode markup: quote/pre/code
   - proper moderator support/management
   - IP/user reporting
 D - message preview before posting
