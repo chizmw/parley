@@ -147,7 +147,7 @@ sub recent : Local {
     # setup the pager
     $self->_prepare_pager($c, $c->stash->{thread_list});
 
-    $c->log->debug( $c->stash->{thread_list}->count() );
+    #$c->log->debug( $c->stash->{thread_list}->count() );
     return;
 }
 
@@ -182,13 +182,13 @@ sub reply : Local {
             and $c->request->method() eq 'POST'
             and defined $c->request->param('post_reply')
     ) {
-        $c->log->debug('calling: _add_new_reply($c)');
+        #$c->log->debug('calling: _add_new_reply($c)');
         $self->_add_new_reply($c);
     }
     # other wise we continue merrily on our way, and simply display the
     # thread/reply page
     else {
-        $c->log->debug('allowing fall-through to view in reply()');
+        #$c->log->debug('allowing fall-through to view in reply()');
         # thread/reply template shown automagically
     }
 }
@@ -229,7 +229,7 @@ sub view : Local {
     # some updates for logged in users
     ##################################################
     if ($c->_authed_user) {
-        $c->log->debug('thread view by authed user');
+        #$c->log->debug('thread view by authed user');
 
         # update thread_view for user
         $self->_update_thread_view($c);
@@ -340,7 +340,7 @@ sub watches : Local {
 
     # if we've got a list of threads to stop watching ...
     if (my @thread_ids = $c->request->param('stop_watching')) {
-        $c->log->debug( q{stop_watching parameter found} );
+        #$c->log->debug( q{stop_watching parameter found} );
         foreach my $thread_id ( @thread_ids ) {
             # get the ThreadView so we can update it
             my $thread_view = $c->model('ParleyDB')->resultset('ThreadView')->find(
@@ -693,7 +693,7 @@ sub _update_thread_view {
 
     # get the timestamp of the last post
     $last_post_timestamp = $last_post->created();
-    $c->log->debug( qq{\$last_post_timestamp = $last_post_timestamp} );
+    #$c->log->debug( qq{\$last_post_timestamp = $last_post_timestamp} );
 
     # make a note of when the user last viewed this thread, if a record doesn't already exist
     my $thread_view =
@@ -709,7 +709,7 @@ sub _update_thread_view {
     # set the timestamp the time of the last post on the page (unless the
     # existing time is later)
     if ($thread_view->timestamp() < $last_post_timestamp) {
-        $c->log->debug('thread view time is less than last_post time');
+        #$c->log->debug('thread view time is less than last_post time');
         $thread_view->timestamp( $last_post_timestamp );
     }
 
@@ -784,14 +784,14 @@ sub _txn_add_new_reply {
 
     # would we like to lock the thread?
     if ($c->form->valid->{lock_thread} and $c->stash->{moderator}) {
-        $c->log->debug( q{locking thread after replying} );
+        #$c->log->debug( q{locking thread after replying} );
         $new_post->thread->locked(1);
         $new_post->thread->update;
     }
 
     # would we like to set a thread watch at the time of posting?
     if ($c->form->valid->{watch_on_post}) {
-        $c->log->debug( q{Auto-add thread watch on new post} );
+        #$c->log->debug( q{Auto-add thread watch on new post} );
         my $thread_view =
             $c->model('ParleyDB')->resultset('ThreadView')->find(
                 {
@@ -801,7 +801,7 @@ sub _txn_add_new_reply {
             )
         ;
         if (defined $thread_view) {
-            $c->log->debug( q{Adding Watch} );
+            #$c->log->debug( q{Adding Watch} );
             #$thread_view->timestamp( $new_post->created() );
             $thread_view->watched( 1 );
             $thread_view->update;
@@ -853,7 +853,7 @@ sub _txn_add_new_thread {
     # if the poster wants to add a watch we need to create the ThreadView record here
     # (it's a new thread so they can't have viewed it yet)
     if ($c->form->valid->{watch_on_post}) {
-        $c->log->debug( q{Auto-add thread watch on new thread} );
+        #$c->log->debug( q{Auto-add thread watch on new thread} );
         my $thread_view =
             $c->model('ParleyDB')->resultset('ThreadView')->create(
                 {

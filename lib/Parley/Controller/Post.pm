@@ -136,7 +136,7 @@ sub preview : Local {
                 )
         }
     );
-    $c->log->debug( $json );
+    #$c->log->debug( $json );
 
     $c->response->body( $json );
     return;
