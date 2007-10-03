@@ -506,6 +506,8 @@ a[href $='.pdf']{
     color:              #ff0;
     background-color:   #333;
     border:             1px solid #666;
+
+    white-space:        pre;
 }
 
 .forumcode_pre {
@@ -517,6 +519,8 @@ a[href $='.pdf']{
     padding:            6px;
     width:              85%;
     overflow:           auto;
+
+    white-space:        pre;
 }
 
 .forumcode_quote {

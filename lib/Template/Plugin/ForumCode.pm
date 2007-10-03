@@ -5,7 +5,7 @@ use warnings;
 use base qw{ Template::Plugin };
 use base qw{ Template::Plugin::HTML };
 
-use version; our $VERSION = qv('0.0.1');
+use version; our $VERSION = qv('0.0.2');
 
 sub new {
     my ($class, $context, @args) = @_;
@@ -344,6 +344,7 @@ templates.
     padding:            6px;
     width:              85%;
     overflow:           auto;
+    white-space:        pre;
 
     color:              #ff0;
     background-color:   #333;
@@ -367,6 +368,7 @@ templates.
     padding:            6px;
     width:              85%;
     overflow:           auto;
+    white-space:        pre;
   }
 
 =item B<[quote]>...B<[/quote]>
