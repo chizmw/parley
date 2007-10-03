@@ -42,11 +42,6 @@ sub accept : Local {
     # make sure to set the template to view as we expect to get forwarded to
     $c->stash->{template} = 'terms/accept';
 
-    # store where they were trying to get to
-    if (not $c->session->{after_terms}) {
-        $c->session->{after_terms} = $c->request->uri();
-    }
-
     # deal with form submits
     if (defined $c->request->method()
             and $c->request->method() eq 'POST'
@@ -71,9 +66,9 @@ sub accept : Local {
             $c->model('ParleyDB')->schema->txn_commit;
 
             # if we can, send them back to where they were trying to go
-            if ( $c->session->{after_terms} ) {
+            if ( $c->session->{after_terms_accept_uri} ) {
                 $c->response->redirect(
-                    delete $c->session->{after_terms}
+                    delete $c->session->{after_terms_accept_uri}
                 );
             }
             else {
