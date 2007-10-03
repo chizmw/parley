@@ -12,13 +12,6 @@ sub terms_check :Export( :terms ) {
     my $path = $c->request->path();
     my $action = $c->action;
 
-    if (not defined $c->session->{after_terms_accept_uri}) {
-        $c->session->{after_terms_accept_uri} = $c->uri_for(
-            $action,
-            $c->request->query_parameters()
-        );
-    }
-
     if ($c->request->path() eq 'terms/accept') {
         #$c->log->debug('visiting: terms/accept');
         return 1;
@@ -42,6 +35,13 @@ sub terms_check :Export( :terms ) {
     }
 
     #$c->log->debug('forwarding to acceptance page: '.  $c->config->{terms_accept_uri});
+
+    if (not defined $c->session->{after_terms_accept_uri}) {
+        $c->session->{after_terms_accept_uri} = $c->uri_for(
+            $action,
+            $c->request->query_parameters()
+        );
+    }
     $c->response->redirect(
         $c->uri_for($c->config->{terms_accept_uri})
     );
