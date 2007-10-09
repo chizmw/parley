@@ -11,6 +11,16 @@ sub has_errors :Export(:methods) {
     return (exists $c->stash->{view}{error}{messages});
 }
 
+sub has_died :Export(:methods) {
+    my ($c) = @_;
+
+    return (
+        exists $c->stash->{view}{error}{type}
+           and $c->stash->{view}{error}{type} eq 'die'
+    );
+}
+
+
 sub parley_warn :Export(:methods) {
     my ($c, $error_msg) = @_;
 
@@ -22,7 +32,7 @@ sub parley_warn :Export(:methods) {
         $error_msg;
 }
 
-sub parley_die {
+sub parley_die :Export(:methods) {
     my ($c, $error_msg) = @_;
 
     # die overrides existing types

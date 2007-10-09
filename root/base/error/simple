@@ -1,3 +1,4 @@
+[% IF error %]
 <h1>An error has occurred</h1>
 
 <p>
@@ -5,6 +6,7 @@ The following error message was returned by the application:
 
 <blockquote>[% error.message %]</blockquote>
 </p>
+[% END %]
 
 <!-- offer the user the chance to return somewhere interesting -->
 [% IF current_thread || current_forum %]

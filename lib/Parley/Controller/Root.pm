@@ -5,6 +5,7 @@ use warnings;
 use base 'Catalyst::Controller';
 
 use Parley::App::Terms qw( :terms );
+use Parley::App::Error qw( :methods );
 
 #
 # Sets the actions in this controller to be registered with no prefix
@@ -19,6 +20,7 @@ __PACKAGE__->config->{namespace} = '';
 # - _current_forum
 sub auto : Private {
     my ($self, $c) = @_;
+    $c->log->debug('global auto() called');
 
     # get a list of (all/available) forums
     $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(
@@ -113,7 +115,7 @@ sub auto : Private {
     # if we have a user ... fetch some info (if we don't already have it)
     ############################################################
     if ( $c->user and not defined $c->_authed_user ) {
-        #$c->log->info('Fetching user information for ' . $c->user->id);
+        $c->log->info('Fetching user information for ' . $c->user->id);
 
         # get the person info for the username
         my $row = $c->model('ParleyDB')->resultset('Person')->find(
@@ -136,6 +138,13 @@ sub auto : Private {
     }
 
 
+    ######################################
+    # TopDog is always a site moderator
+    # ####################################
+    if (defined $c->_authed_user() and 0 == $c->_authed_user()->id()) {
+        $c->log->debug( q{topdog user site-moderates anything he wants} );
+        $c->stash->{site_moderator} = 1;
+    }
 
     ##################################################
     # if we are logged in and if we have a current_forum, can the (current)
@@ -144,7 +153,7 @@ sub auto : Private {
     if (defined $c->_authed_user() and defined $c->_current_forum()) {
         # 'topdog' user can moderate anything
         if (0 == $c->_authed_user()->id()) {
-            #$c->log->debug( q{topdog user moderates anything he wants} );
+            $c->log->debug( q{topdog user moderates anything he wants} );
             $c->stash->{moderator} = 1;
         }
         else {
@@ -196,6 +205,11 @@ sub render : ActionClass('RenderView') {
     if (defined $c->stash->{error}) {
         $c->stash->{template} = 'error/simple';
         $c->log->error( $c->stash->{error}{message} );
+    }
+
+    if (has_died($c)) {
+        $c->stash->{template} = 'error/simple';
+        $c->log->error( $c->stash->{view}{error}{messages} );
     }
 }
 

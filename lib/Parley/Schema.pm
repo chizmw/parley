@@ -8,6 +8,6 @@ use warnings;
 use base 'DBIx::Class::Schema';
 
 __PACKAGE__->load_classes;
-$ENV{DBIC_TRACE} = 0;
+$ENV{DBIC_TRACE} = 1;
 
 1;

@@ -5,6 +5,7 @@ use warnings;
 use base 'Catalyst::Controller';
 
 use Parley::App::Terms qw( :terms );
+use Parley::App::Error qw( :methods );
 
 sub auto : Private {
     my ($self, $c) = @_;
@@ -110,6 +111,48 @@ sub accept : Local {
         # otherwise, show the terms to be accepted
     }
 }
+
+sub add : Local {
+    my ($self, $c) = @_;
+
+    # currently only a global moderator can add new site terms
+    if (not $c->stash->{site_moderator}) {
+        parley_die($c, q{You must be a site-moderator to access this area});
+        return;
+    }
+
+    # deal with form submits
+    if (defined $c->request->method()
+            and $c->request->method() eq 'POST'
+    ) {
+        if (defined $c->request->param('new_site_terms')) {
+            $c->log->debug('found: new_site_terms');
+            $c->model('ParleyDB')->schema->txn_do(
+                sub {
+                    # add new T&Cs to database
+                    my $new_terms = $c->model('ParleyDB')->resultset('Terms')->create(
+                        {
+                            content => $c->request->param('new_site_terms'),
+                        }
+                    );
+                }
+            );
+
+            #$c->model('ParleyDB')->schema->txn_commit;
+            #$new_terms->update;
+
+            $c->response->redirect( $c->uri_for($c->config->{default_uri}) );
+            return;
+        }
+        else {
+            $c->log->debug('NOT found: new_site_terms');
+        }
+    }
+    else {
+        $c->log->debug('No POST method');
+    }
+}
+
 
 1;
 
