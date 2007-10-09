@@ -18,6 +18,32 @@ sub auto : Private {
 
 sub index : Private {
     my ( $self, $c ) = @_;
+
+    # we'd like to be able to give the use the option
+    # of viewing older T&Cs
+    $c->stash->{all_site_terms} =
+        $c->model('ParleyDB')->resultset('Terms')->search(
+            {},
+            {
+                'order_by' => 'created DESC',
+            }
+        )
+    ;
+
+    if (    'GET' eq $c->request->method()
+        and defined $c->request->param('site_term_id')
+    ) {
+        # get the terms for the given id
+        $c->stash->{terms} =
+            $c->model('ParleyDB')->resultset('Terms')->find(
+                $c->request->param('site_term_id')
+            );
+    }
+
+    # otherwise show the latest terms
+    else {
+        $c->stash->{terms} = $c->stash->{latest_terms};
+    }
 }
 
 sub accept : Local {
