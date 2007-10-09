@@ -1,7 +1,6 @@
 TODO LIST
 
   - add T&C editor/updater
-D - add historic T&C view (for all users)
   - write some sensible T&Cs
   - add missing link to <img> tag to help/formatting_posts
   - add missing link to BBCode to help/formatting_posts
@@ -11,6 +10,7 @@ D - add historic T&C view (for all users)
   - proper moderator support/management
   - IP/user reporting
 ? - fix CSS for <fieldset>s
+D - add historic T&C view (for all users)
 D - Minimising clicks - After password reset
 D   "After the password reset has been accepted a page indicating that change
 D   was successful appears with link to login. How about triggering the usual
