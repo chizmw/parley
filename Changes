@@ -2,6 +2,7 @@ This file documents the revision history for Parley.
 
 0.57
     - added T&Cs to application
+    - added T&C editor/updater (site_moderator only)
     - added "Accept T&C" functionality (for logged in users)
     - after accepting T&Cs you should be taken to your original destination
     - fixed error handling for unknown user in pwd reset

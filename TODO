@@ -1,15 +1,16 @@
 TODO LIST
 
   - write some sensible T&Cs
-  - add missing link to <img> tag to help/formatting_posts
-  - add missing link to BBCode to help/formatting_posts
-  - add license link to help/faq
+  - setup/use ttcache
   - update avatar update response to force a No-Cache?
   - application logo
   - advanced search page
   - proper moderator support/management
   - IP/user reporting
 ? - fix CSS for <fieldset>s
+D - add missing link to <img> tag to help/formatting_posts
+D - add missing link to BBCode to help/formatting_posts
+D - add license link to help/faq
 D - add T&C editor/updater
 D - add historic T&C view (for all users)
 D - Minimising clicks - After password reset

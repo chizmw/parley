@@ -121,15 +121,92 @@ __END__
 
 =head1 NAME
 
-Parley - Catalyst based application
+Parley - Message board / forum application
 
 =head1 SYNOPSIS
 
-    script/parley_server.pl
+To run a B<test/development> server:
+
+  script/parley_server.pl
+
+To run under FastCGI:
+
+  cp config/parley /etc/apache2/sites-available
+  a2ensite parley
+  /etc/init.d/apache2 restart
+
+Also see: L<Catalyst::Manual::Cookbook/Deployment>
+
+Start the email engine:
+
+  script/parley_email_engine.pl
 
 =head1 DESCRIPTION
 
-Catalyst driven forum application
+Parley is a forum/message-board application. It's raison d'etre is to try
+to fill a void in the perl application space.
+
+=head1 FEATURES
+
+=over 4
+
+=item Multiple forums
+
+Have numerous forums to separate areas of discussion.
+
+=item Paging for long threads
+
+Save the scroll-wheel on your mouse.
+
+=item Sign-Up with email/URL based authentication
+
+Sign-Up and Authentication runs without moderator intervention.
+
+=item User preferences
+
+Time-zone; time format; user avatar; notifications
+
+=item Non-plaintext passwords stored in database
+
+There's nothing worse than letting someone with database
+access read your favourite password.
+
+=item Password reset / Lost password
+
+People forget. This way they can reset their password without
+needing human help.
+
+=item L<ForumCode|Template::Plugin::ForumCode>
+
+BBCode-esque markup in posts.
+
+=item Terms & Conditions
+
+If you add new T&Cs, all users will be required to agree to them
+next time they log-in. No more hidden, unnoticed T&C updates.
+
+Users can view historical T&Cs.
+
+=back
+
+=head1 SEE ALSO
+
+L<Catalyst>,
+L<http://developer.berlios.de/projects/parley/>
+
+=head1 AUTHOR
+
+Chisel Wright C<< <chiselwright@users.berlios.de> >>
+
+=head1 LICENSE
+
+This library is free software, you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 TECHNICAL STUFF
+
+General users don't need to read beyond this point. The following information
+describes the top-level interface for the C<Parley> module.
 
 =head1 METHODS
 
@@ -237,19 +314,6 @@ get/set value stored in $c->stash->{_current_forum}:
   $c->_current_forum( $some_value );
 
 =back
-
-=head1 SEE ALSO
-
-L<Parley::Controller::Root>, L<Catalyst::Plugin::Email>, L<Catalyst>
-
-=head1 AUTHOR
-
-Chisel Wright C<< <chiselwright@users.berlios.de> >>
-
-=head1 LICENSE
-
-This library is free software, you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut
 

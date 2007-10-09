@@ -2,7 +2,8 @@
 
 <p>Allowing raw HTML markup in posts leads to a very special
 world of pain. With that in mind a form of markup inspired by
-BBCode [<b>link?</b>] was developed for this project. As it's
+<a href="http://www.phpbb.com/community/faq.php?mode=bbcode">BBCode</a>
+was developed for this project. As it's
 not an identical implementation of BBCode it has it's own name
 - <i>ForumCode</i></p>
 
@@ -188,7 +189,8 @@ using the "name=..." attribute in the code block:</p>
     <li>
         You may also include extra attributes such as
         <code>title=</code>, <code>alt=</code>, etc.
-        Research the HTML &lt;img&gt; tag [<b>link?</b>]
+        Research the HTML
+        <a href="http://www.w3schools.com/tags/tag_img.asp">&lt;img&gt; tag</a>
         for the full list of attributes.
         <br />
         <q><code>[img title='Powered by Catalyst' width='50'][%c.request.base%]static/images/btn_88x31_powered.png[/img]</code></q>
