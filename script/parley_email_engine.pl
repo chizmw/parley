@@ -108,7 +108,7 @@ else { # child
 
     while (1) {
         child_process($schema);
-        sleep(1);
+        sleep(5);
     }
 }
 

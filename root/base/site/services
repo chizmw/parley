@@ -1,0 +1,35 @@
+<h1>Services</h1>
+
+<table class="site_services">
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th>Active</th>
+            <th>Comment</th>
+            <th>Start/Stop</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>Email Engine</td>
+            <td>
+                [% IF email_engine.pid %]
+                Yes
+                [% ELSE %]
+                No
+                [% END %]
+            </td>
+            <td>
+                [% IF email_engine.pid %]
+                pid=[%email_engine.pid%]
+                [% ELSE %]
+                &nbsp;
+                [% END %]
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+    </tbody>
+</table>
