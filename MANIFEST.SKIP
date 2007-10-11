@@ -14,3 +14,4 @@ Parley-0.*
 ^pm_to_blib
 \.bak$
 root/base/help/yui_test
+ttcache

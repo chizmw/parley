@@ -94,6 +94,7 @@ root/base/post/edit
 root/base/search/forum
 root/base/shared/autocomplete_style
 root/base/shared/focus_username_js
+root/base/shared/loading_please_wait
 root/base/shared/login_dialog
 root/base/shared/moderator_list
 root/base/shared/navigation
@@ -149,6 +150,7 @@ root/static/images/catalyst_logo.png
 root/static/images/filetypes/image.png
 root/static/images/filetypes/pdf.png
 root/static/images/locked.png
+root/static/images/rel_interstitial_loading.gif
 root/static/images/sticky.png
 root/static/images/unread_posts.gif
 root/static/script/prototype.js
