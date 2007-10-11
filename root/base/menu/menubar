@@ -109,11 +109,20 @@
             </li>
             [% END %]
             [% IF site_moderator %]
-            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Moderate</a>
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Site</a>
                 <div id="menu_site_moderate" class="yuimenu">
                     <div class="bd">                                        
                         <ul>
                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="terms/add">Add T&amp;Cs</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#">Site</a>
+                                <div id="site" class="yuimenu">
+                                    <div class="bd">
+                                        <ul class="first-of-type">
+                                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="site/services">Services</a></li>
+                                        </ul>            
+                                    </div>
+                                </div>                    
+                            </li>
                         </ul>
                     </div>
                 </div>                                        
