@@ -68,6 +68,7 @@ View::TT:
     # comment out the following line to enable Template::Timer output in your
     # template source
     CONTEXT:        ''
+    COMPILE_DIR:    'ttcache'
 
 static:
     ignore_extensions:
