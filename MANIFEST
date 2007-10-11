@@ -37,6 +37,7 @@ lib/Parley/Controller/My.pm
 lib/Parley/Controller/Post.pm
 lib/Parley/Controller/Root.pm
 lib/Parley/Controller/Search.pm
+lib/Parley/Controller/Site.pm
 lib/Parley/Controller/Terms.pm
 lib/Parley/Controller/Thread.pm
 lib/Parley/Controller/User.pm
@@ -103,6 +104,7 @@ root/base/shared/threadcrumbs
 root/base/shared/useful_tt_stuff
 root/base/shared/user_avatar
 root/base/shared/user_status
+root/base/site/services
 root/base/terms/accept
 root/base/terms/add
 root/base/terms/index
@@ -400,6 +402,7 @@ t/controller_Help.t
 t/controller_My.t
 t/controller_Post.t
 t/controller_Search.t
+t/controller_Site.t
 t/controller_Terms.t
 t/controller_Thread.t
 t/controller_User.t

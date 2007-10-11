@@ -2,6 +2,7 @@
 ^Parley.*gz$
 ^Parley.*tar$
 swp$
+swo$
 tmp$
 \.old$
 base.messy
