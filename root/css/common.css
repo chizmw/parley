@@ -189,7 +189,8 @@ td {
 }
 
 .innerpost {
-    overflow:       auto;
+    overflow-left:      auto;
+    overflow-right:     auto;
 }
 
 .in_response_to {
