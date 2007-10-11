@@ -397,7 +397,6 @@ t/02pod.t
 t/03podcoverage.t
 t/04_forumcode.t
 t/50.text_search.sql.t
-t/bug/password_reset.t
 t/controller_Admin.t
 t/controller_Forum.t
 t/controller_Help.t
