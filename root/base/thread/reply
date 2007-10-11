@@ -1,4 +1,9 @@
 <div id="logger"></div>
+
+[% PROCESS shared/loading_please_wait %]
+
+
+
 <h1>
 [% current_forum.name %]
 &nbsp;:&nbsp;
@@ -128,6 +133,8 @@
                 var data = eval('(' + o.responseText + ')');
                 var obj = o.argument.obj;
 
+                YAHOO.parley.loading.wait.hide();
+
                 if (data.formatted) {
                     obj.previewElId = YU.Dom.generateId();
 
@@ -190,6 +197,7 @@
             };
 
             this.preview = function() {
+                YAHOO.parley.loading.wait.show();
                 var request = YU.Connect.asyncRequest(
                     'POST',
                     '[%base%]post/preview',

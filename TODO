@@ -1,5 +1,6 @@
 TODO LIST
 
+  - investigate i18n
   - write some sensible T&Cs
   - setup/use ttcache
   - update avatar update response to force a No-Cache?
