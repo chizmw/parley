@@ -60,11 +60,11 @@
             </div><!-- header div -->
 
             <div id="userinfo_box">
-                Current User:
+                [%l('Current User')%]:
                 [% IF authed_user %]
                 <em>[% authed_user.forum_name %]</em>
                 [% ELSE %]
-                <em>Guest User</em>
+                <em>[%l('Guest User')%]</em>
                 [% END %]
             </div>
 

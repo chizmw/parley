@@ -4,24 +4,6 @@
 
             <div id="navigation">
             <p> &nbsp; </p>
-            <!--
-                <p>Navigation</p>
-                [%# PROCESS shared/navigation %]
-
-                <p>
-                <a href="javascript:;" onclick="search_dialog.show(); return false;">Search</a>
-                </p>
-
-                <p>
-                <a href="thread/recent">Recently Updated Threads</a>
-                </p>
-
-                [% IF authed_user %]
-                <p>
-                <a href="my/preferences">Preferences</a>
-                </p>
-                [% END %]
-                -->
             </div><!-- navigation div -->
 
             <div id="extra">
@@ -30,7 +12,7 @@
             </div><!-- extra div -->
 
             <div id="footer">
-                <p>&copy; Chisel Wright 2006-2007. All Rights Reserved.</p>
+                <p>&copy; Chisel Wright 2006-2007. [%l('All Rights Reserved')%].</p>
             </div><!-- footer div -->
 
 

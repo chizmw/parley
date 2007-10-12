@@ -1,23 +1,77 @@
 msgid "404 Not Found"
 msgstr "404 Not Found"
 
-msgid "Forum List"
-msgstr "Forum List"
+msgid "Add Reply"
+msgstr "Add Reply"
+
+msgid "Add T-and-Cs"
+msgstr "Add T&amp;Cs"
+
+msgid "Add Watch"
+msgstr "Add Watch"
+
+msgid "All Rights Reserved"
+msgstr "All Rights Reserved"
+
+msgid "Contents"
+msgstr "Contents"
+
+msgid "Create New Thread"
+msgstr "Create New Thread"
+
+msgid "Current User"
+msgstr "Current User"
 
 msgid "Forum"
 msgstr "Forum"
 
+msgid "Forum List"
+msgstr "Forum List"
+
+msgid "Forum Summary"
+msgstr "Forum Summary"
+
+msgid "Guest User"
+msgstr "Guest User"
+
+msgid "Go"
+msgstr "Go"
+
+msgid "Help"
+msgstr "Help"
+
 msgid "Last Post"
 msgstr "Last Post"
 
-msgid "Posts"
-msgstr "Posts"
+msgid "Lock Thread"
+msgstr "Lock Thread"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Me"
+msgstr "Me"
+
+msgid "Main Page"
+msgstr "Main Page"
+
+msgid "Moderate"
+msgstr "Moderate"
+
+msgid "My Preferences"
+msgstr "My Preferences"
+
+msgid "My Profile"
+msgstr "My Profile"
+
+msgid "My Watched Threads"
+msgstr "My Watched Threads"
 
 msgid "No posts"
 msgstr "No posts"
-
-msgid "posted by"
-msgstr "posted by"
 
 msgid "non-integer post id passed"
 msgstr "Non-integer post id passed"
@@ -28,3 +82,47 @@ msgstr "Non-integer thread id passed"
 msgid "non-integer forum id passed"
 msgstr "Non-integer forum id passed"
 
+msgid "Password Reminder"
+msgstr "Password Reminder"
+
+msgid "posted by"
+msgstr "posted by"
+
+msgid "Posts"
+msgstr "Posts"
+
+msgid "Recently Updated Threads"
+msgstr "Recently Updated Threads"
+
+msgid "Register"
+msgstr "Register"
+
+msgid "Remove Watch"
+msgstr "Remove Watch"
+
+msgid "Search"
+msgstr "Search"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Site"
+msgstr "Site"
+
+msgid "Stick Thread"
+msgstr "Stick Thread"
+
+msgid "Terms and Conditions"
+msgstr "Terms &amp; Conditions"
+
+msgid "Thread"
+msgstr "Thread"
+
+msgid "Unlock Thread"
+msgstr "Unlock Thread"
+
+msgid "Unstick Thread"
+msgstr "Unstick Thread"
+
+msgid "View Threads"
+msgstr "View Threads"
