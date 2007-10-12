@@ -1,0 +1,11 @@
+msgid "404 Not Found"
+msgstr "404 Not Found"
+
+msgid "non-integer post id passed"
+msgstr "Non-integer post id passed"
+
+msgid "non-integer thread id passed"
+msgstr "Non-integer thread id passed"
+
+msgid "non-integer forum id passed"
+msgstr "Non-integer forum id passed"

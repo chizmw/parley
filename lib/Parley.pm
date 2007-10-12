@@ -24,6 +24,8 @@ use Catalyst qw/
     Authentication
     Authentication::Store::DBIC
     Authentication::Credential::Password
+
+    I18N
 /;
 
 use Parley::App::Communication::Email qw( :email );

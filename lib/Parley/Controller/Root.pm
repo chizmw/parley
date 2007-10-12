@@ -22,6 +22,11 @@ sub auto : Private {
     my ($self, $c) = @_;
     $c->log->debug('global auto() called');
 
+    # i18n poking
+    $c->log->info(join q{ }, @{ $c->languages });
+    $c->log->info( $c->localize('Hello Catalyst') );
+    $c->log->info( $c->localize("non integer post id passed") );
+
     # get a list of (all/available) forums
     $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(
         {
@@ -38,7 +43,9 @@ sub auto : Private {
     if (defined $c->request->param('post')) {
         # make sure the paramter looks sane
         if (not $c->request->param('post') =~ m{\A\d+\z}) {
-            $c->stash->{error}{message} = 'non-integer post id passed: ['
+            $c->stash->{error}{message} =
+                  $c->localize('non-integer post id passed')
+                . ': ['
                 . $c->request->param('post')
                 . ']';
             return;
@@ -69,7 +76,9 @@ sub auto : Private {
     elsif (defined $c->request->param('thread')) {
         # make sure the paramter looks sane
         if (not $c->request->param('thread') =~ m{\A\d+\z}) {
-            $c->stash->{error}{message} = 'non-integer thread id passed: ['
+            $c->stash->{error}{message} =
+                  $c->localize('non-integer thread id passed')
+                . ': ['
                 . $c->request->param('thread')
                 . ']';
             return;
@@ -95,7 +104,9 @@ sub auto : Private {
     elsif (defined $c->request->param('forum')) {
         # make sure the paramter looks sane
         if (not $c->request->param('forum') =~ m{\A\d+\z}) {
-            $c->stash->{error}{message} = 'non-integer forum id passed: ['
+            $c->stash->{error}{message} =
+                  $c->localize('non-integer forum id passed')
+                . ': ['
                 . $c->request->param('forum')
                 . ']';
             return;
@@ -193,7 +204,7 @@ sub default : Private {
     my ( $self, $c ) = @_;
 
     $c->response->status(404);
-    $c->response->body( '404 Not Found' );
+    $c->response->body( $c->localize('404 Not Found') );
 }
 
 
