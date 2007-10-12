@@ -99,9 +99,11 @@
                             [% END %]
 
                             [% IF current_thread.sticky %]
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="admin/lock?thread=[%current_thread.id%]&amp;sticky=0">Unstick Thread</a></li>
+                            <li class="yuimenuitem"><a
+                            class="yuimenuitemlabel" href="admin/sticky?thread=[%current_thread.id%]&amp;sticky=0">Unstick Thread</a></li>
                             [% ELSE %]
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="admin/lock?thread=[%current_thread.id%]&amp;sticky=1">Stick Thread</a></li>
+                            <li class="yuimenuitem"><a
+                            class="yuimenuitemlabel" href="admin/sticky?thread=[%current_thread.id%]&amp;sticky=1">Stick Thread</a></li>
                             [% END %]
                         </ul>
                     </div>
