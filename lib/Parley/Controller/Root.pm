@@ -24,8 +24,7 @@ sub auto : Private {
 
     # i18n poking
     $c->log->info(join q{ }, @{ $c->languages });
-    $c->log->info( $c->localize('Hello Catalyst') );
-    $c->log->info( $c->localize("non integer post id passed") );
+    $c->log->info( $c->localize("non-integer post id passed") );
 
     # get a list of (all/available) forums
     $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(
