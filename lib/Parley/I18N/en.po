@@ -1,6 +1,24 @@
 msgid "404 Not Found"
 msgstr "404 Not Found"
 
+msgid "Forum List"
+msgstr "Forum List"
+
+msgid "Forum"
+msgstr "Forum"
+
+msgid "Last Post"
+msgstr "Last Post"
+
+msgid "Posts"
+msgstr "Posts"
+
+msgid "No posts"
+msgstr "No posts"
+
+msgid "posted by"
+msgstr "posted by"
+
 msgid "non-integer post id passed"
 msgstr "Non-integer post id passed"
 
@@ -9,3 +27,4 @@ msgstr "Non-integer thread id passed"
 
 msgid "non-integer forum id passed"
 msgstr "Non-integer forum id passed"
+

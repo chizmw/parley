@@ -1,11 +1,11 @@
-<h1>Forum List</h1>
+<h1>[%l('Forum List')%]</h1>
 
 <table class="forum_list">
 <tbody>
     <tr>
-        <th>Forum</th>
-        <th>Last Post</th>
-        <th>Posts</th>
+        <th>[%l('Forum')%]</th>
+        <th>[%l('Last Post')%]</th>
+        <th>[%l('Posts')%]</th>
     </tr>
 
     [% WHILE (forum = forum_list.next) %]
@@ -19,12 +19,13 @@
             [% IF forum.last_post %]
             [% nicedate(forum.last_post.created) %]
             <br />
-            <span class="topic_creator">posted by
+            <span class="topic_creator">
+                [%l('posted by')%]
                 <span class="post_creator">[% forum.last_post.creator.forum_name %]</span>
             </span>
             [% ELSE %]
             <br />
-            <span class="topic_creator">No posts</span>
+            <span class="topic_creator">[%l('No posts')%]</span>
             [% END %]
         </td>
         <td>
