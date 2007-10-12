@@ -2,13 +2,13 @@ TODO LIST
 
   - investigate i18n
   - write some sensible T&Cs
-  - setup/use ttcache
   - update avatar update response to force a No-Cache?
   - application logo
   - advanced search page
   - proper moderator support/management
   - IP/user reporting
 ? - fix CSS for <fieldset>s
+D - setup/use ttcache
 D - add missing link to <img> tag to help/formatting_posts
 D - add missing link to BBCode to help/formatting_posts
 D - add license link to help/faq
