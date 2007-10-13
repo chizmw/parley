@@ -13,6 +13,9 @@ msgstr "Add Watch"
 msgid "All Rights Reserved"
 msgstr "All Rights Reserved"
 
+msgid "Close"
+msgstr "Close"
+
 msgid "Contents"
 msgstr "Contents"
 
@@ -27,6 +30,9 @@ msgstr "Edit"
 
 msgid "Edited"
 msgstr "Edited"
+
+msgid "Forgotten Password"
+msgstr "Forgotten Password"
 
 msgid "Forum"
 msgstr "Forum"
@@ -103,8 +109,20 @@ msgstr "Non-integer forum id passed"
 msgid "None"
 msgstr "None"
 
+msgid "Password"
+msgstr "Password"
+
 msgid "Password Reminder"
 msgstr "Password Reminder"
+
+msgid "Password Reminder"
+msgstr "Password Reminder"
+
+msgid "Please enter your information"
+msgstr "Please enter your information"
+
+msgid "Please enter your username and password"
+msgstr "Please enter your username and password"
 
 msgid "posted by"
 msgstr "posted by"
@@ -156,6 +174,9 @@ msgstr "Unlock Thread"
 
 msgid "Unstick Thread"
 msgstr "Unstick Thread"
+
+msgid "Username"
+msgstr "Username"
 
 msgid "view"
 msgstr "view"

@@ -11,7 +11,7 @@ function init() {
 		this.cancel();
 	};
 	var handleSuccess = function(o) {
-        console.log('Success');
+        //console.log('Success');
 	};
 	var handleFailure = function(o) {
 		alert("Submission failed: " + o.status);
@@ -37,7 +37,7 @@ function init() {
 	YAHOO.parley.login.login_dialog.validate = function() {
 		var data = this.getData();
 		if (data.username == "" || data.password == "") {
-			alert("Please enter your username and password.");
+			alert("[%l('Please enter your username and password')%].");
 			return false;
 		} else {
 			return true;
@@ -56,20 +56,20 @@ YAHOO.util.Event.onDOMReady(init);
 </script>
 
 <div id="login_dialog">
-<div class="hd">Please enter your information</div>
+<div class="hd">[%l('Please enter your information')%]</div>
 <div class="bd">
     <form action="user/login" method="post" name="login_form" class="login_dialog_form">
         <fieldset>
-            <label for="username"><b>Username:</b></label>
+            <label for="username"><b>[%l('Username')%]:</b></label>
             <input type="text" id="username" name="username" style="width: 16em;" class="input_text" />
             <br />
-            <label for="password"><b>Password:</b></label>
+            <label for="password"><b>[%l('Password')%]:</b></label>
             <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
 
             <p align="right">
-            <a href="user/password/forgotten">Forgotten Password</a>
+            <a href="user/password/forgotten">[%l('Forgotten Password')%]</a>
             |
-            <a id="login_dialog_hider" href="javascript:;">Close</a><br />
+            <a id="login_dialog_hider" href="javascript:;">[%l('Close')%]</a><br />
             </p>
         </fieldset>
     </form>
