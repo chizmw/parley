@@ -34,6 +34,9 @@ msgstr "Forum"
 msgid "Forum List"
 msgstr "Forum List"
 
+msgid "Forum Moderators"
+msgstr "Forum Moderators"
+
 msgid "Forum Summary"
 msgstr "Forum Summary"
 
@@ -96,6 +99,9 @@ msgstr "Non-integer thread id passed"
 
 msgid "non-integer forum id passed"
 msgstr "Non-integer forum id passed"
+
+msgid "None"
+msgstr "None"
 
 msgid "Password Reminder"
 msgstr "Password Reminder"
