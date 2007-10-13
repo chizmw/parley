@@ -22,6 +22,12 @@ msgstr "Create New Thread"
 msgid "Current User"
 msgstr "Current User"
 
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Edited"
+msgstr "Edited"
+
 msgid "Forum"
 msgstr "Forum"
 
@@ -40,11 +46,20 @@ msgstr "Go"
 msgid "Help"
 msgstr "Help"
 
+msgid "IP Logged"
+msgstr "IP Logged"
+
 msgid "Last Post"
 msgstr "Last Post"
 
 msgid "Lock Thread"
 msgstr "Lock Thread"
+
+msgid "Locked"
+msgstr "Locked"
+
+msgid "Locked Topic"
+msgstr "Locked Topic"
 
 msgid "Login"
 msgstr "Login"
@@ -88,14 +103,23 @@ msgstr "Password Reminder"
 msgid "posted by"
 msgstr "posted by"
 
+msgid "Posted From"
+msgstr "Posted From"
+
 msgid "Posts"
 msgstr "Posts"
+
+msgid "Quote"
+msgstr "Quote"
 
 msgid "Recently Updated Threads"
 msgstr "Recently Updated Threads"
 
 msgid "Register"
 msgstr "Register"
+
+msgid "Reply"
+msgstr "Reply"
 
 msgid "Remove Watch"
 msgstr "Remove Watch"
@@ -118,11 +142,23 @@ msgstr "Terms &amp; Conditions"
 msgid "Thread"
 msgstr "Thread"
 
+msgid "Thread Locked"
+msgstr "Thread Locked"
+
 msgid "Unlock Thread"
 msgstr "Unlock Thread"
 
 msgid "Unstick Thread"
 msgstr "Unstick Thread"
 
+msgid "view"
+msgstr "view"
+
+msgid "views"
+msgstr "views"
+
 msgid "View Threads"
 msgstr "View Threads"
+
+msgid "wrote"
+msgstr "wrote"
