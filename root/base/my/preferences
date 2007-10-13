@@ -1,4 +1,4 @@
-<h1>Your preferences</h1>
+<h1>[%l('Your Preferences')%]</h1>
 
 [% IF view.error.message %]
     [% view.error.message %]
@@ -11,10 +11,10 @@
 
 <div id="tabbed_prefs" class="yui-navset" style="max-width: 80%; margin-left: auto; margin-right: auto;">
     [% tab_info = [
-            { label => 'Your Details',       tab_name => 'tab_you' },
-            { label => 'Time',               tab_name => 'tab_time' },
-            { label => 'Notifications',      tab_name => 'tab_notifications' },
-            { label => 'Avatar',             tab_name => 'tab_avatar' },
+            { label => l('Your Details'),       tab_name => 'tab_you' },
+            { label => l('Time'),               tab_name => 'tab_time' },
+            { label => l('Notifications'),      tab_name => 'tab_notifications' },
+            { label => l('Avatar'),             tab_name => 'tab_avatar' },
        ]
     %]
     [% SET selected_tab = c.flash.show_pref_tab || 'tab_you' %]
@@ -37,7 +37,7 @@
 
 [% IF c.session.my_pref_came_from %]
 <p>
-<a href="[% c.session.my_pref_came_from %]">Return to the forum</a>
+<a href="[% c.session.my_pref_came_from %]">[%l('Return to the forum')%]</a>
 </p>
 [% ELSE %]
 <p>&nbsp;</p>

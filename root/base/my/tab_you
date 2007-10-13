@@ -6,7 +6,7 @@
     <tbody>
         <tr>
             <td width="25%">
-                First Name:
+                [%l('First Name')%]:
             </td>
 
             <td id="FirstName" name="First name" class="editable">[%authed_user.first_name%]</td>
@@ -14,7 +14,7 @@
 
         <tr>
             <td width="25%">
-                Last Name:
+                [%l('Last Name')%]:
             </td>
 
             <td id="LastName" class="editable">[% authed_user.last_name %]</td>
@@ -22,7 +22,7 @@
 
         <tr>
             <td width="25%">
-                Forum Name:
+                [%l('Forum Name')%]:
             </td>
 
             <td id="ForumName" class="editable">[% authed_user.forum_name %]</td>
@@ -30,7 +30,7 @@
 
         <tr>
             <td width="25%">
-                Email Address:
+                [%l('Email Address')%]:
             </td>
 
             <td>
@@ -90,4 +90,3 @@
 
     E.init();
 </script>
-

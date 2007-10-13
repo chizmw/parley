@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <td width="150" align="center">
-                    Current Avatar
+                   [%l('Current Avatar')%] 
                 </td>
                 <td>
                     &nbsp;
@@ -20,13 +20,12 @@
                     [% INCLUDE shared/user_avatar person=authed_user %]
                 </td>
                 <td>
-                    Change your avatar image by selecting a file and clicking
-                    the Upload button below:
+                    [%l('CHANGE AVATAR')%]:
                     <br />
 
                     <input type="file" id="avatar_file" name="avatar_file" />
 
-                    <input type="submit" value="Upload" style="float: right;"/>
+                    <input type="submit" value="[%l('Upload')%]" style="float: right;"/>
                 </td>
             </tr>
         </tbody>

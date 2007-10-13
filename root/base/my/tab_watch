@@ -3,15 +3,15 @@
         <tbody>
             <tr>
                 <th style="width:14px;">&nbsp;</th>
-                <th>Subject</th>
-                <th>Last Modified</th>
-                <th>Last Viewed</th>
+                <th>[%l('Subject')%]</th>
+                <th>[%l('Last Modified')%]</th>
+                <th>[%l('Last Viewed')%]</th>
             [% WHILE (watch = thread_watches.next) %]
             [% thread = watch.thread %]
             <tr>
                 <td style="width:14px;">
                     [% IF (thread.last_post.created > watch.timestamp) %]
-                    <img src="static/images/unread_posts.gif" width="12" height="12" alt="Unread Posts" title="Unread Posts" />
+                    <img src="static/images/unread_posts.gif" width="12" height="12" alt="[%l('Unread posts')%]" title="[%l('Unread posts')%]" />
                     [% ELSE %]
                     &nbsp;
                     [% END %]
@@ -25,7 +25,7 @@
                         [%- IF authed_user || mini_pager %]
                         [
                             [%- IF authed_user %]
-                            <a href="thread/next_post?thread=[% thread.id %]">Continue</a>
+                            <a href="thread/next_post?thread=[% thread.id %]">[%l('Continue')%]</a>
                             [%- END %]
                         ]
                         [%- END %]
@@ -35,7 +35,7 @@
                 <td style="vertical-align: top;">
                     [% nicedate(thread.last_post.created) %]
                     <br />
-                    <span class="topic_creator">last post by
+                    <span class="topic_creator"[%l('last post by')%]>
                     <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
                     </span>
                 </td>
@@ -44,7 +44,7 @@
                     [% nicedate(watch.timestamp) %]
                     <br />
                     [% IF (thread.last_post.created > watch.timestamp) %]
-                    <span class="topic_creator">Unread posts</span>
+                    <span class="topic_creator">[%l('Unread posts')%]</span>
                     [% END %]
                 </td>
             </tr>
@@ -52,5 +52,5 @@
         </tbody>
     </table>
 [% ELSE %]
-    <p>You are not watching any threads</p>
+    <p>[%l('You are not watching any threads')%]</p>
 [% END %]

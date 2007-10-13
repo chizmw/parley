@@ -1,8 +1,8 @@
 [% IF error %]
-<h1>An error has occurred</h1>
+<h1>[%l('An error has occurred')%]</h1>
 
 <p>
-The following error message was returned by the application:
+[%l('The following error message was returned by the application')%]:
 
 <blockquote>[% error.message %]</blockquote>
 </p>
@@ -13,13 +13,13 @@ The following error message was returned by the application:
 <ul>
     [% IF current_thread %]
     [% IF authed_user %]
-    <li>Continue reading: <a href="thread/next_post?thread=[%current_thread.id%]">[%current_thread.subject%]</a></li>
+    <li>[%l('Continue reading')%]: <a href="thread/next_post?thread=[%current_thread.id%]">[%current_thread.subject%]</a></li>
     [% END %]
-    <li>Return to: <a href="thread/view?thread=[%current_thread.id%]">[%current_thread.subject%]</a></li>
+    <li>[%l('Return to')%]: <a href="thread/view?thread=[%current_thread.id%]">[%current_thread.subject%]</a></li>
     [% END %]
 
     [% IF current_forum %]
-    <li>View all <a href="forum/view?forum=[%current_forum.id%]">[%current_forum.name%]</a> threads</li>
+    <li>[%l('View all')%] <a href="forum/view?forum=[%current_forum.id%]">[%current_forum.name%]</a> [%l('threads')%]</li>
     [% END %]
 </ul>
 [% END %]

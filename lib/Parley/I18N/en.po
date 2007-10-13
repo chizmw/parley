@@ -13,23 +13,50 @@ msgstr "Add Watch"
 msgid "All Rights Reserved"
 msgstr "All Rights Reserved"
 
+msgid "An error has occurred"
+msgstr "An error has occurred"
+
+msgid "Avatar"
+msgstr "Avatar"
+
+msgid "CHANGE AVATAR"
+msgstr "Change your avatar image by selecting a file and clicking the Upload button below"
+
 msgid "Close"
 msgstr "Close"
 
 msgid "Contents"
 msgstr "Contents"
 
+msgid "Continue"
+msgstr "Continue"
+
+msgid "Continue reading"
+msgstr "Continue reading"
+
 msgid "Create New Thread"
 msgstr "Create New Thread"
 
+msgid "Current Avatar"
+msgstr "Current Avatar"
+
 msgid "Current User"
 msgstr "Current User"
+
+msgid "Default"
+msgstr "Default"
 
 msgid "Edit"
 msgstr "Edit"
 
 msgid "Edited"
 msgstr "Edited"
+
+msgid "Email Address"
+msgstr "Email Address"
+
+msgid "First Name"
+msgstr "First Name"
 
 msgid "Forgotten Password"
 msgstr "Forgotten Password"
@@ -42,6 +69,9 @@ msgstr "Forum List"
 
 msgid "Forum Moderators"
 msgstr "Forum Moderators"
+
+msgid "Forum Name"
+msgstr "Forum Name"
 
 msgid "Forum Summary"
 msgstr "Forum Summary"
@@ -58,8 +88,20 @@ msgstr "Help"
 msgid "IP Logged"
 msgstr "IP Logged"
 
+msgid "Last Modified"
+msgstr "Last Modified"
+
+msgid "Last Name"
+msgstr "Last Name"
+
 msgid "Last Post"
 msgstr "Last Post"
+
+msgid "last post by"
+msgstr "last post by"
+
+msgid "Last Viewed"
+msgstr "Last Viewed"
 
 msgid "Lock Thread"
 msgstr "Lock Thread"
@@ -109,6 +151,9 @@ msgstr "Non-integer forum id passed"
 msgid "None"
 msgstr "None"
 
+msgid "Notifications"
+msgstr "Notifications"
+
 msgid "Password"
 msgstr "Password"
 
@@ -133,6 +178,15 @@ msgstr "Posted From"
 msgid "Posts"
 msgstr "Posts"
 
+msgid "PREFS ADD WATCHES"
+msgstr "Automatically add watches for new posts"
+
+msgid "PREFS DESIRED LOCATION"
+msgstr "Select your desired location. This will be used to display times using your local timezone."
+
+msgid "PREFS EMAIL NOTIFICATION"
+msgstr "Receive email notification for watched threads"
+
 msgid "Quote"
 msgstr "Quote"
 
@@ -148,11 +202,23 @@ msgstr "Reply"
 msgid "Remove Watch"
 msgstr "Remove Watch"
 
+msgid "Return to"
+msgstr "Return to"
+
+msgid "Return to the forum"
+msgstr "Return to the forum"
+
 msgid "Search"
 msgstr "Search"
 
+msgid "Select Zone"
+msgstr "Select Zone"
+
 msgid "Services"
 msgstr "Services"
+
+msgid "Show timezone"
+msgstr "Show timezone"
 
 msgid "Site"
 msgstr "Site"
@@ -160,26 +226,56 @@ msgstr "Site"
 msgid "Stick Thread"
 msgstr "Stick Thread"
 
+msgid "Subject"
+msgstr "Subject"
+
 msgid "Terms and Conditions"
 msgstr "Terms &amp; Conditions"
+
+msgid "The following error message was returned by the application"
+msgstr "The following error message was returned by the application"
 
 msgid "Thread"
 msgstr "Thread"
 
+msgid "threads"
+msgstr "threads"
+
 msgid "Thread Locked"
 msgstr "Thread Locked"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Time formatting example"
+msgstr "Time formatting example"
 
 msgid "Unlock Thread"
 msgstr "Unlock Thread"
 
+msgid "Unread posts"
+msgstr "Unread posts"
+
 msgid "Unstick Thread"
 msgstr "Unstick Thread"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Upload"
+msgstr "Upload"
+
+msgid "Use UTC"
+msgstr "Use UTC"
 
 msgid "Username"
 msgstr "Username"
 
 msgid "view"
 msgstr "view"
+
+msgid "View all"
+msgstr "View all"
 
 msgid "views"
 msgstr "views"
@@ -189,3 +285,12 @@ msgstr "View Threads"
 
 msgid "wrote"
 msgstr "wrote"
+
+msgid "You are not watching any threads"
+msgstr "You are not watching any threads"
+
+msgid "Your Details"
+msgstr "Your Details"
+
+msgid "Your Preferences"
+msgstr "Your Preferences"

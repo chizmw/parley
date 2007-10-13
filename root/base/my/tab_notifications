@@ -7,13 +7,13 @@
             <tr>
                 <td>
                     <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %] />
-                    Automatically add watches for new posts
+                    [%l('PREFS ADD WATCHES')%] 
                 </td>
             </tr>
             <tr>
                 <td>
                     <input type="checkbox" name="notify_thread_watch" value="1" [% IF authed_user.preference.notify_thread_watch %]checked="checked" [% END %] />
-                    Receive email notification for watched threads
+                    [%l('PREFS EMAIL NOTIFICATION')%] 
                 </td>
             </tr>
 
@@ -21,7 +21,7 @@
 
             <tr>
                 <td colspan="2" style="text-align: center;">
-                <input type="submit" value="Update" name="update" class="input_button" />
+                <input type="submit" value="[%l('Update')%]" name="update" class="input_button" />
                 </td>
             </tr>
         </tbody>

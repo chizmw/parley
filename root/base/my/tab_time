@@ -1,5 +1,5 @@
 <!-- preferences : time tab -->
-<p>Select your desired location. This will be used to display times using your local timezone.</p>
+<p>[%l('PREFS DESIRED LOCATION')%]</p>
 
 <form action="my/preferences/update" method="POST" name="time_format">
     <input type="hidden" name="form_name" value="time_format">
@@ -15,7 +15,7 @@
         <tr>
             <td>
                 <select id="selectZone" name="selectZone">
-                    <option value="">[ Select Zone ]</option>
+                    <option value="">[ [%l('Select Zone')%] ]</option>
                     [% FOREACH item=tz_categories %]
                     <option value="[% item %]">[% item %]</option>
                     [% END %]
@@ -23,7 +23,7 @@
             </td>
 
             <td class="right_align" />
-                <label for="use_utc">Use UTC</label>
+                <label for="use_utc">[%l('Use UTC')%]</label>
                 <input type="checkbox" id="use_utc" name="use_utc" value="1" onChange="toggle_timezone_menus(this)"/>
             </td>
         </tr>
@@ -32,14 +32,14 @@
         <tr>
             <td>
                 <select id="time_format" name="time_format" style="text-align: center;">
-                    <option value="">(Default)</option>
+                    <option value="">([%l('Default')%])</option>
                     [% WHILE (tf = time_formats.next) %]
                     <option value="[% tf.id %]">[% tf.sample %]</option>
                     [% END %]
                 </select>
             </td>
             <td class="right_align">
-                <label for="show_tz">Show timezone</label>
+                <label for="show_tz">[%l('Show timezone')%]</label>
                 <input type="checkbox" id="show_tz" name="show_tz" value="1" />
             </td>
         </tr>
@@ -47,7 +47,7 @@
         <!-- <tr><td colspan="2">&nbsp;</td></tr> -->
 
         <tr>
-            <td>Time formatting example:</td>
+            <td>[%l('Time formatting example')%]:</td>
             <td><i>[% nicedate(current_time) %]</i></td>
         </tr>
 
@@ -56,13 +56,13 @@
 
         <tr>
             <td colspan="2" style="text-align: center;">
-            <input type="submit" value="Update" name="update" class="input_button" />
+            <input type="submit" value="[%l('Update')%]" name="update" class="input_button" />
             </td>
         </tr>
     </table>
 </form>
 
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 <!-- Begin
 
     function toggle_timezone_menus(checkbox) {
