@@ -24,7 +24,7 @@
                 )
             ;
     
-            YAHOO.parley.loading.wait.setHeader("Loading, please wait...");
+            YAHOO.parley.loading.wait.setHeader("%[l('Loading, please wait')%]...");
             YAHOO.parley.loading.wait.setBody("<img src=\"static/images/rel_interstitial_loading.gif\"/>");
             YAHOO.parley.loading.wait.render(document.body);
         }

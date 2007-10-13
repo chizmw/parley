@@ -31,18 +31,18 @@
                             <td width="50%">
                                 <small>
                                     [% current_thread.view_count %]
-                                    [% IF current_thread.view_count == 1 %]l('view')[% ELSE %]l('views')[% END %].
+                                    [% IF current_thread.view_count == 1 %][%l('view')%][% ELSE %][%l('views')%][% END %].
                                 </small>
                             </td>
                             <td width="50%" align="right">
                                 <small>
                                 [% IF current_thread.locked %]
-                                    l('Thread Locked') 
-                                    <img src="static/images/locked.png" alt="l('Locked')" title="l('Locked Topic')" width="16" height="16" />
+                                    [%l('Thread Locked')%] 
+                                    <img src="static/images/locked.png" alt="[%l('Locked')"%] title="[%l('Locked Topic')%]" width="16" height="16" />
                                 [% ELSE %]
                                     <span class="yui-button yui-link-button">
                                         <span class="first-child">
-                                            <a href="thread/reply?thread=[% current_thread.id %]">l('Reply')</a>
+                                            <a href="thread/reply?thread=[% current_thread.id %]">[%l('Reply')%]</a>
                                         </span>
                                     </span>
                                 [% END %]
@@ -60,7 +60,7 @@
         <tr>
             <td class="user_post_info">
                 <!-- user avatar -->
-                [% avatar_file = c.path_to('root') _ "/static/user_file/${post.creator.id}/avatar.jpg" %]
+                [% avatar_file = c.path_to('root')%] _ "/static/user_file/${post.creator.id}/avatar.jpg" %]
                 [% TRY %]
                     [% USE avatar = Image(avatar_file) %]
                     [% tmp = avatar.attr %]
@@ -84,7 +84,7 @@
                 <div class="innerpost">
                     [% IF post.quoted_post %]
                     <div class="quote">
-                    <strong>[% post.quoted_post.creator.forum_name %] l('wrote'):</strong><br>
+                    <strong>[% post.quoted_post.creator.forum_name %] [%l('wrote')%]:</strong><br>
                     [% ForumCode.forumcode(post.quoted_text) %]<br />
                     </div>
                     <br />
@@ -97,14 +97,14 @@
                     [% nicedate(post.created) %]
                     <br />[% post.interval_ago %] ago
                     [% IF post.edited %]
-                    <br /><span class="post_edited_alert">l('Edited'): [% nicedate(post.edited) %]</span>
+                    <br /><span class="post_edited_alert">[%l('Edited')%]: [% nicedate(post.edited) %]</span>
                     [% END %]
                     <br />
                     [% IF post.ip_addr %]
                         [% IF moderator %]
-                            l('Posted from'): [% post.ip_addr %]
+                            [%l('Posted from')%]: [% post.ip_addr %]
                         [% ELSE %]
-                           l('IP Logged') 
+                           [%l('IP Logged')%] 
                         [% END %]
                     [% END %]
                     [% UNLESS current_thread.locked %]
@@ -113,18 +113,18 @@
                         [% IF authed_user.id == post.creator.id %]
                         <span class="yui-button yui-link-button">
                             <span class="first-child">
-                                <a href="post/edit?post=[% post.id %]">l('Edit')</a>
+                                <a href="post/edit?post=[% post.id %]">[%l('Edit')%]</a>
                             </span>
                         </span>
                         [% END %]
                         <span class="yui-button yui-link-button">
                             <span class="first-child">
-                                <a href="thread/reply?post=[% post.id %]">l('Quote')</a>
+                                <a href="thread/reply?post=[% post.id %]">[%l('Quote')%]</a>
                             </span>
                         </span>
                         <span class="yui-button yui-link-button">
                             <span class="first-child">
-                                <a href="thread/reply?thread=[% current_thread.id %]">l('Reply')</a>
+                                <a href="thread/reply?thread=[% current_thread.id %]">[%l('Reply')%]</a>
                             </span>
                         </span>
                     [% END %]
@@ -152,18 +152,18 @@
                             <td width="50%">
                                 <small>
                                     [% current_thread.view_count %]
-                                    [% IF current_thread.view_count == 1 %]l('view')[% ELSE %]l('views')[% END %].
+                                    [% IF current_thread.view_count == 1 %][%l('view')%][% ELSE %][%l('views')%][% END %].
                                 </small>
                             </td>
                             <td width="50%" align="right">
                                 <small>
                                 [% IF current_thread.locked %]
-                                    l('Thread Locked') 
-                                    <img src="static/images/locked.png" alt="l('Locked')" title="l('Locked Topic')" width="16" height="16" />
+                                    [%l('Thread Locked')%] 
+                                    <img src="static/images/locked.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
                                 [% ELSE %]
                                     <span class="yui-button yui-link-button">
                                         <span class="first-child">
-                                            <a href="thread/reply?thread=[% current_thread.id %]">l('Reply')</a>
+                                            <a href="thread/reply?thread=[% current_thread.id %]">[%l('Reply')%]</a>
                                         </span>
                                     </span>
                                 [% END %]
