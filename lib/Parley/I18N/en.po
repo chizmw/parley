@@ -1,4 +1,4 @@
-msgid "404 Not Found"
+msgid "406 Not Found"
 msgstr "404 Not Found"
 
 msgid "ACCEPT TERMS"
@@ -6,6 +6,9 @@ msgstr "You need to accept the Terms and Conditions below to continue using the 
 
 msgid "Active"
 msgstr "Active"
+
+msgid "ADD THREAD WATCH"
+msgstr "Add a Thread Watch"
 
 msgid "Add Reply"
 msgstr "Add Reply"
@@ -15,6 +18,9 @@ msgstr "Add T&amp;Cs"
 
 msgid "Add Watch"
 msgstr "Add Watch"
+
+msgid "ago"
+msgstr "ago"
 
 msgid "All Forums"
 msgstr "All Forums"
@@ -49,6 +55,9 @@ msgstr "Continue reading"
 msgid "Create New Thread"
 msgstr "Create New Thread"
 
+msgid "created by"
+msgstr "created by"
+
 msgid "Current Avatar"
 msgstr "Current Avatar"
 
@@ -72,6 +81,9 @@ msgstr "Email Address"
 
 msgid "Email Engine"
 msgstr "Email Engine"
+
+msgid "ENTER REPLY"
+msgstr "Please enter your reply in the form below"
 
 msgid "First"
 msgstr "First"
@@ -133,6 +145,9 @@ msgstr "last post by"
 msgid "Last Viewed"
 msgstr "Last Viewed"
 
+msgid "LOCK AFTER POSTING"
+msgstr "Lock thread after posting"
+
 msgid "Lock Thread"
 msgstr "Lock Thread"
 
@@ -157,6 +172,9 @@ msgstr "Me"
 msgid "Main Page"
 msgstr "Main Page"
 
+msgid "Message"
+msgstr "Message"
+
 msgid "Moderate"
 msgstr "Moderate"
 
@@ -177,6 +195,9 @@ msgstr "No"
 
 msgid "No posts"
 msgstr "No posts"
+
+msgid "NO RECENT THREADS"
+msgstr "No recent threads to display"
 
 msgid "NO SEARCH RESULTS"
 msgstr "No results found matching specified terms"
@@ -241,6 +262,9 @@ msgstr "Posted From"
 msgid "Posts"
 msgstr "Posts"
 
+msgid "posts"
+msgstr "posts"
+
 msgid "PREFS ADD WATCHES"
 msgstr "Automatically add watches for new posts"
 
@@ -258,6 +282,9 @@ msgstr "Previous"
 
 msgid "Post New Terms"
 msgstr "Post New Terms"
+
+msgid "Post New Topic"
+msgstr "Post New Topic"
 
 msgid "Quote"
 msgstr "Quote"
@@ -279,6 +306,9 @@ msgstr "Return to"
 
 msgid "Return to the forum"
 msgstr "Return to the forum"
+
+msgid "said"
+msgstr "said"
 
 msgid "Search"
 msgstr "Search"
@@ -316,8 +346,17 @@ msgstr "Snippet"
 msgid "Start"
 msgstr "Start"
 
+msgid "Start A New Topic"
+msgstr "Start A New Topic"
+
 msgid "Stick Thread"
 msgstr "Stick Thread"
+
+msgid "Sticky"
+msgstr "Sticky"
+
+msgid "Sticky Topic"
+msgstr "Sticky Topic"
 
 msgid "Stop"
 msgstr "Stop"
@@ -357,6 +396,9 @@ msgstr "Time"
 
 msgid "Time formatting example"
 msgstr "Time formatting example"
+
+msgid "Topic"
+msgstr "Topic"
 
 msgid "Unlock Thread"
 msgstr "Unlock Thread"

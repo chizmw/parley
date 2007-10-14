@@ -1,4 +1,4 @@
-<h1>Start A New Topic</h1>
+<h1>[%l('Start A New Topic')%]</h1>
 
 [% IF view.error.message %]
     [% view.error.message %]
@@ -15,14 +15,14 @@
 <table>
 
   <tr>
-    <td> Topic </td>
+    <td> [%l('Topic')%] </td>
     <td>
       <input type="text" name="thread_subject" size="60" class="input_text" />
     </td>
   </tr>
 
   <tr>
-    <td> Message </td>
+    <td> [%l('Message')%] </td>
     <td>
         <textarea name="thread_message" id="thread_message" cols="60" rows="20" class="input_text" /></textarea>
     </td>
@@ -30,15 +30,15 @@
 
   <tr>
     <td colspan="2" style="text-align: center;">
-      <input type="button" value="Preview"        name="post_reply" class="input_button" id="message_preview" />
-      <input type="submit" value="Post New Topic" name="post_reply" class="input_button" />
+      <input type="button" value="[%l('Preview')%]"        name="post_reply" class="input_button" id="message_preview" />
+      <input type="submit" value="[%l('Post New Topic')%]" name="post_reply" class="input_button" />
     </td>
   </tr>
 
   <tr>
     <td colspan="2" align="right">
         <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %]/>
-        Add a Thread Watch
+        [%l('ADD THREAD WATCH')%] 
     </td>
   </tr>
 </table>
@@ -96,7 +96,7 @@
 
 
                     // update the button
-                    obj.trigger.value = 'Edit';
+                    obj.trigger.value = '[%l('Edit')%]';
 
                     YU.Event.removeListener( obj.trigger, 'click' );
                     YU.Event.addListener(
@@ -115,7 +115,7 @@
 
             this.edit = function() {
                 // update the button
-                this.trigger.value = 'Preview';
+                this.trigger.value = '[%l('Preview')%]';
 
                 this.user_input.style.visibility     = 'visible';
                 this.preview_overlay.destroy();

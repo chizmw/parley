@@ -1,4 +1,4 @@
-<h1>Recently Updated Threads</h1>
+<h1>[%l('Recently Updated Threads')%]</h1>
 
 [%- IF thread_list.count > 0 %]
 [% PROCESS shared/pager_advanced %]
@@ -8,10 +8,10 @@
         <td width="36">
         <!-- interesting things about the thread; sticky, locked, etc -->
         [%- IF thread.sticky %]
-        <img src="static/images/sticky.png" alt="Sticky" title="Sticky Topic" width="16" height="16" />
+        <img src="static/images/sticky.png" alt="[%l('Sticky')%]" title="[%l('Sticky Topic')%]" width="16" height="16" />
         [%- END %]
         [%- IF thread.locked %]
-        <img src="static/images/locked.png" alt="Locked" title="Locked Topic" width="16" height="16" />
+        <img src="static/images/locked.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
         [%- END %]
         </td>
 
@@ -22,12 +22,12 @@
             [%- IF authed_user || mini_pager %]
             [
                 [%- IF authed_user %]
-                <a href="thread/next_post?thread=[% thread.id %]">Continue</a>
+                <a href="thread/next_post?thread=[% thread.id %]">[%l('Continue')%]</a>
                 [%- END %]
             ]
             [%- END %]
         </span>
-        <span class="topic_creator">created by
+        <span class="topic_creator"[%l('created by')%]>
             <span class="post_creator">[% thread.creator.forum_name %]</span>
         </span>
         </td>
@@ -35,10 +35,10 @@
         <td>
         [% nicedate(thread.last_post.created) %]
         <br /><span class="interval_ago">
-            [% thread.last_post.interval_ago %] ago
+            [% thread.last_post.interval_ago %] [%l('ago')%] 
             </span>
         <br />
-        <span class="topic_creator">posted by
+        <span class="topic_creator"[%l('posted by')%]>
             <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
         </span>
         </td>
@@ -49,9 +49,9 @@
         </td>
         
         <td align="right">
-        [% thread.view_count %] views<br />
+        [% thread.view_count %] [%l('views')%]<br />
         <br />
-        [% thread.post_count %] posts<br />
+        [% thread.post_count %] [%l('posts')%]<br />
         </td>
 
         <td>
@@ -81,5 +81,5 @@
 [% END %]
 </table>
 [% ELSE %]
-  No recent threads to display
+[%l('NO RECENT THREADS')%]
 [% END %]

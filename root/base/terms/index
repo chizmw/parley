@@ -1,20 +1,20 @@
 [% IF terms %]
-    <h1>Terms and Conditions</h1>
+    <h1>[%l('Terms and Conditions')%]</h1>
     <div class="site_terms">
         [% ForumCode.forumcode(terms.content) %]
         <div style="text-align: right;">
-        Last Modified: [% nicedate(terms.created) %]
+        [%l('Last Modified')%]: [% nicedate(terms.created) %]
         </div>
     </div>
 
     [% IF terms.change_summary %]
-    <h1>Summary of Changes</h1>
+    <h1>[%l('Summary of Changes')%]</h1>
     <div class="site_terms">
         [% ForumCode.forumcode(terms.change_summary) %]
     </div>
     [% END %]
 [% ELSE %]
-This site has no Terms and Conditions to view.
+[%l('NO SITE TERMS')%].
 [% END %]
 
 [% IF all_site_terms %]
@@ -27,7 +27,7 @@ This site has no Terms and Conditions to view.
             </option>
             [% END %]
         </select>
-        <input type="submit" value="View"/>
+        <input type="submit" value="[%l('View')%]"/>
     </div>
 </form>
 [% END %]
