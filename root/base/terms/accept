@@ -1,18 +1,18 @@
-<h1>Terms and Conditions</h1>
+<h1>[%l('Terms and Conditions')%]</h1>
 
 <p>
-You need to accept the Terms and Conditions below to continue using the site:
+[%l('ACCEPT TERMS')%]:
 </p>
 
 <div class="site_terms">
     [% ForumCode.forumcode(latest_terms.content) %]
     <div style="text-align: right;">
-    Last Modified: [% nicedate(latest_terms.created) %]
+    [%l('Last Modified')%]: [% nicedate(latest_terms.created) %]
     </div>
 </div>
 
 [% IF latest_terms.change_summary %]
-<h1>Summary of Changes</h1>
+<h1>[%l('Summary of Changes')%]</h1>
 <div class="site_terms">
     [% ForumCode.forumcode(latest_terms.change_summary) %]
 </div>
@@ -21,9 +21,9 @@ You need to accept the Terms and Conditions below to continue using the site:
 <div class="site_terms" style="border: none; text-align: center;">
     <form method="post" action="terms/accept" />
 
-    <input type="submit" name="terms_accept" value="I AGREE to the terms above" />
+    <input type="submit" name="terms_accept" value="[%l('TERMS AGREE')%]" />
     <br />
-    <input type="submit" name="terms_reject" value="I DO NOT agree to the terms above" />
+    <input type="submit" name="terms_reject" value="[%l('TERMS REJECT')%]" />
 
     </form>
 </div>

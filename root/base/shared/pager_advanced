@@ -6,15 +6,15 @@
     [% url_extra_args = '&amp;forum=' _ current_forum.id %]
     [% END %]
 
-    Page [% page.current_page %] of [% page.last_page %]
+    [%l('Page')%] [% page.current_page %] [%l('of')%] [% page.last_page %]
     [% IF page.last_page > 1 %]
     [
         [% UNLESS page.current_page == page.first_page %]
-        <a href="[% c.req.path %]?page=[% page.first_page %][% url_extra_args %]">First</a> |
+        <a href="[% c.req.path %]?page=[% page.first_page %][% url_extra_args %]">[%l('First')%]</a> |
         [% END %]
 
         [% IF page.previous_page %]
-        <a href="[% c.req.path %]?page=[% page.previous_page %][% url_extra_args %]">Previous</a>
+        <a href="[% c.req.path %]?page=[% page.previous_page %][% url_extra_args %]">[%l('Previous')%]</a>
         |
         [% END %]
 
@@ -33,12 +33,12 @@
 
         [% IF page.next_page %]
         |
-        <a href="[% c.req.path %]?page=[% page.next_page %][% url_extra_args %]">Next</a>
+        <a href="[% c.req.path %]?page=[% page.next_page %][% url_extra_args %]">[%l('Next')%]</a>
         [% END %]
 
         [% UNLESS page.current_page == page.last_page %]
         |
-        <a href="[% c.req.path %]?page=[% page.last_page %][% url_extra_args %]">Last</a>
+        <a href="[% c.req.path %]?page=[% page.last_page %][% url_extra_args %]">[%l('Last')%]</a>
         [% END %]
     ]
     [% END %]

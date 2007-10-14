@@ -1,23 +1,23 @@
-<h1>Services</h1>
+<h1>[%l('Services')%]</h1>
 
 <table class="site_services">
     <thead>
         <tr>
-            <th>Service</th>
-            <th>Active</th>
-            <th>Comment</th>
-            <th>Start/Stop</th>
+            <th>[%l('Service')%]</th>
+            <th>[%l('Active')%]</th>
+            <th>[%l('Comment')%]</th>
+            <th>[%l('Start')%]/[%l('Stop')%]</th>
         </tr>
     </thead>
 
     <tbody>
         <tr>
-            <td>Email Engine</td>
+            <td>[%l('Email Engine')%]</td>
             <td>
                 [% IF email_engine.pid %]
-                Yes
+                [%l('Yes')%] 
                 [% ELSE %]
-                No
+                [%l('No')%] 
                 [% END %]
             </td>
             <td>

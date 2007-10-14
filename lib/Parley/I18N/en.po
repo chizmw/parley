@@ -1,6 +1,12 @@
 msgid "404 Not Found"
 msgstr "404 Not Found"
 
+msgid "ACCEPT TERMS"
+msgstr "You need to accept the Terms and Conditions below to continue using the site"
+
+msgid "Active"
+msgstr "Active"
+
 msgid "Add Reply"
 msgstr "Add Reply"
 
@@ -9,6 +15,9 @@ msgstr "Add T&amp;Cs"
 
 msgid "Add Watch"
 msgstr "Add Watch"
+
+msgid "All Forums"
+msgstr "All Forums"
 
 msgid "All Rights Reserved"
 msgstr "All Rights Reserved"
@@ -25,6 +34,9 @@ msgstr "Change your avatar image by selecting a file and clicking the Upload but
 msgid "Close"
 msgstr "Close"
 
+msgid "Comment"
+msgstr "Comment"
+
 msgid "Contents"
 msgstr "Contents"
 
@@ -39,6 +51,9 @@ msgstr "Create New Thread"
 
 msgid "Current Avatar"
 msgstr "Current Avatar"
+
+msgid "Current Forum"
+msgstr "Current Forum"
 
 msgid "Current User"
 msgstr "Current User"
@@ -55,6 +70,12 @@ msgstr "Edited"
 msgid "Email Address"
 msgstr "Email Address"
 
+msgid "Email Engine"
+msgstr "Email Engine"
+
+msgid "First"
+msgstr "First"
+
 msgid "First Name"
 msgstr "First Name"
 
@@ -63,6 +84,9 @@ msgstr "Forgotten Password"
 
 msgid "Forum"
 msgstr "Forum"
+
+msgid "Forums"
+msgstr "Forums"
 
 msgid "Forum List"
 msgstr "Forum List"
@@ -76,6 +100,9 @@ msgstr "Forum Name"
 msgid "Forum Summary"
 msgstr "Forum Summary"
 
+msgid "General"
+msgstr "General"
+
 msgid "Guest User"
 msgstr "Guest User"
 
@@ -87,6 +114,9 @@ msgstr "Help"
 
 msgid "IP Logged"
 msgstr "IP Logged"
+
+msgid "Last"
+msgstr "Last"
 
 msgid "Last Modified"
 msgstr "Last Modified"
@@ -112,6 +142,9 @@ msgstr "Locked"
 msgid "Locked Topic"
 msgstr "Locked Topic"
 
+msgid "Logged in as"
+msgstr "Logged in as"
+
 msgid "Login"
 msgstr "Login"
 
@@ -136,8 +169,23 @@ msgstr "My Profile"
 msgid "My Watched Threads"
 msgstr "My Watched Threads"
 
+msgid "Next"
+msgstr "Next"
+
+msgid "No"
+msgstr "No"
+
 msgid "No posts"
 msgstr "No posts"
+
+msgid "NO SEARCH RESULTS"
+msgstr "No results found matching specified terms"
+
+msgid "NO SITE TERMS"
+msgstr "This site has no Terms and Conditions to view"
+
+msgid "No User Avatar"
+msgstr "No User Avatar"
 
 msgid "non-integer post id passed"
 msgstr "Non-integer post id passed"
@@ -154,6 +202,15 @@ msgstr "None"
 msgid "Notifications"
 msgstr "Notifications"
 
+msgid "Not Authenticated"
+msgstr "Not Authenticated"
+
+msgid "of"
+msgstr "of"
+
+msgid "Page"
+msgstr "Page"
+
 msgid "Password"
 msgstr "Password"
 
@@ -163,11 +220,17 @@ msgstr "Password Reminder"
 msgid "Password Reminder"
 msgstr "Password Reminder"
 
+msgid "person"
+msgstr "person"
+
 msgid "Please enter your information"
 msgstr "Please enter your information"
 
 msgid "Please enter your username and password"
 msgstr "Please enter your username and password"
+
+msgid "people"
+msgstr "people"
 
 msgid "posted by"
 msgstr "posted by"
@@ -186,6 +249,15 @@ msgstr "Select your desired location. This will be used to display times using y
 
 msgid "PREFS EMAIL NOTIFICATION"
 msgstr "Receive email notification for watched threads"
+
+msgid "Preview"
+msgstr "Preview"
+
+msgid "Previous"
+msgstr "Previous"
+
+msgid "Post New Terms"
+msgstr "Post New Terms"
 
 msgid "Quote"
 msgstr "Quote"
@@ -211,8 +283,20 @@ msgstr "Return to the forum"
 msgid "Search"
 msgstr "Search"
 
+msgid "Search For"
+msgstr "Search For"
+
+msgid "Search Results"
+msgstr "Search Results"
+
+msgid "Searching for"
+msgstr "Searching for"
+
 msgid "Select Zone"
 msgstr "Select Zone"
+
+msgid "Service"
+msgstr "Service"
 
 msgid "Services"
 msgstr "Services"
@@ -220,14 +304,38 @@ msgstr "Services"
 msgid "Show timezone"
 msgstr "Show timezone"
 
+msgid "Signup"
+msgstr "Signup"
+
 msgid "Site"
 msgstr "Site"
+
+msgid "Snippet"
+msgstr "Snippet"
+
+msgid "Start"
+msgstr "Start"
 
 msgid "Stick Thread"
 msgstr "Stick Thread"
 
+msgid "Stop"
+msgstr "Stop"
+
 msgid "Subject"
 msgstr "Subject"
+
+msgid "Summary of Changes"
+msgstr "Summary of Changes"
+
+msgid "TERMS ADD NEW"
+msgstr "Add New Site Terms &amp; Conditions"
+
+msgid "TERMS AGREE"
+msgstr "I AGREE to the terms above"
+
+msgid "TERMS REJECT"
+msgstr "I DO NOT agree to the terms above"
 
 msgid "Terms and Conditions"
 msgstr "Terms &amp; Conditions"
@@ -262,6 +370,9 @@ msgstr "Unstick Thread"
 msgid "Update"
 msgstr "Update"
 
+msgid "Update Reply"
+msgstr "Update Reply"
+
 msgid "Upload"
 msgstr "Upload"
 
@@ -270,6 +381,9 @@ msgstr "Use UTC"
 
 msgid "Username"
 msgstr "Username"
+
+msgid "View"
+msgstr "View"
 
 msgid "view"
 msgstr "view"
@@ -283,11 +397,23 @@ msgstr "views"
 msgid "View Threads"
 msgstr "View Threads"
 
+msgid "Watch this thread"
+msgstr "Watch this thread"
+
+msgid "watching this thread"
+msgstr "watching this thread"
+
 msgid "wrote"
 msgstr "wrote"
 
+msgid "Yes"
+msgstr "Yes"
+
 msgid "You are not watching any threads"
 msgstr "You are not watching any threads"
+
+msgid "You are watching this thread"
+msgstr "You are watching this thread"
 
 msgid "Your Details"
 msgstr "Your Details"

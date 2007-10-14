@@ -3,9 +3,9 @@
 [% TRY %]
     [% USE avatar = Image(avatar_file) %]
     [% tmp = avatar.attr %]
-    <img class="picborder" src="/static/user_file/[% person.id %]/avatar.jpg" border="0" [% avatar.attr %] alt="Avatar" />
+    <img class="picborder" src="/static/user_file/[% person.id %]/avatar.jpg" border="0" [% avatar.attr %] alt="[%l('Avatar')%]" />
     <br />
 [% CATCH %]
-    No User Avatar
+   [%l('No User Avatar')%] 
 [% END %]
 <!-- end : user avatar -->

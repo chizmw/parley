@@ -56,11 +56,11 @@ YAHOO.util.Event.onDOMReady(init);
 </script>
 
 <div id="search_dialog">
-<div class="hd">Search</div>
+<div class="hd">[%l('Search')%]</div>
 <div class="bd">
     <form action="search/forum" method="post" name="search_form" class="search_dialog_form">
         <fieldset>
-            <label for="search_terms"><b>Search For:</b></label>
+            <label for="search_terms"><b>[%l('Search For')%]:</b></label>
             <input type="text" id="search_terms" name="search_terms" style="width: 25em;" class="input_text" />
             <br />
         </fieldset>
@@ -68,13 +68,13 @@ YAHOO.util.Event.onDOMReady(init);
         <fieldset>
             <label for="search_forum"><em>in:</em></label>
             <select id="search_forum" name="search_forum">
-                <optgroup label="General">
-                    [% IF current_forum %]<option value="[% current_forum.id %]">Current Forum</option>[% END %]
-                    <option value="">All Forums</option>
+                <optgroup label="[%l('General')%]">
+                    [% IF current_forum %]<option value="[% current_forum.id %]">[%l('Current Forum')%]</option>[% END %]
+                    <option value="">[%l('All Forums')%]</option>
                 </optgroup>
                 [% IF available_forums %]
                 [% SET dummy=available_forums.reset %]
-                <optgroup label="Forums">
+                <optgroup label="[%l('Forums')%]">
                 [% WHILE (forum = available_forums.next) %]
                 <option value="[% forum.id %]">[% forum.name %]</option>
                 [% END %]

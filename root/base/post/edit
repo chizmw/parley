@@ -18,7 +18,7 @@
 
         <tr>
             <td colspan="2" style="text-align: center;">
-                <input type="submit" value="Update Reply" name="post_update"    class="input_button" />
+                <input type="submit" value="[%l('Update Reply')%]" name="post_update"    class="input_button" />
             </td>
         </tr>
     </table>

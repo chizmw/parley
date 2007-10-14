@@ -1,13 +1,13 @@
-<h1>Search Results</h1>
+<h1>[%l('Search Results')%]</h1>
 
-<h2>Searching for <em>[% search_terms.raw || '[nothing]' %]</em> in <em>[% search_forum.name || 'all forums' %]</em></h2>
+<h2>[%l('Searching for')%] <em>[% search_terms.raw || '[nothing]' %]</em> in <em>[% search_forum.name || 'all forums' %]</em></h2>
 
 [% IF search_results %]
 
     <table class="search_results">
     <tr>
-        <th>Subject</th>
-        <th>Snippet</th>
+        <th>[%l('Subject')%]</th>
+        <th>[%l('Snippet')%]</th>
     </tr>
 
     [% WHILE (result = search_results.next) %]
@@ -39,5 +39,5 @@
     </tr>
     </table>
 [% ELSE %]
-No results found matching specified terms.
+[%l('No results found matching specified terms')%].
 [% END %]
