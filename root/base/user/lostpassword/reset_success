@@ -1,2 +1,2 @@
-Your password has been set to the value you entered. You may now 
-<a href="javascript:;" onclick="login_dialog.show();">login</a>
+<!-- I don't think we see this page any more -->
+[%l('PASSWORD RESET SUCCESS')%]

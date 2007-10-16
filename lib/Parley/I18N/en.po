@@ -28,6 +28,9 @@ msgstr "All Forums"
 msgid "All Rights Reserved"
 msgstr "All Rights Reserved"
 
+msgid "An email has been sent to"
+msgstr "An email has been sent to"
+
 msgid "An error has occurred"
 msgstr "An error has occurred"
 
@@ -37,11 +40,17 @@ msgstr "Avatar"
 msgid "CHANGE AVATAR"
 msgstr "Change your avatar image by selecting a file and clicking the Upload button below"
 
+msgid "Click on the login link to continue"
+msgstr "Click on the login link to continue"
+
 msgid "Close"
 msgstr "Close"
 
 msgid "Comment"
 msgstr "Comment"
+
+msgid "Confirm Password"
+msgstr "Confirm Password"
 
 msgid "Contents"
 msgstr "Contents"
@@ -187,8 +196,20 @@ msgstr "My Profile"
 msgid "My Watched Threads"
 msgstr "My Watched Threads"
 
+msgid "Name"
+msgstr "Name"
+
+msgid "Never Posted"
+msgstr "Never Posted"
+
+msgid "New Password"
+msgstr "New Password"
+
 msgid "Next"
 msgstr "Next"
+
+msgid "Nickname"
+msgstr "Nickname"
 
 msgid "No"
 msgstr "No"
@@ -232,6 +253,27 @@ msgstr "of"
 msgid "Page"
 msgstr "Page"
 
+msgid "PASSWORD DETAILS SENT"
+msgstr "You should recieve an email in the next few minutes with further instructions to reset your password."
+
+msgid "PASSWORD GAIN"
+msgstr "To gain access to your account your password can be re-set, and an authentication email re-sent."
+
+msgid "PASSWORD IMPOSSIBLE"
+msgstr "This makes it impossible to remind you of your current password."
+
+msgid "PASSWORD PROCEED"
+msgstr "If you wish to proceed please enter the username or email address you signed up with."
+
+msgid "PASSWORD RESET"
+msgstr "To reset your password enter your username and your desired password in the fields below, then click the <em>reset my password</em> button to proceed."
+
+msgid "PASSWORD RESET SUCCESS"
+msgstr "Your password has been set to the value you entered."
+
+msgid "PASSWORD STORES"
+msgstr "stores an encrypted copy of your password or email address you signed up with."
+
 msgid "Password"
 msgstr "Password"
 
@@ -265,6 +307,9 @@ msgstr "Posts"
 msgid "posts"
 msgstr "posts"
 
+msgid "Posts Made"
+msgstr "Posts Made"
+
 msgid "PREFS ADD WATCHES"
 msgstr "Automatically add watches for new posts"
 
@@ -279,6 +324,9 @@ msgstr "Preview"
 
 msgid "Previous"
 msgstr "Previous"
+
+msgid "PROFILE NOT FOUND"
+msgstr "Can't locate a profile for the requested user."
 
 msgid "Post New Terms"
 msgstr "Post New Terms"
@@ -295,11 +343,17 @@ msgstr "Recently Updated Threads"
 msgid "Register"
 msgstr "Register"
 
-msgid "Reply"
-msgstr "Reply"
+msgid "Registration Complete"
+msgstr "Registration Complete"
 
 msgid "Remove Watch"
 msgstr "Remove Watch"
+
+msgid "Reply"
+msgstr "Reply"
+
+msgid "Reset My Password"
+msgstr "Reset My Password"
 
 msgid "Return to"
 msgstr "Return to"
@@ -334,8 +388,38 @@ msgstr "Services"
 msgid "Show timezone"
 msgstr "Show timezone"
 
-msgid "Signup"
-msgstr "Signup"
+msgid "Sign Up"
+msgstr "Sign Up"
+
+msgid "SIGNUP COMPLETE FORM"
+msgstr "Complete the form below to create a new user account."
+
+msgid "SIGNUP EMAIL"
+msgstr "Your Email Address"
+
+msgid "SIGNUP EMAIL CONFIRM"
+msgstr "Confirm Email Address"
+
+msgid "SIGNUP EMAIL USAGE"
+msgstr "Your email address will not be passed on to any third parties. It will be used to send an activation link for the new account. If you request thread update alerts this address will also be used for the notification emails."
+
+msgid "SIGNUP ERRORS"
+msgstr "The following errors were found in your submission"
+
+msgid "SIGNUP FORUMNAME"
+msgstr "Forum Name"
+
+msgid "SIGNUP FORUMNAME DESCRIPTION"
+msgstr "Your <em>Forum Name</em> will be displayed with all postings you make on the forums.  Forum names are all unique, so when two "John Smith"s register, only one will appear as \"John Smith\" when posting. (Sorry other John Smith!)"
+
+msgid "SIGNUP PASSWORD"
+msgstr "Desired Password"
+
+msgid "SIGNUP PASSWORD CONFIRM"
+msgstr "Confirm password"
+
+msgid "SIGNUP USERNAME"
+msgstr "Desired Username"
 
 msgid "Site"
 msgstr "Site"
@@ -379,6 +463,9 @@ msgstr "I DO NOT agree to the terms above"
 msgid "Terms and Conditions"
 msgstr "Terms &amp; Conditions"
 
+msgid "Thanks for signing up"
+msgstr "Thanks for signing up"
+
 msgid "The following error message was returned by the application"
 msgstr "The following error message was returned by the application"
 
@@ -420,6 +507,18 @@ msgstr "Upload"
 
 msgid "Use UTC"
 msgstr "Use UTC"
+
+msgid "USER ACTIVATE"
+msgstr "To activate your account click on the link in the email"
+
+msgid "USER ALMOST THERE"
+msgstr "Almost there..."
+
+msgid "USER AUTHENTICATED"
+msgstr "Your registration has been authenticated"
+
+msgid "User Profile"
+msgstr "User Profile"
 
 msgid "Username"
 msgstr "Username"

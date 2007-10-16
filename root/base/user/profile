@@ -1,5 +1,5 @@
 <!-- user/profile -->
-<h1>User Profile</h1>
+<h1>[%l('User Profile')%]</h1>
 [% IF profiled_user %]
 
 <table class="user_profile">
@@ -19,7 +19,7 @@
             [% END %]
             <!-- end : user avatar -->
             <td class="user_profile_key">
-                Nickname:
+                [%l('Nickname')%]:
             </td>
             <td class="user_profile_value">
                 [% profiled_user.forum_name %]
@@ -28,7 +28,7 @@
 
         <tr>
             <td class="user_profile_key">
-                Posts made:
+                [%l('Posts Made')%]:
             </td>
             <td class="user_profile_value">
                 [% profiled_user.post_count %]
@@ -37,7 +37,7 @@
 
         <tr>
             <td class="user_profile_key">
-                Last Post:
+                [%l('Last Post')%]:
             </td>
             <td class="user_profile_value">
                 [% IF profiled_user.last_post %]
@@ -45,7 +45,7 @@
                 <br />
                 [% nicedate(profiled_user.last_post.created) %]
                 [% ELSE %]
-                Never Posted
+                [%l('Never Posted')%] 
                 [% END %]
             </td>
         </tr>
@@ -53,6 +53,6 @@
 </table>
 
 [% ELSE %]
-<p>Can't locate a profile for requested user</p>
+<p>[%l('PROFILE NOT FOUND')%]</p>
 [% END %]
 <!-- end : user/profile -->

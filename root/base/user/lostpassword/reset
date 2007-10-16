@@ -1,7 +1,6 @@
 <form action="user/password/reset/[% reset_uid %]" method="post" name="password_reset_form">
 
-To reset your password enter your username and your desired password in the
-fields below, then click the <em>reset my password</em> button to proceed.
+[%l('PASSWORD RESET')%]
 
     <fieldset>
         [%- IF view.error.messages %]
@@ -14,20 +13,20 @@ fields below, then click the <em>reset my password</em> button to proceed.
         </p>
         [% END %]
 
-        <label>Name:</label>
+        <label>[%l('Name')%]:</label>
         <input type="text" value="[% reset_user.first_name %] [% reset_user.last_name %]" tabindex="1" readonly="readonly" disabled="disabled" size="40" />
 
-        <label for="reset_username">Username:</label>
+        <label for="reset_username">[%l('Username')%]:</label>
         <input type="text" name="reset_username" id="reset_username" size="40" tabindex="2" />
 
-        <label for="new_password">New password:</label>
+        <label for="new_password">[%l('New Password')%]:</label>
         <input type="password" name="new_password" id="new_password" size="40" tabindex="3" />
 
-        <label for="confirm_password">Confirm password:</label>
+        <label for="confirm_password">[%l('Confirm Password')%]:</label>
         <input type="password" name="confirm_password" id="confirm_password" size="40" tabindex="4" />
 
         <br />
-        <button type="submit" class="input_button" tabindex="5" name="reset_password" />reset my password</button>
+        <button type="submit" class="input_button" tabindex="5" name="reset_password" />[%l('Reset My Password')%]</button>
 
     </fieldset>
 </form>
