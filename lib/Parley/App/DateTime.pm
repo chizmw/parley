@@ -38,7 +38,7 @@ sub _time_string {
     }
 
     # localise the unit
-    $unit = $c->localize($unit);
+    #$unit = $c->localize($unit);
 
     return "$duration $unit";
 }
