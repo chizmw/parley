@@ -35,7 +35,7 @@ sub form_data_valid :Export( :validation ) {
 
     # deal with missing/invalid fields
     if ($c->form->has_missing()) {
-        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        $c->stash->{view}{error}{message} = $c->localize(q{DFV REQUIRED});
         foreach my $f ( $c->form->missing ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }
@@ -43,7 +43,7 @@ sub form_data_valid :Export( :validation ) {
         return; # invalid form data
     }
     elsif ($c->form->has_invalid()) {
-        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        $c->stash->{view}{error}{message} = $c->localize(q{DFV INVALID});
         foreach my $f ( $c->form->invalid ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }

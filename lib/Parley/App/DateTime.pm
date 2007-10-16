@@ -37,6 +37,9 @@ sub _time_string {
         $unit =~ s{s\z}{};
     }
 
+    # localise the unit
+    $unit = $c->localize($unit);
+
     return "$duration $unit";
 }
 1;

@@ -91,6 +91,15 @@ msgstr "Email Address"
 msgid "Email Engine"
 msgstr "Email Engine"
 
+msgid "EMAIL FAILED STORE"
+msgstr "Sorry, we are currently unable to store your information. Please try again later."
+
+msgid "EMAIL SEND PROBLEM"
+msgstr "There was a problem sending an email from the system"
+
+msgid "EMAIL MISSING SUBJECT"
+msgstr "Subject Line Missing"
+
 msgid "ENTER REPLY"
 msgstr "Please enter your reply in the form below"
 
@@ -561,3 +570,42 @@ msgstr "Your Details"
 
 msgid "Your Preferences"
 msgstr "Your Preferences"
+
+
+# UNITS OF TIME
+
+msgid "second"
+msgstr "second"
+
+msgid "seconds"
+msgstr "seconds"
+
+msgid "minute"
+msgstr "minute"
+
+msgid "minutes"
+msgstr "minutes"
+
+msgid "hour"
+msgstr "hour"
+
+msgid "hours"
+msgstr "hours"
+
+msgid "day"
+msgstr "day"
+
+msgid "days"
+msgstr "days"
+
+msgid "month"
+msgstr "month"
+
+msgid "months"
+msgstr "months"
+
+msgid "year"
+msgstr "year"
+
+msgid "years"
+msgstr "years"

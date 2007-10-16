@@ -106,7 +106,8 @@ sub send_email :Export( :email ) {
     }
     else {
         $c->log->error( $email_status );
-        $c->stash->{error}{message} = q{There was a problem sending an email from the system};
+        $c->stash->{error}{message} =
+            $c->localize(q{EMAIL SEND PROBLEM});
         return 0;
     }
 }
@@ -136,7 +137,7 @@ sub old_send_email :Export( :email ) {
         header => [
             To      => $options->{person}->email(),
             From    => $options->{headers}{from}      || q{Missing From <chisel@somewhere.com>},
-            Subject => $options->{headers}{subject}   || q{Subject Line Missing},
+            Subject => $options->{headers}{subject}   || $c->localize(q{EMAIL MISSING SUBJECT}),
         ],
 
         body => $c->view('Plain')->render(
@@ -167,7 +168,7 @@ sub old_send_email :Export( :email ) {
     }
     else {
         $c->log->error( $email_status );
-        $c->stash->{error}{message} = q{Sorry, we are currently unable to store your information. Please try again later.};
+        $c->stash->{error}{message} = $c->localize(q{EMAIL FAILED STORE});
         return 0;
     }
 }
