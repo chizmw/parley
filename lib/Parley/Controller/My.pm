@@ -33,7 +33,7 @@ my %dfv_profile_for = (
         filters     => [qw( trim )],
         msgs => {
             format  => q{%s},
-            missing => q{One or more required fields are missing},
+            missing => q{One ore more required fields are missing.},
 
             constraints => {
                 tz_data => 'you must do stuff',
@@ -74,7 +74,7 @@ sub auto : Private {
     my ($self, $c) = @_;
     # need to be logged in to perform any 'my' actions
     my $status = $c->login_if_required(
-        q{You must be logged in before you can access this area}
+        $c->localize(q{LOGIN REQUIRED}) 
     );
     if (not defined $status) {
         return 0;
@@ -178,7 +178,11 @@ sub update :Path('/my/preferences/update') {
 
     # make sure the form name matches something we have a DFV profile for
     if (not exists $dfv_profile_for{ $form_name }) {
-        parley_warn($c, qq{no such form: $form_name});
+        parley_warn(
+            $c,
+              $c->localize(qq{No Such Form}) 
+            . q{: $form_name}
+        );
         return;
     }
 
@@ -239,7 +243,7 @@ sub _form_data_valid {
 
     # deal with missing/invalid fields
     if ($c->form->has_missing()) {
-        parley_warn($c, q{You must fill in all the required fields});
+        parley_warn($c, $c->localize(q{DFV FILL REQUIRED}));
         foreach my $f ( $c->form->missing ) {
             parley_warn($c, $f);
         }
@@ -247,7 +251,7 @@ sub _form_data_valid {
         return; # invalid form data
     }
     elsif ($c->form->has_invalid()) {
-        parley_warn($c, q{One or more fields are invalid});
+        parley_warn($c, $c->localize(q{DFV FIELDS INVALID}));
         foreach my $f ( $c->form->invalid ) {
             parley_warn($c, $f);
         }
@@ -300,8 +304,8 @@ sub _process_form_avatar {
 
         # reject files that are too large
         if ($upload->size > 20480 ) {
-            parley_warn($c, q{File size too large. File must be no larger than 20K});
-            $c->log->info(q{File size too large. File must be no larger than 20K});
+            parley_warn($c, $c->localize(q{FILE TOO LARGE}));
+            $c->log->info($c->localize(q{FILE TOO LARGE}));
             return;
         }
 
@@ -309,7 +313,8 @@ sub _process_form_avatar {
         if ($upload->type !~ m{\Aimage/}xms) {
             parley_warn(
                 $c,
-                  q{Uploaded file does not appear to be an image file [}
+                  $c->localize(q{FILE NOT IMAGE}) 
+                . q{ [}
                 . $upload->type
                 . q{]}
             );
@@ -327,7 +332,7 @@ sub _process_form_avatar {
         if (not -d $target_dir) {
             mkdir $target_dir;
             if (not -d $target_dir) {
-                parley_warn($c, q{Failed to create destination directory.  Unable to store upload.});
+                parley_warn($c, $c->localize(q{FILE NEWDIR FAILED}));
                 $c->log->error( qq{$target_dir - $!} );
                 return;
             }
@@ -335,7 +340,7 @@ sub _process_form_avatar {
 
         # save the file for processing
         if ( not $upload->link_to($target) and not $upload->copy_to($target) ) {
-            parley_warn($c, q{Failed to store upload.});
+            parley_warn($c, $c->localize(q{FILE STORE FAILED}));
             $c->log->error( qq{$target - $!} );
             return;
         }
@@ -461,7 +466,9 @@ sub saveHandler : Local {
                 $return_data->{message} =
                       q{<p>'}
                     . $c->request->param('value')
-                    . q{' has already been used by another user.</p>}
+                    . q{' }
+                    . $c->localize(q{FORUMNAME USED})
+                    . q{.</p>}
                 ;
                 $return_data->{updated} = 0;
                 $json = objToJson($return_data);
@@ -507,7 +514,10 @@ sub saveHandler : Local {
         }
     }
     else {
-        $return_data->{message} = q{<p>Unknown field name</p>};
+        $return_data->{message} =
+              q{<p>}
+            . $c->localize(q{Unknown field name})
+            . q{</p>};
         $return_data->{updated} = 0;
         $json = objToJson($return_data);
         $c->response->body( $json );
@@ -538,14 +548,14 @@ sub _convert_and_scale_image {
         # scale the longest side - if it's square, scale by height
         if ($width > $height) {
             # scale down by width
-            warn('# scale down by width');
+            #warn('# scale down by width');
             $img->Resize(
                 geometry => $options->{width}
             );
         }
         elsif ($height >= $width) {
             # scale down by height
-            warn('# scale down by height');
+            #warn('# scale down by height');
             $img->Resize(
                 geometry => q{x} . $options->{height}
             );

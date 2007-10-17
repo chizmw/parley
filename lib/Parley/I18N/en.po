@@ -19,6 +19,12 @@ msgstr "Add T&amp;Cs"
 msgid "Add Watch"
 msgstr "Add Watch"
 
+msgid "ADMIN SPECIFY LOCK THREAD"
+msgstr "You must specify the thread to lock"
+
+msgid "ADMIN SPECIFY STICK THREAD"
+msgstr "You must specify the thread to stick"
+
 msgid "ago"
 msgstr "ago"
 
@@ -79,6 +85,15 @@ msgstr "Current User"
 msgid "Default"
 msgstr "Default"
 
+msgid "DFV FIELDS MISSING"
+msgstr "One or more required fields are missing."
+
+msgid "DFV FIELDS INVALID"
+msgstr "One or more fields are invalid."
+
+msgid "DFV FILL REQUIRED"
+msgstr "You must fill in all the required fields."
+
 msgid "Edit"
 msgstr "Edit"
 
@@ -102,6 +117,18 @@ msgstr "Subject Line Missing"
 
 msgid "ENTER REPLY"
 msgstr "Please enter your reply in the form below"
+
+msgid "FILE NOT IMAGE"
+msgstr "Uploaded file does not appear to be an image file"
+
+msgid "FILE NEWDIR FAILED"
+msgstr "Failed to create destination directory.  Unable to store upload."
+
+msgid "FILE STORE FAILED"
+msgstr "Failed to store upload."
+
+msgid "FILE TOO LARGE"
+msgstr "File size too large. File must be no larger than 20K."
 
 msgid "First"
 msgstr "First"
@@ -129,6 +156,9 @@ msgstr "Forum Name"
 
 msgid "Forum Summary"
 msgstr "Forum Summary"
+
+msgid "FORUMNAME USED"
+msgstr "has already been used by another user."
 
 msgid "General"
 msgstr "General"
@@ -174,6 +204,9 @@ msgstr "Locked"
 
 msgid "Locked Topic"
 msgstr "Locked Topic"
+
+msgid "LOGIN REQUIRED"
+msgstr "You must be logged in before you can access this area."
 
 msgid "Logged in as"
 msgstr "Logged in as"
@@ -234,6 +267,9 @@ msgstr "No results found matching specified terms"
 
 msgid "NO SITE TERMS"
 msgstr "This site has no Terms and Conditions to view"
+
+msgid "No Such Form"
+msgstr "No Such Form"
 
 msgid "No User Avatar"
 msgstr "No User Avatar"
@@ -495,6 +531,9 @@ msgstr "Time formatting example"
 
 msgid "Topic"
 msgstr "Topic"
+
+msgid "Unknown field name"
+msgstr "Unknown field name"
 
 msgid "Unlock Thread"
 msgstr "Unlock Thread"

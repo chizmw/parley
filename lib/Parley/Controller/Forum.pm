@@ -8,14 +8,15 @@ sub list : Local {
     my ($self, $c) = @_;
 
     # get a list of (active) forums
-    $c->stash->{forum_list} = $c->model('ParleyDB')->resultset('Forum')->search(
-        {
-            active => 1,
-        },
-        {
-            'order_by'  => 'forum_id ASC',
-        }
-    );
+    $c->stash->{forum_list} =
+        $c->model('ParleyDB')->resultset('Forum')->search(
+            {
+                active => 1,
+            },
+            {
+                'order_by'  => 'forum_id ASC',
+            }
+        );
 }
 
 sub view : Local {
@@ -25,19 +26,20 @@ sub view : Local {
     $c->stash->{current_page}= $c->request->param('page') || 1;
 
     # get a list of (active) threads in a given forum
-    $c->stash->{thread_list} = $c->model('ParleyDB')->resultset('Thread')->search(
-        {
-            forum       => $c->_current_forum->id(),
-            active      => 1,
-        },
-        {
-            join        => 'last_post',
-            order_by    => 'sticky DESC, last_post.created DESC',
-            # pager information
-            rows        => $c->config->{threads_per_page},
-            page        => $c->stash->{current_page},
-        }
-    );
+    $c->stash->{thread_list} =
+        $c->model('ParleyDB')->resultset('Thread')->search(
+            {
+                forum       => $c->_current_forum->id(),
+                active      => 1,
+            },
+            {
+                join        => 'last_post',
+                order_by    => 'sticky DESC, last_post.created DESC',
+                # pager information
+                rows        => $c->config->{threads_per_page},
+                page        => $c->stash->{current_page},
+            }
+        );
 
     # setup the pager
     $self->_forum_view_pager($c);

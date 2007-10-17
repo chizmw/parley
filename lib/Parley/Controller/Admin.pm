@@ -39,8 +39,8 @@ sub lock :Local {
 
     # we should already have the thread we're locking, but let's check anyway
     if (not defined $c->_current_thread()) {
-        $c->stash->{error}{message} = q{You must specify the thread to lock};
-        $c->log->error( q{You must specify the thread to lock} );
+        $c->stash->{error}{message} = $c->localize(q{ADMIN SPECIFY LOCK THREAD});
+        $c->log->error( $c->localize(q{ADMIN SPECIFY LOCK THREAD}) );
         return;
     }
 
@@ -66,8 +66,9 @@ sub sticky :Local {
 
     # we should already have the thread we're sticking, but let's check anyway
     if (not defined $c->_current_thread()) {
-        $c->stash->{error}{message} = q{You must specify the thread to stick};
-        $c->log->error( q{You must specify the thread to stick} );
+        $c->stash->{error}{message}
+            = $c->localize(q{ADMIN SPECIFY STICK THREAD});
+        $c->log->error( $c->localize(q{ADMIN SPECIFY STICK THREAD}) );
         return;
     }
 
