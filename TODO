@@ -1,6 +1,7 @@
 TODO LIST
 
-  - investigate i18n
+  - i18n email template files
+  - i18n help files
   - write some sensible T&Cs
   - update avatar update response to force a No-Cache?
   - application logo
