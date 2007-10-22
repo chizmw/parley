@@ -51,7 +51,7 @@ sub accept : Local {
     my ( $self, $c ) = @_;
 
     my $status = $c->login_if_required(
-        q{You must be logged in before you can access this area}
+        $c->localize(q{LOGIN REQUIRED}) 
     );
     if (not defined $status) {
         return 0;
@@ -117,7 +117,7 @@ sub add : Local {
 
     # currently only a global moderator can add new site terms
     if (not $c->stash->{site_moderator}) {
-        parley_die($c, q{You must be a site-moderator to access this area});
+        parley_die($c, $c->localize(q{SITE MODERATOR REQUIRED}));
         return;
     }
 

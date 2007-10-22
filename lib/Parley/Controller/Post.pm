@@ -32,25 +32,25 @@ sub edit : Local {
 
     # if we don't have a post param, then return with an error
     unless (defined $c->_current_post) {
-        $c->stash->{error}{message} = q{Incomplete URL};
+        $c->stash->{error}{message} = $c->localize(q{Incomplete URL});
         return;
     }
 
     # you need to be logged in to edit a post
     # (although non-logged users shouldn't see an edit link, you never know
     # what people will make-up or bookmark)
-    $c->login_if_required(q{You must be logged in before you can edit your posts.});
+    $c->login_if_required($c->localize(q{EDIT LOGIN REQUIRED}));
 
     # you can only edit you own posts
     # (unless you're a moderator, but we don't do that yet)
     if ($c->_authed_user()->id() != $c->_current_post()->creator()->id()) {
-        $c->stash->{error}{message} = q{You can only edit posts you have made};
+        $c->stash->{error}{message} = $c->localize(q{EDIT OWN POSTS ONLY});
         return;
     }
 
     # you can't edit a locked post
     elsif ($c->_current_post->thread->locked) {
-        $c->stash->{error}{message} = q{You can't edit locked posts};
+        $c->stash->{error}{message} = $c->localize(q{EDIT LOCKED POST}) 
         return;
     }
 
@@ -62,13 +62,13 @@ sub edit : Local {
         );
         # deal with missing/invalid fields
         if ($c->form->has_missing()) {
-            $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+            $c->stash->{view}{error}{message} = $c->localize(q{DFV FILL REQUIRED});
             foreach my $f ( $c->form->missing ) {
                 push @{ $c->stash->{view}{error}{messages} }, $f;
             }
         }
         elsif ($c->form->has_invalid()) {
-            $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+            $c->stash->{view}{error}{message} = $c->localize(q{DFV FIELDS INVALID});
             foreach my $f ( $c->form->invalid ) {
                 push @{ $c->stash->{view}{error}{messages} }, $f;
             }
@@ -95,7 +95,7 @@ sub view : Local {
 
     # if we don't have a post param, then return with an error
     unless (defined $c->_current_post) {
-        $c->stash->{error}{message} = q{Incomplete URL};
+        $c->stash->{error}{message} = $c->localize(q{Incomplete URL});
         return;
     }
 

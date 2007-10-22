@@ -39,7 +39,7 @@ sub add : Local {
     my ($self, $c) = @_;
 
     # make sure we're logged in
-    $c->login_if_required(q{You must be logged in before you can add a new topic.});
+    $c->login_if_required($c->localize(q{LOGIN NEW TOPIC}));
 
     # make sure we're authenticated
     # XXX
@@ -59,7 +59,7 @@ sub next_post : Local {
     my ($self, $c) = @_;
 
     # make sure we're logged in
-    $c->login_if_required(q{You must be logged in before you can use the thread continuation function});
+    $c->login_if_required($c->localize(q{LOGIN THREAD CONTINUE}));
 
     # get the most recent post the user has seen
     my $last_viewed_post = $c->model('ParleyDB')->resultset('Thread')->last_post_viewed_in_thread(
@@ -155,7 +155,7 @@ sub reply : Local {
     my ($self, $c) = @_;
 
     # make sure we're logged in
-    $c->login_if_required(q{You must be logged in before you can add a reply.});
+    $c->login_if_required($c->localize(q{LOGIN ADD REPLY}));
 
     # make sure we're authenticated
     # XXX
@@ -163,7 +163,7 @@ sub reply : Local {
     # can't reply to a locked thread
     if ($c->_current_thread()->locked()) {
         #die q{can't reply to a locked thread!};
-        $c->stash->{error}{message} = q{You can't reply to a locked thread};
+        $c->stash->{error}{message} = $c->localize(q{REPLY LOCKED THREAD});
         return;
     };
 
@@ -264,7 +264,7 @@ sub watch :Local {
     }
 
     # need to be logged in to watch threads
-    $c->login_if_required($c, q{You must be logged in before you can watch a topic.});
+    $c->login_if_required($c, $c->localize(q{LOGIN WATCH TOPIC}));
 
     # get the ThreadView so we can update it
     my $thread_view = $c->model('ParleyDB')->resultset('ThreadView')->find(
@@ -277,7 +277,7 @@ sub watch :Local {
     # if we couldn't find a thread view, then something odd is happening -
     # logged in users should always have a thread_view entry
     if (not defined $thread_view) {
-        $c->stash->{error}{message} = q{Failed to watch requested thread};
+        $c->stash->{error}{message} = $c->localize(q{THREAD WATCH FAILED});
         $c->log->error(q{User doesn't have a thread_view entry});
         return;
     }
@@ -321,7 +321,7 @@ sub watches : Local {
     my ($self, $c) = @_;
 
     # make sure we're logged in
-    $c->login_if_required(q{You must be logged in before you can view your watched threads});
+    $c->login_if_required($c->localize(q{LOGIN VIEW WATCHES}));
 
     # watched threads
     my $watches = $c->model('ParleyDB')->resultset('ThreadView')->search(
@@ -353,7 +353,7 @@ sub watches : Local {
             # if we couldn't find a thread view, then something odd is happening -
             # logged in users should always have a thread_view entry
             if (not defined $thread_view) {
-                $c->stash->{error}{message} = q{Failed to watch requested thread};
+                $c->stash->{error}{message} = $c->localize(q{THREAD WATCH FAILED});
                 $c->log->error(q{User doesn't have a thread_view entry});
                 return;
             }
@@ -384,13 +384,13 @@ sub _add_new_reply {
 
     # deal with missing/invalid fields
     if ($c->form->has_missing()) {
-        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        $c->stash->{view}{error}{message} = $c->localize(q{DFV FILL REQUIRED});
         foreach my $f ( $c->form->missing ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }
     }
     elsif ($c->form->has_invalid()) {
-        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        $c->stash->{view}{error}{message} = $c->localize(q{DFV FIELDS INVALID});
         foreach my $f ( $c->form->invalid ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }
@@ -439,13 +439,13 @@ sub _add_new_thread {
 
     # deal with missing/invalid fields
     if ($c->form->has_missing()) {
-        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        $c->stash->{view}{error}{message} = $c->localize(q{DFV FILL REQUIRED});
         foreach my $f ( $c->form->missing ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }
     }
     elsif ($c->form->has_invalid()) {
-        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        $c->stash->{view}{error}{message} = $c->localize(q{DFV FIELDS INVALID});
         foreach my $f ( $c->form->invalid ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }
@@ -512,13 +512,13 @@ sub _get_thread_reply_post {
         );
     }
     else {
-        $c->stash->{error}{message} = q{No information for thread or post to reply to};
+        $c->stash->{error}{message} = $c->localize(q{THREAD NO INFORMATION});
         return;
     }
 
     # if we don't have one post, something really odd happened
     if (1 != $posts->count()) {
-        $c->stash->{error}{message} = q{I don't know how you managed to reply to a thread with no posts};
+        $c->stash->{error}{message} = $c->localize(q{THREAD NO POSTS});
         return;
     }
 

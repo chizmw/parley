@@ -40,6 +40,9 @@ msgstr "An email has been sent to"
 msgid "An error has occurred"
 msgstr "An error has occurred"
 
+msgid "AUTHENTICATION FAILED"
+msgstr "Unable to authenticate the supplied login credentials"
+
 msgid "Avatar"
 msgstr "Avatar"
 
@@ -93,6 +96,15 @@ msgstr "One or more fields are invalid."
 
 msgid "DFV FILL REQUIRED"
 msgstr "You must fill in all the required fields."
+
+msgid "EDIT LOCKED POST"
+msgstr "You can't edit locked posts."
+
+msgid "EDIT LOGIN REQUIRED"
+msgstr "You must be logged in before you can edit your posts."
+
+msgid "EDIT OWN POSTS ONLY"
+msgstr "You can only edit posts you have made."
 
 msgid "Edit"
 msgstr "Edit"
@@ -172,6 +184,9 @@ msgstr "Go"
 msgid "Help"
 msgstr "Help"
 
+msgid "Incomplete URL"
+msgstr "Incomplete URL"
+
 msgid "IP Logged"
 msgstr "IP Logged"
 
@@ -205,8 +220,23 @@ msgstr "Locked"
 msgid "Locked Topic"
 msgstr "Locked Topic"
 
+msgid "LOGIN ADD REPLY"
+msgstr "You must be logged in before you can add a reply."
+
+msgid "LOGIN NEW TOPIC"
+msgstr "You must be logged in to add a new topic."
+
 msgid "LOGIN REQUIRED"
 msgstr "You must be logged in before you can access this area."
+
+msgid "LOGIN THREAD CONTINUE"
+msgstr "You must be logged in before you can use the thread continuation function."
+
+msgid "LOGIN VIEW WATCHES"
+msgstr "You must be logged in before you can view your watched threads."
+
+msgid "LOGIN WATCH TOPIC"
+msgstr "You must be logged in before you can watch a topic."
 
 msgid "Logged in as"
 msgstr "Logged in as"
@@ -274,6 +304,9 @@ msgstr "No Such Form"
 msgid "No User Avatar"
 msgstr "No User Avatar"
 
+msgid "No User Specified"
+msgstr "No User Specified"
+
 msgid "non-integer post id passed"
 msgstr "Non-integer post id passed"
 
@@ -300,6 +333,9 @@ msgstr "Page"
 
 msgid "PASSWORD DETAILS SENT"
 msgstr "You should recieve an email in the next few minutes with further instructions to reset your password."
+
+msgid "PASSWORD ENTER DETAILS"
+msgstr "Please enter your username and password"
 
 msgid "PASSWORD GAIN"
 msgstr "To gain access to your account your password can be re-set, and an authentication email re-sent."
@@ -394,6 +430,9 @@ msgstr "Registration Complete"
 msgid "Remove Watch"
 msgstr "Remove Watch"
 
+msgid "REPLY LOCKED THREAD"
+msgstr "You can't reply to a locked thread."
+
 msgid "Reply"
 msgstr "Reply"
 
@@ -466,6 +505,9 @@ msgstr "Confirm password"
 msgid "SIGNUP USERNAME"
 msgstr "Desired Username"
 
+msgid "SITE MODERATOR REQUIRED"
+msgstr "You need to be a site moderator to access this section of the site."
+
 msgid "Site"
 msgstr "Site"
 
@@ -513,6 +555,15 @@ msgstr "Thanks for signing up"
 
 msgid "The following error message was returned by the application"
 msgstr "The following error message was returned by the application"
+
+msgid "THREAD NO INFORMATION"
+msgstr "No information exists for the thread or post you are trying to reply to."
+
+msgid "THREAD NO POSTS"
+msgstr "You are trying to reply to a thread with no posts in it."
+
+msgid "THREAD WATCH FAILED"
+msgstr "Failed to add a watch for the requested thread."
 
 msgid "Thread"
 msgstr "Thread"

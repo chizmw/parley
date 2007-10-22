@@ -13,7 +13,7 @@ sub auto : Private {
     my ($self, $c) = @_;
 
     if (not $c->stash->{site_moderator}) {
-        parley_warn($c, q{You need to be a site moderator});
+        parley_warn($c, $c->localize(q{SITE MODERATOR REQUIRED}));
 
         $c->response->redirect(
             $c->uri_for(

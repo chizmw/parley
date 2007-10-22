@@ -9,7 +9,7 @@ sub login : Path('/user/login') {
     my ( $self, $c ) = @_;
 
     # default form message
-    $c->stash->{'message'} = 'Please enter your username and password';
+    $c->stash->{'message'} = $c->localize(q{PASSWORD ENTER DETAILS});
     # if we have a custom message to use ..
     $c->stash->{'login_message'} = delete( $c->session->{login_message} );
     # make sure we use the correct template - we sometimes detach() here
@@ -63,7 +63,7 @@ sub login : Path('/user/login') {
         # otherwise we failed to login, try again!
         else {
             $c->stash->{'message'}
-                = 'Unable to authenticate the login details supplied';
+                = $c->localize(q{AUTHENTICATION FAILED});
         }
     }
 }
@@ -95,7 +95,8 @@ sub profile :Local {
     if (defined $user_id) {
         # make sure we got a sane looking user-id
         if (not $user_id =~ m{\A\d+\z}) {
-            $c->stash->{error}{message} = 'non-integer user passed';
+            $c->stash->{error}{message}
+                = $c->localize(q{non-integer user id passed});
             return;
         }
 
@@ -104,7 +105,7 @@ sub profile :Local {
             = $c->model('ParleyDB::Person')->find( $user_id );
     }
     else {
-        $c->stash->{error}{message} = 'No user specified';
+        $c->stash->{error}{message} = $c->localize(q{No User Specified});
         return;
     }
 }
