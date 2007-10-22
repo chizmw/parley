@@ -130,8 +130,8 @@ msgstr "Email Engine"
 msgid "EMAIL FAILED STORE"
 msgstr "Sorry, we are currently unable to store your information. Please try again later."
 
-msgid "EMAIL IN USE %s"
-msgstr "The email address you have chosen is already in use.<br />Please try a different one, or use the <a href=\"%s\">Forgotten Password</a> page."
+msgid "EMAIL IN USE (%1)"
+msgstr "The email address you have chosen is already in use.<br />Please try a different one, or use the <a href=\"%1\">Forgotten Password</a> page."
 
 msgid "EMAIL SEND PROBLEM"
 msgstr "There was a problem sending an email from the system"

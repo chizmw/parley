@@ -160,8 +160,8 @@ sub _add_new_user {
     # is the requested email address already in use?
     if ($self->_email_exists($c, $valid_results->{email})) {
         push @messages, $c->localize(
-            q{EMAIL IN USE [_1],
-            'user/password/forgotten'},
+            q{EMAIL IN USE ([_1])},
+            q{user/password/forgotten}
         );
     }
     # is the requested forum name already in use?
