@@ -5,6 +5,8 @@ use warnings;
 
 use Perl6::Export::Attrs;
 
+use Parley::App::I18N qw( :locale );
+
 sub queue_email :Export( :email ) {
     my ($c, $options) = @_;
     my $queued_mail = $c->model('ParleyDB')->resultset('EmailQueue')->create(
@@ -23,6 +25,9 @@ sub queue_email :Export( :email ) {
 sub send_email :Export( :email ) {
     my ($c, $options) = @_;
     my ($text_content, $html_content, $email_status);
+
+    my $locale = first_valid_locale($c, [qw/email_templates/]);
+    $c->log->debug('first_valid_locale is: ' . $locale);
 
     # preparing for future expansion, where we intend to build multipart emails
     # and we'll be using ->{template}{text} and ->{template}{html}
@@ -50,7 +55,13 @@ sub send_email :Export( :email ) {
         $c,
         $options->{template}{text},
         {
-            additional_template_paths => [ $c->config->{root} . q{/email_templates}],
+            additional_template_paths => [
+                $c->path_to(
+                    'root',
+                    'email_templates',
+                    $locale
+                )
+            ],
 
             # automatically make the person data available
             person => $options->{person},
@@ -66,7 +77,14 @@ sub send_email :Export( :email ) {
             $c,
             $options->{template}{html},
             {
-                additional_template_paths => [ $c->config->{root} . q{/email_templates}],
+                #additional_template_paths => [ $c->config->{root} . q{/email_templates}],
+                additional_template_paths => [
+                    $c->path_to(
+                        'root',
+                        'email_templates',
+                        $locale
+                    )
+                ],
 
                 # automatically make the person data available
                 person => $options->{person},
@@ -112,67 +130,6 @@ sub send_email :Export( :email ) {
     }
 }
 
-sub old_send_email :Export( :email ) {
-    my ($c, $options) = @_;
-
-    # preparing for future expansion, where we intend to build multipart emails
-    # and we'll be using ->{template}{text} and ->{template}{html}
-    if (            exists $options->{template}
-            and ref($options->{template}) ne 'HASH'
-    ) {
-        $c->log->warn(
-              q{DEPRECATED use of ->{template} = 'file.eml'}
-            . q{: plain-text template name should be stored in }
-            . q{->{template}{text} instead of ->{template}}
-        );
-
-        # put the data in the right place
-        my $tpl_name = $options->{template};
-        $options->{template} = {};
-        $options->{template}{text} = $tpl_name;
-    }
-
-    # send an email off to the new user
-    my $email_status = $c->email(
-        header => [
-            To      => $options->{person}->email(),
-            From    => $options->{headers}{from}      || q{Missing From <chisel@somewhere.com>},
-            Subject => $options->{headers}{subject}   || $c->localize(q{EMAIL MISSING SUBJECT}),
-        ],
-
-        body => $c->view('Plain')->render(
-            $c,
-            $options->{template}{text},
-            {
-                additional_template_paths => [ $c->config->{root} . q{/email_templates}],
-
-                # automatically make the person data available
-                person => $options->{person},
-
-                # pass through extra TT data
-                %{ $options->{template_data} || {} },
-            }
-        ),
-    );
-
-    # did we get "Message sent" from the email send?
-    if ($email_status eq q{Message sent}) {
-        $c->log->info(
-              q{send_email(}
-            . $options->{person}->email()
-            . q{): }
-            . $email_status
-        );
-
-        return 1;
-    }
-    else {
-        $c->log->error( $email_status );
-        $c->stash->{error}{message} = $c->localize(q{EMAIL FAILED STORE});
-        return 0;
-    }
-}
-
 1;
 
 __END__
@@ -185,7 +142,7 @@ Parley::App::Communication::Email - email helper functions
 
   use Parley::App::Communication::Email;
 
-  $self->send_email($c, $options);
+  send_email($c, $options);
 
 =head1 SEE ALSO
 
