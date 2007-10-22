@@ -22,11 +22,6 @@ sub auto : Private {
     my ($self, $c) = @_;
     $c->log->debug('global auto() called');
 
-    # i18n poking
-    $c->log->info(join q{ }, @{ $c->languages });
-    $c->log->info( $c->localize("non-integer post id passed") );
-    $c->log->info( $c->localize(q{Your [_1] Username}, 'Jimbob') );
-
     # get a list of (all/available) forums
     $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(
         {
