@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+use Parley::App::I18N qw( :locale );
+
 sub index : Private {
     my ( $self, $c ) = @_;
     $c->stash->{template} = 'help/contents';
@@ -17,16 +19,22 @@ sub default :Private {
     $help_template = $c->request->arguments->[1];
 
     # set the template to use based on the URI
-    $c->stash->{template} = qq[help/${help_template}];
+    $c->stash->{template} =
+          q{help/}
+        . first_valid_locale($c)
+        . q{/}
+        . $help_template;
     # send to the view
     $c->forward('Parley::View::TT');
 
     # deal with errors (i.e. missing templates)
-    if ($c->error) {
+    if ($c->error and $c->error->[0]) {
         # only show the "unknown help section" page if we couldn't find the
         # page to show
-        if ($c->error->[0] =~ m{file error - help/$help_template: not found}ms) {
+        my $template_name = $c->stash->{template};
+        if ($c->error->[0] =~ m{file error - $template_name: not found}ms) {
             $c->clear_errors;
+            $c->stash->{template_name} = $template_name;
             $c->forward( 'unknown' );
         }
     }
