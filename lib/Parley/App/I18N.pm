@@ -6,10 +6,15 @@ use warnings;
 use Perl6::Export::Attrs;
 
 sub first_valid_locale :Export( :locale ) {
-    my ($c) = @_;
+    my ($c, $path_parts) = @_;
+
+    $c->log->debug(
+          'first_valid_locale language list: '
+        . "@{$c->languages}"
+    );
 
     foreach my $lang ( @{$c->languages} ) {
-        if (-d $c->path_to( 'root', 'base', 'help', $lang) ) {
+        if (-d $c->path_to( 'root', @{$path_parts}, $lang) ) {
             return $lang;
         }
     }
@@ -30,7 +35,7 @@ Parley::App::I18N - i18n helper functions
 
   use Parley::App::I18N qw( :locale );
 
-  first_valid_locale($c);
+  first_valid_locale($c, [qw/path parts/]);
 
 =head1 SEE ALSO
 

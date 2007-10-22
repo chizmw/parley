@@ -21,7 +21,7 @@ sub default :Private {
     # set the template to use based on the URI
     $c->stash->{template} =
           q{help/}
-        . first_valid_locale($c)
+        . first_valid_locale($c, [qw/base help/])
         . q{/}
         . $help_template;
     # send to the view
