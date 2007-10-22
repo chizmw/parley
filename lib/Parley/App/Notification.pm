@@ -74,9 +74,9 @@ Parley::App::Notification - notification helper functions
 
 =head1 SYNOPSIS
 
-  use Parley::App::Notification;
+  use Parley::App::Notification qw( :watch );
 
-  $c->notify_watchers($post);
+  notify_watchers($c, $post);
 
 =head1 SEE ALSO
 
