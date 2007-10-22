@@ -34,7 +34,7 @@
 
 		<tr>
 			<td width="20%">
-				<label for="username">[%l('DESIRED USERNAME')%]:</label>
+				<label for="username">[%l('SIGNUP USERNAME')%]:</label>
 			</td>
 			<td>
 				<input type="text" id="new_username" name="new_username" class="input_text" />
@@ -54,7 +54,7 @@
 
 		<tr>
 			<td>
-				<label for="confirm_password">[%l('CONFIRM PASSWORD')%]:</label>
+				<label for="confirm_password">[%l('SIGNUP PASSWORD CONFIRM')%]:</label>
 			</td>
 			<td>
 				<input type="password" id="confirm_password" name="confirm_password" class="input_text" />
