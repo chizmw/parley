@@ -4,6 +4,9 @@ msgstr "404 Not Found"
 msgid "ACCEPT TERMS"
 msgstr "You need to accept the Terms and Conditions below to continue using the site"
 
+msgid "Activate Your %s Registration"
+msgstr "Activate Your %s Registration"
+
 msgid "Active"
 msgstr "Active"
 
@@ -85,6 +88,12 @@ msgstr "Current Forum"
 msgid "Current User"
 msgstr "Current User"
 
+msgid "DATABASE CRITERIA MISSING"
+msgstr "Missing criteria in database lookup"
+
+msgid "DATABASE TOO MANY RECORDS"
+msgstr "The database lookup returned too many records"
+
 msgid "Default"
 msgstr "Default"
 
@@ -120,6 +129,9 @@ msgstr "Email Engine"
 
 msgid "EMAIL FAILED STORE"
 msgstr "Sorry, we are currently unable to store your information. Please try again later."
+
+msgid "EMAIL IN USE %s"
+msgstr "The email address you have chosen is already in use.<br />Please try a different one, or use the <a href=\"%s\">Forgotten Password</a> page."
 
 msgid "EMAIL SEND PROBLEM"
 msgstr "There was a problem sending an email from the system"
@@ -169,6 +181,9 @@ msgstr "Forum Name"
 msgid "Forum Summary"
 msgstr "Forum Summary"
 
+msgid "FORUMNAME IN USE"
+msgstr "The forum name you have chosen is already in use. Please try a different one."
+
 msgid "FORUMNAME USED"
 msgstr "has already been used by another user."
 
@@ -183,6 +198,9 @@ msgstr "Go"
 
 msgid "Help"
 msgstr "Help"
+
+msgid "Incomplete authentication URL"
+msgstr "Incomplete authentication URL"
 
 msgid "Incomplete URL"
 msgstr "Incomplete URL"
@@ -231,6 +249,9 @@ msgstr "You must be logged in before you can access this area."
 
 msgid "LOGIN THREAD CONTINUE"
 msgstr "You must be logged in before you can use the thread continuation function."
+
+msgid "LOGIN USE NEW"
+msgstr "Please log-in using your username and your <u>new</u> password."
 
 msgid "LOGIN VIEW WATCHES"
 msgstr "You must be logged in before you can view your watched threads."
@@ -289,6 +310,9 @@ msgstr "No"
 msgid "No posts"
 msgstr "No posts"
 
+msgid "NO MATCHING USERS"
+msgstr "There are no users matching that information"
+
 msgid "NO RECENT THREADS"
 msgstr "No recent threads to display"
 
@@ -307,14 +331,17 @@ msgstr "No User Avatar"
 msgid "No User Specified"
 msgstr "No User Specified"
 
+msgid "non-integer forum id passed"
+msgstr "Non-integer forum id passed"
+
 msgid "non-integer post id passed"
 msgstr "Non-integer post id passed"
 
 msgid "non-integer thread id passed"
 msgstr "Non-integer thread id passed"
 
-msgid "non-integer forum id passed"
-msgstr "Non-integer forum id passed"
+msgid "non-integer user id passed"
+msgstr "Non-integer user id passed"
 
 msgid "None"
 msgstr "None"
@@ -334,6 +361,9 @@ msgstr "Page"
 msgid "PASSWORD DETAILS SENT"
 msgstr "You should recieve an email in the next few minutes with further instructions to reset your password."
 
+msgid "PASSWORD EMAIL SEND FAILED"
+msgstr "The application failed to send the password reset email."
+
 msgid "PASSWORD ENTER DETAILS"
 msgstr "Please enter your username and password"
 
@@ -349,8 +379,14 @@ msgstr "If you wish to proceed please enter the username or email address you si
 msgid "PASSWORD RESET"
 msgstr "To reset your password enter your username and your desired password in the fields below, then click the <em>reset my password</em> button to proceed."
 
+msgid "PASSWORD RESET ID BOGUS"
+msgstr "Bogus password reset ID"
+
 msgid "PASSWORD RESET SUCCESS"
 msgstr "Your password has been set to the value you entered."
+
+msgid "PASSWORD RESET URL INCOMPLETE"
+msgstr "Incomplete password reset URL."
 
 msgid "PASSWORD STORES"
 msgstr "stores an encrypted copy of your password or email address you signed up with."
@@ -444,6 +480,9 @@ msgstr "Return to"
 
 msgid "Return to the forum"
 msgstr "Return to the forum"
+
+msgid "Reset Your %s Password"
+msgstr "Reset Your %s Password"
 
 msgid "said"
 msgstr "said"
@@ -619,6 +658,12 @@ msgstr "Your registration has been authenticated"
 msgid "User Profile"
 msgstr "User Profile"
 
+msgid "USERNAME IN USE"
+msgstr "The username you have chosen is already in use. Please try a different one."
+
+msgid "USERNAME INCORRECT"
+msgstr "Incorrect Username Supplied."
+
 msgid "Username"
 msgstr "Username"
 
@@ -660,6 +705,9 @@ msgstr "Your Details"
 
 msgid "Your Preferences"
 msgstr "Your Preferences"
+
+msgid "Your %s Username"
+msgstr "Your %s Username"
 
 
 # UNITS OF TIME

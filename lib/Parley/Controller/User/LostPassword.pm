@@ -120,7 +120,7 @@ sub reset : Path('/user/password/reset') {
 
     # we should have the reset UID in the URL
     if (not defined $reset_uid) {
-        parley_warn($c, q{Incomplete password reset URL});
+        parley_warn($c, $c->localize(q{PASSWORD RESET URL INCOMPLETE}));
         #$c->stash->{error}{message} = q{Incomplete password reset URL};
         return;
     }
@@ -134,7 +134,7 @@ sub reset : Path('/user/password/reset') {
 
     # if we don't have any matches then the id was bogus
     if (not defined $pwd_reset) {
-        $c->stash->{error}{message} = q{Bogus password reset ID};
+        $c->stash->{error}{message} = $c->localize(q{PASSWORD RESET ID BOGUS});
         return;
     }
 
@@ -160,10 +160,11 @@ sub reset : Path('/user/password/reset') {
         # no messages, means that all should be well
         else {
             # set an informative message to display on the login screen
-            $c->session->{login_message} = q{
-                Your password has been set to the new value you entered.
-                Please log-in using your username and your <b>new</b> password.
-            };
+            $c->session->{login_message} = 
+                $c->localize(q{PASSWORD RESET SUCCESS})
+                . q{ }
+                .  $c->localize(q{LOGIN USE NEW})
+            ;
             # send the user to the login screen
             $c->detach( '/user/login' );
             return;
@@ -214,8 +215,8 @@ sub _reset_password {
     }
     else {
         # incorrect username
-        push @messages, 'Incorrect username supplied';
-        parley_warn($c, q{Incorrect username supplied});
+        push @messages, $c->localize(q{USERNAME INCORRECT});
+        parley_warn($c, $c->localize(q{USERNAME INCORRECT}));
         return;
     }
 
@@ -235,7 +236,10 @@ sub _send_username_reminder {
             person      => $person,
             headers => {
                 from    => $c->application_email_address(),
-                subject => qq{Your @{[$c->config->{name}]} username},
+                subject => $c->localise(
+                    q{Your [_1] Username},
+                    $c->config->{name}
+                ),
             },
         }
     );
@@ -274,7 +278,11 @@ sub _user_password_reset {
             person      => $person,
             headers => {
                 from    => $c->application_email_address(),
-                subject => qq{Reset your @{[$c->config->{name}]} password},
+                subject => #qq{Reset your @{[$c->config->{name}]} password},
+                    $c->localise(
+                        q{Reset Your [_1] Password},
+                        $c->config->{name}
+                    ),
             },
             template_data => {
                 pwd_reset => $pwd_reset,
@@ -334,7 +342,7 @@ sub _user_reset {
     # make sure we don't have too many matches
     if ($matches->count > 1) {
         #push @messages, q{Database lookup returned too many records};
-        parley_warn($c, q{Database lookup returned too many records});
+        parley_warn($c, $c->localize(q{DATABASE TOO MANY RECORDS}));
         $c->log->error(q{Looks like the SQL for password reset is a bit borked});
         $c->log->error(
                 q{Lookup returned }
@@ -348,7 +356,7 @@ sub _user_reset {
 
     # make sure we don't have too few matches
     elsif ($matches->count < 1) {
-        parley_warn($c, q{There are no users matching that information});
+        parley_warn($c, $c->localize(q{NO MATCHING USERS}));
     }
 
     # otherwise, do the work
@@ -364,7 +372,7 @@ sub _user_reset {
         # do the actual password reset
         $email_send_status = $self->_user_password_reset($c, $person);
         if (not $email_send_status) {
-            parley_warn($c, q{Failed to send password reset email});
+            parley_warn($c, $c->localize(q{PASWORD EMAIL SEND FAILED}));
         }
     }
 
@@ -396,9 +404,9 @@ sub _txn_password_reset {
         }
     );
 
-    # as far as I know, no md5_hex value is 'X', so set the hexed password to X
+    # as far as I know, no md5_hex value is 'BeenReset', so set the hexed password to X
     # to prevent anyone logging in after a reset request
-    $person->authentication->password('X');
+    $person->authentication->password('BeenReset');
     # the person is no longer authenticated
     $person->authentication->authenticated(0);
     # update the person's record

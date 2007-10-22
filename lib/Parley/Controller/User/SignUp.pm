@@ -72,7 +72,8 @@ sub authenticate : Path('/user/authenticate') {
 
     # we should have an auth-id in the url
     if (not defined $auth_id) {
-        $c->stash->{error}{message} = q{Incomplete authentication URL};
+        $c->stash->{error}{message}
+            = $c->localize(q{Incomplete authentication URL});
         return;
     }
 
@@ -154,15 +155,18 @@ sub _add_new_user {
 
     # is the requested username already in use?
     if ($self->_username_exists($c, $valid_results->{new_username})) {
-        push @messages, q{The username you have chosen is already in use. Please try a different one.};
+        push @messages, $c->localize(q{USERNAME IN USE});
     }
     # is the requested email address already in use?
     if ($self->_email_exists($c, $valid_results->{email})) {
-        push @messages, q{The email address you have chosen is already in use.<br />Please try a different one, or use the <a href="user/password/forgotten">Forgotten Password</a> page.};
+        push @messages, $c->localize(
+            q{EMAIL IN USE [_1],
+            'user/password/forgotten'},
+        );
     }
     # is the requested forum name already in use?
     if ($self->_forumname_exists($c, $valid_results->{forum_name})) {
-        push @messages, q{The forum name you have chosen is already in use. Please try a different one.};
+        push @messages, $c->localize(q{FORUMNAME IN USE});
     }
 
     # if we DON'T have any messages, then there were no errors, so we can try
@@ -247,7 +251,10 @@ sub _new_user_authentication_email {
             person      => $person,
             headers => {
                 from    => $c->application_email_address(),
-                subject => qq{Activate your @{[$c->config->{name}]} registration},
+                subject => $c->localize(
+                    q{Activate Your [_1] Registration},
+                    $c->config->{name}
+                ),
             },
             template_data => {
                 regauth => $invitation,
@@ -269,13 +276,15 @@ sub _user_signup {
 
     # deal with missing/invalid fields
     if ($c->form->has_missing()) {
-        $c->stash->{view}{error}{message} = q{You must fill in all the required fields};
+        $c->stash->{view}{error}{message}
+            = $c->localize(q{DFV FILL REQUIRED});
         foreach my $f ( $c->form->missing ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }
     }
     elsif ($c->form->has_invalid()) {
-        $c->stash->{view}{error}{message} = q{One or more fields are invalid};
+        $c->stash->{view}{error}{message}
+            = $c->localize(q{DFV FIELDS INVALID});
         foreach my $f ( $c->form->invalid ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }

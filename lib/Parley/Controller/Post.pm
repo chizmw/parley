@@ -50,7 +50,7 @@ sub edit : Local {
 
     # you can't edit a locked post
     elsif ($c->_current_post->thread->locked) {
-        $c->stash->{error}{message} = $c->localize(q{EDIT LOCKED POST}) 
+        $c->stash->{error}{message} = $c->localize(q{EDIT LOCKED POST});
         return;
     }
 
