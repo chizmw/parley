@@ -38,7 +38,7 @@
                                 <small>
                                 [% IF current_thread.locked %]
                                     [%l('Thread Locked')%] 
-                                    <img src="static/images/locked.png" alt="[%l('Locked')"%] title="[%l('Locked Topic')%]" width="16" height="16" />
+                                    <img src="static/images/locked.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
                                 [% ELSE %]
                                     <span class="yui-button yui-link-button">
                                         <span class="first-child">
@@ -60,7 +60,7 @@
         <tr>
             <td class="user_post_info">
                 <!-- user avatar -->
-                [% avatar_file = c.path_to('root')%] _ "/static/user_file/${post.creator.id}/avatar.jpg" %]
+                [% avatar_file = c.path_to('root') _ "/static/user_file/${post.creator.id}/avatar.jpg" %]
                 [% TRY %]
                     [% USE avatar = Image(avatar_file) %]
                     [% tmp = avatar.attr %]
