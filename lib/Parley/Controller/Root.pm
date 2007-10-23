@@ -20,7 +20,6 @@ __PACKAGE__->config->{namespace} = '';
 # - _current_forum
 sub auto : Private {
     my ($self, $c) = @_;
-    $c->log->debug('global auto() called');
 
     # get a list of (all/available) forums
     $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(

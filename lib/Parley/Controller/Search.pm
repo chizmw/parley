@@ -103,7 +103,6 @@ sub _results_view_pager {
     my ($self, $c) = @_;
 
     if (not $c->stash->{search_results}) {
-        $c->log->debug('no results - no pager');
         return;
     }
 
