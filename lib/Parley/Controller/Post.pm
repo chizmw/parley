@@ -55,7 +55,7 @@ sub edit : Local {
     }
 
     # process the form submission
-    else {
+    elsif (defined $c->request->method() and $c->request->method() eq 'POST') {
         # validate the form data
         $c->form(
             $dfv_profile_for{edit_post}

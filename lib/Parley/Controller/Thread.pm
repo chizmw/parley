@@ -388,12 +388,14 @@ sub _add_new_reply {
         foreach my $f ( $c->form->missing ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }
+        return;
     }
     elsif ($c->form->has_invalid()) {
         $c->stash->{view}{error}{message} = $c->localize(q{DFV FIELDS INVALID});
         foreach my $f ( $c->form->invalid ) {
             push @{ $c->stash->{view}{error}{messages} }, $f;
         }
+        return;
     }
 
     # otherwise, the form data is ok ...
