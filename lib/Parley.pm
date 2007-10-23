@@ -5,7 +5,6 @@ use warnings;
 
 use Catalyst::Runtime '5.70';
 use Catalyst qw/
-    -Debug
     Dumper
     StackTrace
 
@@ -30,7 +29,7 @@ use Catalyst qw/
 
 use Parley::App::Communication::Email qw( :email );
 
-our $VERSION = '0.57_03';
+our $VERSION = '0.57_04';
 
 __PACKAGE__->config( version => $VERSION );
 __PACKAGE__->setup;
