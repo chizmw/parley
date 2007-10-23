@@ -15,6 +15,7 @@ This file documents the revision history for Parley.
     - show forum name on thread/view page
     - added (inline) message preview to new thread/post/reply page
     - use COMPILE_DIR setting for Template in parley.yml
+    - added i18n support
 
 0.56    Fri Sep 14 08:44:05 BST 2007
     - replaced Dojo toolkit with YUI toolkit

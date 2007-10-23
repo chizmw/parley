@@ -1,7 +1,5 @@
 TODO LIST
 
-  - i18n email template files
-  - i18n help files
   - write some sensible T&Cs
   - update avatar update response to force a No-Cache?
   - application logo
@@ -9,6 +7,8 @@ TODO LIST
   - proper moderator support/management
   - IP/user reporting
 ? - fix CSS for <fieldset>s
+D - i18n email template files
+D - i18n help files
 D - setup/use ttcache
 D - add missing link to <img> tag to help/formatting_posts
 D - add missing link to BBCode to help/formatting_posts
