@@ -11,7 +11,8 @@ sub first_valid_locale :Export( :locale ) {
     $c->log->debug(
           'first_valid_locale language list: '
         . "@{$c->languages}"
-    );
+    )
+    if $ENV{CATALYST_DEBUG};
 
     foreach my $lang ( @{$c->languages} ) {
         if (-d $c->path_to( 'root', @{$path_parts}, $lang) ) {
