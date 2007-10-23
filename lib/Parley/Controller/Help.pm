@@ -8,7 +8,10 @@ use Parley::App::I18N qw( :locale );
 
 sub index : Private {
     my ( $self, $c ) = @_;
-    $c->stash->{template} = 'help/contents';
+    $c->stash->{template} =
+          q{help/}
+        . first_valid_locale($c, [qw/base help/])
+        . q{/contents}
 }
 
 sub default :Private {
