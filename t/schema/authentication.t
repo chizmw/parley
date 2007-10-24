@@ -28,6 +28,7 @@ $schematest->methods(
 
         relations => [
             qw[
+                people
             ]
         ],
 
