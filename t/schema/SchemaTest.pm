@@ -75,7 +75,7 @@ sub run_tests {
                 # try calling each method
                 foreach my $method ( @{ $self->{methods}->{$method_type} } ) {
                     eval { $record->$method };
-                    is($@, q{}, qq{calling $method didn't barf});
+                    is($@, q{}, qq{calling $method() didn't barf});
                 }
             }
         }
