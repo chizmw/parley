@@ -27,12 +27,14 @@ sub run_tests {
     my ($self) = @_;
     my ($schema, $record, $resultset);
 
-    plan tests =>
+    $self->{num_tests} =
           7                             # fixed number of tests
         + @{ $self->{methods}->{columns}   }
         + @{ $self->{methods}->{relations} }
         + @{ $self->{methods}->{custom}    }
     ;
+
+    plan tests => $self->{num_tests};
 
     # make sure we can use the schema (namespace) module
     use_ok( $self->{namespace} );
@@ -43,39 +45,52 @@ sub run_tests {
     );
     isa_ok($schema, $self->{namespace});
 
-    # get an object to test methods against
-    $record = $schema->resultset( $self->{moniker} )->search({})->first();
-    isa_ok($record, $self->{namespace} . '::' . $self->{moniker});
+    SKIP: {
+        # if we don't have any records, it's pretty hard to test
+        # available methods
+        skip
+            qq{no records in $self->{moniker}},
+            ($self->{num_tests} - 2)
+                unless (
+                    $schema->resultset( $self->{moniker} )->search({})->count()
+                )
+        ;
+            
 
-    my @std_method_types = qw(columns relations custom);
+        # get an object to test methods against
+        $record = $schema->resultset( $self->{moniker} )->search({})->first();
+        isa_ok($record, $self->{namespace} . '::' . $self->{moniker});
 
-    foreach my $method_type (@std_method_types) {
-        SKIP: {
-            skip qq{no $method_type methods}, 1
-                unless @{ $self->{methods}->{$method_type} };
+        my @std_method_types = qw(columns relations custom);
 
-            can_ok(
-                $record,
-                @{ $self->{methods}->{$method_type} },
-            );
-            # try calling each method
-            foreach my $method ( @{ $self->{methods}->{$method_type} } ) {
-                eval { $record->$method };
-                is($@, q{}, qq{calling $method didn't barf});
+        foreach my $method_type (@std_method_types) {
+            SKIP: {
+                skip qq{no $method_type methods}, 1
+                    unless @{ $self->{methods}->{$method_type} };
+
+                can_ok(
+                    $record,
+                    @{ $self->{methods}->{$method_type} },
+                );
+                # try calling each method
+                foreach my $method ( @{ $self->{methods}->{$method_type} } ) {
+                    eval { $record->$method };
+                    is($@, q{}, qq{calling $method didn't barf});
+                }
             }
         }
-    }
 
-    # resultset class methods - we need something slightly different here
-    SKIP: {
-        skip qq{no resultsets methods}, 1
-            unless @{ $self->{methods}->{resultsets} };
+        # resultset class methods - we need something slightly different here
+        SKIP: {
+            skip qq{no resultsets methods}, 1
+                unless @{ $self->{methods}->{resultsets} };
 
-        $resultset = $schema->resultset( $self->{moniker} )->search({});
-        can_ok(
-            $resultset,
-            @{ $self->{methods}->{resultsets} },
-        );
+            $resultset = $schema->resultset( $self->{moniker} )->search({});
+            can_ok(
+                $resultset,
+                @{ $self->{methods}->{resultsets} },
+            );
+        }
     }
 }
 
