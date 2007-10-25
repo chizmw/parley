@@ -14,6 +14,7 @@ requires 'Catalyst::Plugin::Dumper';
 requires 'Catalyst::Plugin::Email';
 requires 'Catalyst::Plugin::FillInForm';
 requires 'Catalyst::Plugin::FormValidator';
+requires 'Catalyst::Plugin::I18N';
 requires 'Catalyst::Plugin::Session';
 requires 'Catalyst::Plugin::Session::State::Cookie';
 requires 'Cache::FastMmap';
