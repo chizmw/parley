@@ -236,7 +236,7 @@ sub _send_username_reminder {
             person      => $person,
             headers => {
                 from    => $c->application_email_address(),
-                subject => $c->localise(
+                subject => $c->localize(
                     q{Your [_1] Username},
                     $c->config->{name}
                 ),
@@ -279,7 +279,7 @@ sub _user_password_reset {
             headers => {
                 from    => $c->application_email_address(),
                 subject => #qq{Reset your @{[$c->config->{name}]} password},
-                    $c->localise(
+                    $c->localize(
                         q{Reset Your [_1] Password},
                         $c->config->{name}
                     ),
