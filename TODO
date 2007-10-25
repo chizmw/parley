@@ -6,6 +6,7 @@ TODO LIST
   - advanced search page
   - proper moderator support/management
   - IP/user reporting
+  - see if we can work out why 'make catalyst_par' is failing
 ? - fix CSS for <fieldset>s
 D - i18n email template files
 D - i18n help files
