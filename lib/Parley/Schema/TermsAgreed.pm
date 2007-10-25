@@ -30,7 +30,7 @@ __PACKAGE__->belongs_to(
     { 'self.person_id' => 'foreign.person_id' }
 );
 __PACKAGE__->belongs_to(
-    'person' => 'Terms',
+    'terms' => 'Terms',
     { 'self.terms_id' => 'foreign.id' }
 );
 
