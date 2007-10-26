@@ -11,7 +11,7 @@
         <img src="static/images/sticky.png" alt="[%l('Sticky')%]" title="[%l('Sticky Topic')%]" width="16" height="16" />
         [%- END %]
         [%- IF thread.locked %]
-        <img src="static/images/locked.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
+        <img src="static/images/icons/lock.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
         [%- END %]
         </td>
 

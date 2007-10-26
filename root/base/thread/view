@@ -38,7 +38,7 @@
                                 <small>
                                 [% IF current_thread.locked %]
                                     [%l('Thread Locked')%] 
-                                    <img src="static/images/locked.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
+                                    <img src="static/images/icons/lock.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
                                 [% ELSE %]
                                     <span class="yui-button yui-link-button">
                                         <span class="first-child">
@@ -159,7 +159,7 @@
                                 <small>
                                 [% IF current_thread.locked %]
                                     [%l('Thread Locked')%] 
-                                    <img src="static/images/locked.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
+                                    <img src="static/images/icons/lock.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
                                 [% ELSE %]
                                     <span class="yui-button yui-link-button">
                                         <span class="first-child">

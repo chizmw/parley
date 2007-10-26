@@ -49,6 +49,7 @@
 
     E.callback = function(){
         var handleSuccess = function(o) {
+            YAHOO.parley.small_loading.wait.hide();
             var data = eval('(' + o.responseText + ')');
             // show the status message
             o.argument.msg_node.innerHTML = data.message;
@@ -58,8 +59,11 @@
             }
         };
         var handleFailure =  function(o) {
+            YAHOO.parley.small_loading.wait.hide();
             alert('ERROR: ' + o.responseText);
         };
+
+        YAHOO.parley.small_loading.wait.show();
 
         // where to post to
         var sUrl = '[%base%]my/saveHandler';
