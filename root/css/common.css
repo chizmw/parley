@@ -499,6 +499,14 @@ a[href $='.pdf']{
     border:             1px solid #666;
 }
 
+#loader_wait.yui-overlay {
+    position:       fixed;
+    float: right;
+    top:            10px;
+    right:          10px;
+    border:         none;
+    text-align: right;
+    }
 
 
 /* ForumCode styles */
@@ -547,3 +555,5 @@ a[href $='.pdf']{
     font-weight:        bold;
     margin-bottom:      3px;
 }
+
+

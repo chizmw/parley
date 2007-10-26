@@ -27,7 +27,7 @@
             ]
             [%- END %]
         </span>
-        <span class="topic_creator"[%l('created by')%]>
+        <span class="topic_creator">[%l('created by')%]
             <span class="post_creator">[% thread.creator.forum_name %]</span>
         </span>
         </td>
@@ -38,7 +38,7 @@
             [% thread.last_post.interval_ago %] [%l('ago')%] 
             </span>
         <br />
-        <span class="topic_creator"[%l('posted by')%]>
+        <span class="topic_creator">[%l('posted by')%]
             <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
         </span>
         </td>
