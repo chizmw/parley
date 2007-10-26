@@ -71,7 +71,7 @@
                     if (   this.config.save_on_enter
                         || this.config.clear_on_escape
                     ) {
-                        YU.Event.addListener(
+                        var status = YU.Event.addListener(
                             _items[i],
                             'keyup',
                             this.onKeyUp,
@@ -129,7 +129,7 @@
             switch (keyCode) {
                 case 13: // enter key
                     if (this.config.save_on_enter) {
-                        this.check();
+                        this.check(p_oEvent);
                     }
                     break;
 
