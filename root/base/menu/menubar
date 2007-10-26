@@ -18,8 +18,8 @@
                     <div class="bd">                                        
                         <ul>
                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]">[%l('Main Page')%]</a></li>
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]/forum/list">[%l('Forum Summary')%]</a></li>
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]/thread/recent">[%l('Recently Updated Threads')%]</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]forum/list">[%l('Forum Summary')%]</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.request.base%]thread/recent">[%l('Recently Updated Threads')%]</a></li>
                         </ul>
 
                         <ul>
