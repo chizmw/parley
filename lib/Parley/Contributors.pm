@@ -16,6 +16,12 @@ Parley::Contributors - people that helped out along the way
 
 Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
+=head1 INTERFACE
+
+=head2 Icons
+
+L<FamFamFam Silk Icons|http://www.famfamfam.com/lab/icons/silk/>
+
 =head1 PATCHES AND BUG-FIXES
 
 Kaare Rasmussen C<< CPANID: KAARE >>
