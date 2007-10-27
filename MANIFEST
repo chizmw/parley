@@ -104,6 +104,7 @@ root/base/shared/moderator_list
 root/base/shared/navigation
 root/base/shared/pager_advanced
 root/base/shared/search_dialog
+root/base/shared/small_loading_please_wait
 root/base/shared/thread_watch
 root/base/shared/threadcrumbs
 root/base/shared/useful_tt_stuff
@@ -153,6 +154,9 @@ root/static/images/btn_88x31_powered_shadow.png
 root/static/images/catalyst_logo.png
 root/static/images/filetypes/image.png
 root/static/images/filetypes/pdf.png
+root/static/images/icons/anchor.png
+root/static/images/icons/lock.png
+root/static/images/loader.gif
 root/static/images/locked.png
 root/static/images/rel_interstitial_loading.gif
 root/static/images/sticky.png
