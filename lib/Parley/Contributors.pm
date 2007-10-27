@@ -29,6 +29,7 @@ Kaare Rasmussen C<< CPANID: KAARE >>
 =head1 PROJECTS
 
 L<Catalyst>,
-L<DBIx::Class>
+L<DBIx::Class>,
+L<Yahoo! User Interface Library|http://developer.yahoo.com/yui/>
 
 =cut
