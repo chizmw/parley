@@ -1,0 +1,6 @@
+This file documents additions and changes to files and templates
+related to Parley's i18n.
+
+
+0.57_08
+    - initial i18n inplementation (en only)
