@@ -49,7 +49,7 @@ sub auto : Private {
         $c->_current_post(
             $c->model('ParleyDB')->resultset('Post')->find(
                 {
-                    post_id  => $c->request->param('post')
+                    'me.id'  => $c->request->param('post')
                 }
             )
         );
@@ -82,7 +82,7 @@ sub auto : Private {
         $c->_current_thread(
             $c->model('ParleyDB')->resultset('Thread')->find(
                 {
-                    thread_id  => $c->request->param('thread'),
+                    'me.id'  => $c->request->param('thread'),
                 }
             )
         );
@@ -110,7 +110,7 @@ sub auto : Private {
         $c->_current_forum(
             $c->model('ParleyDB')->resultset('Forum')->find(
                 {
-                    forum_id  => $c->request->param('forum'),
+                    'me.id'  => $c->request->param('forum'),
                 }
             )
         );

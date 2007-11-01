@@ -29,7 +29,7 @@ sub view : Local {
     $c->stash->{thread_list} =
         $c->model('ParleyDB')->resultset('Thread')->search(
             {
-                forum       => $c->_current_forum->id(),
+                forum_id    => $c->_current_forum->id(),
                 active      => 1,
             },
             {
@@ -39,7 +39,7 @@ sub view : Local {
                 rows        => $c->config->{threads_per_page},
                 page        => $c->stash->{current_page},
 
-                prefetch => [
+                _prefetch => [
                     { creator => 'authentication' },
                     'last_post',
                 ],

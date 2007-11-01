@@ -7,14 +7,14 @@ use base 'DBIx::Class';
 __PACKAGE__->load_components('PK::Auto', 'Core');
 __PACKAGE__->table('forum_moderator');
 __PACKAGE__->add_columns(
-    person => {
+    person_id => {
         data_type       => "integer",
         default_value   => undef,
         is_nullable     => 0,
         size            => 4
     },
 
-    forum => {
+    forum_id => {
         data_type       => "integer",
         default_value   => undef,
         is_nullable     => 0,
@@ -29,8 +29,17 @@ __PACKAGE__->add_columns(
     },
 );
 
-__PACKAGE__->add_unique_constraint('forum_moderator_person_key', ['person', 'forum']);
-__PACKAGE__->belongs_to('person', 'Person', { person_id => 'person' });
-__PACKAGE__->belongs_to('forum',  'Forum',  {  forum_id => 'forum'  });
+__PACKAGE__->add_unique_constraint(
+    'forum_moderator_person_key',
+    ['person_id', 'forum_id']
+);
+__PACKAGE__->belongs_to(
+    'person' => 'Person',
+    { 'foreign.id' => 'self.person_id' }
+);
+__PACKAGE__->belongs_to(
+    'forum' => 'Forum',
+    { 'foreign.id' => 'self.forum_id'  }
+);
 
 1;

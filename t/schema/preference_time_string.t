@@ -19,7 +19,7 @@ $schematest->methods(
     {
         columns => [
             qw[
-                preference_time_string_id
+                id
                 time_string
                 sample
                 comment

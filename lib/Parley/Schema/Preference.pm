@@ -10,23 +10,21 @@ use base 'DBIx::Class';
 __PACKAGE__->load_components("PK::Auto", "Core");
 __PACKAGE__->table("preference");
 __PACKAGE__->add_columns(
-  "timezone",
-  {
-    data_type => "text",
-    default_value => "'UTC'::text",
-    is_nullable => 0,
-    size => undef,
-  },
-
-  "preference_id",
-  {
+  "id" => {
     data_type => "integer",
     default_value => "nextval('preference_preference_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },
 
-  'time_format' => {
+  "timezone" => {
+    data_type => "text",
+    default_value => "'UTC'::text",
+    is_nullable => 0,
+    size => undef,
+  },
+
+  'time_format_id' => {
     data_type => 'integer',
     size => 4,
   },
@@ -49,15 +47,16 @@ __PACKAGE__->add_columns(
     size => 1,
   },
 );
-__PACKAGE__->set_primary_key("preference_id");
+__PACKAGE__->set_primary_key("id");
 __PACKAGE__->has_many(
   "people",
   "Person",
-  { "foreign.preference" => "self.preference_id" },
+  { "foreign.id" => "self.preference_id" },
 );
 
-__PACKAGE__->belongs_to("time_format", "PreferenceTimeString", { preference_time_string_id => "time_format" });
+__PACKAGE__->belongs_to(
+    "time_format" => "PreferenceTimeString",
+    { 'foreign.id' => 'self.time_format_id' });
 
 
 1;
-

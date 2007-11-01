@@ -6,7 +6,7 @@ use base 'DBIx::Class';
 __PACKAGE__->load_components("PK::Auto", "Core");
 __PACKAGE__->table("preference_time_string");
 __PACKAGE__->add_columns(
-    preference_time_string_id => {
+    id => {
         data_type => "integer",
         default_value => "nextval('preference_time_string_preference_time_string_id_seq'::regclass)",
         is_nullable => 0,
@@ -28,6 +28,6 @@ __PACKAGE__->add_columns(
         size => undef,
     },
 );
-__PACKAGE__->set_primary_key("preference_time_string_id");
+__PACKAGE__->set_primary_key("id");
 
 1;

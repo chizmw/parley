@@ -19,8 +19,8 @@ $schematest->methods(
     {
         columns => [
             qw[
-                forum
-                person
+                forum_id
+                person_id
                 can_moderate
             ]
         ],

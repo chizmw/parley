@@ -19,9 +19,9 @@ $schematest->methods(
     {
         columns => [
             qw[
-                thread_view_id
-                person
-                thread
+                id
+                person_id
+                thread_id
                 timestamp
                 watched
                 last_notified

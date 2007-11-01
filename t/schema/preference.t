@@ -19,7 +19,7 @@ $schematest->methods(
     {
         columns => [
             qw[
-                preference_id
+                id
                 timezone
                 time_format
                 show_tz

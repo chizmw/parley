@@ -89,32 +89,32 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->has_many(
     "threads" => "Thread",
-    { "foreign.last_post" => "self.id" }
+    { "foreign.last_post_id" => "self.id" }
 );
 __PACKAGE__->has_many(
     "forums" => "Forum",
-    { "foreign.last_post" => "self.id" }
+    { "foreign.last_post_id" => "self.id" }
 );
 __PACKAGE__->belongs_to(
     "creator" => "Person",
-    { person_id => "creator_id" },
+    { 'foreign.id' => "self.creator_id" },
 );
 __PACKAGE__->belongs_to(
     "reply_to" => "Post",
-    { id => "reply_to_id" },
+    { 'foreign.id' => "self.reply_to_id" },
     { join_type => 'left' },
 );
 __PACKAGE__->has_many(
   "post_reply_toes" => "Post",
-  { "foreign.reply_to" => "self.id" },
+  { "foreign.reply_to_id" => "self.id" },
 );
 __PACKAGE__->belongs_to(
     "thread" => "Thread",
-    { thread_id => "thread_id" },
+    { 'foreign.id' => "self.thread_id" },
 );
 __PACKAGE__->belongs_to(
     "quoted_post" => "Post",
-    { id => "quoted_post_id" },
+    { 'foreign.id' => "self.quoted_post_id" },
     { join_type => 'left' },
 );
 __PACKAGE__->has_many(

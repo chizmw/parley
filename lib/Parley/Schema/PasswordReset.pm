@@ -8,13 +8,13 @@ __PACKAGE__->load_components("PK::Auto", "Core");
 __PACKAGE__->table("password_reset");
 __PACKAGE__->add_columns(
 
-  password_reset_id => {
+  id => {
     data_type => "integer",
     is_nullable => 0,
     size => undef,
   },
 
-  recipient => {
+  recipient_id => {
     data_type => "integer",
     default_value => undef,
     is_nullable => 0,
@@ -28,8 +28,11 @@ __PACKAGE__->add_columns(
   },
 );
 
-__PACKAGE__->set_primary_key("password_reset_id");
+__PACKAGE__->set_primary_key("id");
 
-__PACKAGE__->belongs_to("recipient", "Person", { person_id => "recipient" });
+__PACKAGE__->belongs_to(
+    "recipient" => "Person",
+    { 'foreign.id' => 'self.recipient_id' }
+);
 
 1;

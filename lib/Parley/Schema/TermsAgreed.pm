@@ -27,7 +27,7 @@ __PACKAGE__->set_primary_key('id');
 
 __PACKAGE__->belongs_to(
     'person' => 'Person',
-    { 'foreign.person_id' => 'self.person_id' }
+    { 'foreign.id' => 'self.person_id' }
 );
 __PACKAGE__->belongs_to(
     'terms' => 'Terms',

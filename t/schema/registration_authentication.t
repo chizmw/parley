@@ -19,8 +19,8 @@ $schematest->methods(
     {
         columns => [
             qw[
-                registration_authentication_id
-                recipient
+                id
+                recipient_id
                 expires
             ]
         ],

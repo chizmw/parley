@@ -10,82 +10,99 @@ use base 'DBIx::Class';
 __PACKAGE__->load_components('ResultSetManager', "PK::Auto", "Core");
 __PACKAGE__->table("thread");
 __PACKAGE__->add_columns(
-  "thread_id",
-  {
+  "id" => {
     data_type => "integer",
     default_value => "nextval('thread_thread_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },
-  "locked",
-  {
+  "locked" => {
     data_type => "boolean",
     default_value => "false",
     is_nullable => 0,
     size => 1,
   },
-  "creator",
-  { data_type => "integer", default_value => undef, is_nullable => 0, size => 4 },
-  "subject",
-  {
+  "creator_id" => {
+    data_type => "integer",
+    default_value => undef,
+    is_nullable => 0,
+    size => 4
+  },
+  "subject" => {
     data_type => "text",
     default_value => undef,
     is_nullable => 0,
     size => undef,
   },
-  "active",
-  {
+  "active" => {
     data_type => "boolean",
     default_value => "true",
     is_nullable => 0,
     size => 1,
   },
-  "forum",
-  { data_type => "integer", default_value => undef, is_nullable => 0, size => 4 },
-  "created",
-  {
+  "forum_id", {
+    data_type => "integer",
+    default_value => undef,
+    is_nullable => 0,
+    size => 4
+  },
+  "created" => {
     data_type => "timestamp with time zone",
     default_value => "now()",
     is_nullable => 1,
     size => 8,
   },
-  "last_post",
-  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
-  "sticky",
-  {
+  "last_post_id" => {
+    data_type => "integer",
+    default_value => undef,
+    is_nullable => 1,
+    size => 4
+  },
+  "sticky" => {
     data_type => "boolean",
     default_value => "false",
     is_nullable => 0,
     size => 1,
   },
-  "post_count",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "view_count",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "post_count" => {
+    data_type => "integer",
+    default_value => 0,
+    is_nullable => 0,
+    size => 4
+  },
+  "view_count" => {
+    data_type => "integer",
+    default_value => 0,
+    is_nullable => 0,
+    size => 4
+  },
 );
-__PACKAGE__->set_primary_key("thread_id");
-__PACKAGE__->belongs_to("creator", "Person", { person_id => "creator" });
+__PACKAGE__->set_primary_key("id");
 __PACKAGE__->belongs_to(
-    "last_post", "Post",
-    { id => "last_post" },
-    { prefetch => [ qw/ creator / ] },
+    "creator" => "Person",
+    { 'foreign.id' => 'self.creator_id' }
 );
-__PACKAGE__->belongs_to("forum", "Forum", { forum_id => "forum" });
-__PACKAGE__->has_many(
-    "posts", "Post",
-    { "foreign.thread" => "self.thread_id" },
+__PACKAGE__->belongs_to(
+    "last_post" => "Post",
+    { 'foreign.id' => 'self.last_post_id' },
+);
+__PACKAGE__->belongs_to(
+    "forum" =>  "Forum",
+    { 'foreign.id' => 'self.forum_id' }
 );
 __PACKAGE__->has_many(
-  "thread_views",
-  "ThreadView",
-  { "foreign.thread" => "self.thread_id" },
+    "posts" => "Post",
+    { "foreign.thread_id" => "self.id" },
+);
+__PACKAGE__->has_many(
+  "thread_views" => "ThreadView",
+  { "foreign.thread_id" => "self.id" },
 );
 
 __PACKAGE__->has_many(
-    'forum_moderators',
-    'ForumModerator',
+    'forum_moderators' => 'ForumModerator',
     {
-        'foreign.forum' => 'self.forum',
+        'foreign.forum' => 'self.forum_id',
     }
 );
 

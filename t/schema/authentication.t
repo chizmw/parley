@@ -19,7 +19,7 @@ $schematest->methods(
     {
         columns => [
             qw[
-                authentication_id
+                id
                 username
                 password
                 authenticated

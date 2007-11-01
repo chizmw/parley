@@ -19,8 +19,8 @@ $schematest->methods(
     {
         columns => [
             qw[
-                password_reset_id
-                recipient
+                id
+                recipient_id
                 expires
             ]
         ],

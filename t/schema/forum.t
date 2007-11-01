@@ -19,12 +19,12 @@ $schematest->methods(
     {
         columns => [
             qw[
-                forum_id
+                id
                 name
                 description
                 active
                 post_count
-                last_post
+                last_post_id
             ]
         ],
 

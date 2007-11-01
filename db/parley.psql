@@ -12,7 +12,7 @@ BEGIN;
 
 -- we have authentication
 CREATE TABLE authentication (
-    authentication_id       SERIAL          not null        primary key,
+    id                      SERIAL          not null        primary key,
     username                text            not null,
     password                text            not null,
     authenticated           boolean         NOT NULL        default False,
@@ -23,7 +23,7 @@ CREATE TABLE authentication (
 
 -- a table of acceptable TZ strings
 CREATE TABLE preference_time_string (
-    preference_time_string_id       SERIAL      primary key,
+    id                              SERIAL      primary key,
     time_string                     text        not null,
     sample                          text        not null,
     comment                         text
@@ -40,11 +40,11 @@ INSERT INTO preference_time_string (time_string, sample) VALUES ('%R, %b %d ''%y
 
 
 CREATE TABLE preference (
-    preference_id   SERIAL      primary key,
+    id             SERIAL      primary key,
 
     timezone        text        not null
             default 'UTC',
-    time_format     integer     references preference_time_string,
+    time_format_id  integer     references preference_time_string(id),
     show_tz         boolean     default True,
 
     notify_thread_watch     boolean     default False,
@@ -52,41 +52,41 @@ CREATE TABLE preference (
 );
 
 CREATE TABLE person (
-    person_id       SERIAL      primary key,
+    id                  SERIAL      primary key,
     
-    first_name      text        not null,
-    last_name       text        not null,
-    email           text        not null,
+    first_name          text        not null,
+    last_name           text        not null,
+    email               text        not null,
     
-    forum_name      text        not null,
+    forum_name          text        not null,
 
-    preference      integer
-                    references preference,
+    preference_id       integer
+                        references preference(id),
 
-    authentication  integer
-                    references authentication,
+    authentication_id   integer
+                        references authentication(id),
 
     UNIQUE(forum_name),
     UNIQUE(email)
 );
 
 CREATE TABLE registration_authentication (
-    registration_authentication_id  text  primary key,
-    recipient       integer     not null
-                    references person,
+    id              text  primary key,
+    recipient_id    integer     not null
+                    references person(id),
     expires         date
 );
 
 -- new table used during forgotten password process
 CREATE TABLE password_reset (
-    password_reset_id       text        primary key,
-    recipient               integer     not null
-                            references person,
+    id                      text        primary key,
+    recipient_id            integer     not null
+                            references person(id),
     expires                 timestamp
 );
 
 CREATE TABLE forum (
-    forum_id        SERIAL      primary key,
+    id              SERIAL      primary key,
     name            text        not null,
     description     text,
 
@@ -98,16 +98,16 @@ CREATE TABLE forum (
 );
 
 CREATE TABLE thread (
-    thread_id       SERIAL      primary key,
-    forum           integer     not null
-                    references forum,
+    id              SERIAL      primary key,
+    forum_id        integer     not null
+                    references forum(id),
 
     subject         text        not null,
     
     created         timestamp with time zone
                     default CURRENT_TIMESTAMP,
-    creator         integer     not null
-                    references person,
+    creator_id      integer     not null
+                    references person(id),
     post_count      integer     not null    default 0,
     view_count      integer     not null    default 0,
 
@@ -118,45 +118,45 @@ CREATE TABLE thread (
 );
 
 CREATE TABLE post (
-    post_id         SERIAL      primary key,
-    thread          integer     not null
-                    references thread,
+    id              SERIAL      primary key,
+    thread_id       integer     not null
+                    references thread(id),
 
     subject         text,
     message         text        not null,
 
     created         timestamp with time zone
                     default CURRENT_TIMESTAMP,
-    creator         integer     not null
-                    references person,
+    creator_id      integer     not null
+                    references person(id),
 
     ip_addr         inet
 
 );
 
 -- add ReplyTo information for post
-ALTER TABLE post ADD COLUMN reply_to
-    integer references post
+ALTER TABLE post ADD COLUMN reply_to_id
+    integer references post(id)
 ;
 -- deal with quoted replies
 ALTER TABLE post
-ADD COLUMN quoted_post
-integer REFERENCES post;
+ADD COLUMN quoted_post_id
+integer REFERENCES post(id);
 
 ALTER TABLE post
 ADD COLUMN quoted_text text;
 
 -- add LastPost information
-ALTER TABLE thread ADD COLUMN last_post
-    integer references post
+ALTER TABLE thread ADD COLUMN last_post_id
+    integer references post(id)
 ;
-ALTER TABLE forum ADD COLUMN last_post
-    integer references post
+ALTER TABLE forum ADD COLUMN last_post_id
+    integer references post(id)
 ;
 
 -- person posting information
-ALTER TABLE person ADD COLUMN last_post
-    integer references post
+ALTER TABLE person ADD COLUMN last_post_id
+    integer references post(id)
 ;
 ALTER TABLE person ADD COLUMN post_count
     integer NOT NULL default 0
@@ -171,9 +171,9 @@ ALTER TABLE post
 
 -- when a user last viewed a thread
 CREATE TABLE thread_view (
-    thread_view_id      SERIAL      not null        primary key,
-    person              integer     not null        references person,
-    thread              integer     not null        references thread,
+    id                  SERIAL      not null        primary key,
+    person_id           integer     not null        references person(id),
+    thread_id           integer     not null        references thread(id),
     timestamp           timestamp with time zone    not null
                         default CURRENT_TIMESTAMP,
 
@@ -187,13 +187,13 @@ CREATE TABLE thread_view (
 -- overall it's better to queue outgoing emails, and have a separate process
 -- deal with them
 CREATE TABLE email_queue (
-    email_queue_id      SERIAL      not null        primary key,
+    id                  SERIAL      not null        primary key,
     queued              timestamp with time zone    not null
                         default CURRENT_TIMESTAMP,
 
-    recipient           integer     not null        references person,
-    cc                  integer                     references person,
-    bcc                 integer                     references person,
+    recipient_id        integer     not null        references person(id),
+    cc_id               integer                     references person(id),
+    bcc_id              integer                     references person(id),
 
     sender              text        not null,
 
@@ -208,8 +208,8 @@ CREATE TABLE email_queue (
 
 -- a table of person/forum to show who's a moderator
 CREATE TABLE forum_moderator (
-    person              integer     not null    references person,
-    forum               integer     not null    references forum,
+    person_id           integer     not null    references person(id),
+    forum_id            integer     not null    references forum(id),
     can_moderate        boolean     not null    default true,
 
     unique(person,forum)
@@ -232,7 +232,7 @@ CREATE TABLE terms_agreed (
     id              serial      primary key,
 
     person_id       integer     not null
-                    references person(person_id),
+                    references person(id),
     terms_id        integer     not null
                     references terms(id),
 
@@ -250,23 +250,23 @@ CREATE TABLE terms_agreed (
 
 -- #0 authentication
 INSERT INTO authentication
-(authentication_id, username, password, authenticated)
+(id, username, password, authenticated)
 VALUES
 (0, 'topdog', md5('k1tt3n'), true);
 
 -- #0 preference
 INSERT INTO preference
-(preference_id, timezone)
+(id, timezone)
 VALUES
 (0, 'UTC');
 
 -- #0 person info
 INSERT INTO person
-(person_id,first_name, last_name, email, forum_name, authentication, preference)
+(id,first_name, last_name, email, forum_name, authentication, preference)
 VALUES
 (0, 'Top','Dog','topdog@herlpacker.co.uk','TopDog', 0, 0);
 
-INSERT INTO forum (forum_id, name, description) VALUES (0, 'Off-Topic', 'General off-topic discussion');
+INSERT INTO forum (id, name, description) VALUES (0, 'Off-Topic', 'General off-topic discussion');
 INSERT INTO forum (name, description) VALUES ('Suggestions', 'Things you think should be added');
 INSERT INTO forum (name, description) VALUES ('Bugs', 'If you find anything broken, report it here');
 

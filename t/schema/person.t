@@ -19,14 +19,14 @@ $schematest->methods(
     {
         columns => [
             qw[
-                person_id
-                authentication
+                id
+                authentication_id
                 first_name
                 last_name
                 email
                 forum_name
-                preference
-                last_post
+                preference_id
+                last_post_id
                 post_count
             ]
         ],

@@ -19,11 +19,11 @@ $schematest->methods(
     {
         columns => [
             qw[
-                email_queue_id
+                id
                 queued
-                recipient
-                cc
-                bcc
+                recipient_id
+                cc_id
+                bcc_id
                 sender
                 subject
                 text_content

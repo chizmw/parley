@@ -13,18 +13,18 @@ use Parley::App::DateTime qw( :interval );
 __PACKAGE__->load_components('ResultSetManager', "PK::Auto", "Core");
 __PACKAGE__->table("thread_view");
 __PACKAGE__->add_columns(
+  "id" => {
+    data_type => "integer",
+    default_value => "nextval('thread_view_thread_view_id_seq'::regclass)",
+    is_nullable => 0,
+    size => 4,
+  },
+
   "watched" => {
     data_type => "boolean",
     default_value => "false",
     is_nullable => 0,
     size => 1,
-  },
-
-  "thread_view_id" => {
-    data_type => "integer",
-    default_value => "nextval('thread_view_thread_view_id_seq'::regclass)",
-    is_nullable => 0,
-    size => 4,
   },
 
   "last_notified" => {
@@ -34,7 +34,7 @@ __PACKAGE__->add_columns(
     size => 8,
   },
 
-  "thread" => {
+  "thread_id" => {
     data_type => "integer",
     default_value => undef,
     is_nullable => 0,
@@ -46,17 +46,26 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => 8,
   },
-  "person" => {
+  "person_id" => {
     data_type => "integer",
     default_value => undef,
     is_nullable => 0,
     size => 4
   },
 );
-__PACKAGE__->set_primary_key("thread_view_id");
-__PACKAGE__->add_unique_constraint("thread_view_person_key", ["person", "thread"]);
-__PACKAGE__->belongs_to("thread", "Thread", { thread_id => "thread" });
-__PACKAGE__->belongs_to("person", "Person", { person_id => "person" });
+__PACKAGE__->set_primary_key("id");
+__PACKAGE__->add_unique_constraint(
+    'thread_view_person_key',
+    ['person_id', 'thread_id']
+);
+__PACKAGE__->belongs_to(
+    "thread" => "Thread",
+    { 'foreign.id' => 'self.thread_id' },
+);
+__PACKAGE__->belongs_to(
+    "person" => "Person",
+    { 'foreign.id' => 'self.person_id' }
+);
 
 
 
@@ -152,4 +161,3 @@ sub interval_ago {
 }
 
 1;
-

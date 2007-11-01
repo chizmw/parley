@@ -10,20 +10,28 @@ use base 'DBIx::Class';
 __PACKAGE__->load_components("PK::Auto", "Core");
 __PACKAGE__->table("registration_authentication");
 __PACKAGE__->add_columns(
-  "recipient",
-  { data_type => "integer", default_value => undef, is_nullable => 0, size => 4 },
-  "registration_authentication_id",
-  {
+  "id" => {
     data_type => "text",
     default_value => undef,
     is_nullable => 0,
     size => undef,
   },
-  "expires",
-  { data_type => "date", default_value => undef, is_nullable => 1, size => 4 },
+  "recipient_id" => {
+    data_type => "integer",
+    default_value => undef,
+    is_nullable => 0,
+    size => 4
+  },
+  "expires" => {
+    data_type => "date",
+    default_value => undef,
+    is_nullable => 1,
+    size => 4
+  },
 );
-__PACKAGE__->set_primary_key("registration_authentication_id");
-__PACKAGE__->belongs_to("recipient", "Person", { person_id => "recipient" });
+__PACKAGE__->set_primary_key("id");
+__PACKAGE__->belongs_to(
+    "recipient" => "Person",
+    { 'foreign.id' => "self.recipient_id" });
 
 1;
-

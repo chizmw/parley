@@ -19,15 +19,15 @@ $schematest->methods(
     {
         columns => [
             qw[
-                post_id
-                creator
+                id
+                creator_id
                 subject
-                quoted_post
+                quoted_post_id
                 message
                 quoted_text
                 created
-                thread
-                reply_to
+                thread_id
+                reply_to_id
                 edited
                 ip_addr
             ]
