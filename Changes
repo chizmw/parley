@@ -1,6 +1,6 @@
 This file documents the revision history for Parley.
 
-0.57
+0.57    Wed Oct 31 19:15:06 GMT 2007
     - added T&Cs to application
     - added T&C editor/updater (site_moderator only)
     - added "Accept T&C" functionality (for logged in users)
