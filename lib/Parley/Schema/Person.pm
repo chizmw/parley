@@ -70,10 +70,9 @@ __PACKAGE__->has_many(
   { "foreign.person" => "self.person_id" },
 );
 __PACKAGE__->belongs_to("preference", "Preference", { preference_id => "preference" });
-__PACKAGE__->belongs_to("last_post", "Post", { post_id => "last_post" });
+__PACKAGE__->belongs_to("last_post", "Post", { id => "last_post" });
 __PACKAGE__->belongs_to(
-  "authentication",
-  "Authentication",
+  "authentication" => "Authentication",
   { authentication_id => "authentication" },
 );
 __PACKAGE__->has_many(

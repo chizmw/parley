@@ -38,6 +38,11 @@ sub view : Local {
                 # pager information
                 rows        => $c->config->{threads_per_page},
                 page        => $c->stash->{current_page},
+
+                prefetch => [
+                    { creator => 'authentication' },
+                    'last_post',
+                ],
             }
         );
 

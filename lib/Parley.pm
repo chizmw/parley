@@ -3,6 +3,8 @@ package Parley;
 use strict;
 use warnings;
 
+our $VERSION = '0.58_01';
+
 use Catalyst::Runtime '5.70';
 use Catalyst qw/
     Dumper
@@ -28,8 +30,6 @@ use Catalyst qw/
 /;
 
 use Parley::App::Communication::Email qw( :email );
-
-our $VERSION = '0.57_08';
 
 __PACKAGE__->config( version => $VERSION );
 __PACKAGE__->setup;

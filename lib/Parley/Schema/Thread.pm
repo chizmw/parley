@@ -65,9 +65,16 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("thread_id");
 __PACKAGE__->belongs_to("creator", "Person", { person_id => "creator" });
-__PACKAGE__->belongs_to("last_post", "Post", { post_id => "last_post" });
+__PACKAGE__->belongs_to(
+    "last_post", "Post",
+    { id => "last_post" },
+    { prefetch => [ qw/ creator / ] },
+);
 __PACKAGE__->belongs_to("forum", "Forum", { forum_id => "forum" });
-__PACKAGE__->has_many("posts", "Post", { "foreign.thread" => "self.thread_id" });
+__PACKAGE__->has_many(
+    "posts", "Post",
+    { "foreign.thread" => "self.thread_id" },
+);
 __PACKAGE__->has_many(
   "thread_views",
   "ThreadView",

@@ -209,12 +209,19 @@ sub view : Local {
     ##################################################
     $c->stash->{post_list} = $c->model('ParleyDB')->resultset('Post')->search(
         {
-            thread => $c->_current_thread->id(),
+            'me.thread_id' => $c->_current_thread->id(),
         },
         {
-            order_by    => 'created ASC',
+            order_by    => 'me.created ASC',
             rows        => $c->config->{posts_per_page},
             page        => $c->stash->{current_page},
+
+            prefetch => [
+                { thread => 'forum' },
+                { reply_to => 'creator' },
+                { quoted_post => 'creator' },
+                { creator => 'authentication' },
+            ],
         }
     );
 
