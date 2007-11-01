@@ -92,8 +92,8 @@ sub watching_thread : ResultSet {
 
     my $thread_view = $self->find(
         {
-            person  => $person->id(),
-            thread  => $thread->id(),
+            person_id => $person->id(),
+            thread_id => $thread->id(),
         }
     );
 
@@ -124,7 +124,7 @@ sub notification_list : ResultSet {
     my $notification_list = $self->search(
         {
             # the thread the post belongs to
-            thread          => $post->thread()->id(),
+            thread_id       => $post->thread()->id(),
             # only interested in records where a person is watching
             watched         => 1,
             # and they last viewed the thread before the last post
@@ -140,7 +140,7 @@ sub notification_list : ResultSet {
                    \'< timestamp'    ,
             ],
             # and they aren't the person that created the post itself
-            person          => {
+            person_id => {
                 '!=',
                 $post->creator()->id(),
             },

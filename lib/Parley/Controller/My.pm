@@ -154,7 +154,7 @@ sub preferences : Local {
     # watched threads
     my $watches = $c->model('ParleyDB')->resultset('ThreadView')->search(
         {
-            person      => $c->_authed_user()->id(),
+            person_id   => $c->_authed_user()->id(),
             watched     => 1,
         },
         {

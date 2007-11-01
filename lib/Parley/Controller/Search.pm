@@ -68,7 +68,7 @@ sub forum :Local {
         eval {
             $forum = $c->model('ParleyDB')->resultset('Forum')->find(
                 {
-                    forum_id    => $c->request->param('search_forum'),
+                    'me.id'    => $c->request->param('search_forum'),
                 }
             );
         };

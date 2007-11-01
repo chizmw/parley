@@ -14,7 +14,7 @@ sub list : Local {
                 active => 1,
             },
             {
-                'order_by'  => 'forum_id ASC',
+                'order_by'  => 'me.id ASC',
             }
         );
 }

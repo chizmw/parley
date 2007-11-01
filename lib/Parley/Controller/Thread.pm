@@ -276,8 +276,8 @@ sub watch :Local {
     # get the ThreadView so we can update it
     my $thread_view = $c->model('ParleyDB')->resultset('ThreadView')->find(
         {
-            person  => $c->_authed_user()->id(),
-            thread  => $c->_current_thread()->id(),
+            person_id  => $c->_authed_user()->id(),
+            thread_id  => $c->_current_thread()->id(),
         }
     );
 
@@ -333,7 +333,7 @@ sub watches : Local {
     # watched threads
     my $watches = $c->model('ParleyDB')->resultset('ThreadView')->search(
         {
-            person      => $c->_authed_user()->id(),
+            person_id   => $c->_authed_user()->id(),
             watched     => 1,
         },
         {
@@ -352,8 +352,8 @@ sub watches : Local {
             # get the ThreadView so we can update it
             my $thread_view = $c->model('ParleyDB')->resultset('ThreadView')->find(
                 {
-                    person  => $c->_authed_user()->id(),
-                    thread  => $thread_id,
+                    person_id  => $c->_authed_user()->id(),
+                    thread_id  => $thread_id,
                 }
             );
 
@@ -512,7 +512,7 @@ sub _get_thread_reply_post {
         # get the first post in the thread
         $posts = $c->model('ParleyDB')->resultset('Post')->search(
             {
-                thread      => $c->_current_thread()->id(),
+                'me.id'     => $c->_current_thread()->id(),
             },
             {
                 order_by    => 'created ASC',
@@ -626,7 +626,7 @@ sub _thread_watch_count {
     $c->stash->{watcher_count} =
         $c->model('ParleyDB')->resultset('ThreadView')->count(
             {
-                thread  => $c->_current_thread()->id(),
+                'me.id' => $c->_current_thread()->id(),
                 watched => 1,
             }
         )
@@ -708,8 +708,8 @@ sub _update_thread_view {
     my $thread_view =
         $c->model('ParleyDB')->resultset('ThreadView')->find_or_create(
             {
-                person      => $c->_authed_user()->id(),
-                thread      => $c->_current_thread()->id(),
+                person_id   => $c->_authed_user()->id(),
+                thread_id   => $c->_current_thread()->id(),
                 timestamp   => $last_post_timestamp,
             },
         )
@@ -756,10 +756,10 @@ sub _txn_add_new_reply {
     # create a new post in the current thread
     $new_post = $c->model('ParleyDB')->resultset('Post')->create(
         {
-            thread      => $c->_current_thread()->id(),
+            'me.id'     => $c->_current_thread()->id(),
             subject     => $c->form->valid->{thread_subject},
             message     => $c->form->valid->{thread_message},
-            creator     => $c->_authed_user->id(),
+            creator_id  => $c->_authed_user->id(),
             ip_addr     => $c->request->address(),
         }
     );
@@ -804,8 +804,8 @@ sub _txn_add_new_reply {
         my $thread_view =
             $c->model('ParleyDB')->resultset('ThreadView')->find(
                 {
-                    person      => $c->_authed_user()->id(),
-                    thread      => $c->_current_thread()->id(),
+                    person_id   => $c->_authed_user()->id(),
+                    thread_id   => $c->_current_thread()->id(),
                 },
             )
         ;
@@ -833,19 +833,19 @@ sub _txn_add_new_thread {
     # create a new thread
     $new_thread = $c->model('ParleyDB')->resultset('Thread')->create(
         {
-            forum       => $c->_current_forum->id(),
+            forum_id    => $c->_current_forum->id(),
             subject     => $c->form->valid->{thread_subject},
-            creator     => $c->_authed_user->id(),
+            creator_id  => $c->_authed_user->id(),
         }
     );
 
     # create a new post in the new thread
     $new_post = $c->model('ParleyDB')->resultset('Post')->create(
         {
-            thread      => $new_thread->id(),
+            thread_id   => $new_thread->id(),
             subject     => $c->form->valid->{thread_subject},
             message     => $c->form->valid->{thread_message},
-            creator     => $c->_authed_user->id(),
+            creator_id  => $c->_authed_user->id(),
             ip_addr     => $c->request->address(),
         }
     );
@@ -866,8 +866,8 @@ sub _txn_add_new_thread {
         my $thread_view =
             $c->model('ParleyDB')->resultset('ThreadView')->create(
                 {
-                    person      => $c->_authed_user()->id(),
-                    thread      => $new_thread->id(),
+                    person_id   => $c->_authed_user()->id(),
+                    thread_id   => $new_thread->id(),
                     watched     => 1,
                 },
             )
