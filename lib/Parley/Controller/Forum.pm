@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+use Parley::App::Error qw( :methods );
+
 sub list : Local {
     my ($self, $c) = @_;
 
@@ -21,6 +23,11 @@ sub list : Local {
 
 sub view : Local {
     my ($self, $c) = @_;
+
+    if (not defined $c->_current_forum) {
+        parley_die($c, $c->localize('There is no current forum to view'));
+        return;
+    }
 
     # page to show - either a param, or show the first
     $c->stash->{current_page}= $c->request->param('page') || 1;

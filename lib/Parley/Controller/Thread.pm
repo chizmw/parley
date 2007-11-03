@@ -5,6 +5,7 @@ use warnings;
 use base 'Catalyst::Controller';
 use Data::SpreadPagination;
 
+use Parley::App::Error qw( :methods );
 use Parley::App::Notification qw( :watch );
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -196,6 +197,11 @@ sub reply : Local {
 sub view : Local {
     my ($self, $c) = @_;
 
+    if (not defined $c->_current_thread) {
+        parley_die($c, $c->localize('There is no current thread to view'));
+        return;
+    }
+
     # page to show - either a param, or show the first
     $c->stash->{current_page}= $c->request->param('page') || 1;
 
@@ -271,7 +277,7 @@ sub watch :Local {
     }
 
     # need to be logged in to watch threads
-    $c->login_if_required($c, $c->localize(q{LOGIN WATCH TOPIC}));
+    $c->login_if_required($c->localize(q{LOGIN WATCH TOPIC}));
 
     # get the ThreadView so we can update it
     my $thread_view = $c->model('ParleyDB')->resultset('ThreadView')->find(

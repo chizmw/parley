@@ -21,6 +21,8 @@ __PACKAGE__->config->{namespace} = '';
 sub auto : Private {
     my ($self, $c) = @_;
 
+    $c->log->debug( $c->language() );
+
     # get a list of (all/available) forums
     $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(
         {
@@ -214,7 +216,7 @@ sub render : ActionClass('RenderView') {
 
     if (has_died($c)) {
         $c->stash->{template} = 'error/simple';
-        $c->log->error( $c->stash->{view}{error}{messages} );
+        $c->log->error( @{ $c->stash->{view}{error}{messages} } );
     }
 }
 
