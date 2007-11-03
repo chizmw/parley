@@ -16,3 +16,5 @@ Parley-0.*
 root/base/help/en/yui_test
 ttcache
 t/99.prefetch_experiments.t
+.*YUI.*
+root/base/yui
