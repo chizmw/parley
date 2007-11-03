@@ -1,6 +1,14 @@
-This file documents additions and changes to files and templates
-related to Parley's i18n.
+This file documents additions and changes to files and templates related to
+Parley's i18n.
 
+The inention is for 'en' to be the main/key language for the application with
+other translations being made from it.  As a consequence of this, i-default
+(i_default.po) should always be an exact copy of the en (en.po) file(s).
 
-0.57_08
+0.58
+    en.po:
+        - 'There is no current forum to view'
+        - 'There is no current thread to view'
+
+0.57
     - initial i18n inplementation (en only)
