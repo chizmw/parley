@@ -21,8 +21,6 @@ __PACKAGE__->config->{namespace} = '';
 sub auto : Private {
     my ($self, $c) = @_;
 
-    $c->log->debug( $c->language() );
-
     # get a list of (all/available) forums
     $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(
         {
