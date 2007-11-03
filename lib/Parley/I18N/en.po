@@ -595,6 +595,12 @@ msgstr "Thanks for signing up"
 msgid "The following error message was returned by the application"
 msgstr "The following error message was returned by the application"
 
+msgid "There is no current forum to view"
+msgstr "There is no current forum to view"
+
+msgid "There is no current thread to view"
+msgstr "There is no current thread to view"
+
 msgid "THREAD NO INFORMATION"
 msgstr "No information exists for the thread or post you are trying to reply to."
 
