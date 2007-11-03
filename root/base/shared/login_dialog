@@ -50,6 +50,35 @@ function init() {
 	
 	// Render the Dialog
 	YAHOO.parley.login.login_dialog.render();
+
+    // firefox caret/cursor fix
+    // from: http://yuiblog.com/sandbox/yui/v230/examples/container/ffcursor.html
+    if (YAHOO.env.ua.gecko) {
+        console.log('caret fix ...');
+        var dlg = YAHOO.parley.login.login_dialog;
+        /* 
+            * Other part of workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=167801 !!?
+            * I have no explanation for why the new thread (setTimeout) is needed, but it is.
+            */
+        YAHOO.util.Dom.addClass(dlg.form, "caretfix");
+
+        dlg.showEvent.subscribe(function() {
+            YAHOO.util.Dom.setStyle(dlg.form, "display", "none");
+
+            var fixDisplay = function() {
+                YAHOO.util.Dom.setStyle(dlg.form, "display", "block");
+                try {
+                    dlg.firstFormElement.focus();
+                } catch (e) {
+                    // Not related to the workaround, I just try/catch focus calls
+                    // to avoid testing for the various conditions in which they could
+                    // fail.
+                }
+            }
+            setTimeout(fixDisplay, 0);
+        });
+        console.log('caret fixed ... ?');
+    }
 }
 
 YAHOO.util.Event.onDOMReady(init);

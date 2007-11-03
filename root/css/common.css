@@ -1,3 +1,7 @@
+.caretfix {
+    overflow:auto;
+}
+
 div#userinfo_box {
     position:       absolute;
     top:            0;
