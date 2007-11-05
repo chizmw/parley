@@ -148,7 +148,6 @@ sub recent : Local {
     # setup the pager
     $self->_prepare_pager($c, $c->stash->{thread_list});
 
-    #$c->log->debug( $c->stash->{thread_list}->count() );
     return;
 }
 
@@ -183,13 +182,11 @@ sub reply : Local {
             and $c->request->method() eq 'POST'
             and defined $c->request->param('post_reply')
     ) {
-        #$c->log->debug('calling: _add_new_reply($c)');
         $self->_add_new_reply($c);
     }
     # other wise we continue merrily on our way, and simply display the
     # thread/reply page
     else {
-        #$c->log->debug('allowing fall-through to view in reply()');
         # thread/reply template shown automagically
     }
 }
@@ -242,8 +239,6 @@ sub view : Local {
     # some updates for logged in users
     ##################################################
     if ($c->_authed_user) {
-        #$c->log->debug('thread view by authed user');
-
         # update thread_view for user
         $self->_update_thread_view($c);
 
@@ -353,7 +348,6 @@ sub watches : Local {
 
     # if we've got a list of threads to stop watching ...
     if (my @thread_ids = $c->request->param('stop_watching')) {
-        #$c->log->debug( q{stop_watching parameter found} );
         foreach my $thread_id ( @thread_ids ) {
             # get the ThreadView so we can update it
             my $thread_view = $c->model('ParleyDB')->resultset('ThreadView')->find(
@@ -507,7 +501,7 @@ sub _get_thread_reply_post {
         # get the specific post we're responding to
         $posts = $c->model('ParleyDB')->resultset('Post')->search(
             {
-                post_id     => $c->_current_post()->id(),
+                'me.id'     => $c->_current_post()->id(),
             },
             {
                 rows        => 1,
@@ -518,7 +512,7 @@ sub _get_thread_reply_post {
         # get the first post in the thread
         $posts = $c->model('ParleyDB')->resultset('Post')->search(
             {
-                'me.id'     => $c->_current_thread()->id(),
+                'thread_id' => $c->_current_thread()->id(),
             },
             {
                 order_by    => 'created ASC',
@@ -708,7 +702,6 @@ sub _update_thread_view {
 
     # get the timestamp of the last post
     $last_post_timestamp = $last_post->created();
-    #$c->log->debug( qq{\$last_post_timestamp = $last_post_timestamp} );
 
     # make a note of when the user last viewed this thread, if a record doesn't already exist
     my $thread_view =
@@ -724,7 +717,6 @@ sub _update_thread_view {
     # set the timestamp the time of the last post on the page (unless the
     # existing time is later)
     if ($thread_view->timestamp() < $last_post_timestamp) {
-        #$c->log->debug('thread view time is less than last_post time');
         $thread_view->timestamp( $last_post_timestamp );
     }
 
@@ -762,7 +754,7 @@ sub _txn_add_new_reply {
     # create a new post in the current thread
     $new_post = $c->model('ParleyDB')->resultset('Post')->create(
         {
-            'me.id'     => $c->_current_thread()->id(),
+            'thread_id' => $c->_current_thread()->id(),
             subject     => $c->form->valid->{thread_subject},
             message     => $c->form->valid->{thread_message},
             creator_id  => $c->_authed_user->id(),
@@ -774,19 +766,19 @@ sub _txn_add_new_reply {
     # post (i.e. quoted reply, not just reply-to-thread)
     if (defined $c->_current_post()) {
         # mark what the new post is in reply-to
-        $new_post->reply_to( $c->_current_post()->id() );
+        $new_post->reply_to_id( $c->_current_post()->id() );
     }
 
     # do we have a quoted post? if we do we need to store the
     # (potentially ammended) quoted text, and the actual post being
     # quoted (so we can get author, date, etc)
     if (defined $c->request->param('have_quoted_post')) {
-        $new_post->quoted_post( $c->_current_post()->id() );
-        $new_post->quoted_text( $c->req->param('quote_message') );
+        $new_post->quoted_post_id( $c->_current_post()->id() );
+        $new_post->quoted_text   ( $c->req->param('quote_message') );
     }
 
     # the thread's last post is the one we just created
-    $c->_current_thread()->last_post( $new_post->id );
+    $c->_current_thread()->last_post_id( $new_post->id );
 
     # we've got one post in our new thread
     $self->_increase_post_count($c, $c->_current_thread());
@@ -799,14 +791,12 @@ sub _txn_add_new_reply {
 
     # would we like to lock the thread?
     if ($c->form->valid->{lock_thread} and $c->stash->{moderator}) {
-        #$c->log->debug( q{locking thread after replying} );
         $new_post->thread->locked(1);
         $new_post->thread->update;
     }
 
     # would we like to set a thread watch at the time of posting?
     if ($c->form->valid->{watch_on_post}) {
-        #$c->log->debug( q{Auto-add thread watch on new post} );
         my $thread_view =
             $c->model('ParleyDB')->resultset('ThreadView')->find(
                 {
@@ -816,7 +806,6 @@ sub _txn_add_new_reply {
             )
         ;
         if (defined $thread_view) {
-            #$c->log->debug( q{Adding Watch} );
             #$thread_view->timestamp( $new_post->created() );
             $thread_view->watched( 1 );
             $thread_view->update;
@@ -832,7 +821,6 @@ sub _txn_add_new_reply {
 
 sub _txn_add_new_thread {
     my ($self, $c) = @_;
-    $c->log->info( q{_txn_add_new_thread} );
     
     my ($new_thread, $new_post);
 
@@ -857,7 +845,7 @@ sub _txn_add_new_thread {
     );
 
     # the thread's last post is the one we just created
-    $new_thread->last_post( $new_post->id );
+    $new_thread->last_post_id( $new_post->id );
 
     # we've got one post in our new thread
     $new_thread->post_count( 1 );
@@ -868,7 +856,6 @@ sub _txn_add_new_thread {
     # if the poster wants to add a watch we need to create the ThreadView record here
     # (it's a new thread so they can't have viewed it yet)
     if ($c->form->valid->{watch_on_post}) {
-        #$c->log->debug( q{Auto-add thread watch on new thread} );
         my $thread_view =
             $c->model('ParleyDB')->resultset('ThreadView')->create(
                 {

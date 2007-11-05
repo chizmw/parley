@@ -135,8 +135,8 @@ sub last_post_viewed_in_thread :ResultSet {
     # get the entry (if any) for person-thread from the thread_view table
     $last_viewed = $schema->resultset('ThreadView')->find(
         {
-            person  => $person->id(),
-            thread  => $thread->id(),
+            person_id  => $person->id(),
+            thread_id  => $thread->id(),
         }
     );
 
@@ -147,7 +147,7 @@ sub last_post_viewed_in_thread :ResultSet {
         # get all the posts in the thread, oldest first
         my $posts_in_thread = $schema->resultset('Post')->search(
             {
-                thread  => $thread->id(),
+                thread_id  => $thread->id(),
             },
             {
                 rows        => 1,
@@ -174,7 +174,7 @@ sub last_post_viewed_in_thread :ResultSet {
                         $last_viewed->timestamp()
                     )
                 },
-                thread  => $thread->id(),
+                thread_id  => $thread->id(),
             },
             {
                 rows        => 1,
@@ -209,8 +209,8 @@ sub _last_post_viewed_in_thread :ResultSet {
     # get the "last_viewed" value from thread_view
     $last_viewed = $schema->resultset('ThreadView')->search(
         {
-            person  => $person->id(),
-            thread  => $thread->id(),
+            person_id  => $person->id(),
+            thread_id  => $thread->id(),
         },
         {
             rows => 1,
@@ -224,7 +224,7 @@ sub _last_post_viewed_in_thread :ResultSet {
 
         $last_post = $schema->resultset('Post')->search(
             {
-                thread  => $thread->id(),
+                thread_id  => $thread->id(),
             },
             {
                 rows        => 1,
@@ -249,7 +249,7 @@ sub _last_post_viewed_in_thread :ResultSet {
                 '<=', 
                 DateTime::Format::Pg->format_datetime($last_viewed->timestamp())
             },
-            thread  => $thread->id(),
+            thread_id  => $thread->id(),
         },
         {
             rows        => 1,

@@ -165,8 +165,8 @@ sub next_post :ResultSet {
     # if for some reason there are no matches, just return the post we were passed
     $next_post = $self->search(
         {
-            created => { '>' => DateTime::Format::Pg->format_datetime($post->created()) },
-            thread  => $post->thread()->id(),
+            created    => { '>' => DateTime::Format::Pg->format_datetime($post->created()) },
+            thread_id  => $post->thread()->id(),
         },
         {
             rows    => 1,
@@ -204,7 +204,7 @@ sub thread_position : ResultSet {
     # explicitly 'deflate' the creation time, as DBIx::Class (<=v0.06003) doesn't deflate on search()
     my $position = $self->count(
         {
-            thread  => $post->thread()->id(),
+            thread_id  => $post->thread()->id(),
             created => {
                 '<='   => DateTime::Format::Pg->format_datetime($post->created())
             },
@@ -251,4 +251,3 @@ sub interval_ago {
 1;
 __END__
 vim: ts=8 sts=4 et sw=4 sr sta
-
