@@ -41,6 +41,10 @@ requires 'Readonly';
 requires 'Text::Context::EitherSide';
 requires 'YAML'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
+
+build_requires 'Test::More';
+build_requires 'Test::WWW::Mechanize::Catalyst';
+
 catalyst;
 
 install_script glob('script/*.pl');
