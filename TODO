@@ -1,5 +1,6 @@
 TODO LIST
 
+  - [bug] fix email notification for thread notification emails
   - [bug] fix user's last post information (profile page)
   - limit thread subject length on user profile page
   - rename DB columns to be more sensible
