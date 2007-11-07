@@ -56,7 +56,9 @@ __PACKAGE__->has_many(
 
 __PACKAGE__->belongs_to(
     "time_format" => "PreferenceTimeString",
-    { 'foreign.id' => 'self.time_format_id' });
+    { 'foreign.id' => 'self.time_format_id' },
+    { join_type => 'left' },
+);
 
 
 1;

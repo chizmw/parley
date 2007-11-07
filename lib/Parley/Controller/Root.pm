@@ -129,6 +129,10 @@ sub auto : Private {
             },
             {
                 join => 'authentication',
+                prefetch => [
+                    'authentication',
+                    { 'preference' => 'time_format' },
+                ],
             },
         );
         $c->_authed_user( $row );
