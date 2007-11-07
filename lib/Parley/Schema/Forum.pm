@@ -54,6 +54,7 @@ __PACKAGE__->has_many("threads", "Thread", { "foreign.forum" => "self.id" });
 __PACKAGE__->belongs_to(
     "last_post" => "Post",
     { 'foreign.id' => 'self.last_post_id' },
+    { join_type => 'left' }
 );
 
 sub moderators {

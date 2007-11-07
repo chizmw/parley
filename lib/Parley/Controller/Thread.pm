@@ -220,7 +220,7 @@ sub view : Local {
             page        => $c->stash->{current_page},
 
             prefetch => [
-                { thread => 'forum' },
+                { thread => {'forum'=>'last_post'} },
                 { reply_to => 'creator' },
                 { quoted_post => 'creator' },
                 { creator => 'authentication' },
@@ -279,6 +279,12 @@ sub watch :Local {
         {
             person_id  => $c->_authed_user()->id(),
             thread_id  => $c->_current_thread()->id(),
+        },
+        {
+            prefetch => [
+                'person',
+                { 'thread' => [qw/ forum creator last_post/] },
+            ],
         }
     );
 
@@ -354,6 +360,12 @@ sub watches : Local {
                 {
                     person_id  => $c->_authed_user()->id(),
                     thread_id  => $thread_id,
+                },
+                {
+                    prefetch => [
+                        'person',
+                        { 'thread' => [qw/ forum creator last_post/] },
+                    ],
                 }
             );
 
@@ -711,6 +723,12 @@ sub _update_thread_view {
                 thread_id   => $c->_current_thread()->id(),
                 timestamp   => $last_post_timestamp,
             },
+            {
+                prefetch => [
+                    'person',
+                    { 'thread' => [qw/ forum creator last_post/] },
+                ],
+            }
         )
     ;
 
