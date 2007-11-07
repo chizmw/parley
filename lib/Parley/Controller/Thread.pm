@@ -647,8 +647,8 @@ sub _update_last_post {
                 my $forum = $thread->forum;
 
                 # set the last_post for both forum and thread
-                $forum-> last_post($new_post->post_id());
-                $thread->last_post($new_post->post_id());
+                $forum-> last_post_id($new_post->id());
+                $thread->last_post_id($new_post->id());
                 $forum ->update();
                 $thread->update();
             }
@@ -674,7 +674,7 @@ sub _update_person_post_info {
         # increase the post count for the user
         $person->post_count( $person->post_count() + 1 );
         # make a note of their last post
-        $person->last_post( $post->id() );
+        $person->last_post_id( $post->id() );
         # push the changes back tot the db
         $person->update();
     };
