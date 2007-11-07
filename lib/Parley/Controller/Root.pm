@@ -50,6 +50,14 @@ sub auto : Private {
             $c->model('ParleyDB')->resultset('Post')->find(
                 {
                     'me.id'  => $c->request->param('post')
+                },
+                {
+                    prefetch => [
+                        { thread => 'forum' },
+                        'creator',
+                        'reply_to',
+                        'quoted_post',
+                    ],
                 }
             )
         );
@@ -83,6 +91,13 @@ sub auto : Private {
             $c->model('ParleyDB')->resultset('Thread')->find(
                 {
                     'me.id'  => $c->request->param('thread'),
+                },
+                {
+                    prefetch => [
+                        { 'forum' => 'last_post' },
+                        'creator',
+                        'last_post',
+                    ]
                 }
             )
         );
@@ -111,6 +126,11 @@ sub auto : Private {
             $c->model('ParleyDB')->resultset('Forum')->find(
                 {
                     'me.id'  => $c->request->param('forum'),
+                },
+                {
+                    prefetch => [
+                        'last_post',
+                    ],
                 }
             )
         );
