@@ -68,6 +68,11 @@ sub moderators {
             forum_id        => $self->id(),
             can_moderate    => 1,
         },
+        {
+            prefetch => [
+                'person',
+            ],
+        }
     );
 
     while (my $res = $results->next()) {
