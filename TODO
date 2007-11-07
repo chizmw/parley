@@ -1,9 +1,6 @@
 TODO LIST
 
   - [bug] fix email notification for thread notification emails
-  - [bug] fix user's last post information (profile page)
-  - limit thread subject length on user profile page
-  - rename DB columns to be more sensible
   - write some sensible T&Cs
   - update avatar update response to force a No-Cache?
   - application logo
@@ -12,6 +9,9 @@ TODO LIST
   - IP/user reporting
   - see if we can work out why 'make catalyst_par' is failing
 ? - fix CSS for <fieldset>s
+D - [bug] fix user's last post information (profile page)
+D - limit thread subject length on user profile page
+D - rename DB columns to be more sensible
 D - i18n email template files
 D - i18n help files
 D - setup/use ttcache
