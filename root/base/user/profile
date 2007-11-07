@@ -41,7 +41,7 @@
             </td>
             <td class="user_profile_value">
                 [% IF profiled_user.last_post %]
-                <a href="thread/view?thread=[% profiled_user.last_post.thread.id %]">[% ForumCode.escape(profiled_user.last_post.thread.subject) %]</a>
+                <a href="thread/view?thread=[% profiled_user.last_post.thread.id %]">[% ForumCode.escape(profiled_user.last_post.thread.subject) |truncate(55) %]</a>
                 <br />
                 [% nicedate(profiled_user.last_post.created) %]
                 [% ELSE %]
