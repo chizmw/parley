@@ -1,6 +1,7 @@
 Changes
 Changes.i18n
 config/parley
+contrib/patch/0.57_02_KAARE.patch
 db/parley.psql
 db/patch.skel
 db/patch_0.06_to_0.07.psql
@@ -26,7 +27,6 @@ inc/Module/Install/Metadata.pm
 inc/Module/Install/Scripts.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
-incoming/patch/0.57_02_KAARE.patch
 lib/Parley.pm
 lib/Parley/App/Communication/Email.pm
 lib/Parley/App/DateTime.pm
@@ -49,7 +49,7 @@ lib/Parley/Controller/Thread.pm
 lib/Parley/Controller/User.pm
 lib/Parley/Controller/User/LostPassword.pm
 lib/Parley/Controller/User/SignUp.pm
-lib/Parley/I18N/en.po
+lib/Parley/I18N/i_default.po
 lib/Parley/Model/ParleyDB.pm
 lib/Parley/ResultSet/Terms.pm
 lib/Parley/Schema.pm
@@ -83,9 +83,9 @@ root/base/footer
 root/base/forum/list
 root/base/forum/view
 root/base/header
-root/base/help/en/contents
-root/base/help/en/faq
-root/base/help/en/formatting_posts
+root/base/help/i_default/contents
+root/base/help/i_default/faq
+root/base/help/i_default/formatting_posts
 root/base/help/unknown
 root/base/menu/left/main
 root/base/menu/menubar
@@ -139,11 +139,11 @@ root/css/images/logo.png
 root/css/layout23.css
 root/css/layout27.css
 root/css/layout33.css
-root/email_templates/en/authentication_email.eml
-root/email_templates/en/password_reset.eml
-root/email_templates/en/thread_update_notify.eml
-root/email_templates/en/thread_update_notify.html
-root/email_templates/en/username_reminder.eml
+root/email_templates/i_default/authentication_email.eml
+root/email_templates/i_default/password_reset.eml
+root/email_templates/i_default/thread_update_notify.eml
+root/email_templates/i_default/thread_update_notify.html
+root/email_templates/i_default/username_reminder.eml
 root/favicon.ico
 root/static/Editable.js
 root/static/images/btn_120x50_built.png
@@ -419,6 +419,9 @@ t/controller_Site.t
 t/controller_Terms.t
 t/controller_Thread.t
 t/controller_User.t
+t/mechanize/00.login.t
+t/mechanize/01.main_page.t
+t/mechanize/02.forum.t
 t/model_ParleyDB.t
 t/schema/authentication.t
 t/schema/email_queue.t
