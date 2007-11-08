@@ -16,12 +16,16 @@ sub first_valid_locale :Export( :locale ) {
 
     foreach my $lang ( @{$c->languages} ) {
         if (-d $c->path_to( 'root', @{$path_parts}, $lang) ) {
+            $c->log->info(
+                'Apparently this exists: ',
+                $c->path_to( 'root', @{$path_parts}, $lang)
+            );
             return $lang;
         }
     }
 
     # default to a generic english variant
-    return 'en';
+    return 'i_default';
 }
 
 1;
