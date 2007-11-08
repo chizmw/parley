@@ -78,6 +78,8 @@ __PACKAGE__->add_columns(
   },
 );
 __PACKAGE__->set_primary_key("id");
+__PACKAGE__->resultset_class('Parley::ResultSet::Thread');
+
 __PACKAGE__->belongs_to(
     "creator" => "Person",
     { 'foreign.id' => 'self.creator_id' }
