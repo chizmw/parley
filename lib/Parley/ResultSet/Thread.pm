@@ -5,25 +5,6 @@ use warnings;
 
 use base 'DBIx::Class::ResultSet';
 
-sub latest_terms {
-    my $resultset = shift;
-
-    my $latest_rs = $resultset->search(
-        {
-        },
-        {
-            rows        => 1,
-            order_by    => 'created DESC',
-        }
-    );
-
-    if ($latest_rs->count()) {
-        return $latest_rs->first();
-    }
-
-    return;
-}
-
 sub recent {
     my ($resultset, $c) = @_;
     my ($thread_list, $where, @join);
