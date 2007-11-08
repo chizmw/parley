@@ -49,8 +49,8 @@ sub notify_watchers :Export( :watch ) {
         # update thread_view record for thread-person
         my $thread_view_record = $c->model('ParleyDB')->resultset('ThreadView')
             ->find(
-                person  => $thread_view_row->person()->id(),
-                thread  => $post->thread()->id(),
+                person_id  => $thread_view_row->person()->id(),
+                thread_id  => $post->thread()->id(),
             )
         ;
         $thread_view_record->last_notified(

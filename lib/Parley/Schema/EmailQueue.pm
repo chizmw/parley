@@ -78,10 +78,13 @@ __PACKAGE__->belongs_to(
 );
 __PACKAGE__->belongs_to(
     "cc" => "Person",
-    { 'foreign.id' => 'self.cc_id' }
+    { 'foreign.id' => 'self.cc_id' },
+    { join_type => 'left' },
 );
 __PACKAGE__->belongs_to(
     "bcc" =>  "Person",
-    { 'foreign.id' => 'self.bcc_id' });
+    { 'foreign.id' => 'self.bcc_id' },
+    { join_type => 'left' },
+);
 
 1;

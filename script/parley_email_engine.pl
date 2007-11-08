@@ -125,6 +125,13 @@ sub child_process {
             order_by    => 'queued ASC',
             # one result
             rows        => 1,
+
+            # some prefetching to make things a little easier on the database
+            prefetch => [
+                'recipient',
+                'cc',
+                'bcc'
+            ],
         }
     );
 
@@ -180,6 +187,7 @@ sub send_email {
 
     # print the email out for now, no need to send anything
     $email->send();
+    syslog( LOG_INFO, $email->as_string() );
     # update the table to say we've attempted delivery
     $queue_item->attempted_delivery(1);
     $queue_item->update();

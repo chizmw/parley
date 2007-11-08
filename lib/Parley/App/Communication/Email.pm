@@ -9,16 +9,24 @@ use Parley::App::I18N qw( :locale );
 
 sub queue_email :Export( :email ) {
     my ($c, $options) = @_;
-    my $queued_mail = $c->model('ParleyDB')->resultset('EmailQueue')->create(
-        {
-            sender          => $options->{headers}{from}        || q{Missing From <chisel@somewhere.com>},
+    $c->log->info('queuing an email');
+    eval {
+        my $queued_mail = $c->model('ParleyDB')->resultset('EmailQueue')->create(
+            {
+                sender          => $options->{headers}{from}        || q{Missing From <chisel@somewhere.com>},
 
-            recipient       => $options->{recipient}->id()      || 0,
-            subject         => $options->{headers}{subject}     || q{Subject Line Missing},
-            text_content    => $options->{text_content}         || q{Email Body Text Missing},
-            html_content    => $options->{html_content}         || undef,
-        }
-    );
+                recipient_id    => $options->{recipient}->id()      || 0,
+                subject         => $options->{headers}{subject}     || q{Subject Line Missing},
+                text_content    => $options->{text_content}         || q{Email Body Text Missing},
+                html_content    => $options->{html_content}         || undef,
+            }
+        );
+    };
+    if ($@) {
+        $c->log->error($@);
+        return;
+    }
+    $c->log->info('email queued');
     return 1; # success
 }
 
@@ -51,6 +59,13 @@ sub send_email :Export( :email ) {
 
     # prepare the text content portion of the message - we read this from a
     # [template] file which we render
+    $c->log->info(
+        $c->path_to(
+            'root',
+            'email_templates',
+            $locale
+        )
+    );
     $text_content = $c->view('Plain')->render(
         $c,
         $options->{template}{text},

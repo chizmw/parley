@@ -638,8 +638,8 @@ sub _thread_watch_count {
     $c->stash->{watcher_count} =
         $c->model('ParleyDB')->resultset('ThreadView')->count(
             {
-                'me.id' => $c->_current_thread()->id(),
-                watched => 1,
+                'thread_id' => $c->_current_thread()->id(),
+                watched     => 1,
             }
         )
     ;
