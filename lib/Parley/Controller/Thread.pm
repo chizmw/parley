@@ -287,6 +287,17 @@ sub watches : Local {
             join        => {
                 'thread' => 'last_post',
             },
+
+            prefetch => [
+                { person   => 'authentication' },
+                { 'thread' => [
+                    'forum',
+                    #'creator',
+                    { creator   => 'authentication' },
+                    { 'last_post' => 'creator' },
+                  ]
+                },
+            ],
         }
     );
     $c->stash->{thread_watches} = $watches;

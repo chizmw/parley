@@ -7,11 +7,20 @@ use FindBin qw($Bin);
 use lib "$Bin/../lib";
 
 use Parley::Schema;
+use Parley;
+
+use Getopt::Long;
+my %cli=();
+GetOptions(\%cli, 'from=s', 'to=s');
+
+if (not defined $cli{to}) {
+    $cli{to} = Parley->VERSION();
+}
 
 my $schema = Parley::Schema->connect;
 
 $schema->create_ddl_dir(
     ['PostgreSQL'],
-    '0.57_08',
+    $cli{to},
     'db_script',
 );
