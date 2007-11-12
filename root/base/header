@@ -6,7 +6,7 @@
 <!-- Header : Start -->
 <html>
     <head>
-        <base href="[% c.req.base %]" />
+        <base href="[% c.request.base %]" />
         <title>
             [% c.config.name %]
 
@@ -28,13 +28,14 @@
         </title>
         <meta name="author" content="Chisel Wright" />
         <link rel="shortcut icon" href="[% c.request.base %]/favicon.ico" type="image/x-icon" />
-        <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/common.css" />
-        <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/layout27.css" />
 
         <!-- YUI ajax magick -->
 
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/fonts/fonts-min.css" />
+        <!--<link rel="stylesheet" type="text/css"
+            href="[%c.request.base%]/static/yui/reset-fonts-grids/reset-fonts-grids.css"
+            />-->
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/button/assets/skins/sam/button.css" />
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/container/assets/skins/sam/container.css" />
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/menu/assets/skins/sam/menu.css" /> 
@@ -43,14 +44,18 @@
 
         <!-- Dependency source files -->
         <script type="text/javascript" src="[%c.request.base%]/static/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
-        <script type="text/javascript" src="[%c.request.base%]/static/yui/container/container_core.js"></script>
-        <script type="text/javascript" src="[%c.request.base%]/static/yui/container/container.js"></script>
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/container/container_core-min.js"></script>
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/container/container-min.js"></script>
         <script type="text/javascript" src="[%c.request.base%]/static/yui/utilities/utilities.js"></script>
-        <script type="text/javascript" src="[%c.request.base%]/static/yui/button/button-beta.js"></script>
-        <script type="text/javascript" src="[%c.request.base%]/static/yui/container/container.js"></script>
-        <script type="text/javascript" src="[%c.request.base%]/static/yui/menu/menu.js"></script>
-        <script type="text/javascript" src="[%c.request.base%]/static/yui/tabview/tabview.js"></script>
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/button/button-beta-min.js"></script>
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/menu/menu-min.js"></script>
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/tabview/tabview-min.js"></script>
         <script type="text/javascript" src="[%c.request.base%]/static/yui/logger/logger-min.js"></script>
+
+
+        <!-- defined styles for parley -->
+        <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/common.css" />
+        <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/layout27.css" />
     </head>
 
     <body class="yui-skin-sam">
