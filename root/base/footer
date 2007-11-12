@@ -12,7 +12,11 @@
             </div><!-- extra div -->
 
             <div id="footer">
-                <p>&copy; Chisel Wright 2006-2007. [%l('All Rights Reserved')%].</p>
+                <span style="text-align:right;display:block;">
+                <a href="http://developer.berlios.de/projects/parley">Parley</a>
+                version ([%c.config.version%])
+                &copy; Chisel Wright 2006-2007. [%l('All Rights Reserved')%].
+                </span>
             </div><!-- footer div -->
 
 

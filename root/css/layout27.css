@@ -8,8 +8,10 @@ div#content { margin-top: 20px; margin-left: 20px; }
 div#content p{line-height:1.4}
 div#navigation{background:transparent}
 div#extra{background:transparent}
-div#footer{background: #333;color: #FFF}
+div#footer{background: #333;color: #FFF; font-size: 80%;}
 div#footer p{margin:0;padding:5px 10px}
+div#footer span{margin:0;padding:5px 10px}
+div#footer a{color: #ccc};
 
 div#navigation{float:left;width:50%}
 div#extra{float:left;width:49.9%}
