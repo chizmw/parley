@@ -33,9 +33,8 @@
 
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/fonts/fonts-min.css" />
-        <!--<link rel="stylesheet" type="text/css"
-            href="[%c.request.base%]/static/yui/reset-fonts-grids/reset-fonts-grids.css"
-            />-->
+        <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/reset-fonts-grids/reset-fonts-grids.css" />
+
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/button/assets/skins/sam/button.css" />
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/container/assets/skins/sam/container.css" />
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/menu/assets/skins/sam/menu.css" /> 
@@ -54,8 +53,13 @@
 
 
         <!-- defined styles for parley -->
-        <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/common.css" />
-        <link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/layout27.css" />
+        <!--<link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/common.css" />-->
+        <link type="text/css" rel="stylesheet"           title="Default"   href="[% c.request.base %]/css/layout27.css" />
+        <link type="text/css" rel="alternate stylesheet" title="Layout 23" href="[% c.request.base %]/css/layout23.css" />
+        <style type="text/css">
+            @import url("[%c.request.base%]/css/common.css");
+        </style>
+
     </head>
 
     <body class="yui-skin-sam">

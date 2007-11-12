@@ -2,6 +2,10 @@
     overflow:auto;
 }
 
+body {
+    text-align: left;
+}
+
 div#userinfo_box {
     position:       absolute;
     top:            0;
@@ -13,6 +17,7 @@ div#userinfo_box {
     padding-top:    3px;
     padding-right:  10px;
     text-align:     right;
+    font-size:      85%;
 }
 
 /* link styling */
@@ -21,7 +26,7 @@ a.nav, a.nav:visited, a.nav:link, a.nav:active {
     border:             solid black 1px;
     border-style:       outset;
     display:            block;
-    font-size:          0.8em;
+    font-size:          85%;
     font-weight:        bold;
     list-style-image:   none;
     list-style-type:    none;
@@ -35,17 +40,20 @@ a.nav, a.nav:visited, a.nav:link, a.nav:active {
 }
 
 h1 {
-    font-size: 1.1em;
+    font-size: 100%;
     font-weight: bold;
+    text-align: left;
 }
 h2 {
-    font-size: 1em;
+    font-size: 93%;
     font-weight: bold;
+    text-align: left;
 }
 h3 {
-    font-size: 1em;
+    font-size: 85%;
     font-weight: bold;
     font-style:     italic;
+    text-align: left;
 }
 
 
@@ -63,32 +71,12 @@ a, a:link, a:visited, a:active {
 th {
     text-align:         left;
     font-weight:        bold;
+    font-size:          85%;
 }
 
 td {
     border:             1px solid #888;
     padding:            3px;
-}
-
-/* start : dojo menu styling */
-.dojoMenuBar2 {
-    border-top:1px solid #d4d4d4;
-}
-.dojoPopupMenu2 td {
-    border: none;
-}
-/* end : dojo menu styling */
-
-.dojoTabPaneWrapper {
-  padding : 10px 10px 10px 10px;
-}
-
-/* dojo dialog styling - initially taken from dojo demo */
-.dojoDialog {
-    background : #eee;
-    border : 1px solid #999;
-    -moz-border-radius : 5px;
-    padding : 4px;
 }
 
 /* login dialog styling */
@@ -123,7 +111,7 @@ td {
                               label aligns textarea better in IE */
 }
 #login_dialog form p {
-    font-size: 0.8em;
+    font-size: 85%;
 }
 
 /* style classes */
@@ -138,10 +126,11 @@ td {
 
 
 .forum_link {
+    font-size:      93%;
     font-weight:    bold;
 }
 .forum_description {
-    font-size:      0.8em;
+    font-size:      85%;
 }
 
 .topic_link {
@@ -149,18 +138,18 @@ td {
 }
 .topic_creator {
     display:        block;
-    font-size:      0.8em;
+    font-size:      85%;
     /*text-align:     right;*/
     float: right;
 }
 .forum_mini_pager {
     display:        block;
-    font-size:      0.8em;
+    font-size:      85%;
     /*text-align:     right;*/
     float: left;
 }
 .topic_last_post {
-    font-size:      0.8em;
+    font-size:      85%;
 }
 
 .post_subject {
@@ -170,12 +159,12 @@ td {
 .post_creator {
     font-weight:    bold;
     font-style:     italic;
-    font-size:      0.9em;
+    font-size:      85%;
 }
 
 .post_created {
     text-align:     right;
-    font-size:      0.8em;
+    font-size:      85%;
 }
 
 .reply_post_message {
@@ -195,26 +184,26 @@ td {
 .innerpost {
     padding: 5px;
     overflow: auto;
+    font-size:      85%;
 }
 
 .in_response_to {
     margin-left:    20px;
     font-weight:    bold;
     font-style:     italic;
-    font-size:      0.8em;
+    font-size:      85%;
 }
 
 .quoted_message {
         border:         solid black 1pt;
         background:     #ccc;
-        /*font-family:    "courier new", courier, fixed;*/
         color:          #000;
         margin-left:    20px;
         margin-right:   0px;
         margin-top:     0px;
         margin-bottom:  0px;
         padding:        2px;
-        font-size:      0.9em;
+        font-size:      93%;
 
         display: block;
         overflow: auto;
@@ -229,25 +218,27 @@ td {
 }
 
 .thread_watch {
-    font-size:          x-small;
+    font-size:          77%;
 }
 .pager_advanced {
-    font-size:          x-small;
+    font-size:          77%;
 }
 .moderator_list {
-    font-size:          x-small;
+    font-size:          77%;
+    text-align:         left;
 }
 
 .interval_ago {
     display:            block;
     text-align:         right;
-    font-size:          x-small;
+    font-size:          77%;
 }
 
 .thread_header {
     font-weight:        bold;
     background:         #666;
     padding:            4px;
+    text-align:         left;
 }
 
 .thread_header a {
@@ -258,6 +249,7 @@ td {
     margin-left:        auto;
     margin-right:       auto;
     width:              80%;
+    font-size:          93%;
 }
 .forum_list td {
     vertical-align:     top;
@@ -274,6 +266,9 @@ td {
     vertical-align:     top;
     border:             none;
     border:             1px dashed #ddd;
+    font-size:          85%;
+}
+.forum_view th {
 }
 
 .recently_updated {
@@ -372,12 +367,12 @@ td.user_profile_key {
 .post_edited_alert {
     font-weight:    bold;
     font-style:     italic;
-    font-size:      0.8em;
+    font-size:      85%;
 }
 
 .user_post_info {
     background:         #ccc;
-    font-size:          85%;
+    font-size:          77%;
     margin-left:        auto;
     margin-right:       auto;
     text-align:         center;
@@ -388,7 +383,7 @@ td.user_profile_key {
 .quote {
     background-color:   #F9FBFF;
     border:             1px solid #333;
-    font-size:          95%;
+    font-size:          85%;
     margin:             0 0 2px 4px;
     padding:            6px;
     width:              85%;
@@ -396,7 +391,7 @@ td.user_profile_key {
 }
 
 .post_info {
-    font-size:          80%;
+    font-size:          77%;
     line-height:        1.1em;
     margin-top:         10px;
     margin-bottom:      2px;
@@ -517,7 +512,7 @@ a[href $='.pdf']{
 .forumcode_code {
     font-family:        monospace;
     border:             1px solid #333;
-    font-size:          95%;
+    font-size:          85%;
     margin:             15px 20px 15px 20px;
     padding:            6px;
     width:              85%;
@@ -534,7 +529,7 @@ a[href $='.pdf']{
     background-color:   transparent;
     font-family:        monospace;
     border:             1px dashed #333;
-    font-size:          95%;
+    font-size:          85%;
     margin:             15px 20px 15px 20px;
     padding:            6px;
     width:              85%;
@@ -548,7 +543,7 @@ a[href $='.pdf']{
     font-family:        monospace;
     font-style:         italic;
     border:             1px dotted #333;
-    font-size:          95%;
+    font-size:          85%;
     margin:             15px 20px 15px 20px;
     padding:            6px;
     width:              85%;
