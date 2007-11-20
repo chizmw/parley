@@ -1,6 +1,7 @@
 This file documents the revision history for Parley.
 
 0.58 (UNDER DEVELOPMENT)
+    - make the display of the time zone independant of the time_format string
     - fix issues with email notifications
     - [bug] fix user's last post information (profile page)
     - limit thread subject length on user profile page

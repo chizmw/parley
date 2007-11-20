@@ -400,12 +400,12 @@ sub _process_form_time_format {
     }
     # time_format preference
     if (defined $c->form->valid('time_format')) {
-        $c->_authed_user()->preference()->time_format(
+        $c->_authed_user()->preference()->time_format_id(
             $c->form->valid('time_format')
         )
     }
     else {
-        $c->_authed_user()->preference()->time_format( undef );
+        $c->_authed_user()->preference()->time_format_id( undef );
     }
     # show_tz
     $c->_authed_user()->preference()->show_tz(

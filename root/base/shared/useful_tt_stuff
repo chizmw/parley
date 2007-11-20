@@ -13,11 +13,13 @@
 
     [% IF authed_user.preference.time_format %]
         [% d.strftime(authed_user.preference.time_format.time_string) %]
-        [% IF authed_user.preference.show_tz %]
-            [% d.time_zone_short_name() %]
-        [% END %]
     [% ELSE %]
         [% d.strftime('%c') %]
+    [% END %]
+
+    [% IF    authed_user.preference.show_tz
+        || ! authed_user.preference.show_tz.defined
+    %]
         [% d.time_zone_short_name() %]
     [% END %]
 [% END %]
@@ -25,4 +27,3 @@
 [% MACRO l(text, args) BLOCK;
     c.localize(text, args);
 END; %]
-
