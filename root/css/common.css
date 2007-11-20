@@ -88,11 +88,14 @@ td {
 }
 #login_dialog form fieldset {
     / * clear: both; note that this clear causes inputs to break to left in ie5.x mac, commented out */
+    /*
     border-color: #000;
     border-width: 1px;
     border-style: solid;
+    */
     padding: 10px;        /* padding in fieldset support spotty in IE */
     margin: 0;
+    border: none;
 }
 #login_dialog form label { 
     display: block;  /* block float the labels to left column, set a width */
