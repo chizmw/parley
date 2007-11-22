@@ -178,10 +178,17 @@ sub update :Path('/my/preferences/update') {
 
     # make sure the form name matches something we have a DFV profile for
     if (not exists $dfv_profile_for{ $form_name }) {
+        # if there's no form, detach back to prefs
+        if ($form_name =~ m{\A\s*\z}xms) {
+            $c->response->redirect( $c->uri_for('/my/preferences') );
+            return;
+        }
+
+        # otherwise notify user about the unknown form
         parley_warn(
             $c,
               $c->localize(qq{No Such Form}) 
-            . q{: $form_name}
+            . qq{: $form_name}
         );
         return;
     }
