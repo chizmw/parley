@@ -49,9 +49,9 @@ sub view : Local {
                 rows        => $c->config->{threads_per_page},
                 page        => $c->stash->{current_page},
 
-                _prefetch => [
+                prefetch => [
                     { creator => 'authentication' },
-                    'last_post',
+                    {'last_post' => { 'creator' => 'authentication' } },
                 ],
             }
         );
