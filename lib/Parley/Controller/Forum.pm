@@ -40,7 +40,7 @@ sub view : Local {
         $c->model('ParleyDB')->resultset('Thread')->search(
             {
                 forum_id    => $c->_current_forum->id(),
-                active      => 1,
+                'me.active' => 1,
             },
             {
                 join        => 'last_post',
@@ -52,6 +52,7 @@ sub view : Local {
                 prefetch => [
                     { creator => 'authentication' },
                     {'last_post' => { 'creator' => 'authentication' } },
+                    'forum',
                 ],
             }
         );
