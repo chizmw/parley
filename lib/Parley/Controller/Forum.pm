@@ -17,6 +17,9 @@ sub list : Local {
             },
             {
                 'order_by'  => 'me.id ASC',
+                prefetch => [
+                    {'last_post' => { 'creator' => 'authentication' } },
+                ],
             }
         );
 }
