@@ -1,8 +1,8 @@
-<!-- login dialog (YUI) -->
+<!-- LOGIN DIALOG -->
 <script type="text/javascript">
 YAHOO.namespace("parley.login");
 
-function init() {
+function login_dialog_init() {
 	// Define various event handlers for Dialog
 	var handleSubmit = function() {
 		this.submit();
@@ -11,7 +11,7 @@ function init() {
 		this.cancel();
 	};
 	var handleSuccess = function(o) {
-        //console.log('Success');
+        console.log('Success');
 	};
 	var handleFailure = function(o) {
 		alert("Submission failed: " + o.status);
@@ -21,13 +21,13 @@ function init() {
 	YAHOO.parley.login.login_dialog = new YAHOO.widget.Dialog(
         'login_dialog', 
         {
-            postmethod : 'form',
-            fixedcenter : true,
-            visible : false, 
-            modal: true,
-            constraintoviewport : true,
+            postmethod:             'form',
+            fixedcenter:            true,
+            visible:                false, 
+            modal:                  false,
+            constraintoviewport:    true,
             buttons : [
-                { text:'Submit', handler:handleSubmit, isDefault:true },
+                { text:'Login',  handler:handleSubmit, isDefault:true },
                 { text:'Cancel', handler:handleCancel }
             ]
         }
@@ -39,67 +39,45 @@ function init() {
 		if (data.username == "" || data.password == "") {
 			alert("[%l('Please enter your username and password')%].");
 			return false;
-		} else {
+		}
+        else {
 			return true;
 		}
 	};
 
 	// Wire up the success and failure handlers
-	YAHOO.parley.login.login_dialog.callback = { success: handleSubmit,
-												 failure: handleFailure };
+	YAHOO.parley.login.login_dialog.callback = {
+        success: handleSubmit,
+        failure: handleFailure
+    };
 	
 	// Render the Dialog
 	YAHOO.parley.login.login_dialog.render();
-
-    // firefox caret/cursor fix
-    // from: http://yuiblog.com/sandbox/yui/v230/examples/container/ffcursor.html
-    if (YAHOO.env.ua.gecko) {
-        var dlg = YAHOO.parley.login.login_dialog;
-        /* 
-            * Other part of workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=167801 !!?
-            * I have no explanation for why the new thread (setTimeout) is needed, but it is.
-            */
-        YAHOO.util.Dom.addClass(dlg.form, "caretfix");
-
-        dlg.showEvent.subscribe(function() {
-            YAHOO.util.Dom.setStyle(dlg.form, "display", "none");
-
-            var fixDisplay = function() {
-                YAHOO.util.Dom.setStyle(dlg.form, "display", "block");
-                try {
-                    dlg.firstFormElement.focus();
-                } catch (e) {
-                    // Not related to the workaround, I just try/catch focus calls
-                    // to avoid testing for the various conditions in which they could
-                    // fail.
-                }
-            }
-            setTimeout(fixDisplay, 0);
-        });
-    }
+	//YAHOO.parley.search.search_dialog.show();
 }
 
-YAHOO.util.Event.onDOMReady(init);
+YAHOO.util.Event.onDOMReady(login_dialog_init);
 </script>
 
 <div id="login_dialog">
-<div class="hd">[%l('Please enter your information')%]</div>
-<div class="bd">
-    <form action="user/login" method="post" name="login_form" class="login_dialog_form">
-        <fieldset>
-            <label for="username"><b>[%l('Username')%]:</b></label>
-            <input type="text" id="username" name="username" style="width: 16em;" class="input_text" />
-            <br />
-            <label for="password"><b>[%l('Password')%]:</b></label>
-            <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
+    <div class="hd">
+        [%l('Please enter your information')%]
+    </div>
+    <div class="bd">
+        <form action="user/login" method="post" name="login_form"
+            class="login_dialog_form_">
+            <fieldset>
+                <label for="username"><b>[%l('Username')%]:</b></label>
+                <input type="text" id="username" name="username" style="width: 16em;" class="input_text" />
+                <br />
+                <label for="password"><b>[%l('Password')%]:</b></label>
+                <input type="password" id="password" name="password" style="width: 15em;" class="input_text" />
 
-            <p align="right">
-            <a href="user/password/forgotten">[%l('Forgotten Password')%]</a>
-            |
-            <a id="login_dialog_hider" href="javascript:;">[%l('Close')%]</a><br />
-            </p>
-        </fieldset>
-    </form>
+                <p align="right">
+                <a href="user/password/forgotten">[%l('Forgotten Password')%]</a>
+                </p>
+            </fieldset>
+        </form>
+    </div>
 </div>
-</div>
-<!-- (end) login dialog (YUI) -->
+<!-- LOGIN DIALOG -->
