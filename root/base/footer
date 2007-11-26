@@ -1,39 +1,27 @@
 <!-- Footer : Start -->
-                </div><!-- content div -->
-            </div><!-- wrapper div -->
+            </div><!-- id="bd" -->
 
-            <div id="navigation">
-            <p> &nbsp; </p>
-            </div><!-- navigation div -->
-
-            <div id="extra">
-            <p> &nbsp; </p>
-                [%# PROCESS shared/user_status %]
-            </div><!-- extra div -->
-
-            <div id="footer">
-                <span style="text-align:right;display:block;">
+            <div id="ft">
+                <p>
                 <a href="http://developer.berlios.de/projects/parley">Parley</a>
                 version ([%c.config.version%])
                 &copy; Chisel Wright 2006-2007. [%l('All Rights Reserved')%].
-                </span>
-            </div><!-- footer div -->
+                </p>
+            </div><!-- id="ft" -->
 
-
-            <span style="display: block; float: right; margin-right: 20px;">
-            <a href="http://catalystframework.org"><img
-                src="static/images/btn_88x31_powered.png"
-                width="88"
-                height="31"
-                alt="Powered By Catalyst"
-                style="border: none;"
-                /></a>
+            <span style="display: block; float: right; margin-right: 20px; margin-top: 5px;">
+                <a href="http://catalystframework.org"><img
+                    src="static/images/btn_88x31_powered.png"
+                    width="88"
+                    height="31"
+                    alt="Powered By Catalyst"
+                    style="border: none;"
+                    /></a>
             </span>
-
-            [% INCLUDE shared/login_dialog %]
-            [% INCLUDE shared/search_dialog %]
-        </div><!-- container div -->
-
+            [% PROCESS shared/search_dialog %]
+            [% PROCESS shared/small_loading_please_wait %]
+            [% PROCESS shared/login_dialog %]
+        </div><!-- id="doc3" -->
     </body>
 </html>
 <!-- Footer : End -->
