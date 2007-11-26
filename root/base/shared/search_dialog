@@ -2,7 +2,7 @@
 <script type="text/javascript">
 YAHOO.namespace("parley.search");
 
-function init() {
+function search_dialog_init() {
 	// Define various event handlers for Dialog
 	var handleSubmit = function() {
 		this.submit();
@@ -27,7 +27,7 @@ function init() {
             modal: false,
             constraintoviewport : true,
             buttons : [
-                { text:'Submit', handler:handleSubmit, isDefault:true },
+                { text:'Search', handler:handleSubmit, isDefault:true },
                 { text:'Cancel', handler:handleCancel }
             ]
         }
@@ -52,7 +52,7 @@ function init() {
 	YAHOO.parley.search.search_dialog.render();
 }
 
-YAHOO.util.Event.onDOMReady(init);
+YAHOO.util.Event.onDOMReady(search_dialog_init);
 </script>
 
 <div id="search_dialog">
