@@ -9,7 +9,7 @@
 
 [%- IF thread_list.count > 0 %]
 [% PROCESS shared/pager_advanced %]
-<table class="forum_view">
+<table class="forum_view" border="1">
   <tr>
     <th>&nbsp;</th>
     <th>Topic</th>

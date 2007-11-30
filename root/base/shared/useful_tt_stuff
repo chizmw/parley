@@ -1,6 +1,8 @@
 [% USE HTML %]
 [% USE ForumCode %]
 
+[% SET row_styles = ['row_odd', 'row_even'] %]
+
 [%- MACRO nicedate(d) BLOCK %]
     [%# if a person has preferences, and there's a timezone option set, use it to
         set the TZ used to display the time in nicedate

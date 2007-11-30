@@ -1,37 +1,46 @@
 <h1>[%l('Forum List')%]</h1>
 
 <table class="forum_list">
-<tbody>
-    <tr>
-        <th>[%l('Forum')%]</th>
-        <th>[%l('Last Post')%]</th>
-        <th>[%l('Posts')%]</th>
-    </tr>
-
-    [% WHILE (forum = forum_list.next) %]
-    <tr>
-        <td>
-            <a href="forum/view?forum=[% forum.id %]" class="forum_link">[% forum.name %]</a>
-            <br />
-            <span class="forum_description">[% forum.description %]</span>
-        </td>
-        <td>
-            [% IF forum.last_post %]
-            [% nicedate(forum.last_post.created) %]
-            <br />
-            <span class="topic_creator">
-                [%l('posted by')%]
-                <span class="post_creator">[% forum.last_post.creator.forum_name %]</span>
-            </span>
-            [% ELSE %]
-            <br />
-            <span class="topic_creator">[%l('No posts')%]</span>
-            [% END %]
-        </td>
-        <td>
-            [% forum.post_count %]
-        </td>
-    </tr>
-    [% END %]
-</tbody>
+    <tbody>
+        [% WHILE (forum = forum_list.next) %]
+        [% toggler = (1 - toggler) %]
+        <tr class="row [% row_styles.$toggler %]">
+            <td width="50%">
+                <div class="forum_name">
+                    <a href="forum/view?forum=[% forum.id %]" class="forum_link">[% HTML.escape(forum.name) %]</a>
+                </div>
+                <div class="forum_description">
+                    [% HTML.escape(forum.description) %]
+                </div>
+            </td>
+            <td width="40%">
+                <div class="forum_lastpost">
+                [% IF forum.last_post %]
+                <div class="forum_lastpost_subject">
+                    <a href="thread/view?thread=[% forum.last_post.thread_id %]" class="topic_link">[% HTML.escape(forum.last_post.thread.subject) |truncate(55) %]</a>
+                </div>
+                <div class="topic_creator">
+                    [%l('posted by')%]
+                    [% HTML.escape(forum.last_post.creator.forum_name) %]
+                </div>
+                <div class="topic_lastpost_created">
+                    [% forum.last_post.interval_ago %]
+                    ago
+                </div>
+                [% ELSE %]
+                <div class="topic_creator">
+                    [%l('No posts')%]
+                </div>
+                [% END %]
+                </div>
+            </td>
+            <td width="10%">
+                <div class="forum_postcount">
+                    [% forum.post_count %]
+                    [%l('posts')%]
+                </div>
+            </td>
+        </tr>
+        [% END %]
+    </tbody>
 </table>

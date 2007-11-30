@@ -1,0 +1,160 @@
+/* core layout styling */
+
+#hd {
+    height:         80px;
+    line-height:    80px;
+    margin:         0px;
+    padding-left:   10px;
+    background:     #EEE;
+    color:          #79B30B
+}
+
+#hd h1 {
+    font-size:  200%;
+    text-align: left;
+}
+
+div#ft   {background: #666;color: #FFF; font-size: 77%; margin-top: 20px;}
+div#ft p {border:none;margin-top:30px;padding:5px 10px 5px 10px; text-align:right;display:block;}
+div#ft a {color: #ccc;}
+
+div#user_information {
+    line-height:        1em;
+    font-size:          85%;
+    color:              #000;
+    background-color:   transparent;
+    position:           absolute;
+    top:                0px;
+    right:              10px;
+    height:             70px;
+    width:              200px;
+    padding-top:        3px;
+}
+
+/* CSS bug fixes */
+
+.caretfix {
+    overflow:auto;
+}
+
+/* content styling */
+
+/* headers */
+#bd h1 {
+    font-size:          116%;
+    font-weight:        bold;
+    text-align:         left;
+    margin-top:         10px;
+    color:              #79B30B
+}
+#bd h2 {
+    font-size:          108%;
+    font-weight:        bold;
+    text-align:         left;
+    margin-top:         3px;
+    color:              #79B30B
+}
+#bd h3 {
+    font-size:          100%;
+    font-weight:        bold;
+    font-style:         italic;
+    text-align:         left;
+    margin-top:         3px;
+    color:              #79B30B
+}
+
+/* links */
+a.nav:hover {
+    background:         #000;
+    color:              #fff;
+}
+
+a, a:link, a:visited, a:active {
+    background:         transparent;
+    color:              blue;
+    text-decoration:    none;
+}
+
+/* tables */
+th {
+    font-size:          100%;
+    text-align:         left;
+    font-weight:        bold;
+}
+
+/* login dialog */
+#login_dialog {
+}
+
+/* generic row styling */
+.row {
+    border-top:         1px dotted #666;
+    border-bottom:      1px dotted #666;
+}
+/* alternating row styles */
+.row_odd {
+    background:         #eee;
+}
+.row_even {
+    background:         #ddd;
+}
+
+/* style classes */
+.forum_description {
+    font-size:          93%;
+}
+.forum_lastpost {
+    font-size:          85%;
+    text-align:         right;
+}
+.forum_lastpost_subject a {
+    color:              #333;
+    color:              #79B30B
+}
+.forum_link {
+    font-size:          100%;
+    font-weight:        bold;
+}
+.forum_list  {
+    margin-left:        auto;
+    margin-right:       auto;
+    margin-top:         15px;
+    width:              100%;
+    font-size:          93%;
+}
+.forum_list td {
+    vertical-align:     top;
+    border:             1px dashed #ddd;
+    border:             none;
+    line-height:        120%;
+    padding-left:       10px;
+    padding-right:      10px;
+}
+.forum_name {
+    font-size:          100%;
+    text-align:         left;
+    font-weight:        bold;
+    margin-top:         5px;
+}
+.forum_name a {
+    color:              #333;
+    color:              #79B30B
+}
+.forum_postcount {
+    font-size:          85%;
+    text-align:         right;
+    margin-top:         5px;
+}
+
+.post_creator {
+    font-weight:        bold;
+    font-style:         italic;
+    font-size:          85%;
+}
+
+.topic_creator {
+    display:            block;
+    font-size:          85%;
+    text-align:         right;
+    /*float:              right;*/
+}
