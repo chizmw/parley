@@ -1,4 +1,10 @@
-msgid "406 Not Found"
+msgid "%quant(%1,reply)"
+msgstr "%quant(%1,reply,replies)"
+
+msgid "%quant(%1,view)"
+msgstr "%quant(%1,view,views)"
+
+msgid "404 Not Found"
 msgstr "404 Not Found"
 
 msgid "ACCEPT TERMS"

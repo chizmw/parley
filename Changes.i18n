@@ -12,6 +12,8 @@ It's unlikely that we'll need an 'en' file in the project.
     i_default.po:
         - 'There is no current forum to view'
         - 'There is no current thread to view'
+        - "%quant(%1,reply)"
+        - "%quant(%1,view)"
 
 0.57
     - initial i18n inplementation (en only)
