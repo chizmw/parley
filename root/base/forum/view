@@ -1,96 +1,96 @@
 <h1>[% current_forum.name %] : List Of Active Threads</h1>
 
-<!-- NO LONGER NEEDED - IT'S PART OF THE MENUS NOW
-<p style="font-size: small;">
-<a href="thread/add?forum=[% current_forum.id %]">[Start A New Topic]</a>
-<a href="javascript:;" onclick="search_dialog.show(); return false;">[Search]</a>
--->
-
-
 [%- IF thread_list.count > 0 %]
 [% PROCESS shared/pager_advanced %]
-<table class="forum_view" border="1">
-  <tr>
-    <th>&nbsp;</th>
-    <th>Topic</th>
-    <th>Last Post</th>
-    <th>Replies</th>
-    <th>Views</th>
-    [% IF 0 && moderator %]<th>Actions</th>[% END %]
-  </tr>
-  [%- WHILE (thread = thread_list.next) %]
-  <tr>
-    <td width="36">
-    <!-- interesting things about the thread; sticky, locked, etc -->
-    [%- IF thread.sticky %]
-    <img src="static/images/icons/anchor.png" alt="Sticky" title="Sticky Topic" width="16" height="16" />
-    [%- END %]
-    [%- IF thread.locked %]
-    <img src="static/images/icons/lock.png" alt="Locked" title="Locked Topic" width="16" height="16" />
-    [%- END %]
-    </td>
+<table class="forum_view">
+    <tbody>
+        [%- WHILE (thread = thread_list.next) %]
+        [% toggler = (1 - toggler) %]
+        <tr class="row [% row_styles.$toggler %]">
+            <td width="36" style="padding-top:5px;">
+                <!-- interesting things about the thread; sticky, locked, etc -->
+                [%- IF thread.sticky %]
+                <img src="static/images/icons/anchor.png" alt="Sticky" title="Sticky Topic" width="16" height="16" />
+                [%- END %]
+                [%- IF thread.locked %]
+                <img src="static/images/icons/lock.png" alt="Locked" title="Locked Topic" width="16" height="16" />
+                [%- END %]
+            </td>
 
-    <td>
-    <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% ForumCode.escape(thread.subject) |truncate(55) %]</a>
-    <br />
-    <span class="forum_mini_pager">
-        [%- IF authed_user || mini_pager %]
-        [
-            [%- IF authed_user %]
-            <a href="thread/next_post?thread=[% thread.id %]">Continue</a>
-            [%- END %]
-        ]
-        [%- END %]
-    </span>
-    <span class="topic_creator">created by
-        <span class="post_creator">[% thread.creator.forum_name %]</span>
-    </span>
-    </td>
+            <td>
+                <div class="thread_subject">
+                    <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% ForumCode.escape(thread.subject) |truncate(55) %]</a>
+                </div>
+                <br />
+                <span class="forum_mini_pager">
+                    [%- IF authed_user || mini_pager %]
+                    [
+                        [%- IF authed_user %]
+                        <a href="thread/next_post?thread=[% thread.id %]">Continue</a>
+                        [%- END %]
+                    ]
+                    [%- END %]
+                </span>
+            </td>
 
-    <td>
-     [% nicedate(thread.last_post.created) %]
-     <br />
-     <span class="topic_creator">posted by
-        <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
-     </span>
-    </td>
+            <td>
+                <div class="topic_creator">
+                    [% l('last post by ([_1])', thread.last_post.creator.forum_name) %]
+                </div>
+                <div class="thread_lastpost">
+                    [% thread.last_post.interval_ago %]
+                    [%l('ago')%]
+                </div>
+            </td>
 
-    <td style="text-align: center;">
-      [%# number of replies is one less than the number of posts %]
-      [% thread.post_count - 1 %]
-    </td>
+            <td>
+                <div class="topic_creator">
+                    [% l('created by ([_1])', thread.creator.forum_name) %]
+                </div>
+                <div class="thread_lastpost">
+                    [% nicedate(thread.created) %]
+                </div>
+            </td>
 
-    <td style="text-align: center;">
-      [% thread.view_count %]
-    </td>
+            <td width="10%">
+                <div class="forum_postcount">
+                    [%# number of replies is one less than the number of posts %]
+                    [% SET tpc = (thread.post_count - 1) %]
+                    [%l('[quant,_1,reply]',tpc)%]
+                </div>
+                <div class="forum_postcount">
+                    [%l('[quant,_1,view]',thread.post_count)%]
+                </div>
+            </td>
 
-    [% IF 0 && moderator %]
-        <td>
-            <!-- add/remove sticky -->
-            [% IF thread.sticky %]
-            <a href="admin/sticky?thread=[% thread.id %]&sticky=0">{S-}</a>
-            [% ELSE %]
-            <a href="admin/sticky?thread=[% thread.id %]">{S+}</a>
+            [%- IF 0 && moderator %]
+            <td>
+                <!-- add/remove sticky -->
+                [% IF thread.sticky %]
+                <a href="admin/sticky?thread=[% thread.id %]&sticky=0">{S-}</a>
+                [% ELSE %]
+                <a href="admin/sticky?thread=[% thread.id %]">{S+}</a>
+                [% END %]
+
+                <!-- add/remove locked -->
+                [% IF thread.locked %]
+                <a href="admin/lock?thread=[% thread.id %]&lock=0">{L-}</a>
+                [% ELSE %]
+                <a href="admin/lock?thread=[% thread.id %]">{L+}</a>
+                [% END %]
+
+                <!-- add/removed active -->
+                [% IF thread.active %]{A-}[% ELSE %]{A+}[% END %]
+            </td>
             [% END %]
-
-            <!-- add/remove locked -->
-            [% IF thread.locked %]
-            <a href="admin/lock?thread=[% thread.id %]&lock=0">{L-}</a>
-            [% ELSE %]
-            <a href="admin/lock?thread=[% thread.id %]">{L+}</a>
-            [% END %]
-
-            <!-- add/removed active -->
-            [% IF thread.active %]{A-}[% ELSE %]{A+}[% END %]
-        </td>
-    [% END %]
-    </tr>
-  [% END %]
-    <tr>
-        <td colspan="5">
-            [% PROCESS shared/moderator_list %]
-        </td>
-    </tr>
+        </tr>
+        [% END %]
+        <tr>
+            <td colspan="5">
+                [% PROCESS shared/moderator_list %]
+            </td>
+        </tr>
+    </tbody>
 </table>
 
 

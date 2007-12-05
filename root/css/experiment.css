@@ -145,11 +145,48 @@ th {
     text-align:         right;
     margin-top:         5px;
 }
+.forum_view  {
+    margin-left:        auto;
+    margin-right:       auto;
+    margin-top:         15px;
+    width:              100%;
+    font-size:          93%;
+}
+.forum_view td {
+    vertical-align:     top;
+    border:             1px dashed #ddd;
+    border:             none;
+    line-height:        120%;
+    padding-left:       10px;
+    padding-right:      10px;
+}
+
+.moderator_list {
+    font-size:          77%;
+    margin-bottom:      5px;
+    margin-top:         5px;
+    text-align:         right;
+}
+
+.pager_advanced {
+    font-size:          77%;
+    margin-bottom:      5px;
+    margin-top:         5px;
+}
 
 .post_creator {
     font-weight:        bold;
     font-style:         italic;
     font-size:          85%;
+}
+
+.thread_lastpost {
+    font-size:          85%;
+    text-align:         right;
+}
+.thread_subject a {
+    color:              #333;
+    color:              #79B30B
 }
 
 .topic_creator {

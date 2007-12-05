@@ -25,7 +25,7 @@
                 </div>
                 <div class="topic_lastpost_created">
                     [% forum.last_post.interval_ago %]
-                    ago
+                    [%l('ago')%]
                 </div>
                 [% ELSE %]
                 <div class="topic_creator">
