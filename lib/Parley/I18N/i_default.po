@@ -1,5 +1,11 @@
+msgid "%quant(%1,Reply)"
+msgstr "%quant(%1,Reply,Replies)"
+
 msgid "%quant(%1,reply)"
 msgstr "%quant(%1,reply,replies)"
+
+msgid "%quant(%1,View)"
+msgstr "%quant(%1,View,Views)"
 
 msgid "%quant(%1,view)"
 msgstr "%quant(%1,view,views)"
@@ -84,6 +90,9 @@ msgstr "Create New Thread"
 
 msgid "created by"
 msgstr "created by"
+
+msgid "created by (%1)"
+msgstr "created by %1"
 
 msgid "Current Avatar"
 msgstr "Current Avatar"
@@ -228,6 +237,9 @@ msgstr "Last Post"
 
 msgid "last post by"
 msgstr "last post by"
+
+msgid "last post by (%1)"
+msgstr "last post by %1"
 
 msgid "Last Viewed"
 msgstr "Last Viewed"
