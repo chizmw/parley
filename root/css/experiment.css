@@ -138,6 +138,12 @@ th {
     padding-left:       10px;
     padding-right:      10px;
 }
+.forum_mini_pager {
+    font-size:          85%;
+}
+.forum_mini_pager a {
+    color:              #666;
+}
 .forum_name {
     font-size:          100%;
     text-align:         left;
@@ -319,6 +325,14 @@ th {
     margin-top:         15px;
     width:              100%;
     font-size:          93%;
+}
+
+.thread_recent_forum {
+    float:              right;
+    font-size:          85%;
+}
+.thread_recent_forum a {
+    color:              #333;
 }
 
 .thread_reply {

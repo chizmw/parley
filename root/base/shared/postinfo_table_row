@@ -15,8 +15,12 @@
         <div class="thread_subject">
             <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% ForumCode.escape(thread.subject) |truncate(55) %]</a>
         </div>
-        <br />
-        <span class="forum_mini_pager">
+        [%- IF show_forum_name %]
+        <div class="thread_recent_forum">
+            <a href="forum/view?forum=[%thread.forum.id%]">[% thread.forum.name %]</a>
+        </div>
+        [% END %]
+        <div class="forum_mini_pager">
             [%- IF authed_user || mini_pager %]
             [
                 [%- IF authed_user %]
@@ -24,7 +28,7 @@
                 [%- END %]
             ]
             [%- END %]
-        </span>
+        </div>
     </td>
 
     <td>
