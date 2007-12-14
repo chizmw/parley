@@ -1,5 +1,6 @@
 TODO LIST
 
+  - post/edit; needs styling and Preview code
   - [bug] fix email notification for thread notification emails
   - write some sensible T&Cs
   - update avatar update response to force a No-Cache?

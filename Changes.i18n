@@ -11,12 +11,18 @@ It's unlikely that we'll need an 'en' file in the project.
 
     i_default.po:
         - added:
-            - 'There is no current forum to view'
-            - 'There is no current thread to view'
+            - "%1 wrote:"
             - "%quant(%1,reply)"
             - "%quant(%1,view)"
-            - "last post by (%1)"
             - "created by (%1)"
+            - "last post by (%1)"
+            - "Posted from %1"
+            - "Replying To"
+            - 'There is no current forum to view'
+            - 'There is no current thread to view'
+
+        - removed:
+            - "Posted From"
 
 0.57
     - initial i18n inplementation (en only)

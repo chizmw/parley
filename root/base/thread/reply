@@ -2,11 +2,12 @@
 
 [% PROCESS shared/loading_please_wait %]
 
-<h1>
-[% current_forum.name %]
-&nbsp;:&nbsp;
-[% current_thread.subject %]
-</h1>
+<div style="margin-top:10px;"></div>
+<div class="thread_header">
+    <a href="forum/view?forum=[% current_forum.id %]">[% ForumCode.escape(current_forum.name) %]</a>
+    &nbsp;:&nbsp;
+    [% ForumCode.escape(current_thread.subject) %]
+</div>
 
 [%# different action depending on whether we're adding to a thread or replying to a specific post %]
 [% IF current_post %]
@@ -16,7 +17,7 @@
 [% END %]
 
 <!-- The post we're replying to -->
-<table>
+<table style="margin-top:10px;">
   <tr>
     <td class="post_subject">
       [% responding_to_post.subject %]
@@ -31,6 +32,7 @@
   
   <tr>
     <td colspan="3" class="reply_post_message">
+          [%l('Replying To')%]:
       <div class="innerpost">
       [% FILTER html_line_break %][% HTML.escape(responding_to_post.message) %][% END %]
       </div>
@@ -49,10 +51,10 @@
 [% END %]
 
     
-<p>[%l('ENTER REPLY')%]:</p>
+<p style="padding:10px;">[%l('ENTER REPLY')%]:</p>
 
 
-<table>
+<table class="thread_reply">
   [% IF c.config.replies_have_own_subject %]
   <tr>
     <td> [%l('Topic')%] </td>
@@ -77,7 +79,7 @@
   </tr>
   [% END %]
 
-  <tr valign="top">
+  <tr>
     <td> [%l('Message')%] </td>
     <td>
         <textarea name="thread_message" id="thread_message" cols="60" rows="20" class="input_text" /></textarea>
@@ -85,21 +87,24 @@
   </tr>
 
   <tr>
-    <td colspan="2" style="text-align: center;">
-      <input type="button" value="[%l('Preview')%]"   name="post_reply" class="input_button" id="message_preview" />
-      <input type="submit" value="[%l('Add Reply')%]" name="post_reply" class="input_button" />
+    <td>&nbsp</td>
+    <td colspan="1" style="text-align: center;">
+      <input type="button" value="[%l('Preview')%]"   accesskey="Z" name="post_reply" class="input_button" id="message_preview" />
+      <input type="submit" value="[%l('Add Reply')%]" accesskey="X" name="post_reply" class="input_button" />
     </td>
   </tr>
 
   [% IF moderator %]
   <tr>
-    <td colspan="2" align="right">
+    <td>&nbsp</td>
+    <td colspan="1" align="left">
         <input type="checkbox" name="lock_thread" value="1" /> [%l('LOCK AFTER POSTING')%] 
     </td>
   </tr>
   [% END %]
   <tr>
-    <td colspan="2" align="right">
+    <td>&nbsp</td>
+    <td colspan="1" align="left">
         <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %]/>
         [%l('ADD THREAD WATCH')%] 
     </td>

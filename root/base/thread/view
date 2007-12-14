@@ -1,11 +1,9 @@
 <!-- thread/view -->
-
 [% SET dummy_value = post_list.reset %]
 
 <!-- thread contents -->
 <table class="thread_posts">
     <tbody>
-
         <tr>
             <td colspan="2" class="thread_header">
                 <a href="forum/view?forum=[% current_forum.id %]">[% ForumCode.escape(current_forum.name) %]</a>
@@ -21,7 +19,9 @@
                     <tbody>
                         <tr>
                             <td width="50%">
-                                [% PROCESS shared/thread_watch %]
+                                <small>
+                                    [%l('[quant,_1,view]',current_thread.view_count)%].
+                                </small>
                             </td>
                             <td width="50%" align="right">
                                 [% PROCESS shared/pager_advanced %]
@@ -29,10 +29,7 @@
                         </tr>
                         <tr>
                             <td width="50%">
-                                <small>
-                                    [% current_thread.view_count %]
-                                    [% IF current_thread.view_count == 1 %][%l('view')%][% ELSE %][%l('views')%][% END %].
-                                </small>
+                                [% PROCESS shared/thread_watch %]
                             </td>
                             <td width="50%" align="right">
                                 <small>
@@ -57,7 +54,7 @@
 
     <!-- thread posts -->
     [% WHILE (post = post_list.next) %]
-        <tr>
+        <tr class="thread_post_row">
             <td class="user_post_info">
                 <!-- user avatar -->
                 [% avatar_file = c.path_to('root') _ "/static/user_file/${post.creator.id}/avatar.jpg" %]
@@ -74,9 +71,7 @@
                 <a href="user/profile?user=[% post.creator.id %]">[% post.creator.forum_name %]</a>
 
                 <br />
-                    [% post.creator.post_count %]
-                    post[% IF (post.creator.post_count != 1) %]s[% END %]
-                
+                [%l('[quant,_1,post]', post.creator.post_count)%]
             </td>
 
             <td class="post">
@@ -84,7 +79,7 @@
                 <div class="innerpost">
                     [% IF post.quoted_post %]
                     <div class="quote">
-                    <strong>[% post.quoted_post.creator.forum_name %] [%l('wrote')%]:</strong><br>
+                    <strong>[%l('[_1] wrote:', post.quoted_post.creator.forum_name)%]</strong><br>
                     [% ForumCode.forumcode(post.quoted_text) %]<br />
                     </div>
                     <br />
@@ -94,15 +89,16 @@
                 <!-- end : the body of the post -->
 
                 <div class="post_info">
+                    [% post.interval_ago %] ago
+                    <br />
                     [% nicedate(post.created) %]
-                    <br />[% post.interval_ago %] ago
                     [% IF post.edited %]
                     <br /><span class="post_edited_alert">[%l('Edited')%]: [% nicedate(post.edited) %]</span>
                     [% END %]
                     <br />
                     [% IF post.ip_addr %]
                         [% IF moderator %]
-                            [%l('Posted from')%]: [% post.ip_addr %]
+                            [%l('Posted from [_1]', post.ip_addr)%]
                         [% ELSE %]
                            [%l('IP Logged')%] 
                         [% END %]

@@ -3,82 +3,9 @@
 [%- IF thread_list.count > 0 %]
 [% PROCESS shared/pager_advanced %]
 <table class="recently_updated">
-[% WHILE (thread = thread_list.next) %]
-    <tr>
-        <td width="36">
-        <!-- interesting things about the thread; sticky, locked, etc -->
-        [%- IF thread.sticky %]
-        <img src="static/images/icons/anchor.png" alt="[%l('Sticky')%]" title="[%l('Sticky Topic')%]" width="16" height="16" />
-        [%- END %]
-        [%- IF thread.locked %]
-        <img src="static/images/icons/lock.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
-        [%- END %]
-        </td>
-
-        <td>
-        <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% ForumCode.escape(thread.subject) |truncate(45) %]</a>
-        <br />
-        <span class="forum_mini_pager">
-            [%- IF authed_user || mini_pager %]
-            [
-                [%- IF authed_user %]
-                <a href="thread/next_post?thread=[% thread.id %]">[%l('Continue')%]</a>
-                [%- END %]
-            ]
-            [%- END %]
-        </span>
-        <span class="topic_creator">[%l('created by')%]
-            <span class="post_creator">[% thread.creator.forum_name %]</span>
-        </span>
-        </td>
-
-        <td>
-        [% nicedate(thread.last_post.created) %]
-        <br /><span class="interval_ago">
-            [% thread.last_post.interval_ago %] [%l('ago')%] 
-            </span>
-        <br />
-        <span class="topic_creator">[%l('posted by')%]
-            <span class="post_creator">[% thread.last_post.creator.forum_name %]</span>
-        </span>
-        </td>
-
-        <td>
-        <a href="forum/view?forum=[%thread.forum.id%]">[% thread.forum.name %]</a>
-        <br />&nbsp;
-        </td>
-        
-        <td align="right">
-        [% thread.view_count %] [%l('views')%]<br />
-        <br />
-        [% thread.post_count %] [%l('posts')%]<br />
-        </td>
-
-        <td>
-            [% IF 0 && thread.forum_moderators.can_moderate %]
-            <!-- add/remove sticky -->
-            [% IF thread.sticky %]
-            <a href="admin/sticky?thread=[% thread.id %]&sticky=0">{S-}</a>
-            [% ELSE %]
-            <a href="admin/sticky?thread=[% thread.id %]">{S+}</a>
-            [% END %]
-
-            <!-- add/remove locked -->
-            [% IF thread.locked %]
-            <a href="admin/lock?thread=[% thread.id %]&lock=0">{L-}</a>
-            [% ELSE %]
-            <a href="admin/lock?thread=[% thread.id %]">{L+}</a>
-            [% END %]
-
-            <!-- add/removed active -->
-            [% IF thread.active %]{A-}[% ELSE %]{A+}[% END %]
-            [% ELSE %]
-            &nbsp;
-            [% END %]
-            <br />
-        </td>
-    </tr>
-[% END %]
+    [% WHILE (thread = thread_list.next) %]
+    [% PROCESS shared/postinfo_table_row %]
+    [% END %]
 </table>
 [% ELSE %]
 [%l('NO RECENT THREADS')%]

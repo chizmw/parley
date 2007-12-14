@@ -41,11 +41,19 @@ div#user_information {
 
 /* headers */
 #bd h1 {
+    /*
     font-size:          116%;
     font-weight:        bold;
     text-align:         left;
     margin-top:         10px;
     color:              #79B30B
+    */
+    font-weight:        bold;
+    background:         #666;
+    padding:            4px;
+    text-align:         left;
+    margin-top:         5px;
+    margin-bottom:      5px;
 }
 #bd h2 {
     font-size:          108%;
@@ -161,6 +169,34 @@ th {
     padding-right:      10px;
 }
 
+.help li {
+    margin-top:         25px;
+    margin-right:       25px;
+    list-style-type:    none;
+    border-left:        2px solid #666;
+    padding-top:        5px;
+    padding-bottom:     5px;
+    padding-left:       10px;
+    background-color:   #ddd;
+}
+.help li ul li, .help li ol li{
+    margin-top:         5px;
+    margin-left:        10px;
+    list-style-type:    disc;
+    border-left:        none;
+    padding-left:       none;
+    padding-top:        none;
+    padding-bottom:     none;
+    background-color:   transparent;
+}
+
+.innerpost {
+    margin-left:        10px;
+    padding:            5px;
+    overflow:           auto;
+    font-size:          93%;
+}
+
 .moderator_list {
     font-size:          77%;
     margin-bottom:      5px;
@@ -174,24 +210,239 @@ th {
     margin-top:         5px;
 }
 
+.post {
+    padding-top:        5px;
+    vertical-align:     top;
+    border-left:        1px solid #ddd;
+}
+
+.post_created {
+    text-align:         right;
+    font-size:          85%;
+}
+
 .post_creator {
     font-weight:        bold;
     font-style:         italic;
     font-size:          85%;
 }
 
+.post_edited_alert {
+    font-weight:        bold;
+    font-style:         italic;
+}
+
+.post_info {
+    font-size:          77%;
+    line-height:        1.1em;
+    margin-top:         10px;
+    margin-bottom:      2px;
+    text-align:         right;
+}
+
+.post_subject {
+    font-weight:    bold;
+}
+
+.recently_updated  {
+    margin-left:        auto;
+    margin-right:       auto;
+    margin-top:         15px;
+    width:              100%;
+    font-size:          93%;
+}
+.recently_updated td {
+    vertical-align:     top;
+    border:             1px dashed #ddd;
+    border:             none;
+    line-height:        120%;
+    padding-left:       10px;
+    padding-right:      10px;
+}
+
+.reply_post_message {
+    width: 100%;
+    //background-color: rgb(251,215,194);
+    background-color: #ddd;
+    border: 2px inset #fff;
+}
+
+.quote {
+    background-color:   #F9FBFF;
+    border:             1px solid #333;
+    font-size:          85%;
+    margin:             0 0 2px 4px;
+    padding:            6px;
+    width:              85%;
+    overflow:           hidden;
+}
+
+.thread_header {
+    font-weight:        bold;
+    background:         #666;
+    padding:            4px;
+    text-align:         left;
+}
+.thread_header a {
+    color:              #ccc;
+}
+
+.thread_info {
+    margin:             0px;
+    width:              100%;
+    border:             none;
+    padding:            0px;
+    margin-bottom:      10px;
+}
+.thread_info td {
+    border:             none;
+    padding:            0px;
+}
+
 .thread_lastpost {
     font-size:          85%;
     text-align:         right;
 }
+
+.thread_post_row {
+    border-top:         1px solid #ddd;
+    border-bottom:      1px solid #ddd;
+}
+.thread_post_row td {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.thread_posts {
+    margin-left:        auto;
+    margin-right:       auto;
+    margin-top:         15px;
+    width:              100%;
+    font-size:          93%;
+}
+
+.thread_reply {
+    /*width:              100%;*/
+    font-size:          93%;
+}
+.thread_reply tr {
+    vertical-align:     top;
+}
+.thread_reply td {
+    padding-top:        10px;
+    padding-left:       10px;
+}
+.thread_reply textarea {
+    background-color:   transparent;
+    border:             2px inset black;
+}
+
 .thread_subject a {
+    font-size:          93%;
     color:              #333;
     color:              #79B30B
+}
+
+.thread_watch {
+    margin-top:         5px;
+    font-size:          77%;
+    text-align:         left;
 }
 
 .topic_creator {
     display:            block;
     font-size:          85%;
     text-align:         right;
-    /*float:              right;*/
+}
+
+.user_post_info {
+    background:         #ccc;
+    background:         transparent;
+    font-size:          77%;
+    margin-left:        auto;
+    margin-right:       auto;
+    text-align:         center;
+    vertical-align:     top;
+    width:              110px;
+}
+
+/* add icons to some links with CSS styling */
+
+a[href $='.jpg']{
+    padding-left: 20px;
+    background:   transparent url(/static/images/filetypes/image.png) no-repeat center left;
+}
+
+a[href $='.pdf']{
+    padding-left: 20px;
+    background:   transparent url(/static/images/filetypes/pdf.png) no-repeat center left;
+}
+
+/* YUI element styling */
+#loader_wait.yui-overlay {
+    position:           fixed;
+    float:              right;
+    top:                10px;
+    right:              10px;
+    border:             none;
+    text-align:         right;
+}
+#preview_overlay {
+    border:             1px dashed #ccc;
+    text-align:         left;
+    padding:            3px;
+}
+#thread_message {
+    font-family:        monospace;
+    text-align:         left;
+    padding:            3px;
+    background-color:   #eee;
+    font-size:          93%;
+}
+
+/* ForumCode styles */
+.forumcode_code {
+    font-family:        monospace;
+    border:             1px solid #333;
+    font-size:          85%;
+    margin:             15px 20px 15px 20px;
+    padding:            6px;
+    width:              85%;
+    overflow:           auto;
+
+    color:              #ff0;
+    background-color:   #333;
+    border:             1px solid #666;
+
+    white-space:        pre;
+}
+
+.forumcode_pre {
+    background-color:   transparent;
+    font-family:        monospace;
+    border:             1px dashed #333;
+    font-size:          85%;
+    margin:             15px 20px 15px 20px;
+    padding:            6px;
+    width:              85%;
+    overflow:           auto;
+
+    white-space:        pre;
+}
+
+.forumcode_quote {
+    background-color:   #eee;
+    font-family:        monospace;
+    font-style:         italic;
+    border:             1px dotted #333;
+    font-size:          85%;
+    margin:             15px 20px 15px 20px;
+    padding:            6px;
+    width:              85%;
+    overflow:           auto;
+}
+
+.forumcode_quoting {
+    font-weight:        bold;
+    margin-bottom:      3px;
 }
