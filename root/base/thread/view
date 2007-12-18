@@ -56,6 +56,7 @@
     [% WHILE (post = post_list.next) %]
         <tr class="thread_post_row">
             <td class="user_post_info">
+                <a name="[%post.id%]"></a>
                 <!-- user avatar -->
                 [% avatar_file = c.path_to('root') _ "/static/user_file/${post.creator.id}/avatar.jpg" %]
                 [% TRY %]

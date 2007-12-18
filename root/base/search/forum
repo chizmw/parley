@@ -12,40 +12,6 @@
             [% END %]
         </tbody>
     </table>
-
-    <table class="search_results">
-    <tr>
-        <th>[%l('Subject')%]</th>
-        <th>[%l('Snippet')%]</th>
-    </tr>
-    [% dummy_value = search_results.reset %]
-    [% WHILE (result = search_results.next) %]
-    [% toggler = (1 - toggler) %]
-    <tr class="row [% row_styles.$toggler %]">
-        <td width="25%">
-            <a href="/post/view?post=[% result.id %]">[% ForumCode.escape(result.subject) || ForumCode.escape(result.thread.subject) %]</a>
-        </td>
-        <td>
-            <em>
-            [% context = result.match_context(search_terms.raw) %]
-            [% IF context %]
-            [% context %]
-            [% ELSE %]
-            [% FILTER truncate(60) %]
-            [% result.message %]
-            [% END %]
-            [% END %]
-            </em>
-        </td>
-    </tr>
-    [% END %]
-
-    <tr>
-        <td class="right_align" valign="top" colspan="2">
-        [% INCLUDE shared/pager_advanced %]
-        </td>
-    </tr>
-    </table>
 [% ELSE %]
 [%l('No results found matching specified terms')%].
 [% END %]

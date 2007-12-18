@@ -74,7 +74,7 @@ sub forum :Local {
         };
 
         if (defined $forum) {
-            $where->{'thread.forum'} = $forum->id(),
+            $where->{'thread.forum_id'} = $forum->id(),
             push @join, 'thread';
             # put in the stash
             $c->stash->{search_forum} = $forum;

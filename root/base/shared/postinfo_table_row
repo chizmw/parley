@@ -32,23 +32,20 @@
     </td>
 
     [% IF (search_post = show_search_data) %]
-    <td style="width:50px;background:yellow;">
-        <em>
-            X
-        [% context = search_post.match_context(search_terms.raw) %]
-        [% IF context %]
-        [% context %]
-        [% ELSE %]
-        [% FILTER truncate(60) %]
-        [% search_post.message %]
-        [% END %]
-        [% END %]
-        Y
-        </em>
+    <td style="">
+        <div class="search_match_context">
+            [% context = search_post.match_context(search_terms.raw) %]
+            [% context %]
+        </div>
+        <div class="forum_mini_pager">
+            [
+            <a href="post/view?post=[%search_post.id%]">Go to post</a>
+            ]
+        </div>
     </td>
     [% END %]
 
-    <td>
+    <td width="80">
         <div class="topic_creator">
             [% l('last post by ([_1])', thread.last_post.creator.forum_name) %]
         </div>
@@ -58,7 +55,7 @@
         </div>
     </td>
 
-    <td>
+    <td width="80">
         <div class="topic_creator">
             [% l('created by ([_1])', thread.creator.forum_name) %]
         </div>
@@ -67,7 +64,7 @@
         </div>
     </td>
 
-    <td width="10%">
+    <td width="50">
         <div class="forum_postcount">
             [%# number of replies is one less than the number of posts %]
             [% SET tpc = (thread.post_count - 1) %]
