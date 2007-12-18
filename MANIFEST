@@ -78,6 +78,7 @@ MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
 parley.yml
+prefetch_columns.pl
 README
 root/base/about/modules
 root/base/error/simple
@@ -108,6 +109,7 @@ root/base/shared/login_dialog
 root/base/shared/moderator_list
 root/base/shared/navigation
 root/base/shared/pager_advanced
+root/base/shared/postinfo_table_row
 root/base/shared/search_dialog
 root/base/shared/small_loading_please_wait
 root/base/shared/thread_watch
@@ -135,6 +137,7 @@ root/base/user/profile
 root/base/user/signup/signup
 root/css/common.css
 root/css/default.css
+root/css/experiment.css
 root/css/images/bg.gif
 root/css/images/client_logo.gif
 root/css/images/logo.png

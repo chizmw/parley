@@ -1,6 +1,7 @@
 ^Makefile$
 ^Parley.*gz$
 ^Parley.*tar$
+\.par$
 swp$
 swo$
 tmp$
