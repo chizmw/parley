@@ -31,6 +31,23 @@
         </div>
     </td>
 
+    [% IF (search_post = show_search_data) %]
+    <td style="width:50px;background:yellow;">
+        <em>
+            X
+        [% context = search_post.match_context(search_terms.raw) %]
+        [% IF context %]
+        [% context %]
+        [% ELSE %]
+        [% FILTER truncate(60) %]
+        [% search_post.message %]
+        [% END %]
+        [% END %]
+        Y
+        </em>
+    </td>
+    [% END %]
+
     <td>
         <div class="topic_creator">
             [% l('last post by ([_1])', thread.last_post.creator.forum_name) %]

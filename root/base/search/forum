@@ -3,16 +3,26 @@
 <h2>[%l('Searching for')%] <em>[% search_terms.raw || '[nothing]' %]</em> in <em>[% search_forum.name || 'all forums' %]</em></h2>
 
 [% IF search_results %]
+    <table class="search_results">
+        <tbody>
+            [% dummy_value = search_results.reset %]
+            [%- WHILE (post = search_results.next) %]
+            [% thread = post.thread %]
+            [% PROCESS shared/postinfo_table_row show_search_data=post %]
+            [% END %]
+        </tbody>
+    </table>
 
     <table class="search_results">
     <tr>
         <th>[%l('Subject')%]</th>
         <th>[%l('Snippet')%]</th>
     </tr>
-
+    [% dummy_value = search_results.reset %]
     [% WHILE (result = search_results.next) %]
-    <tr>
-        <td>
+    [% toggler = (1 - toggler) %]
+    <tr class="row [% row_styles.$toggler %]">
+        <td width="25%">
             <a href="/post/view?post=[% result.id %]">[% ForumCode.escape(result.subject) || ForumCode.escape(result.thread.subject) %]</a>
         </td>
         <td>
@@ -32,9 +42,7 @@
 
     <tr>
         <td class="right_align" valign="top" colspan="2">
-        <small>
         [% INCLUDE shared/pager_advanced %]
-        </small>
         </td>
     </tr>
     </table>
