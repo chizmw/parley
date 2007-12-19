@@ -41,13 +41,6 @@ div#user_information {
 
 /* headers */
 #bd h1 {
-    /*
-    font-size:          116%;
-    font-weight:        bold;
-    text-align:         left;
-    margin-top:         10px;
-    color:              #79B30B
-    */
     font-weight:        bold;
     background:         #666;
     padding:            4px;
@@ -56,13 +49,6 @@ div#user_information {
     margin-bottom:      5px;
 }
 #bd h2 {
-    /*
-    font-size:          108%;
-    font-weight:        bold;
-    text-align:         left;
-    margin-top:         3px;
-    color:              #79B30B
-    */
     font-weight:        bold;
     background:         #999;
     padding:            4px;
@@ -286,7 +272,6 @@ th {
 
 .reply_post_message {
     width: 100%;
-    //background-color: rgb(251,215,194);
     background-color: #ddd;
     border: 2px inset #fff;
 }
@@ -366,7 +351,6 @@ th {
 }
 
 .thread_reply {
-    /*width:              100%;*/
     font-size:          93%;
 }
 .thread_reply tr {
