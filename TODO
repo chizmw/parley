@@ -1,6 +1,10 @@
 TODO LIST
 
-  - post/edit; needs styling and Preview code
+  - post/edit: preview (message) code
+  - styling: post/edit
+  - styling: thread/reply
+  - styling: user prefs
+  - styling: user profile
   - [bug] fix email notification for thread notification emails
   - write some sensible T&Cs
   - update avatar update response to force a No-Cache?
@@ -9,7 +13,7 @@ TODO LIST
   - proper moderator support/management
   - IP/user reporting
   - see if we can work out why 'make catalyst_par' is failing
-? - fix CSS for <fieldset>s
+D - fix CSS for <fieldset>s
 D - [bug] fix user's last post information (profile page)
 D - limit thread subject length on user profile page
 D - rename DB columns to be more sensible
