@@ -57,11 +57,12 @@ div#user_information {
     margin-bottom:      5px;
 }
 #bd h3 {
-    font-size:          100%;
     font-weight:        bold;
-    font-style:         italic;
+    background:         #eee;
+    padding:            4px;
     text-align:         left;
-    margin-top:         3px;
+    margin-top:         5px;
+    margin-bottom:      5px;
     color:              #79B30B
 }
 
@@ -324,6 +325,15 @@ th {
     padding-right:      10px;
     padding-top:        5px;
     padding-bottom:     5px;
+}
+
+.site_terms {
+    width:              80%;
+    margin-left:        auto;
+    margin-right:       auto;
+    margin-bottom:      10px;
+    padding:            5px;
+    border:             1px solid #666;
 }
 
 .thread_header {
