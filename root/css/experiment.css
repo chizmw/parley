@@ -84,8 +84,36 @@ th {
     font-weight:        bold;
 }
 
-/* login dialog */
-#login_dialog {
+/* login dialog styling */
+#login_dialog form {
+    margin:             0;
+    padding:            0;
+    min-width:          400px;
+    max-width:          600px;
+}
+#login_dialog form fieldset {
+    / * clear: both; note that this clear causes inputs to break to left in ie5.x mac, commented out */
+    padding:            10px;
+    margin:             0;
+    border:             none;
+}
+#login_dialog form label { 
+    display:            block;  /* block float the labels to left column, set a width */
+    float:              left; 
+    width:              150px; 
+    padding:            0; 
+    margin:             5px 0 0; /* set top margin same as form input - textarea etc. elements */
+    text-align:         right; 
+    font-weight:        bold;
+    margin-bottom:      0;
+}
+#login_dialog form input, form textarea {
+    width:              auto;         /* set width of form elements to auto-size, otherwise watch for wrap on resize */
+    margin:             5px 0 0 10px; /* set margin on left of form elements rather than right of
+                                         label aligns textarea better in IE */
+}
+#login_dialog form p {
+    font-size:          85%;
 }
 
 /* generic row styling */
@@ -474,3 +502,16 @@ a[href $='.pdf']{
     font-weight:        bold;
     margin-bottom:      3px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
