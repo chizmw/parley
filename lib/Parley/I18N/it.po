@@ -491,8 +491,9 @@ msgstr "Cita"
 msgid "Recently Updated Threads"
 msgstr "Thread Aggiornati Recentemente"
 
+# "Sign Up"
 msgid "Register"
-msgstr "Registra"
+msgstr "Crea un account"
 
 msgid "Registration Complete"
 msgstr "Registrazione Completata"
