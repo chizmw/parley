@@ -1,5 +1,5 @@
 <!-- post-info table row -->
-[% toggler = (1 - toggler) %]
+[% toggler = (1 - (toggler||0)) %]
 <tr class="row [% row_styles.$toggler %]">
     <td width="36" style="padding-top:5px;">
         <!-- interesting things about the thread; sticky, locked, etc -->
