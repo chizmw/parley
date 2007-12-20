@@ -67,6 +67,9 @@ msgstr "Unable to authenticate the supplied login credentials"
 msgid "Avatar"
 msgstr "Avatar"
 
+msgid "Cancel"
+msgstr "Cancel"
+
 msgid "CHANGE AVATAR"
 msgstr "Change your avatar image by selecting a file and clicking the Upload button below"
 
@@ -219,6 +222,10 @@ msgstr "Go"
 
 msgid "Help"
 msgstr "Help"
+
+# Search for [....] _in_ [......]
+msgid "in"
+msgstr "in"
 
 msgid "Incomplete authentication URL"
 msgstr "Incomplete authentication URL"
