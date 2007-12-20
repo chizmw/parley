@@ -51,6 +51,7 @@ lib/Parley/Controller/User.pm
 lib/Parley/Controller/User/LostPassword.pm
 lib/Parley/Controller/User/SignUp.pm
 lib/Parley/I18N/i_default.po
+lib/Parley/I18N/it.po
 lib/Parley/Model/ParleyDB.pm
 lib/Parley/ResultSet/Post.pm
 lib/Parley/ResultSet/Terms.pm
@@ -151,6 +152,11 @@ root/email_templates/i_default/password_reset.eml
 root/email_templates/i_default/thread_update_notify.eml
 root/email_templates/i_default/thread_update_notify.html
 root/email_templates/i_default/username_reminder.eml
+root/email_templates/it/authentication_email.eml
+root/email_templates/it/password_reset.eml
+root/email_templates/it/thread_update_notify.eml
+root/email_templates/it/thread_update_notify.html
+root/email_templates/it/username_reminder.eml
 root/favicon.ico
 root/static/Editable.js
 root/static/images/btn_120x50_built.png

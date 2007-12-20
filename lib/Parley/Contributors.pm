@@ -26,7 +26,7 @@ L<FamFamFam Silk Icons|http://www.famfamfam.com/lab/icons/silk/>
 
 =head2 Italian
 
-it.po translated by Darius Jokilehto
+Translation by Darius Jokilehto
 
 =head1 PATCHES AND BUG-FIXES
 
