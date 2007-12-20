@@ -67,6 +67,9 @@ msgstr "Non è stato possibile effettuare l'autenticazione con le credenziali fo
 msgid "Avatar"
 msgstr "Avatar"
 
+msgid "Cancel"
+msgstr "Annulla"
+
 msgid "CHANGE AVATAR"
 msgstr "Cambia l'avatar selezionando un file e cliccando il bottone Upload qui sotto"
 
@@ -220,6 +223,10 @@ msgstr "Vai"
 msgid "Help"
 msgstr "Aiuto"
 
+# Search for [....] _in_ [......]
+msgid "in"
+msgstr "in"
+
 msgid "Incomplete authentication URL"
 msgstr "Autenticazione URL Incompleta"
 
@@ -293,7 +300,7 @@ msgid "Logout"
 msgstr "Logout"
 
 msgid "Me"
-msgstr "Io"
+msgstr "Personale"
 
 msgid "Main Page"
 msgstr "Pagina Principale"
@@ -425,7 +432,7 @@ msgid "Password"
 msgstr "Password"
 
 msgid "Password Reminder"
-msgstr "Fornisci Password"
+msgstr "Dimenticato la Password?"
 
 msgid "person"
 msgstr "persona"
@@ -521,7 +528,7 @@ msgid "Search"
 msgstr "Cerca"
 
 msgid "Search For"
-msgstr "Cerca per"
+msgstr "Trova"
 
 msgid "Search Results"
 msgstr "Risultati Ricerca"

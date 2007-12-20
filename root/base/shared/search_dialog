@@ -27,8 +27,8 @@ function search_dialog_init() {
             modal: false,
             constraintoviewport : true,
             buttons : [
-                { text:'Search', handler:handleSubmit, isDefault:true },
-                { text:'Cancel', handler:handleCancel }
+                { text:'[%l('Search')%]', handler:handleSubmit, isDefault:true },
+                { text:'[%l('Cancel')%]', handler:handleCancel }
             ]
         }
     );

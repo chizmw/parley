@@ -11,6 +11,9 @@ It's unlikely that we'll need an 'en' file in the project.
 
     it.po:
         - full translation from i_default.po
+        - added:
+            - 'Cancel'
+            - 'in'
 
     i_default.po:
         - added:
