@@ -12,7 +12,7 @@ TODO LIST
   - advanced search page
   - proper moderator support/management
   - IP/user reporting
-  - see if we can work out why 'make catalyst_par' is failing
+? - see if we can work out why 'make catalyst_par' is failing
 D - fix CSS for <fieldset>s
 D - [bug] fix user's last post information (profile page)
 D - limit thread subject length on user profile page
