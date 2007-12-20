@@ -10,7 +10,7 @@ use DateTime::Format::Pg;
 
 use Parley::App::DateTime qw( :interval );
 
-__PACKAGE__->load_components('ResultSetManager', "PK::Auto", "Core");
+__PACKAGE__->load_components("PK::Auto", "Core");
 __PACKAGE__->table("thread_view");
 __PACKAGE__->add_columns(
   "id" => {
@@ -54,6 +54,7 @@ __PACKAGE__->add_columns(
   },
 );
 __PACKAGE__->set_primary_key("id");
+__PACKAGE__->resultset_class('Parley::ResultSet::ThreadView');
 __PACKAGE__->add_unique_constraint(
     'thread_view_person_key',
     ['person_id', 'thread_id']
@@ -78,77 +79,6 @@ foreach my $datecol (qw/timestamp/) {
 }
 
 
-sub watching_thread : ResultSet {
-    my ($self, $thread, $person) = @_;
-
-    if (not defined $thread) {
-        warn 'undefined value passed as $thread in watching_thread()';
-        return;
-    }
-    if (not defined $person) {
-        warn 'undefined value passed as $person in watching_thread()';
-        return;
-    }
-
-    my $thread_view = $self->find(
-        {
-            person_id => $person->id(),
-            thread_id => $thread->id(),
-        }
-    );
-
-    return $thread_view->watched();
-}
-
-sub notification_list : ResultSet {
-    my ($self, $post) = @_;
-    my ($schema);
-
-    if (not defined $post) {
-        warn 'undefined value passed as $post in notification_list()';
-        return;
-    }
-
-    # make sure we have full object details
-    # [we don't seem to get all the default column data for a new create()]
-    $schema = $self->result_source()->schema();
-    $post = $schema->resultset('Post')->find(
-        id => $post->id()
-    );
-    if (not defined $post) {
-        warn 'failed to re-fetch post in notification_list()';
-        return;
-    }
-
-    # find the list of people to notify about this update
-    my $notification_list = $self->search(
-        {
-            # the thread the post belongs to
-            thread_id       => $post->thread()->id(),
-            # only interested in records where a person is watching
-            watched         => 1,
-            # and they last viewed the thread before the last post
-            timestamp       => {
-                '<',
-                DateTime::Format::Pg->format_datetime(
-                    $post->created()
-                )
-            },
-            # and they've not been notified
-            last_notified   => [
-                {   '=',    undef   },
-                   \'< timestamp'    ,
-            ],
-            # and they aren't the person that created the post itself
-            person_id => {
-                '!=',
-                $post->creator()->id(),
-            },
-        }
-    );
-
-    return $notification_list;
-}
 
 sub interval_ago {
     my $self = shift;
