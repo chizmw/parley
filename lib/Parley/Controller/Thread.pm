@@ -160,9 +160,11 @@ sub view : Local {
 
             prefetch => [
                 { thread => {'forum'=>'last_post'} },
-                { reply_to => 'creator' },
-                { quoted_post => 'creator' },
                 { creator => 'authentication' },
+                #{ reply_to => 'creator' },
+                #{ quoted_post => 'creator' },
+                'reply_to',
+                'quoted_post',
             ],
         }
     );
