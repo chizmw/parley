@@ -370,6 +370,9 @@ msgstr "Non-integer user id passed"
 msgid "None"
 msgstr "None"
 
+msgid "No Moderators"
+msgstr "None"
+
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -382,8 +385,11 @@ msgstr "of"
 msgid "Page"
 msgstr "Page"
 
+msgid "Page %1 of %2"
+msgstr "Page %1 of %2"
+
 msgid "PASSWORD DETAILS SENT"
-msgstr "You should recieve an email in the next few minutes with further instructions to reset your password."
+msgstr "You should receive an email in the next few minutes with further instructions to reset your password."
 
 msgid "PASSWORD EMAIL SEND FAILED"
 msgstr "The application failed to send the password reset email."

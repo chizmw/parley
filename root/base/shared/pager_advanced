@@ -6,7 +6,7 @@
     [% url_extra_args = '&amp;forum=' _ current_forum.id %]
     [% END %]
 
-    [%l('Page')%] [% page.current_page %] [%l('of')%] [% page.last_page %]
+    [%l('Page [_1] of [_2]', [page.current_page, page.last_page])%]
     [% IF page.last_page > 1 %]
     [
         [% UNLESS page.current_page == page.first_page %]
