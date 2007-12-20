@@ -8,6 +8,7 @@ This file documents the revision history for Parley.
     - [bug] fix issue with forum-limited searches
     - limit thread subject length on user profile page
     - rename DB columns to be more sensible
+    - upgraded to YUI 2.4.1
 
 0.57    Wed Oct 31 19:15:06 GMT 2007
     - added T&Cs to application
