@@ -3,7 +3,7 @@
 <table class="forum_list">
     <tbody>
         [% WHILE (forum = forum_list.next) %]
-        [% toggler = (1 - toggler) %]
+        [% toggler = (1 - (toggler||0)) %]
         <tr class="row [% row_styles.$toggler %]">
             <td width="50%">
                 <div class="forum_name">
