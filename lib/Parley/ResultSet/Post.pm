@@ -7,7 +7,7 @@ use base 'DBIx::Class::ResultSet';
 
 # we used to use ->slice() but it sopped working on page #2 (!!)
 # this may be slower [not benchmarked] but it works
-sub last_post_in_list :ResultSet {
+sub last_post_in_list {
     my ($self, $post_list) = @_;
     my ($current_post);
 
@@ -23,7 +23,7 @@ sub last_post_in_list :ResultSet {
 }
 
 
-sub next_post :ResultSet {
+sub next_post {
     my ($self, $post) = @_;
     my $next_post;
 
@@ -48,7 +48,7 @@ sub next_post :ResultSet {
 }
 
 
-sub page_containing_post : ResultSet {
+sub page_containing_post {
     my ($self, $post, $posts_per_page) = @_;
 
     my $position_in_thread = $self->thread_position($post);
@@ -60,7 +60,7 @@ sub page_containing_post : ResultSet {
 }
 
 
-sub thread_position : ResultSet {
+sub thread_position {
     my ($self, $post) = @_;
 
     if (not defined $post) {
