@@ -9,6 +9,9 @@ It's unlikely that we'll need an 'en' file in the project.
 0.58
     (en renamed to i_default)
 
+    it.po:
+        - full translation from i_default.po
+
     i_default.po:
         - added:
             - "%1 wrote:"

@@ -1,6 +1,7 @@
 This file documents the revision history for Parley.
 
 0.58 (UNDER DEVELOPMENT)
+    - added first part of .it i18n (Thanks Darius!)
     - (begin to) re-work the UI design to be cleaner
     - make the display of the time zone independant of the time_format string
     - fix issues with email notifications

@@ -22,6 +22,12 @@ Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 L<FamFamFam Silk Icons|http://www.famfamfam.com/lab/icons/silk/>
 
+=head1 I18N
+
+=head2 Italian
+
+it.po translated by Darius Jokilehto
+
 =head1 PATCHES AND BUG-FIXES
 
 Kaare Rasmussen C<< CPANID: KAARE >>
