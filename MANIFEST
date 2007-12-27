@@ -107,6 +107,7 @@ root/base/post/edit
 root/base/search/forum
 root/base/shared/autocomplete_style
 root/base/shared/focus_username_js
+root/base/shared/language_dialog
 root/base/shared/loading_please_wait
 root/base/shared/login_dialog
 root/base/shared/moderator_list
@@ -171,6 +172,10 @@ root/static/images/catalyst_logo.png
 root/static/images/filetypes/image.png
 root/static/images/filetypes/pdf.png
 root/static/images/icons/anchor.png
+root/static/images/icons/flags/de.png
+root/static/images/icons/flags/gb.png
+root/static/images/icons/flags/i_default.png
+root/static/images/icons/flags/it.png
 root/static/images/icons/lock.png
 root/static/images/loader.gif
 root/static/images/locked.png
