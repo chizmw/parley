@@ -1,4 +1,4 @@
-<!-- LOGIN DIALOG -->
+<!-- LANGUAGE DIALOG -->
 <script type="text/javascript">
 YAHOO.namespace("parley.language");
 
@@ -84,4 +84,4 @@ YAHOO.util.Event.onDOMReady(language_dialog_init);
         [% END %]
     </div>
 </div>
-<!-- LOGIN DIALOG -->
+<!-- (end) LANGUAGE DIALOG -->
