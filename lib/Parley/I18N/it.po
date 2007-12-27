@@ -437,6 +437,10 @@ msgstr "Dimenticato la Password?"
 msgid "person"
 msgstr "persona"
 
+# added by Chisel via babelfish
+msgid "Please choose a language"
+msgstr "Scelga una lingua"
+
 msgid "Please enter your information"
 msgstr "Per favore fornire le proprie informazioni"
 
