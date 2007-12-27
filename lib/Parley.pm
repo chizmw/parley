@@ -114,6 +114,15 @@ sub login_if_required {
     }
 }
 
+sub i18nise {
+    my ($c, $msgid, $msgargs) = @_;
+
+    return $c->localize(
+        $msgid,
+        $msgargs
+    );
+}
+
 1;
 
 __END__

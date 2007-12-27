@@ -21,6 +21,7 @@
             [% PROCESS shared/search_dialog %]
             [% PROCESS shared/small_loading_please_wait %]
             [% PROCESS shared/login_dialog %]
+            [% PROCESS shared/language_dialog %]
         </div><!-- id="doc3" -->
     </body>
 </html>

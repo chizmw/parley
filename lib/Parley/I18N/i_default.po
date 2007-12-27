@@ -440,6 +440,9 @@ msgstr "Password Reminder"
 msgid "person"
 msgstr "person"
 
+msgid "Please choose a language"
+msgstr "Please choose a language"
+
 msgid "Please enter your information"
 msgstr "Please enter your information"
 

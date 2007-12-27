@@ -1,8 +1,11 @@
 package Parley::Controller::Root;
-
+# vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;
 use base 'Catalyst::Controller';
+
+use DateTime;
+use List::MoreUtils qw(uniq);
 
 use Parley::App::Terms qw( :terms );
 use Parley::App::Error qw( :methods );
@@ -20,6 +23,52 @@ __PACKAGE__->config->{namespace} = '';
 # - _current_forum
 sub auto : Private {
     my ($self, $c) = @_;
+
+    # the cookie name for language choice(s)
+    my $cookie_name = $c->config->{name} . q{_languages};
+
+    ##################################################
+    # do we have a request for a chosen language?
+    ##################################################
+    if (defined $c->request->param('lang')) {
+        $c->log->debug('SET LANG: ' . $c->request->param('lang'));
+        $c->log->debug($c->request->referer());
+        $c->response->cookies->{ $cookie_name } = {
+            value       => $c->request->param('lang'),
+            expires     => '+14d',
+        };
+        # redirect back to the page they were on
+        $c->response->redirect(
+            $c->request->referer()
+        );
+        return;
+    }
+
+    # preserve cookies
+    if ($c->request->cookie($cookie_name)) {
+        $c->response->cookies->{ $cookie_name } = {
+            value       => $c->request->cookie($cookie_name)->value,
+            expires     => '+14d',
+        };
+
+        # push cookie saved languages onto list of i18n languages the user accepts
+        my (@languages);
+        # fetch cookie language prefs (if any)
+        push @languages,
+            split(
+                /\s+/,
+                $c->request->cookie($cookie_name)->value
+            )
+        ;
+        # get current list of accepted languages
+        push @languages, @{$c->languages};
+        # make the list have unique entries
+        @languages = uniq @languages;
+        # set new list of accepted languages
+        $c->languages(
+            \@languages
+        );
+    }
 
     # get a list of (all/available) forums
     $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(

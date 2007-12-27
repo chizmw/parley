@@ -30,6 +30,7 @@ It's unlikely that we'll need an 'en' file in the project.
             - 'Page %1 of %2'
             - 'Cancel'
             - 'in'
+            - 'Please choose a language'
 
         - removed:
             - "Posted From"
