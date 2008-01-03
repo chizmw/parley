@@ -13,18 +13,18 @@
 
     <td>
         <div class="thread_subject">
-            <a href="thread/view?thread=[% thread.id %]" class="topic_link">[% ForumCode.escape(thread.subject) |truncate(55) %]</a>
+            <a href="[%c.uri_for('/thread/view',{'thread'=>thread.id})%]" class="topic_link">[% ForumCode.escape(thread.subject) |truncate(55) %]</a>
         </div>
         [%- IF show_forum_name %]
         <div class="thread_recent_forum">
-            <a href="forum/view?forum=[%thread.forum.id%]">[% thread.forum.name %]</a>
+            <a href="[%c.uri_for('/forum/view',{'forum'=>thread.forum.id})%]">[% thread.forum.name %]</a>
         </div>
         [% END %]
         <div class="forum_mini_pager">
             [%- IF authed_user || mini_pager %]
             [
                 [%- IF authed_user %]
-                <a href="thread/next_post?thread=[% thread.id %]">Continue</a>
+                <a href="[%c.uri_for('/thread/next_post',{'thread'=>thread.id})%]">Continue</a>
                 [%- END %]
             ]
             [%- END %]
@@ -39,7 +39,7 @@
         </div>
         <div class="forum_mini_pager">
             [
-            <a href="post/view?post=[%search_post.id%]">Go to post</a>
+            <a href="[%c.uri_for('/post/view',{'post'=>search_post.id})%]">Go to post</a>
             ]
         </div>
     </td>
