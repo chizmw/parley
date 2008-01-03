@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More tests => 7;
 
 use_ok( 'Test::WWW::Mechanize::Catalyst', 'Parley' );
 
@@ -15,17 +15,7 @@ isa_ok($mech, 'Test::WWW::Mechanize::Catalyst');
 $mech->get_ok("http://localhost/forum/list", 'Got forum list page URL');
 $mech->content_contains('Forum List', 'Returned page is the forum list');
 
-TODO: {
-    local $TODO = q{::Mechanize::Test seems to give incorrect <base>};
-    $status = $mech->base_is('http://localhost/');
-}
-
-if (not $status) {
-    diag "<base> is wrong for tests, overriding";
-    $mech->{base} = 'http://localhost/';
-}
-
-@forum_links = $mech->find_all_links( url_regex => qr{\Aforum/view\?forum=} );
+@forum_links = $mech->find_all_links( url_regex => qr{/forum/view\?forum=} );
 $mech->links_ok(
     \@forum_links,
     'Check all links for forum/view'

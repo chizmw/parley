@@ -7,7 +7,7 @@
         <tr class="row [% row_styles.$toggler %]">
             <td width="50%">
                 <div class="forum_name">
-                    <a href="forum/view?forum=[% forum.id %]" class="forum_link">[% HTML.escape(forum.name) %]</a>
+                    <a href="[%c.uri_for('/forum/view',{'forum'=>forum.id})%]" class="forum_link">[% HTML.escape(forum.name) %]</a>
                 </div>
                 <div class="forum_description">
                     [% HTML.escape(forum.description) %]
@@ -17,7 +17,7 @@
                 <div class="forum_lastpost">
                 [% IF forum.last_post %]
                 <div class="forum_lastpost_subject">
-                    <a href="thread/view?thread=[% forum.last_post.thread_id %]" class="topic_link">[% HTML.escape(forum.last_post.thread.subject) |truncate(55) %]</a>
+                    <a href="[%c.uri_for('/thread/view',{thread=>forum.last_post.thread_id})%]" class="topic_link">[% HTML.escape(forum.last_post.thread.subject) |truncate(55) %]</a>
                 </div>
                 <div class="topic_creator">
                     [%l('posted by')%]
