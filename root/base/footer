@@ -5,7 +5,7 @@
                 <p>
                 <a href="http://developer.berlios.de/projects/parley">Parley</a>
                 (version [%c.config.version%])
-                &copy; Chisel Wright 2006-2007. [%l('All Rights Reserved')%].
+                &copy; Chisel Wright 2006-2008. [%l('All Rights Reserved')%].
                 </p>
             </div><!-- id="ft" -->
 
