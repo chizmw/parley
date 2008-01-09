@@ -53,16 +53,7 @@
 
 
         <!-- defined styles for parley -->
-        <!--<link type="text/css" rel="stylesheet" title="Default" href="[% c.request.base %]/css/common.css" />-->
-        <link type="text/css" rel="alternate stylesheet"           title="Default"    href="[% c.request.base %]/css/layout27.css" />
-        <link type="text/css" rel="alternate stylesheet" title="Layout 23"  href="[% c.request.base %]/css/layout23.css" />
-        <link type="text/css" rel="stylesheet" title="Experiment" href="[% c.request.base %]/css/experiment.css" />
-        <!--
-        <style type="text/css">
-            @import url("[%c.request.base%]/css/common.css");
-        </style>
-        -->
-
+        <link type="text/css" rel="stylesheet" title="Experiment"           href="[% c.request.base %]/static/css/experiment.css" />
     </head>
 
     <body class="yui-skin-sam">
