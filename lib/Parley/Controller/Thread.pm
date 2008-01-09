@@ -441,16 +441,16 @@ sub _add_new_thread {
             $c->log->error( $@ );
             return;
         }
+        # set the current thread
+        $c->_current_thread( $new_thread );
+
+        # view the "next post" in the new thread
+        $c->detach('next_post');
     }
 
     # getting here means we validated the form, and added required data for the
     # new thread
 
-    # set the current thread
-    $c->_current_thread( $new_thread );
-
-    # view the "next post" in the new thread
-    $c->detach('next_post');
 }
 
 sub _get_thread_reply_post {

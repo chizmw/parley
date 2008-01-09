@@ -13,6 +13,7 @@ TODO LIST
   - advanced search page
   - proper moderator support/management
   - IP/user reporting
+D - [bug] fix error when trying to post new thread with no subject line
 ? - see if we can work out why 'make catalyst_par' is failing
 D - i18n Login and Cancel buttons in login_dialog
 D - fix CSS for <fieldset>s
