@@ -17,6 +17,10 @@ sub last_post_viewed_in_thread {
     my ($self, $person, $thread) = @_;
     my ($last_viewed, $last_post) = @_;
 
+    if (not defined $thread) {
+        die "no thread defined";
+    }
+
     my $schema = $self->result_source()->schema();
 
     # we need to be careful that we haven't deleted/hidden the post that

@@ -336,6 +336,34 @@ th {
     border:             1px solid #666;
 }
 
+.thread_add {
+    margin-left:        auto;
+    margin-right:       auto;
+    margin-top:         15px;
+    width:              100%;
+    font-size:          93%;
+}
+
+.thread_add td {
+    padding-top:        4px;
+    padding-bottom:     4px;
+}
+
+.thread_add .input_text {
+    width:              450px;
+    margin-left:        10px;
+}
+
+.thread_add_topic {
+    text-align:         right;
+    padding-right:      5px;
+}
+.thread_add_message {
+    text-align:         right;
+    vertical-align:     top;
+    padding-right:      5px;
+}
+
 .thread_header {
     font-weight:        bold;
     background:         #666;
@@ -456,14 +484,15 @@ a[href $='.pdf']{
 #preview_overlay {
     border:             1px dashed #ccc;
     text-align:         left;
-    padding:            3px;
+    padding:            0px;
 }
 #thread_message {
     font-family:        monospace;
     text-align:         left;
-    padding:            3px;
+    padding:            0px;
     background-color:   #eee;
     font-size:          93%;
+    width:              450px;
 }
 
 /* ForumCode styles */
@@ -512,16 +541,5 @@ a[href $='.pdf']{
     font-weight:        bold;
     margin-bottom:      3px;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
