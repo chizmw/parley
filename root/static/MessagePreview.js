@@ -9,18 +9,26 @@
 /*
     Usage Example:
 
-    <!-- message preview majick -->
-    <script type="text/javascript" src="[%c.uri_for('/static/MessagePreview.js')%]"></script>
-    <script type="text/javascript">
-        var MessagePreview = new ParleyMessagePreview();
+        <!-- message preview majick -->
+        <script type="text/javascript" src="[%c.uri_for('/static/MessagePreview.js')%]"></script>
+        <script type="text/javascript">
+            var MessagePreview = new ParleyMessagePreview();
 
-        MessagePreview.config.label_preview = '[%l('Preview')%]';
-        MessagePreview.config.label_edit    = '[%l('Edit')%]';
-        MessagePreview.config.post_url      = "[%c.uri_for('/post/preview')%]";
+            MessagePreview.config.label_preview = '[%l('Preview')%]';
+            MessagePreview.config.label_edit    = '[%l('Edit')%]';
+            MessagePreview.config.post_url      = "[%c.uri_for('/post/preview')%]";
 
-        MessagePreview.init();
-    </script>
-    <!-- (end) message preview majick -->
+            MessagePreview.init();
+        </script>
+        <!-- (end) message preview majick -->
+
+    In your HTML have a field with id 'thread_message' and a button with id 'message_preview':
+
+        <textarea name="thread_message" id="thread_message" cols="60" rows="20" class="input_text" /></textarea>
+
+        ...
+
+        <input type="button" value="[%l('Preview')%]" name="post_reply" class="" id="message_preview" />
 */
 
 (function () {
