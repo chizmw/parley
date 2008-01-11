@@ -1,6 +1,7 @@
 Changes
 Changes.i18n
 config/parley
+config/parley.fastcgi
 contrib/patch/0.57_02_KAARE.patch
 db/parley.psql
 db/patch.skel
@@ -714,6 +715,7 @@ root/static/yui/yuitest/README
 root/static/yui/yuitest/yuitest-beta-debug.js
 root/static/yui/yuitest/yuitest-beta-min.js
 root/static/yui/yuitest/yuitest-beta.js
+script/deploy.sh
 script/parley_cgi.pl
 script/parley_create.pl
 script/parley_email_engine.pl
