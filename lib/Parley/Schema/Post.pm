@@ -20,7 +20,7 @@ __PACKAGE__->table("post");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",
-    default_value => "nextval('post_post_id_seq'::regclass)",
+    #default_value => "nextval('post_post_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },

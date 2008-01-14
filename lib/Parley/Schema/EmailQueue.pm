@@ -12,7 +12,7 @@ __PACKAGE__->table("email_queue");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",
-    default_value => "nextval('email_queue_email_queue_id_seq'::regclass)",
+    #default_value => "nextval('email_queue_email_queue_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },

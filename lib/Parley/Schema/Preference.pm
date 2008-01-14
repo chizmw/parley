@@ -12,14 +12,14 @@ __PACKAGE__->table("preference");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",
-    default_value => "nextval('preference_preference_id_seq'::regclass)",
+    #default_value => "nextval('preference_preference_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },
 
   "timezone" => {
     data_type => "text",
-    default_value => "'UTC'::text",
+    default_value => "UTC",
     is_nullable => 0,
     size => undef,
   },

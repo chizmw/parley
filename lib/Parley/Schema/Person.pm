@@ -12,7 +12,7 @@ __PACKAGE__->table("person");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",
-    default_value => "nextval('person_person_id_seq'::regclass)",
+    #default_value => "nextval('person_person_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },

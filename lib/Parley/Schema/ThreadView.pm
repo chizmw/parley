@@ -15,7 +15,7 @@ __PACKAGE__->table("thread_view");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",
-    default_value => "nextval('thread_view_thread_view_id_seq'::regclass)",
+    #default_value => "nextval('thread_view_thread_view_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },

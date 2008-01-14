@@ -8,7 +8,7 @@ __PACKAGE__->table("preference_time_string");
 __PACKAGE__->add_columns(
     id => {
         data_type => "integer",
-        default_value => "nextval('preference_time_string_preference_time_string_id_seq'::regclass)",
+        #default_value => "nextval('preference_time_string_preference_time_string_id_seq'::regclass)",
         is_nullable => 0,
         size => 4,
     },
