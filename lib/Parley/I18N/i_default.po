@@ -4,6 +4,9 @@ msgstr "%1 wrote:"
 msgid "%quant(%1,post)"
 msgstr "%quant(%1,post,posts)"
 
+msgid "%quant(%1,Forum)"
+msgstr "%quant(%1,Forum,Forums)"
+
 msgid "%quant(%1,Reply)"
 msgstr "%quant(%1,Reply,Replies)"
 

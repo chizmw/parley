@@ -15,12 +15,14 @@ It's unlikely that we'll need an 'en' file in the project.
             - 'Cancel'
             - 'in'
             - 'Please choose a language' (babelfish)
+            - "%quant(%1,Forum)"
 
     i_default.po:
         - added:
             - "%1 wrote:"
             - "%quant(%1,reply)"
             - "%quant(%1,view)"
+            - "%quant(%1,Forum)"
             - "created by (%1)"
             - "last post by (%1)"
             - "Posted from %1"
