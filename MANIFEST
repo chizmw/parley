@@ -15,6 +15,9 @@ db/patch_0.53_to_0.57.psql
 db/patch_0.57_to_0.58.psql
 db_script/Parley-Schema-0.57_08-PostgreSQL.sql
 db_script/Parley-Schema-0.58-PostgreSQL.sql
+db_script/Parley-Schema-0.58_13-MySQL.sql
+db_script/Parley-Schema-0.58_13-PostgreSQL.sql
+db_script/Parley-Schema-0.58_13-SQLite.sql
 doc/parley-qs.html
 inc/Module/AutoInstall.pm
 inc/Module/Install.pm
@@ -721,6 +724,7 @@ script/parley_create.pl
 script/parley_email_engine.pl
 script/parley_fastcgi.pl
 script/parley_schema_export.pl
+script/parley_schema_export_all.pl
 script/parley_server.pl
 script/parley_test.pl
 script/time_string_sample.pl
