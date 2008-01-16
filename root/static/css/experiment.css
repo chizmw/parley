@@ -5,7 +5,7 @@
     line-height:    80px;
     margin:         0px;
     padding-left:   10px;
-    background:     #EEE;
+    background:     #EEE url('/static/images/parley_logo.jpg') no-repeat left;
     color:          #79B30B
 }
 
