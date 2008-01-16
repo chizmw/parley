@@ -59,7 +59,10 @@
     <body class="yui-skin-sam">
         <div id="doc3">
             <div id="hd">
+                <!--
+                <img src="[%c.uri_for('/static/images/parley_logo.jpg')%]" />
                 <h1>Parley</h1>
+                -->
 
                 <div id="user_information">
                     [%l('Current User')%]:
