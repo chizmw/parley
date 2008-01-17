@@ -1,7 +1,6 @@
 TODO LIST
 
   - investigate in-application language preference/choice
-  - styling: user/login
   - styling: post/edit
   - styling: thread/reply
   - styling: user prefs
@@ -17,6 +16,7 @@ TODO LIST
      - post editing (other users)
   - IP/user reporting
   - voting?
+D - styling: user/login
 D - styling: thread/add
 D - post/edit: preview (message) code
 D - [bug] fix error when trying to post new thread with no subject line

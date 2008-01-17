@@ -449,6 +449,18 @@ th {
     text-align:         right;
 }
 
+.user_login form {
+    width:              350px;
+    margin-left:        auto;
+    margin-right:       auto;
+    margin-top:         20px;
+}
+
+.user_login p {
+    margin-top:         5px;
+    margin-bottom:      5px;
+}
+
 .user_post_info {
     background:         #ccc;
     background:         transparent;
