@@ -1,7 +1,6 @@
 TODO LIST
 
   - investigate in-application language preference/choice
-  - styling: thread/reply
   - styling: user prefs
   - styling: user profile
   - [bug] fix email notification for thread notification emails
@@ -15,6 +14,7 @@ TODO LIST
      - post editing (other users)
   - IP/user reporting
   - voting?
+D - styling: thread/reply
 D - styling: post/edit
 D - styling: user/login
 D - styling: thread/add

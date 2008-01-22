@@ -1,10 +1,8 @@
-<div id="logger"></div>
-
-[% PROCESS shared/loading_please_wait %]
-
 <div style="margin-top:10px;"></div>
 <div class="thread_header">
     <a href="forum/view?forum=[% current_forum.id %]">[% ForumCode.escape(current_forum.name) %]</a>
+    &nbsp;:&nbsp;
+    [%l('Replying To')%]
     &nbsp;:&nbsp;
     [% ForumCode.escape(current_thread.subject) %]
 </div>
@@ -17,28 +15,23 @@
 [% END %]
 
 <!-- The post we're replying to -->
-<table style="margin-top:10px;">
-  <tr>
-    <td class="post_subject">
-      [% responding_to_post.subject %]
-    </td>
-    <td class="post_creator">
-      [% responding_to_post.creator.forum_name %]
-    </td>
-    <td class="post_created">
-      [% nicedate(responding_to_post.created) %]
-    </td>
-  </tr>
-  
-  <tr>
-    <td colspan="3" class="reply_post_message">
-          [%l('Replying To')%]:
-      <div class="innerpost">
-      [% FILTER html_line_break %][% HTML.escape(responding_to_post.message) %][% END %]
-      </div>
-    </td>
-  </tr>
-</table>
+<div class="yui-gf" style="margin-top:10px;margin-bottom:10px;">
+	<div class="yui-u first">
+        <div style="text-align:right; vertical-align: top;">
+            <p class="post_creator">
+            [% responding_to_post.creator.forum_name %]
+            </p>
+            <p class="post_created">
+            [% nicedate(responding_to_post.created) %]
+            </p>
+        </div>
+	</div>
+	<div class="yui-u">
+        <div class="reply_post_message innerpost">
+            [% FILTER html_line_break %][% ForumCode.forumcode(responding_to_post.message) %][% END %]
+        </div>
+	</div>
+</div>
 
 [% IF messages %]
 <p>
@@ -50,67 +43,96 @@
 </p>
 [% END %]
 
-    
 <p style="padding:10px;">[%l('ENTER REPLY')%]:</p>
 
+<!-- replies may have their own subject line -->
+[% IF c.config.replies_have_own_subject %]
+<div class="yui-gf" style="margin-top:10px;margin-bottom:10px;">
+	<div class="yui-u first">
+        <div style="text-align:right; vertical-align: top;">
+            [%l('Topic')%]:
+        </div>
+	</div>
+	<div class="yui-u">
+        <input type="text" name="thread_subject" size="60" class="input_text" value="[% current_thread.subject %]" />
+	</div>
+</div>
+[% END %]
 
-<table class="thread_reply">
-  [% IF c.config.replies_have_own_subject %]
-  <tr>
-    <td> [%l('Topic')%] </td>
-    <td>
-      <input type="text" name="thread_subject" size="60" class="input_text" value="[% current_thread.subject %]" />
-    </td>
-  </tr>
-  [% END %]
-
-  [% IF quote_post %]
+<!-- possibly quoting an existing post -->
+[% IF quote_post %]
   <input type="hidden" name="have_quoted_post" value="1" />
   <input type="hidden" name="__post" value="[% quote_post.id %]" />
-  <tr>
-  <td>&nbsp;</td>
-  <td>
-    <span class="post_creator">
-      [% quote_post.creator.forum_name %] [%l('said')%]:
-    </span>
-    <br />
-    <textarea name="quote_message" cols="60" rows="10" class="quoted_reply_textarea" />[% quote_post.message %]</textarea>
-  </td>
-  </tr>
-  [% END %]
+<div class="yui-gf" style="margin-top:10px;margin-bottom:10px;">
+	<div class="yui-u first">
+        &nbsp;
+	</div>
+	<div class="yui-u">
+        <span class="post_creator">
+            [% quote_post.creator.forum_name %] [%l('said')%]:
+        </span>
+        <br />
+        <textarea name="quote_message" cols="60" rows="10" class="quoted_reply_textarea" />[% quote_post.message %]</textarea>
+	</div>
+</div>
+[% END %]
 
-  <tr>
-    <td> [%l('Message')%] </td>
-    <td>
+<!-- the reply area -->
+<div class="yui-gf" style="margin-top:10px;margin-bottom:10px;">
+	<div class="yui-u first">
+        <div style="text-align:right; vertical-align: top;">
+            [%l('Message')%]:
+        </div>
+	</div>
+	<div class="yui-u">
         <textarea name="thread_message" id="thread_message" cols="60" rows="20" class="input_text" /></textarea>
-    </td>
-  </tr>
+	</div>
+</div>
 
-  <tr>
-    <td>&nbsp</td>
-    <td colspan="1" style="text-align: center;">
-      <input type="button" value="[%l('Preview')%]"   accesskey="Z" name="post_reply" class="input_button" id="message_preview" />
-      <input type="submit" value="[%l('Add Reply')%]" accesskey="X" name="post_reply" class="input_button" />
-    </td>
-  </tr>
+<!-- button row -->
+<div class="yui-g">
+	<div class="yui-g first">
+		<div class="yui-u first">
+			&nbsp;
+		</div>
+		<div class="yui-u" style="text-align:center;">
+            <input type="button" value="[%l('Preview')%]"   accesskey="P" name="post_reply" class="input_button" id="message_preview" />
+		</div>
+	</div>
+	<div class="yui-g">
+		<div class="yui-u first" style="text-align:center;">
+            <input type="submit" value="[%l('Add Reply')%]" accesskey="S" name="post_reply" class="input_button" />
+		</div>
+		<div class="yui-u">
+			&nbsp;
+		</div>
+	</div>
+</div>
 
-  [% IF moderator %]
-  <tr>
-    <td>&nbsp</td>
-    <td colspan="1" align="left">
-        <input type="checkbox" name="lock_thread" value="1" /> [%l('LOCK AFTER POSTING')%] 
-    </td>
-  </tr>
-  [% END %]
-  <tr>
-    <td>&nbsp</td>
-    <td colspan="1" align="left">
-        <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %]/>
-        [%l('ADD THREAD WATCH')%] 
-    </td>
-  </tr>
-</table>
-</form>
+<!-- extra actions -->
+<div class="yui-g" style="margin-top:20px;">
+	<div class="yui-g first">
+		<div class="yui-u first">
+			&nbsp;
+		</div>
+		<div class="yui-u" style="text-align:center;">
+            [% IF moderator %]
+            <input type="checkbox" name="lock_thread" value="1" /> [%l('LOCK AFTER POSTING')%] 
+            [% ELSE %]
+            &nbsp;
+            [% END %]
+		</div>
+	</div>
+	<div class="yui-g">
+		<div class="yui-u first" style="text-align:center;">
+            <input type="checkbox" name="watch_on_post" value="1" [% IF authed_user.preference.watch_on_post %]checked="checked" [% END %]/>
+            [%l('ADD THREAD WATCH')%] 
+		</div>
+		<div class="yui-u">
+			&nbsp;
+		</div>
+	</div>
+</div>
 
 <style type="text/css">
 	.yui-overlay { position:absolute;background:transparent;border:none;padding:none;margin:none; }
@@ -128,3 +150,5 @@
     MessagePreview.init();
 </script>
 <!-- (end) message preview majick -->
+
+[% PROCESS shared/loading_please_wait %]
