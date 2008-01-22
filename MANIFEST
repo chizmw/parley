@@ -1,6 +1,5 @@
 Changes
 Changes.i18n
-config/parley
 config/parley.fastcgi
 contrib/patch/0.57_02_KAARE.patch
 db/parley.psql
@@ -426,6 +425,7 @@ root/static/images/icons/flags/zw.png
 root/static/images/icons/lock.png
 root/static/images/loader.gif
 root/static/images/locked.png
+root/static/images/parley_logo.jpg
 root/static/images/rel_interstitial_loading.gif
 root/static/images/sticky.png
 root/static/images/unread_posts.gif
