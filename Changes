@@ -1,6 +1,7 @@
 This file documents the revision history for Parley.
 
 0.58 (UNDER DEVELOPMENT)
+    - added an application logo
     - add browser and user driven language selection
     - added first part of .it i18n (Thanks Darius!)
     - re-work the UI design to be cleaner
