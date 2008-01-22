@@ -53,7 +53,7 @@
 
 
         <!-- defined styles for parley -->
-        <link type="text/css" rel="stylesheet" title="Simple" href="[%c.uri_for('/static/css/experiment.css')%]" />
+        <link type="text/css" rel="stylesheet" title="Simple" href="[%c.uri_for('/static/css/parley.css')%]" />
     </head>
 
     <body class="yui-skin-sam">
