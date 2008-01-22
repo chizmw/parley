@@ -154,13 +154,13 @@ root/email_templates/it/username_reminder.eml
 root/favicon.ico
 root/static/css/common.css
 root/static/css/default.css
-root/static/css/experiment.css
 root/static/css/images/bg.gif
 root/static/css/images/client_logo.gif
 root/static/css/images/logo.png
 root/static/css/layout23.css
 root/static/css/layout27.css
 root/static/css/layout33.css
+root/static/css/parley.css
 root/static/Editable.js
 root/static/images/btn_120x50_built.png
 root/static/images/btn_120x50_built_shadow.png
