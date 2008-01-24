@@ -399,7 +399,7 @@ sub _txn_password_reset {
     $pwd_reset = $c->model('ParleyDB')->resultset('PasswordReset')->create(
         {
             'password_reset_id' => $random,
-            'recipient'		=> $person->person_id,
+            'recipient'		=> $person->id,
             'expires'		=> Time::Piece->new(time + $LIFETIME)->datetime,
         }
     );

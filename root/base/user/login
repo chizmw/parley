@@ -23,9 +23,9 @@
             <button type="submit" class="input_button" tabindex="3" />[%l('Login')%]</button>
 
                 <p align="right">
-                <a href="[%c.uri_for('user/password/forgotten')%]">[%l('Forgotten Password')%]</a>
+                <a href="[%c.uri_for('/user/password/forgotten')%]">[%l('Forgotten Password')%]</a>
                 |
-                <a href="[%c.uri_for('user/signup')%]">[%l('Register')%]</a>
+                <a href="[%c.uri_for('/user/signup')%]">[%l('Register')%]</a>
                 </p>
         </fieldset>
     </form>
