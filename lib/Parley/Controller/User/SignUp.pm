@@ -80,7 +80,7 @@ sub authenticate : Path('/user/authenticate') {
     # fetch the info from the database
     my $regauth = $c->model('ParleyDB')->resultset('RegistrationAuthentication')->find(
         {
-            registration_authentication_id => $auth_id,
+            id => $auth_id,
         }
     );
 
@@ -100,7 +100,7 @@ sub authenticate : Path('/user/authenticate') {
     # get the person matching the ID
     $c->stash->{signup_user} = $c->model('ParleyDB')->resultset('Person')->find(
         {
-            person_id => $regauth->recipient->person_id(),
+            id => $regauth->recipient_id,
         }
     );
 
@@ -204,9 +204,9 @@ sub _create_regauth {
     # create an invitation
     $invitation = $c->model('ParleyDB')->resultset('RegistrationAuthentication')->create(
         {
-            'registration_authentication_id'	=> $random,
-            'recipient'				=> $person->person_id,
-            'expires'				=> Time::Piece->new(time + $LIFETIME)->datetime,
+            'id'	    => $random,
+            'recipient_id'  => $person->id,
+            'expires'       => Time::Piece->new(time + $LIFETIME)->datetime,
         }
     );
 
@@ -334,11 +334,11 @@ sub _txn_add_new_user {
     # add new person
     $new_person = $c->model('ParleyDB')->resultset('Person')->create(
         {
-            first_name      => $valid_results->{first_name},
-            last_name       => $valid_results->{last_name},
-            forum_name      => $valid_results->{forum_name},
-            email           => $valid_results->{email},
-            authentication  => $new_auth->id(),
+            first_name          => $valid_results->{first_name},
+            last_name           => $valid_results->{last_name},
+            forum_name          => $valid_results->{forum_name},
+            email               => $valid_results->{email},
+            authentication_id   => $new_auth->id(),
         }
     );
 
@@ -350,7 +350,7 @@ sub _txn_add_new_user {
         }
     );
     # and link to the new person
-    $new_person->preference( $new_preference->id() );
+    $new_person->preference_id( $new_preference->id() );
     $new_person->update;
 
     # send an authentication email
