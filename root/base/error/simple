@@ -4,7 +4,7 @@
 <p>
 [%l('The following error message was returned by the application')%]:
 
-<blockquote>[% error.message %]</blockquote>
+<blockquote style="white-space:pre;">[% error.message %]</blockquote>
 </p>
 [% END %]
 

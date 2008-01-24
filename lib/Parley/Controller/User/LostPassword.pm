@@ -128,7 +128,7 @@ sub reset : Path('/user/password/reset') {
     # fetch the info from the database
     my $pwd_reset = $c->model('ParleyDB')->resultset('PasswordReset')->find(
         {
-            password_reset_id => $reset_uid,
+            id => $reset_uid,
         }
     );
 
@@ -372,7 +372,7 @@ sub _user_reset {
         # do the actual password reset
         $email_send_status = $self->_user_password_reset($c, $person);
         if (not $email_send_status) {
-            parley_warn($c, $c->localize(q{PASWORD EMAIL SEND FAILED}));
+            parley_warn($c, $c->localize(q{PASSWORD EMAIL SEND FAILED}));
         }
     }
 
@@ -398,9 +398,9 @@ sub _txn_password_reset {
     # create an invitation
     $pwd_reset = $c->model('ParleyDB')->resultset('PasswordReset')->create(
         {
-            'password_reset_id' => $random,
-            'recipient'		=> $person->id,
-            'expires'		=> Time::Piece->new(time + $LIFETIME)->datetime,
+            'id'                => $random,
+            'recipient_id'      => $person->id,
+            'expires'           => Time::Piece->new(time + $LIFETIME)->datetime,
         }
     );
 
@@ -437,7 +437,7 @@ sub _txn_user_password_update {
     # delete all outstanding reset URLs for the user
     $c->model('ParleyDB')->resultset('PasswordReset')->search(
         {
-            recipient => $pwd_reset->recipient()->id()
+            recipient_id => $pwd_reset->recipient()->id()
         }
     ) ->delete;
 }
