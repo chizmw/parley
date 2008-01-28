@@ -1,8 +1,17 @@
 <form action="user/password/reset/[% reset_uid %]" method="post" name="password_reset_form">
 
-[%l('PASSWORD RESET')%]
+<div class="yui-gb top_padded">
+    <div class="yui-u first align_right">
+        &nbsp;
+    </div>
+    <div class="yui-u" style="text-align:justify;">
+        [%l('PASSWORD RESET')%]
+    </div>
+    <div class="yui-u">
+        &nbsp;
+    </div>
+</div>
 
-    <fieldset>
         [%- IF view.error.messages %]
         <p>
             <ul>
@@ -13,26 +22,71 @@
         </p>
         [% END %]
 
-        <label>[%l('Name')%]:</label>
-        <input type="text" value="[% reset_user.first_name %] [% reset_user.last_name %]" tabindex="1" readonly="readonly" disabled="disabled" size="40" />
+    <fieldset>
+        <div class="yui-gb top_padded">
+            <div class="yui-u first align_right">
+                <label>[%l('Name')%]:</label>
+            </div>
+            <div class="yui-u">
+                <input type="text" value="[% reset_user.first_name %] [% reset_user.last_name %]" tabindex="1" readonly="readonly" disabled="disabled" size="40" />
+            </div>
+            <div class="yui-u">
+                &nbsp;
+            </div>
+        </div>
 
-        <label for="reset_username">[%l('Username')%]:</label>
-        <input type="text" name="reset_username" id="reset_username" size="40" tabindex="2" />
+        <div class="yui-gb top_padded">
+            <div class="yui-u first align_right">
+                <label for="reset_username">[%l('Username')%]:</label>
+            </div>
+            <div class="yui-u">
+                <input type="text" name="reset_username" id="reset_username" size="40" tabindex="2" />
+            </div>
+            <div class="yui-u">
+                &nbsp;
+            </div>
+        </div>
 
-        <label for="new_password">[%l('New Password')%]:</label>
-        <input type="password" name="new_password" id="new_password" size="40" tabindex="3" />
+        <div class="yui-gb top_padded">
+            <div class="yui-u first align_right">
+                <label for="new_password">[%l('New Password')%]:</label>
+            </div>
+            <div class="yui-u">
+                <input type="password" name="new_password" id="new_password" size="40" tabindex="3" />
+            </div>
+            <div class="yui-u">
+                &nbsp;
+            </div>
+        </div>
 
-        <label for="confirm_password">[%l('Confirm Password')%]:</label>
-        <input type="password" name="confirm_password" id="confirm_password" size="40" tabindex="4" />
+        <div class="yui-gb top_padded">
+            <div class="yui-u first align_right">
+                <label for="confirm_password">[%l('Confirm Password')%]:</label>
+            </div>
+            <div class="yui-u">
+                <input type="password" name="confirm_password" id="confirm_password" size="40" tabindex="4" />
+            </div>
+            <div class="yui-u">
+                &nbsp;
+            </div>
+        </div>
 
-        <br />
-        <button type="submit" class="input_button" tabindex="5" name="reset_password" />[%l('Reset My Password')%]</button>
-
+        <div class="yui-gb top_padded">
+            <div class="yui-u first">
+                &nbsp;
+            </div>
+            <div class="yui-u">
+                <button type="submit" class="input_button" tabindex="5" name="reset_password" />[%l('Reset My Password')%]</button>
+            </div>
+            <div class="yui-u">
+                &nbsp;
+            </div>
+        </div>
     </fieldset>
 </form>
 
 <!-- put focus into the username field on the form above -->
-<script language="JavaScript">
+<script language="text/javascript">
     <!-- Begin
     document.forms['password_reset_form'].elements['reset_username'].focus();
     // End -->
