@@ -131,6 +131,10 @@ th {
 }
 
 /* style classes */
+.align_right {
+    text-align:         right;
+}
+
 .forum_description {
     font-size:          93%;
 }
@@ -439,6 +443,10 @@ th {
     margin-top:         5px;
     font-size:          77%;
     text-align:         left;
+}
+
+.top_padded {
+    margin-top:         10px;
 }
 
 .topic_creator {
