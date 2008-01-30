@@ -71,6 +71,12 @@ sub login : Path('/user/login') {
 sub logout : Path('/user/logout') {
     my ($self, $c) = @_;
 
+    # if no-one logged in, send them to the main page as a punishment
+    if (not exists $c->session->{authed_user}) {
+        $c->response->redirect( $c->uri_for($c->config()->{default_uri}) );
+        return;
+    }
+
     # session logout, and remove information we've stashed
     $c->logout;
     delete $c->session->{'authed_user'};

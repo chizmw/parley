@@ -10,4 +10,3 @@ ok( request('/help')->is_success, 'Help contents found' );
 
 # this should show the help contents
 ok( request('/help/faq')->is_success, 'FAQ page found' );
-

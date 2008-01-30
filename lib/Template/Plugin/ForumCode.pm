@@ -30,6 +30,11 @@ sub new {
 sub forumcode {
     my ($self, $text) = @_;
 
+    # if we don't have any text, we don't have to do any work
+    if (not defined $text) {
+        return q{};
+    }
+
     # first of all ESCAPE EVERYTHING!
     $text = Template::Plugin::HTML->escape($text);
 

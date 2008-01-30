@@ -127,16 +127,16 @@ sub view : Local {
 sub preview : Local {
     my ($self, $c) = @_;
     my $tt_forum = Template::Plugin::ForumCode->new();
+    my $msg_source = $c->request->param('msg_source');
 
     my $json = objToJson(
         {
             'formatted' =>
                 $tt_forum->forumcode(
-                    $c->request->param('msg_source')
+                    $msg_source
                 )
         }
     );
-    #$c->log->debug( $json );
 
     $c->response->body( $json );
     return;
