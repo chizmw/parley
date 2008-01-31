@@ -1,65 +1,89 @@
 <!-- preferences : time tab -->
-<p>[%l('PREFS DESIRED LOCATION')%]</p>
+
+    <div style="background-color:#ccc;margin-top:5px;margin-bottom:5px;">
+        &nbsp;
+    </div>
+<div class="top_padded">
+    [%l('PREFS DESIRED LOCATION')%]
+</div>
+
+    <div style="background-color:#ccc;margin-top:5px;margin-bottom:5px;">
+        &nbsp;
+    </div>
 
 <form action="my/preferences/update" method="POST" name="time_format">
     <input type="hidden" name="form_name" value="time_format">
-    <table width="550" border="1">
-        [% IF tz_message %]
-        <!-- Message to user -->
-        <tr>
-        <td colspan="2"><b><i>[% tz_message %]</i></b></td>
-        </tr>
-        [% END %]
 
-        <!-- TZ category list -->
-        <tr>
-            <td>
-                <select id="selectZone" name="selectZone">
-                    <option value="">[ [%l('Select Zone')%] ]</option>
-                    [% FOREACH item=tz_categories %]
-                    <option value="[% item %]">[% item %]</option>
-                    [% END %]
-                </select>
-            </td>
+    [% IF tz_message %]
+    <!-- Message to user -->
+    <div>
+        <b><i>[% tz_message %]</i></b>
+    </div>
+    [% END %]
 
-            <td class="right_align" />
-                <label for="use_utc">[%l('Use UTC')%]</label>
-                <input type="checkbox" id="use_utc" name="use_utc" value="1" onChange="toggle_timezone_menus(this)"/>
-            </td>
-        </tr>
+    <div class="yui-gb top_padded">
+        <div class="yui-u first align_right">
+            <select id="selectZone" name="selectZone">
+                <option value="">[ [%l('Select Zone')%] ]</option>
+                [% FOREACH item=tz_categories %]
+                <option value="[% item %]">[% item %]</option>
+                [% END %]
+            </select>
+        </div>
+        <div class="yui-u align_right">
+            <label for="use_utc">[%l('Use UTC')%]</label>
+            <input type="checkbox" id="use_utc" name="use_utc" value="1" onChange="toggle_timezone_menus(this)"/>
+        </div>
+        <div class="yui-u align_right">
+            &nbsp;
+        </div>
+    </div>
 
-        <!-- Time Format List -->
-        <tr>
-            <td>
-                <select id="time_format" name="time_format" style="text-align: center;">
-                    <option value="">([%l('Default')%])</option>
-                    [% WHILE (tf = time_formats.next) %]
-                    <option value="[% tf.id %]">[% tf.sample %]</option>
-                    [% END %]
-                </select>
-            </td>
-            <td class="right_align">
-                <label for="show_tz">[%l('Show timezone')%]</label>
-                <input type="checkbox" id="show_tz" name="show_tz" value="1" />
-            </td>
-        </tr>
+    <div class="yui-gb top_padded">
+        <div class="yui-u first align_right">
+            <select id="time_format" name="time_format" style="text-align: center;">
+                <option value="">([%l('Default')%])</option>
+                [% WHILE (tf = time_formats.next) %]
+                <option value="[% tf.id %]">[% tf.sample %]</option>
+                [% END %]
+            </select>
+        </div>
+        <div class="yui-u align_right">
+            <label for="show_tz">[%l('Show timezone')%]</label>
+            <input type="checkbox" id="show_tz" name="show_tz" value="1" />
+        </div>
+        <div class="yui-u align_right">
+            &nbsp;
+        </div>
+    </div>
 
-        <!-- <tr><td colspan="2">&nbsp;</td></tr> -->
+    <div class="yui-gb top_padded">
+        <div class="yui-u first align_right">
+            [%l('Time formatting example')%]:
+        </div>
+        <div class="yui-u align_right">
+            <i>[% nicedate(current_time) %]</i>
+        </div>
+        <div class="yui-u align_right">
+            &nbsp;
+        </div>
+    </div>
 
-        <tr>
-            <td>[%l('Time formatting example')%]:</td>
-            <td><i>[% nicedate(current_time) %]</i></td>
-        </tr>
+    <div style="background-color:#ccc;margin-top:5px;margin-bottom:5px;">
+        &nbsp;
+    </div>
 
-        <tr><td colspan="2">&nbsp;</td></tr>
-
-
-        <tr>
-            <td colspan="2" style="text-align: center;">
+    <div class="yui-gb top_padded">
+        <div class="yui-u first align_right">
+            &nbsp;
+        </div>
+        <div class="yui-u">
             <input type="submit" value="[%l('Update')%]" name="update" class="input_button" />
-            </td>
-        </tr>
-    </table>
+        </div>
+        <div class="yui-u align_right">
+            &nbsp;
+        </div>
+    </div>
 </form>
 
 <script language="JavaScript" type="text/javascript">
