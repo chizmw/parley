@@ -561,3 +561,43 @@ a[href $='.pdf']{
 }
 
 
+/* YUI CSS overrides */
+
+/* tabview (user prefs) */
+
+/* .yui-navset defaults to .yui-navset-top */ 
+.yui-skin-sam .yui-navset .yui-nav, 
+.yui-skin-sam .yui-navset .yui-navset-top .yui-nav { /* protect nested tabviews from other orientations */ 
+    border:solid #000; /* color between tab list and content */ 
+    border-width:0 0 5px; 
+    Xposition:relative; 
+    zoom:1; 
+}
+
+.yui-skin-sam .yui-navset .yui-content { 
+    background:transparent; /* content background color */ 
+}
+
+.yui-skin-sam .yui-navset .yui-nav a, 
+.yui-skin-sam .yui-navset .yui-navset-top .yui-nav a { 
+    background-color:   #333;
+    border:             solid #a3a3a3; 
+    border-width:       0 1px; 
+    color:              #ccc;
+    text-decoration:    none; 
+}
+
+
+.yui-skin-sam .yui-navset .yui-nav .selected a, 
+.yui-skin-sam .yui-navset .yui-nav .selected a:focus, /* no focus effect for selected */ 
+.yui-skin-sam .yui-navset .yui-nav .selected a:hover { /* no hover effect for selected */ 
+    background:#000;
+    color:#fff;
+}
+
+.yui-skin-sam .yui-navset .yui-nav a:hover, 
+.yui-skin-sam .yui-navset .yui-nav a:focus { 
+    background: #666;
+    color: black;
+    outline:0; 
+}
