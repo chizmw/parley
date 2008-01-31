@@ -1,47 +1,48 @@
 <!-- preferences : tab_you -->
+<div class="yui-gd top_padded">
+    <div class="yui-u first align_right">
+        &nbsp;
+    </div>
+    <div id="result" class="yui-u">
+        &nbsp;
+    </div>
+</div>
 
-<div id="result">&nbsp;</div>
+<div class="yui-gd top_padded">
+    <div class="yui-u first align_right">
+        [%l('First Name')%]:
+    </div>
+    <div class="yui-u">
+        <span id="FirstName" name="First name" class="editable">[%authed_user.first_name%]</span>
+    </div>
+</div>
 
-<table class="user_profile">
-    <tbody>
-        <tr>
-            <td width="25%">
-                [%l('First Name')%]:
-            </td>
+<div class="yui-gd top_padded">
+    <div class="yui-u first align_right">
+        [%l('Last Name')%]:
+    </div>
+    <div class="yui-u">
+        <span id="LastName" class="editable">[% authed_user.last_name %]</span>
+    </div>
+</div>
 
-            <td id="FirstName" name="First name" class="editable">[%authed_user.first_name%]</td>
-        </tr>
+<div class="yui-gd top_padded">
+    <div class="yui-u first align_right">
+        [%l('Forum Name')%]:
+    </div>
+    <div class="yui-u">
+        <span id="ForumName" class="editable">[% authed_user.forum_name %]</span>
+    </div>
+</div>
 
-        <tr>
-            <td width="25%">
-                [%l('Last Name')%]:
-            </td>
-
-            <td id="LastName" class="editable">[% authed_user.last_name %]</td>
-        </tr>
-
-        <tr>
-            <td width="25%">
-                [%l('Forum Name')%]:
-            </td>
-
-            <td id="ForumName" class="editable">[% authed_user.forum_name %]</td>
-        </tr>
-
-        <tr>
-            <td width="25%">
-                [%l('Email Address')%]:
-            </td>
-
-            <td>
-                <div id="EmailAddress" name="EmailAddress">
-                [% authed_user.email %]
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<!-- (end) preferences : tab_you -->
+<div class="yui-gd top_padded">
+    <div class="yui-u first align_right">
+        [%l('Email Address')%]:
+    </div>
+    <div class="yui-u">
+        <span id="EmailAddress" name="EmailAddress">[% authed_user.email %]</span>
+    </div>
+</div>
 
 <script type="text/javascript" src="[%c.request.base%]/static/Editable.js"></script>
 <script type="text/javascript">
@@ -94,3 +95,4 @@
 
     E.init();
 </script>
+<!-- (end) preferences : tab_you -->
