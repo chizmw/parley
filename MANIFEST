@@ -85,6 +85,7 @@ MANIFEST.SKIP
 META.yml
 parley.yml
 README
+ROADMAP
 root/base/about/modules
 root/base/error/simple
 root/base/footer
@@ -747,6 +748,7 @@ t/mechanize/00.login.t
 t/mechanize/01.main_page.t
 t/mechanize/02.forum.t
 t/model_ParleyDB.t
+t/model_Post.t
 t/schema/authentication.t
 t/schema/email_queue.t
 t/schema/forum.t

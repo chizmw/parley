@@ -4,17 +4,18 @@ TODO LIST
   - investigate in-application language preference/choice
   - styling: user prefs
   - styling: user profile
-  - [bug] fix email notification for thread notification emails
   - write some sensible T&Cs
   - update avatar update response to force a No-Cache?
-  - application logo
   - advanced search page
   - proper moderator support/management
      - forum creation
      - abuse handling
      - post editing (other users)
-  - IP/user reporting
+     - IP/user reporting
   - voting?
+  - 'smileys'?
+D - [bug] fix email notification for thread notification emails
+D - application logo
 D - styling: thread/reply
 D - styling: post/edit
 D - styling: user/login
