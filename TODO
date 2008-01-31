@@ -14,6 +14,8 @@ TODO LIST
      - IP/user reporting
   - voting?
   - 'smileys'?
+  - realtime time-format example update (my/prefs - tab_time)
+  - timezone menu usability
 D - [bug] fix email notification for thread notification emails
 D - application logo
 D - styling: thread/reply
