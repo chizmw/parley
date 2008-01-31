@@ -5,6 +5,29 @@ use warnings;
 
 use base 'DBIx::Class::ResultSet';
 
+sub people_posting_from_ip {
+    my ($resultsource, $ip_addr) = @_;
+    my ($rs);
+
+    $rs = $resultsource->search(
+        {
+            ip_addr     => $ip_addr,
+        },
+        {
+            select => [
+                { distinct => 'creator_id' },
+            ],
+            as => [ 'foobar' ],
+
+            prefetch => [
+                'creator',
+            ],
+        }
+    );
+
+    return $rs;
+}
+
 # we used to use ->slice() but it sopped working on page #2 (!!)
 # this may be slower [not benchmarked] but it works
 sub last_post_in_list {

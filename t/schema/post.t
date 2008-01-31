@@ -56,6 +56,7 @@ $schematest->methods(
 
         resultsets => [
             qw[
+                people_posting_from_ip
                 last_post_in_list
                 next_post
                 page_containing_post
