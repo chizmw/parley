@@ -3,7 +3,7 @@ use inc::Module::Install;
 name 'Parley';
 all_from 'lib/Parley.pm';
 
-requires 'Catalyst' => '5.7001';
+requires 'Catalyst' => '5.008001';
 requires 'Catalyst::Action::RenderView';
 requires 'Catalyst::Model::DBIC::Schema';
 requires 'Catalyst::Plugin::Authentication';
