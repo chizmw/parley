@@ -1,5 +1,10 @@
 TODO LIST
 
+  - more visible Login/Register
+  - disabled menu items don't look disabled
+  - more visible Create New Thread
+  - login form doesn't submit onEnter
+  - login form flickers on IE7 page load
   - TESTS, TESTS, TESTS!
   - investigate in-application language preference/choice
   - styling: user prefs
