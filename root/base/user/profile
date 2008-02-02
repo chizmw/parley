@@ -1,58 +1,48 @@
 <!-- user/profile -->
 <h1>[%l('User Profile')%]</h1>
 [% IF profiled_user %]
+    <div class="yui-gf top_padded">
+        <div class="yui-u first align_right">
+            [% INCLUDE shared/user_avatar person=authed_user %]
+        </div>
+        <div class="yui-u">
 
-<table class="user_profile">
-    <tbody>
-        <tr>
-            <!-- user avatar -->
-            [% avatar_file = c.path_to('root') _ "/static/user_file/${profiled_user.id}/avatar.jpg" %]
-            [% TRY %]
-                [% USE avatar = Image(avatar_file) %]
-                [% tmp = avatar.attr %]
-                <td rowspan="4">
-                    <img class="picborder" src="/static/user_file/[% profiled_user.id %]/avatar.jpg" border="0" [% avatar.attr %] alt="Avatar" />
+            <div class="yui-gf">
+                <div class="yui-u first align_right">
+                    [%l('Nickname')%]:
+                </div>
+                <div class="yui-u">
+                    [% profiled_user.forum_name %]
+                </div>
+            </div>
+
+            <div class="yui-gf top_padded">
+                <div class="yui-u first align_right">
+                    [%l('Posts Made')%]:
+                </div>
+                <div class="yui-u">
+                    [% profiled_user.post_count %]
+                </div>
+            </div>
+
+            <div class="yui-gf top_padded">
+                <div class="yui-u first align_right">
+                    [%l('Last Post')%]:
+                </div>
+                <div class="yui-u">
+                    [% IF profiled_user.last_post %]
+                    <a href="thread/view?thread=[% profiled_user.last_post.thread.id %]">[% ForumCode.escape(profiled_user.last_post.thread.subject) |truncate(55) %]</a>
                     <br />
-                </td>
-            [% CATCH %]
-                <!-- No User Avatar -->
-            [% END %]
-            <!-- end : user avatar -->
-            <td class="user_profile_key">
-                [%l('Nickname')%]:
-            </td>
-            <td class="user_profile_value">
-                [% profiled_user.forum_name %]
-            </td>
-        </tr>
+                    [% nicedate(profiled_user.last_post.created) %]
+                    [% ELSE %]
+                    [%l('Never Posted')%] 
+                    [% END %]
+                </div>
+            </div>
 
-        <tr>
-            <td class="user_profile_key">
-                [%l('Posts Made')%]:
-            </td>
-            <td class="user_profile_value">
-                [% profiled_user.post_count %]
-            </td>
-        </tr>
-
-        <tr>
-            <td class="user_profile_key">
-                [%l('Last Post')%]:
-            </td>
-            <td class="user_profile_value">
-                [% IF profiled_user.last_post %]
-                <a href="thread/view?thread=[% profiled_user.last_post.thread.id %]">[% ForumCode.escape(profiled_user.last_post.thread.subject) |truncate(55) %]</a>
-                <br />
-                [% nicedate(profiled_user.last_post.created) %]
-                [% ELSE %]
-                [%l('Never Posted')%] 
-                [% END %]
-            </td>
-        </tr>
-    </tbody>
-</table>
-
+        </div>
+    </div>
 [% ELSE %]
-<p>[%l('PROFILE NOT FOUND')%]</p>
+    <p>[%l('PROFILE NOT FOUND')%]</p>
 [% END %]
 <!-- end : user/profile -->
