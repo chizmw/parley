@@ -29,6 +29,11 @@ div#user_information {
     height:             70px;
     width:              200px;
     padding-top:        3px;
+    text-align:         center;
+}
+
+div#user_information .user_info_actions {
+    margin-top:         3px;
 }
 
 /* CSS bug fixes */
@@ -562,6 +567,12 @@ a[href $='.pdf']{
 
 
 /* YUI CSS overrides */
+
+/* make disabled menuitems look 'different' */
+.yuimenuitem .disabled {
+    color:              #A6A6A6;
+    cursor:             default;
+}
 
 /* tabview (user prefs) */
 

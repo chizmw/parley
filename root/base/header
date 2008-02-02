@@ -59,11 +59,6 @@
     <body class="yui-skin-sam">
         <div id="doc3">
             <div id="hd">
-                <!--
-                <img src="[%c.uri_for('/static/images/parley_logo.jpg')%]" />
-                <h1>Parley</h1>
-                -->
-
                 <div id="user_information">
                     [%l('Current User')%]:
                     [% IF authed_user %]
@@ -80,6 +75,15 @@
                         <img src="/static/images/icons/flags/gb.png" width="16" height="11" alt="GB" />
                         [% END %]
                     </a>
+                    [% UNLESS authed_user %]
+                    <div class="user_info_actions">
+                        [
+                            <a href="javascript:YAHOO.parley.login.login_dialog.show();">[%l('Login')%]</a>
+                        [%l('or')%]
+                            <a href="[%c.uri_for('/user/signup')%]">[%l('Register')%]</a>
+                        ]
+                    </div>
+                    [% END %]
                 </div>
             </div><!-- id="hd" -->
 

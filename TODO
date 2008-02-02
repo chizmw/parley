@@ -1,7 +1,6 @@
 TODO LIST
 
-  - more visible Login/Register
-  - disabled menu items don't look disabled
+  - add i18n for 'or'
   - more visible Create New Thread
   - login form doesn't submit onEnter
   - login form flickers on IE7 page load
@@ -21,6 +20,8 @@ TODO LIST
   - 'smileys'?
   - realtime time-format example update (my/prefs - tab_time)
   - timezone menu usability
+D - disabled menu items don't look disabled
+D - more visible Login/Register
 D - [bug] fix email notification for thread notification emails
 D - application logo
 D - styling: thread/reply
