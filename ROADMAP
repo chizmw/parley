@@ -6,28 +6,28 @@ This isn't set in stone - the roadmap can be swayed by valid, sensible
 reasoning from interested parties.
 
 
-0.59 (Feb 2008):
+0.58 (Feb 2008):
 
     - UI improvements and cleanup
     - DBIC ResultSetManager deprecation
     - DBIC prefetch (DB optimisation)
 
-0.60:
+0.59:
 
     - admin/moderator support (deal with bad people)
         - edit posts (and flag accordingly)
         - abuse handling (suspend accounts, ban-by-ip, ...)
         - IP reporting
 
-0.61:
+0.60:
 
     - advanced search
 
-0.62:
+0.61:
 
     - admin: add/edit/order forums
 
-0.63:
+0.62:
 
     - user prefs:
         - language preference
