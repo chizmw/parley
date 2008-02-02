@@ -75,7 +75,13 @@
                         <img src="/static/images/icons/flags/gb.png" width="16" height="11" alt="GB" />
                         [% END %]
                     </a>
-                    [% UNLESS authed_user %]
+                    [% IF authed_user %]
+                    <div class="user_info_actions">
+                        [
+                            <a href="[%c.uri_for('/user/logout')%]">[%l('Logout')%]</a>
+                        ]
+                    </div>
+                    [% ELSE %]
                     <div class="user_info_actions">
                         [
                             <a href="javascript:YAHOO.parley.login.login_dialog.show();">[%l('Login')%]</a>

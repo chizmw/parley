@@ -6,8 +6,6 @@ TODO LIST
   - login form flickers on IE7 page load
   - TESTS, TESTS, TESTS!
   - investigate in-application language preference/choice
-  - styling: user prefs
-  - styling: user profile
   - write some sensible T&Cs
   - update avatar update response to force a No-Cache?
   - advanced search page
@@ -20,6 +18,9 @@ TODO LIST
   - 'smileys'?
   - realtime time-format example update (my/prefs - tab_time)
   - timezone menu usability
+D - [bug] can't logout
+D - styling: user prefs
+D - styling: user profile
 D - disabled menu items don't look disabled
 D - more visible Login/Register
 D - [bug] fix email notification for thread notification emails
