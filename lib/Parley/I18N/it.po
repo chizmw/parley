@@ -392,6 +392,9 @@ msgstr "Non Autenticato"
 msgid "of"
 msgstr "di"
 
+msgid "or"
+msgstr "o"
+
 msgid "Page"
 msgstr "Pagina"
 

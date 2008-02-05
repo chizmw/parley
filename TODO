@@ -1,6 +1,5 @@
 TODO LIST
 
-  - add i18n for 'or'
   - Quick Reply
   - login form doesn't submit onEnter
   - login form flickers on IE7 page load
@@ -18,6 +17,7 @@ TODO LIST
   - 'smileys'?
   - realtime time-format example update (my/prefs - tab_time)
   - timezone menu usability
+D - add i18n for 'or'
 D - more visible Create New Thread
 D - [bug] can't logout
 D - styling: user prefs

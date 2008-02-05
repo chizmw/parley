@@ -12,6 +12,7 @@ It's unlikely that we'll need an 'en' file in the project.
     it.po:
         - full translation from i_default.po
         - added:
+            - 'or'
             - 'Cancel'
             - 'in'
             - 'Please choose a language' (babelfish)
@@ -19,6 +20,7 @@ It's unlikely that we'll need an 'en' file in the project.
 
     i_default.po:
         - added:
+            - 'or'
             - "%1 wrote:"
             - "%quant(%1,reply)"
             - "%quant(%1,view)"
