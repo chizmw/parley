@@ -3,7 +3,7 @@
 [% IF profiled_user %]
     <div class="yui-gf top_padded">
         <div class="yui-u first align_right">
-            [% INCLUDE shared/user_avatar person=authed_user %]
+            [% INCLUDE shared/user_avatar person=profiled_user %]
         </div>
         <div class="yui-u">
 
