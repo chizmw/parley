@@ -3,7 +3,7 @@ package Parley;
 use strict;
 use warnings;
 
-our $VERSION = '0.58';
+our $VERSION = '0.58_99_005';
 
 use Catalyst::Runtime '5.70';
 use Catalyst qw/

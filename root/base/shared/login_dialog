@@ -26,6 +26,7 @@ function login_dialog_init() {
             visible:                false, 
             modal:                  false,
             constraintoviewport:    true,
+            width:                  '450px',
             buttons : [
                 { text:'[%l('Login')%]',  handler:handleSubmit, isDefault:true },
                 { text:'[%l('Cancel')%]', handler:handleCancel }
@@ -59,7 +60,7 @@ function login_dialog_init() {
 YAHOO.util.Event.onDOMReady(login_dialog_init);
 </script>
 
-<div id="login_dialog">
+<div id="login_dialog" style="visibility:hidden;">
     <div class="hd">
         [%l('Please enter your information')%]
     </div>
