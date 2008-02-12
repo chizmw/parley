@@ -465,7 +465,7 @@ msgid "posted by"
 msgstr "posted by"
 
 msgid "Post Edited By: %1"
-msgstr "Post Edited By: ~%1~"
+msgstr "Post Edited By: %1"
 
 msgid "Posted from %1"
 msgstr "Posted from %1"
