@@ -1,24 +1,24 @@
 This file documents the revision history for Parley.
 
-0.58 (UNDER DEVELOPMENT)
-    - added an application logo
-    - add browser and user driven language selection
-    - added first part of .it i18n (Thanks Darius!)
+0.58    Fri Feb  8 07:47:31 GMT 2008
     - re-work the UI design to be cleaner
-    - make the display of the time zone independant of the time_format string
-    - fix issues with email notifications
-    - [bug] fix user's last post information (profile page)
-    - [bug] fix issue with forum-limited searches
-    - limit thread subject length on user profile page
-    - rename DB columns to be more sensible
-    - upgraded to YUI 2.4.1
-    - factored out MessagePreview javascript into single included file
-    - [bug] fix error when trying to post new thread with no subject line
-    - modify ::Schema so that we can export mysql and sqlite schemas
+    - added an application logo
     - more efficient database querying (a la DBIC's prefetch)
+    - added first part of .it i18n (Thanks Darius!)
+    - add browser and user driven language selection
+    - upgraded to YUI 2.4.1
+    - modify ::Schema so that we can export mysql and sqlite schemas
+    - rename DB columns to be more sensible
+    - make the display of the time zone independant of the time_format string
+    - limit thread subject length on user profile page
+    - factored out MessagePreview javascript into single included file
     - fix uri_for() error on user/login 
     - fix DBIC field error during lostpassword process
     - fix DBIC field errors during signup
+    - fix issues with email notifications
+    - [bug] fix user's last post information (profile page)
+    - [bug] fix issue with forum-limited searches
+    - [bug] fix error when trying to post new thread with no subject line
 
 0.57    Wed Oct 31 19:15:06 GMT 2007
     - added T&Cs to application

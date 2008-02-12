@@ -17,6 +17,8 @@ TODO LIST
   - realtime time-format example update (my/prefs - tab_time)
   - timezone menu usability
   - skinning (user pref overrides CSS used?)
+  - posting page ForumCode help/tips
+  - database versioning
 D - login form flickers on IE7 page load
 D - [bug] user/profile doesn't show avatar
 D - add i18n for 'or'
