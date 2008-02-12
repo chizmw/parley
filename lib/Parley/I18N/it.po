@@ -44,10 +44,10 @@ msgid "Add Watch"
 msgstr "Aggiungi Watch"
 
 msgid "ADMIN SPECIFY LOCK THREAD"
-msgstr "Bisogna specificare il thread da chiudere"
+msgstr "Bisogna specificare il discussione da chiudere"
 
 msgid "ADMIN SPECIFY STICK THREAD"
-msgstr "Bisogna specificare il thread di rilievo"
+msgstr "Bisogna specificare il discussione di rilievo"
 
 msgid "ago"
 msgstr "fa"
@@ -261,7 +261,7 @@ msgid "Last Viewed"
 msgstr "Ultima Lettura"
 
 msgid "LOCK AFTER POSTING"
-msgstr "Chiudi thread dopo aver inviato il messaggio"
+msgstr "Chiudi discussione dopo aver inviato il messaggio"
 
 msgid "Lock Thread"
 msgstr "Chiudi Thread"
@@ -282,13 +282,13 @@ msgid "LOGIN REQUIRED"
 msgstr "Bisogna aver effettuato il login prima di poter accedere qui."
 
 msgid "LOGIN THREAD CONTINUE"
-msgstr "Bisogna aver effettuato il login prima di poter usare la funzione continuazione thread."
+msgstr "Bisogna aver effettuato il login prima di poter usare la funzione continuazione discussione."
 
 msgid "LOGIN USE NEW"
 msgstr "Effettuare login usando nome utente e la <u>nuova</u> password."
 
 msgid "LOGIN VIEW WATCHES"
-msgstr "Bisogna aver effettuato il login prima di potere vedere i thread seguiti."
+msgstr "Bisogna aver effettuato il login prima di potere vedere i discussione seguiti."
 
 msgid "LOGIN WATCH TOPIC"
 msgstr "Bisogna aver effettuato il login prima di poter seguire una discussione."
@@ -348,7 +348,7 @@ msgid "NO MATCHING USERS"
 msgstr "Non ci sono utenti che corrispondo alle informazioni fornite"
 
 msgid "NO RECENT THREADS"
-msgstr "Non ci sono thread recenti da visualizzare"
+msgstr "Non ci sono discussione recenti da visualizzare"
 
 msgid "NO SEARCH RESULTS"
 msgstr "La ricerca non ha fornito risultati"
@@ -372,7 +372,7 @@ msgid "non-integer post id passed"
 msgstr "L'id del messaggio non è un numero intero"
 
 msgid "non-integer thread id passed"
-msgstr "L'id del thread non è un numero intero"
+msgstr "L'id del discussione non è un numero intero"
 
 msgid "non-integer user id passed"
 msgstr "L'id dell'utente non è un numero intero"
@@ -478,7 +478,7 @@ msgid "PREFS DESIRED LOCATION"
 msgstr "Scegliere il paese di provenienza. Questa informazione sarà usata per visualizzare l'ora di scrittura dei messaggi calcolando i fusi orari."
 
 msgid "PREFS EMAIL NOTIFICATION"
-msgstr "Ricevere email di notifica per thread sotto osservazione"
+msgstr "Ricevere email di notifica per discussione sotto osservazione"
 
 msgid "Preview"
 msgstr "Preview"
@@ -512,7 +512,7 @@ msgid "Remove Watch"
 msgstr "Rimuovi Watch"
 
 msgid "REPLY LOCKED THREAD"
-msgstr "Non è possibilie rispondere a thread chiusi."
+msgstr "Non è possibilie rispondere a discussione chiusi."
 
 msgid "Reply"
 msgstr "Rispondi"
@@ -608,7 +608,7 @@ msgid "Start A New Topic"
 msgstr "Crea una nuova discussione"
 
 msgid "Stick Thread"
-msgstr "Segnare come thread di rilievo"
+msgstr "Segnare come discussione di rilievo"
 
 msgid "Sticky"
 msgstr "Rilievo"
@@ -647,16 +647,16 @@ msgid "There is no current forum to view"
 msgstr "Non è stato selezionato un forum da visualizzare"
 
 msgid "There is no current thread to view"
-msgstr "Non è stato selezionato un thread da visualizzare"
+msgstr "Non è stato selezionato un discussione da visualizzare"
 
 msgid "THREAD NO INFORMATION"
-msgstr "Non ci sono informazioni per il thread o il messaggio al quale si è provato a rispondere."
+msgstr "Non ci sono informazioni per il discussione o il messaggio al quale si è provato a rispondere."
 
 msgid "THREAD NO POSTS"
-msgstr "Non si può rispondere a thread che non contiene messaggi."
+msgstr "Non si può rispondere a discussione che non contiene messaggi."
 
 msgid "THREAD WATCH FAILED"
-msgstr "Non è stato possibile aggiungere un watch ai thread richiesti."
+msgstr "Non è stato possibile aggiungere un watch ai discussione richiesti."
 
 msgid "Thread"
 msgstr "Thread"
@@ -737,10 +737,10 @@ msgid "View Threads"
 msgstr "Visualizza Thread"
 
 msgid "Watch this thread"
-msgstr "Segui questo thread"
+msgstr "Segui questo discussione"
 
 msgid "watching this thread"
-msgstr "questo thread è sotto osservazione"
+msgstr "questo discussione è sotto osservazione"
 
 msgid "wrote"
 msgstr "ha scritto"
@@ -749,10 +749,10 @@ msgid "Yes"
 msgstr "Sì"
 
 msgid "You are not watching any threads"
-msgstr "Non stai seguendo alcun thread"
+msgstr "Non stai seguendo alcun discussione"
 
 msgid "You are watching this thread"
-msgstr "Stai seguendo questo thread"
+msgstr "Stai seguendo questo discussione"
 
 msgid "Your Details"
 msgstr "Le tue Informazioni"
