@@ -8,6 +8,18 @@ It's unlikely that we'll need an 'en' file in the project.
 
 0.59 (UNDER DEVELOPMENT)
 
+    i_default.po:
+        - added:
+            - "ADMIN LOCK POST"
+            - "Locked Post"
+            - "Post Edited By"
+
+    it.po:
+        - added:
+            - "ADMIN LOCK POST"
+            - "Locked Post"
+            - "Post Edited By"
+
 0.58
     (en renamed to i_default)
 

@@ -43,6 +43,9 @@ msgstr "Add T&amp;C"
 msgid "Add Watch"
 msgstr "Aggiungi Watch"
 
+msgid "ADMIN LOCK POST"
+msgstr "Chiudi questo messaggio"
+
 msgid "ADMIN SPECIFY LOCK THREAD"
 msgstr "Bisogna specificare il discussione da chiudere"
 
@@ -269,6 +272,9 @@ msgstr "Chiudi Thread"
 msgid "Locked"
 msgstr "Chiuso"
 
+msgid "Locked Post"
+msgstr "Messaggio Chiuso"
+
 msgid "Locked Topic"
 msgstr "Discussione Chiusa"
 
@@ -443,9 +449,8 @@ msgstr "Dimenticato la Password?"
 msgid "person"
 msgstr "persona"
 
-# added by Chisel via babelfish
 msgid "Please choose a language"
-msgstr "Scelga una lingua"
+msgstr "Scegli una lingua"
 
 msgid "Please enter your information"
 msgstr "Per favore fornire le proprie informazioni"
@@ -458,6 +463,9 @@ msgstr "persone"
 
 msgid "posted by"
 msgstr "inviato da"
+
+msgid "Post Edited By: %1"
+msgstr "Messaggio Modificato Da: %1"
 
 msgid "Posted from %1"
 msgstr "Inviato da %1"
