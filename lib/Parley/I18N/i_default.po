@@ -43,6 +43,9 @@ msgstr "Add T&amp;Cs"
 msgid "Add Watch"
 msgstr "Add Watch"
 
+msgid "ADMIN LOCK POST"
+msgstr "Lock this post"
+
 msgid "ADMIN SPECIFY LOCK THREAD"
 msgstr "You must specify the thread to lock"
 
@@ -269,8 +272,8 @@ msgstr "Lock Thread"
 msgid "Locked"
 msgstr "Locked"
 
-msgid "Locked Topic"
-msgstr "Locked Topic"
+msgid "Locked Post"
+msgstr "Locked Post"
 
 msgid "LOGIN ADD REPLY"
 msgstr "You must be logged in before you can add a reply."
@@ -460,6 +463,9 @@ msgstr "people"
 
 msgid "posted by"
 msgstr "posted by"
+
+msgid "Post Edited By: %1"
+msgstr "Post Edited By: ~%1~"
 
 msgid "Posted from %1"
 msgstr "Posted from %1"
