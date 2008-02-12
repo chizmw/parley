@@ -136,6 +136,19 @@ th {
 }
 
 /* style classes */
+
+.admin_edited_post {
+    color:              #000;
+    background:         #ccc;
+    padding:            2px;
+    padding-left:       10px;
+    padding-right:      10px;
+    border:             1px dashed #000;
+    margin-left:        15px;
+    font-size:          93%;
+    text-align:         right;
+}
+
 .align_right {
     text-align:         right;
 }

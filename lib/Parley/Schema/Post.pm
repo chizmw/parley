@@ -85,6 +85,9 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 8,
   },
+
+  admin_editor_id   => {},
+  locked            => {},
 );
 
 __PACKAGE__->set_primary_key("id");
@@ -127,6 +130,10 @@ __PACKAGE__->has_many(
 __PACKAGE__->has_many(
     "people" => "Person",
     { "foreign.last_post" => "self.id" },
+);
+__PACKAGE__->belongs_to(
+    "admin_editor" => "Person",
+    { 'foreign.id' => "self.admin_editor_id" },
 );
 
 

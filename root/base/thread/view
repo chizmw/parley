@@ -36,7 +36,7 @@
                                 [% IF current_thread.locked %]
                                     [%l('Thread Locked')%] 
                                     <img src="static/images/icons/lock.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
-                                [% ELSE %]
+                                [% ELSIF authed_user %]
                                     <span class="yui-button yui-link-button">
                                         <span class="first-child">
                                             <a href="thread/reply?thread=[% current_thread.id %]">[%l('Reply')%]</a>
@@ -76,6 +76,14 @@
             </td>
 
             <td class="post">
+                    [% IF post.admin_editor %]
+                    <div class="admin_edited_post">
+                        [%l('Post Edited By: [_1]', post.admin_editor.forum_name)%]:
+                        [% IF post.locked %]
+                        <img src="static/images/icons/lock.png" alt="[%l('Locked')%]" title="[%l('Locked Post')%]" width="16" height="16" />
+                        [% END %]
+                    </div>
+                    [% END %]
                 <!-- the body of the post -->
                 <div class="innerpost">
                     [% IF post.quoted_post %]
@@ -104,10 +112,10 @@
                            [%l('IP Logged')%] 
                         [% END %]
                     [% END %]
-                    [% UNLESS current_thread.locked %]
+                    [% IF (!current_thread.locked && authed_user) %]
                         <br />
                         <br />
-                        [% IF authed_user.id == post.creator.id %]
+                        [% IF ((authed_user.id == post.creator.id) && !post.locked) || moderator %]
                         <span class="yui-button yui-link-button">
                             <span class="first-child">
                                 <a href="post/edit?post=[% post.id %]">[%l('Edit')%]</a>
@@ -157,7 +165,7 @@
                                 [% IF current_thread.locked %]
                                     [%l('Thread Locked')%] 
                                     <img src="static/images/icons/lock.png" alt="[%l('Locked')%]" title="[%l('Locked Topic')%]" width="16" height="16" />
-                                [% ELSE %]
+                                [% ELSIF authed_user %]
                                     <span class="yui-button yui-link-button">
                                         <span class="first-child">
                                             <a href="thread/reply?thread=[% current_thread.id %]">[%l('Reply')%]</a>

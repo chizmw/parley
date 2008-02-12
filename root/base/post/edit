@@ -18,6 +18,10 @@
 </p>
 [% END %]
 
+[% IF authed_user.id != current_post.creator_id %]
+Editing [% current_post.creator.forum_name %]'s post
+[% END %]
+
 <form action="post/edit?post=[% current_post.id %]" method="POST" name="new_thread">
     <table>
         <tbody>
@@ -27,6 +31,18 @@
                     <textarea id="thread_message" name="post_message" cols="60" rows="10" class="post_message" />[% current_post.message %]</textarea>
                 </td>
             </tr>
+
+            [% IF authed_user.id != current_post.creator_id %]
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="checkbox" name="lock_post" id="lock_post" value="1" />
+                    <label for="lock_post">
+                        [%l('ADMIN LOCK POST')%]
+                    </label>
+                </td>
+            </tr>
+            [% END %]
 
             <tr>
                 <td>&nbsp;</td>

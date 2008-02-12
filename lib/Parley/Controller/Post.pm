@@ -15,6 +15,7 @@ my %dfv_profile_for = (
     # DFV validation profile for adding a new topic
     edit_post => {
         required    => [qw( post_message )],
+        optional    => [qw( lock_post )],
         filters     => [qw( trim )],
         msgs => {
             format  => q{%s},
@@ -42,14 +43,24 @@ sub edit : Local {
     $c->login_if_required($c->localize(q{EDIT LOGIN REQUIRED}));
 
     # you can only edit you own posts
-    # (unless you're a moderator, but we don't do that yet)
-    if ($c->_authed_user()->id() != $c->_current_post()->creator()->id()) {
+    # (unless you're a moderator)
+    if (
+        (not $c->stash->{moderator})
+            and
+        ($c->_authed_user()->id() != $c->_current_post()->creator()->id())
+    ) {
         $c->stash->{error}{message} = $c->localize(q{EDIT OWN POSTS ONLY});
         return;
     }
 
-    # you can't edit a locked post
-    elsif ($c->_current_post->thread->locked) {
+    # you can't edit post in a locked thread
+    # you also can't edit individually locked posts (unless you are a
+    # moderator)
+    elsif (
+        $c->_current_post->thread->locked
+            or
+        ($c->_current_post->locked and not $c->stash->{moderator})
+    ) {
         $c->stash->{error}{message} = $c->localize(q{EDIT LOCKED POST});
         return;
     }
@@ -74,12 +85,30 @@ sub edit : Local {
             }
         }
         # otherwise; everything seems fine - edit the post
+        # XXX why the HELL isn't this in a txn_do?!
         else {
             # update the post with the new information
             $c->_current_post->message( $c->form->valid->{post_message} );
 
             # set the edited time
             $c->_current_post->edited( DateTime->now() );
+
+            # did an 'evil' admin edit the post?
+            if (
+                ($c->_current_post->creator_id != $c->_authed_user->id)
+                    and
+                $c->stash->{moderator}
+            ) {
+                # stamp the post with the admin editor's mark
+                $c->_current_post->admin_editor_id(
+                    $c->_authed_user->id
+                );
+                # if they asked for the thread to be locked
+                # make it so...
+                if ($c->form->valid->{lock_post}) {
+                    $c->_current_post->locked( 1 );
+                }
+            }
 
             # store the updates in the db
             $c->_current_post->update();

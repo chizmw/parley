@@ -1,0 +1,20 @@
+-- Patch:
+--   From: 0.58
+--   To:   0.59
+--
+-- Description:
+--  add flagging of posts edited by admin
+--  lock posts (so they can't be changed after being edited by admin)
+
+BEGIN;
+
+-- patch starts here --
+
+ALTER TABLE post
+    ADD COLUMN admin_editor_id integer references person(id),
+    ADD COLUMN locked boolean default False
+;
+
+-- patch ends here --
+
+COMMIT;
