@@ -6,6 +6,8 @@ other translations being made from it.  As a consequence of this, i-default
 will be used as the 'en' i18n file.
 It's unlikely that we'll need an 'en' file in the project.
 
+0.59 (UNDER DEVELOPMENT)
+
 0.58
     (en renamed to i_default)
 
