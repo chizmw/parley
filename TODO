@@ -1,5 +1,7 @@
 TODO LIST
 
+  - "Cancel" from post/edit
+  - "Cancel" from thread/reply
   - Quick Reply
   - login form doesn't submit onEnter
   - TESTS, TESTS, TESTS!
@@ -20,6 +22,9 @@ TODO LIST
   - posting page ForumCode help/tips
   - database versioning
   - ForumCode: thumbnail image, lightbox view?
+  - investigate: package Your::Schema; sub connect { do the check; next::method }
+  - investigate: DBIx::Class::Schema::Versioned
+  - investigate: t/model_Post.t / distinct count
 D - login form flickers on IE7 page load
 D - [bug] user/profile doesn't show avatar
 D - add i18n for 'or'
