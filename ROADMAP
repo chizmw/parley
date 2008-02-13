@@ -14,9 +14,14 @@ reasoning from interested parties.
 
 0.59:
 
+    - assign new moderators (on a per-forum basis)
     - admin/moderator support (deal with bad people)
-        - edit posts (and flag accordingly)
-        - abuse handling (suspend accounts, ban-by-ip, ...)
+        - [D] edit posts (and flag accordingly)
+        - abuse handling
+          - suspend account(s)
+          - prevent login from IP
+          - prevent signup from IP
+          - prevent posting/editing from IP
         - IP reporting
 
 0.60:

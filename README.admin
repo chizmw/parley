@@ -1,0 +1,50 @@
+0. INTRODUCTION
+
+  Administering public forums is notoriously nightmarish.
+
+1. BAN TYPES
+
+  The ideas for slowing down Evil People are as follows:
+
+1.1 Account Suspension
+
+    When the account tries to log-in all they see is an "Account Suspended"
+    page.
+
+    The site can be viewed while logged out (i.e. guest user)
+
+1.2 Ban-by-IP
+
+    This can take varying levels of restriction:
+
+1.2.1 Restrict Posting by IP
+
+    Prevent user(s) from matching IPs creating new threads, replying to
+    existing threads or editing existing posts.
+
+1.2.2 Restrict Login by IP
+
+    Prevent user(s) from matching IPs using the login functionality
+
+1.2.3 Restrict Sign-Up by IP
+
+    Prevent new accounts being created from matching IPs
+
+1.2.4 Restrict All Access by IP
+
+    Matching IPs are shown the "Evil People Got You Banned" page.
+    This is pretty harsh, and should be saved as a ast resort .. if
+    implemented/used at all.
+
+2. KNOWN ISSUES
+
+  There are the usual issues of people running through proxies, catching
+  people we didn't intend to, or being used by banned users to circumvent IP
+  based bans.
+
+3. POSSIBLE IMPLEMENTATIONS
+
+3.1 Net::IP::Match::Regexp
+
+    This looks like a useful module for providing (CIDR - a.b.c.d/x) IP ranges
+    and matching IPs that live in those ranges.
