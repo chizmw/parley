@@ -5,6 +5,7 @@
 -- Description:
 --  add flagging of posts edited by admin
 --  lock posts (so they can't be changed after being edited by admin)
+--  allow user accounts to be suspended
 
 BEGIN;
 
@@ -12,8 +13,52 @@ BEGIN;
 
 ALTER TABLE post
     ADD COLUMN admin_editor_id integer references person(id),
-    ADD COLUMN locked boolean default False
+    ADD COLUMN locked boolean not null default False
 ;
+
+ALTER TABLE person
+    ADD COLUMN suspended boolean not null default False
+;
+
+CREATE TABLE role (
+    id          serial      primary key,
+    name        varchar(30) not null unique,
+    description text
+);
+-- a couple of roles
+INSERT INTO role (name, description) VALUES (
+    'site_moderator',
+    'Site Moderator (aka Da Boss)'
+);
+INSERT INTO role (name, description) VALUES (
+    'ip_ban_posting',
+    'Restrict Posting by IP'
+);
+INSERT INTO role (name, description) VALUES (
+    'ip_ban_signup',
+    'Restrict Sign-Up by IP'
+);
+INSERT INTO role (name, description) VALUES (
+    'ip_ban_login',
+    'Restrict Login by IP'
+);
+
+CREATE TABLE user_roles (
+    id          serial      primary key,
+    person_id   integer     not null
+                            references person(id),
+    role_id     integer     not null
+                            references role(id),
+    UNIQUE (person_id, role_id)
+);
+
+-- make topdog a site_moderator
+INSERT INTO user_roles
+    (person_id, role_id)
+VALUES (
+    0,
+    (SELECT id FROM role WHERE name='site_moderator')
+);
 
 -- patch ends here --
 

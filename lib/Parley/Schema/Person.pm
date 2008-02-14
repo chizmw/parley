@@ -107,4 +107,7 @@ __PACKAGE__->has_many(
   { "foreign.recipient" => "self.id" },
 );
 
+__PACKAGE__->has_many(map_user_role => 'Parley::Schema::UserRole', 'person_id');
+
+
 1;

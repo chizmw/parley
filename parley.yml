@@ -46,11 +46,19 @@ default_view:         'TT'
 # authentiation settings; perldoc Catalyst::Plugin::Authentication::Store::DBIC
 authentication:
     dbic:
-        user_class:         'Parley::Model::ParleyDB::Authentication'
+        user_class:         'ParleyDB::Authentication'
         user_field:         'username'
         password_field:     'password'
         password_type:      'hashed'
         password_hash_type: 'MD5'
+
+authorization:
+    dbic:
+        role_class:             'ParleyDB::Role'
+        role_field:             'name'
+        role_rel:               'map_user_role'
+        user_role_user_field:   'person_id'
+
 
 # session settings; perldoc Catalyst::Plugin::Session::FastMmap
 session:

@@ -18,10 +18,12 @@ __PACKAGE__->load_classes(
         'Preference',
         'PreferenceTimeString',
         'RegistrationAuthentication',
+        'Role',
         'TermsAgreed',
         'Terms',
         'Thread',
         'ThreadView',
+        'UserRole',
     ]
 );
 

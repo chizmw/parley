@@ -26,6 +26,8 @@ use Catalyst qw/
     Authentication::Store::DBIC
     Authentication::Credential::Password
 
+    Authorization::Roles
+
     I18N
 /;
 
