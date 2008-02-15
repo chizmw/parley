@@ -59,6 +59,7 @@ $schematest->methods(
 
         resultsets => [
             qw[
+                record_from_id
                 people_posting_from_ip
                 last_post_in_list
                 next_post

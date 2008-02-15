@@ -158,7 +158,7 @@ sub preview : Local {
     my $tt_forum = Template::Plugin::ForumCode->new();
     my $msg_source = $c->request->param('msg_source');
 
-    my $json = objToJson(
+    my $json = to_json(
         {
             'formatted' =>
                 $tt_forum->forumcode(

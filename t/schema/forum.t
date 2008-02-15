@@ -43,6 +43,8 @@ $schematest->methods(
 
         resultsets => [
             qw[
+                available_list
+                record_from_id
             ]
         ],
     }

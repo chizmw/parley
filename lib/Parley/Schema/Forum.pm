@@ -50,6 +50,9 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("forum_name_key", ["name"]);
+
+__PACKAGE__->resultset_class('Parley::ResultSet::Forum');
+
 __PACKAGE__->has_many("threads", "Thread", { "foreign.forum" => "self.id" });
 __PACKAGE__->belongs_to(
     "last_post" => "Post",

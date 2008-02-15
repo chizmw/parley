@@ -127,4 +127,24 @@ sub recent {
     );
 }
 
+sub record_from_id {
+    my ($resultsource, $thread_id) = @_;
+    my ($rs);
+
+    $rs = $resultsource->find(
+        {
+            'me.id'  => $thread_id,
+        },
+        {
+            prefetch => [
+                { 'forum' => 'last_post' },
+                'creator',
+                'last_post',
+            ]
+        }
+    );
+
+    return $rs;
+}
+
 1;

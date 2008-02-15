@@ -107,3 +107,4 @@
 
     Methods can be added to ::Schema::Person to do various role checks;
     e.g.  can_suspend_account()
+    [although, how can we use the Catalyst plugin be used from the Schema?]

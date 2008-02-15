@@ -49,6 +49,9 @@ $schematest->methods(
 
         resultsets => [
             qw[
+                last_post_viewed_in_thread
+                recent
+                record_from_id
             ]
         ],
     }

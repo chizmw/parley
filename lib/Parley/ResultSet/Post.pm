@@ -5,6 +5,27 @@ use warnings;
 
 use base 'DBIx::Class::ResultSet';
 
+sub record_from_id {
+    my ($resultsource, $post_id) = @_;
+    my ($rs);
+
+    $rs = $resultsource->find(
+        {
+            'me.id'  => $post_id,
+        },
+        {
+            prefetch => [
+                { thread => 'forum' },
+                'creator',
+                'reply_to',
+                'quoted_post',
+            ],
+        }
+    );
+
+    return $rs;
+}
+
 sub people_posting_from_ip {
     my ($resultsource, $ip_addr) = @_;
     my ($rs);

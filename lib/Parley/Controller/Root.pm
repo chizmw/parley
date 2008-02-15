@@ -71,14 +71,8 @@ sub auto : Private {
     }
 
     # get a list of (all/available) forums
-    $c->stash->{available_forums} = $c->model('ParleyDB')->resultset('Forum')->search(
-        {
-            active  => 1,
-        },
-        {
-            order_by    => 'name ASC',
-        }
-    );
+    $c->stash->{available_forums} =
+        $c->model('ParleyDB::Forum')->available_list();
 
     ##################################################
     # do we have a post id in the URL?
@@ -96,18 +90,8 @@ sub auto : Private {
 
         # get the matching post
         $c->_current_post(
-            $c->model('ParleyDB')->resultset('Post')->find(
-                {
-                    'me.id'  => $c->request->param('post')
-                },
-                {
-                    prefetch => [
-                        { thread => 'forum' },
-                        'creator',
-                        'reply_to',
-                        'quoted_post',
-                    ],
-                }
+            $c->model('ParleyDB::Post')->record_from_id(
+                $c->request->param('post')
             )
         );
 
@@ -137,17 +121,8 @@ sub auto : Private {
 
         # get the matching thread
         $c->_current_thread(
-            $c->model('ParleyDB')->resultset('Thread')->find(
-                {
-                    'me.id'  => $c->request->param('thread'),
-                },
-                {
-                    prefetch => [
-                        { 'forum' => 'last_post' },
-                        'creator',
-                        'last_post',
-                    ]
-                }
+            $c->model('ParleyDB::Thread')->record_from_id(
+                $c->request->param('thread')
             )
         );
 
@@ -172,15 +147,8 @@ sub auto : Private {
 
         # get the matching forum
         $c->_current_forum(
-            $c->model('ParleyDB')->resultset('Forum')->find(
-                {
-                    'me.id'  => $c->request->param('forum'),
-                },
-                {
-                    prefetch => [
-                        'last_post',
-                    ],
-                }
+            $c->model('ParleyDB::Forum')->record_from_id(
+                $c->request->param('forum')
             )
         );
     }
@@ -191,13 +159,14 @@ sub auto : Private {
     if ( $c->user and not defined $c->_authed_user ) {
         $c->log->info('Fetching user information for ' . $c->user->id);
 
+        # FIXME : move this to the ResultSet class?
         # get the person info for the username
         my $row = $c->model('ParleyDB')->resultset('Person')->find(
             {
                 'authentication.username'   => $c->user->username(),
             },
             {
-                join => 'authentication',
+                #join => 'authentication',
                 prefetch => [
                     'authentication',
                     { 'preference' => 'time_format' },
@@ -217,10 +186,15 @@ sub auto : Private {
 
 
     ######################################
-    # TopDog is always a site moderator
+    # user's with 'site_moderator' role
+    # get flagged as such
     # ####################################
-    if (defined $c->_authed_user() and 0 == $c->_authed_user()->id()) {
-        $c->log->debug( q{topdog user site-moderates anything he wants} );
+    if (
+        defined $c->_authed_user()
+            and
+        $c->check_user_roles('site_moderator')
+    ) {
+        $c->log->debug( q{site_moderator role for user} );
         $c->stash->{site_moderator} = 1;
     }
 
@@ -229,12 +203,13 @@ sub auto : Private {
     # user moderate it?
     ##################################################
     if (defined $c->_authed_user() and defined $c->_current_forum()) {
-        # 'topdog' user can moderate anything
-        if (0 == $c->_authed_user()->id()) {
-            $c->log->debug( q{topdog user moderates anything he wants} );
+        # site_moderators can moderate anything
+        if ($c->check_user_roles('site_moderator')) {
+            $c->log->debug( q{site_moderator role moderates anything he wants} );
             $c->stash->{moderator} = 1;
         }
         else {
+            # FIXME : move this to the ResultSet class?
             # look up person/forum
             my $results = $c->model('ParleyDB')->resultset('ForumModerator')->find(
                 {
