@@ -1,0 +1,84 @@
+<h1>User Management</h1>
+
+<h2>Administration Rights</h2>
+
+<!-- markup for expand/contract links -->
+<!--
+<div id="expandcontractdiv">
+	<a id="collapse" href="#">Collapse all</a>
+</div>
+-->
+
+<div id="treeDiv1"></div>
+
+<h2>Restrictions, Bans and Suspensions</h2>
+
+
+<hr />
+
+<!-- Some custom style for the expand/contract section-->
+<style type="text/css">
+#expandcontractdiv {border:1px dotted #dedede; background-color:#EBE4F2; margin:0 0 .5em 0; padding:0.4em;}
+#treeDiv1 { background: #fff; padding:1em; margin-top:1em; }
+</style>
+
+
+
+<!--BEGIN SOURCE CODE FOR EXAMPLE =============================== -->
+
+
+<script type="text/javascript">
+//an anonymous function wraps our code to keep our variables
+//in function scope rather than in the global namespace:
+(function() {
+	var tree; //will hold our TreeView instance
+	
+	function treeInit() {
+		
+		YAHOO.log("Example's treeInit function firing.", "info", "example");
+		
+		//Hand off ot a method that randomly generates tree nodes:
+		buildRandomTextNodeTree();
+		
+		//handler for collapsing all nodes
+		YAHOO.util.Event.on("collapse", "click", function(e) {
+			YAHOO.log("Collapsing all TreeView  nodes.", "info", "example");
+			tree.collapseAll();
+			YAHOO.util.Event.preventDefault(e);
+		});
+	}
+	
+	function buildRandomTextNodeTree() {
+		//instantiate the tree:
+		tree = new YAHOO.widget.TreeView("treeDiv1");
+		
+		//create top-level nodes
+        [% dummy_value = users_with_roles.reset %]
+        [% WHILE (person = users_with_roles.next) %]
+			var tmpNode = new YAHOO.widget.MenuNode("[%person.forum_name%]", tree.getRoot(), false);
+            console.log('Person: ', "[%person.forum_name%]");
+            console.log('Roles:  ', "[%person.roles||'noroles?'%]");
+
+            [% pRoles = person.roles %]
+            [% WHILE (role = pRoles.next) %]
+                console.log('Role: ', '[%role.name%]');
+				var roleNode = new YAHOO.widget.MenuNode("[%role.name%]", tmpNode, false);
+            [% END %]
+        [% END %]
+		
+		//once it's all built out, we need to render
+		//our TreeView instance:
+		tree.draw();
+	}
+	
+	//When the DOM is done loading, we can initialize our TreeView
+	//instance:
+	YAHOO.util.Event.onDOMReady(treeInit);
+	
+})();//anonymous function wrapper closed; () notation executes function
+
+</script>
+
+<!--END SOURCE CODE FOR EXAMPLE =============================== -->
+
+
