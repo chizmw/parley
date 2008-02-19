@@ -51,6 +51,7 @@ $schematest->methods(
 
         resultsets => [
             qw[
+                users_with_roles
             ]
         ],
     }

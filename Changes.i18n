@@ -13,6 +13,8 @@ It's unlikely that we'll need an 'en' file in the project.
             - "ADMIN LOCK POST"
             - "Locked Post"
             - "Post Edited By"
+            - "Manage"
+            - "Users"
 
     it.po:
         - added:

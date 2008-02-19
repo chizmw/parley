@@ -45,6 +45,17 @@ sub services : Local {
     $c->stash->{email_engine}{pid} = $pid;
 }
 
+sub users : Local {
+    my ($self, $c) = @_;
+
+    $c->stash->{users_with_roles} =
+        $c->model('ParleyDB::Person')->users_with_roles()
+    ;
+
+    $c->log->debug(
+        ref($c->stash->{users_with_roles})
+    );
+}
 
 =head1 NAME
 

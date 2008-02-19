@@ -2,6 +2,7 @@ TODO LIST
 
   - "Cancel" from post/edit
   - "Cancel" from thread/reply
+  - fix <ul>/<ol> CSS
   - Quick Reply
   - login form doesn't submit onEnter
   - TESTS, TESTS, TESTS!

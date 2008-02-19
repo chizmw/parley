@@ -305,6 +305,9 @@ msgstr "Login"
 msgid "Logout"
 msgstr "Logout"
 
+msgid "Manage"
+msgstr "Manage"
+
 msgid "Me"
 msgstr "Me"
 
@@ -727,6 +730,9 @@ msgstr "Incorrect Username Supplied."
 
 msgid "Username"
 msgstr "Username"
+
+msgid "Users"
+msgstr "Users"
 
 msgid "View"
 msgstr "View"

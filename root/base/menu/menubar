@@ -116,11 +116,12 @@
                     <div class="bd">                                        
                         <ul>
                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="terms/add">[%l('Add T-and-Cs')%]</a></li>
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#">[%l('Site')%]</a>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#">[%l('Manage')%]</a>
                                 <div id="site" class="yuimenu">
                                     <div class="bd">
                                         <ul class="first-of-type">
                                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="site/services">[%l('Services')%]</a></li>
+                                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="site/users">[%l('Users')%]</a></li>
                                         </ul>            
                                     </div>
                                 </div>                    

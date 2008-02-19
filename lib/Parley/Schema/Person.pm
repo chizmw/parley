@@ -65,7 +65,11 @@ __PACKAGE__->add_columns(
     size => undef,
   },
 );
+
 __PACKAGE__->set_primary_key("id");
+
+__PACKAGE__->resultset_class('Parley::ResultSet::Person');
+
 __PACKAGE__->add_unique_constraint(
     "person_forum_name_key",
     ["forum_name"]
@@ -107,7 +111,55 @@ __PACKAGE__->has_many(
   { "foreign.recipient" => "self.id" },
 );
 
-__PACKAGE__->has_many(map_user_role => 'Parley::Schema::UserRole', 'person_id');
+__PACKAGE__->has_many(
+    map_user_role => 'Parley::Schema::UserRole',
+    'person_id',
+    { join_type => 'right' }
+);
 
+sub roles {
+    my $record = shift;
+    my ($schema, $rs);
+
+    $schema = $record->result_source()->schema();
+
+    $rs = $schema->resultset('Role')->search(
+        {
+            'person.id'  => $record->id(),
+        },
+        {
+            prefetch => [
+                { 'map_user_role' => 'person' },
+            ],
+        }
+    );
+
+    return $rs;
+}
+
+sub check_user_roles {
+    my $record = shift;
+    my @roles  = @_;
+
+    my ($schema, $rs);
+
+    $schema = $record->result_source()->schema();
+
+    $rs = $schema->resultset('Role')->search(
+        {
+            'map_user_role.person_id'   => $record->id(),
+            'me.name' => {
+                -in => \@roles,
+            },
+        },
+        {
+            prefetch => [
+                { 'map_user_role' => 'person' },
+            ],
+        },
+    );
+
+    return ($rs->count == scalar(@roles) || 0);
+}
 
 1;
