@@ -134,7 +134,7 @@ sub roles {
         }
     );
 
-    return $rs;
+    return (scalar $rs);
 }
 
 sub check_user_roles {

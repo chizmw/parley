@@ -31,6 +31,21 @@
 
         <!-- YUI ajax magick -->
 
+        <link rel="stylesheet" type="text/css"
+            href="[%c.request.base%]/static/yui/fonts/fonts-min.css" />
+        <link rel="stylesheet" type="text/css"
+            href="[%c.request.base%]/static/yui/treeview/assets/skins/sam/treeview.css" />
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/yahoo/yahoo.js"></script>
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/event/event.js"></script>
+
+        <script type="text/javascript" src="[%c.request.base%]/static/yui/treeview/treeview.js"></script>
+
+
+<!--begin custom header content for this example-->
+<!--bring in the folder-style CSS for the TreeView Control-->
+<link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/treeview/assets/treeview-menu.css" />
+
+
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/fonts/fonts-min.css" />
         <link rel="stylesheet" type="text/css" href="[%c.request.base%]/static/yui/reset-fonts-grids/reset-fonts-grids.css" />
