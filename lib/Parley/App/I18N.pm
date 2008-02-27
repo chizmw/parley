@@ -3,6 +3,8 @@ package Parley::App::I18N;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use Perl6::Export::Attrs;
 
 sub first_valid_locale :Export( :locale ) {

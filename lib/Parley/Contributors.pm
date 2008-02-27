@@ -1,4 +1,5 @@
 package Parley::Contributors;
+use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 # this is a dummy package to provide POD
 

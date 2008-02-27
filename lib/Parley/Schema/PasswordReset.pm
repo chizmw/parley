@@ -2,6 +2,8 @@ package Parley::Schema::PasswordReset;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use base 'DBIx::Class';
 
 __PACKAGE__->load_components("PK::Auto", "Core");

@@ -3,6 +3,8 @@ package Parley::ResultSet::Forum;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use base 'DBIx::Class::ResultSet';
 
 sub available_list {

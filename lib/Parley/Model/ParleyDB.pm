@@ -1,6 +1,8 @@
 package Parley::Model::ParleyDB;
 
 use strict;
+
+use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Model::DBIC::Schema';
 
 __PACKAGE__->config(

@@ -6,6 +6,8 @@ use warnings;
 use base 'DBIx::Class';
 use DateTime::Format::Pg;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 __PACKAGE__->load_components('PK::Auto', 'Core');
 __PACKAGE__->table('terms');
 

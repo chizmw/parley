@@ -5,6 +5,8 @@ use warnings;
 use Carp;
 use Data::Dump qw(pp);
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 sub new {
     my ($proto, $options) = @_;
 

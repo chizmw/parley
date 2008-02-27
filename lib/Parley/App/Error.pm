@@ -3,6 +3,8 @@ package Parley::App::Error;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use Perl6::Export::Attrs;
 
 sub has_errors :Export(:methods) {

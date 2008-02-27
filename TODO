@@ -1,6 +1,5 @@
 TODO LIST
 
-  - Parley::Version (a la SVK)
   - "Cancel" from post/edit
   - "Cancel" from thread/reply
   - fix <ul>/<ol> CSS
@@ -27,6 +26,7 @@ TODO LIST
   - investigate: package Your::Schema; sub connect { do the check; next::method }
   - investigate: DBIx::Class::Schema::Versioned
   - investigate: t/model_Post.t / distinct count
+D - Parley::Version (a la SVK)
 D - login form flickers on IE7 page load
 D - [bug] user/profile doesn't show avatar
 D - add i18n for 'or'

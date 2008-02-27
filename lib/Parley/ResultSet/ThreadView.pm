@@ -3,6 +3,8 @@ package Parley::ResultSet::ThreadView;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use base 'DBIx::Class::ResultSet';
 
 sub watching_thread {

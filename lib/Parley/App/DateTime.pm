@@ -3,6 +3,8 @@ package Parley::App::DateTime;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use DateTime;
 use Perl6::Export::Attrs;
 

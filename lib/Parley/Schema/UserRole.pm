@@ -3,6 +3,8 @@ package Parley::Schema::UserRole;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use base qw/DBIx::Class/;
 
 # Load required DBIC stuff

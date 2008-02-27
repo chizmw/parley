@@ -1,6 +1,8 @@
 package Parley::View::TT;
 
 use strict;
+
+use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::View::TT';
 
 =head1 NAME

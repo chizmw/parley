@@ -3,6 +3,8 @@ package Parley::ResultSet::Thread;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use base 'DBIx::Class::ResultSet';
 
 # This is slightly complicated; the way we find the last post a user has seen

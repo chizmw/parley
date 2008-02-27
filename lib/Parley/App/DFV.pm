@@ -3,6 +3,8 @@ package Parley::App::DFV;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use Email::Valid;
 use Perl6::Export::Attrs;
 

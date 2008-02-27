@@ -6,6 +6,8 @@ use strict;
 use warnings;
 use Data::Dump qw(pp);
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use DateTime;
 use DateTime::Format::Pg;
 use Text::Context::EitherSide;

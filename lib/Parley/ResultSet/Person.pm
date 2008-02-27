@@ -3,6 +3,8 @@ package Parley::ResultSet::Person;
 use strict;
 use warnings;
 
+use Parley::Version;  our $VERSION = $Parley::VERSION;
+
 use base 'DBIx::Class::ResultSet';
 
 sub users_with_roles {
