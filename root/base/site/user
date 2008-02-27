@@ -2,22 +2,55 @@
 
 <h2>[% person.forum_name %] ([%person.first_name%] [%person.last_name%])</h2>
 
-<table class="forum_list">
-    <tbody>
+<form>
+    <table class="user_permission_list">
+        <tbody>
 
-        [% WHILE (role = roles.next) %]
-        [% toggler = (1 - (toggler||0)) %]
-        <tr class="row [% row_styles.$toggler %]">
-            <td>
-                [% role.description %]
-            </td>
-            <td>
-                [% person.check_user_roles(role.name) %]
-            </td>
-        </tr>
-        [% END %]
+            [% WHILE (role = roles.next) %]
+            [% toggler = (1 - (toggler||0)) %]
+            <tr class="row [% row_styles.$toggler %]">
+                <td width="25%">
+                    <label for="userrole_[%role.id%]">
+                        [% role.description %]
+                    </label>
+                </td>
+                <td>
+                    [% has_role = person.check_user_roles(role.name) %]
+                    <input type="checkbox" class="role_checkbox" id="userrole_[%role.id%]" [%IF has_role%]checked="checked"[%END%]/>
 
-    </tbody>
-</table>
+                    <span id="status_[%role.id%]"></span>
+                </td>
+            </tr>
+            [% END %]
 
-<hr />
+        </tbody>
+    </table>
+</form>
+
+<script type="text/javascript">
+    var YU  = YAHOO.util,
+        Dom = YAHOO.util.Dom;
+
+    var items = Dom.getElementsByClassName('role_checkbox');
+    console.log(items);
+
+
+    var boink = function() {
+        var elID = this.id,
+            checked = this.checked;
+        var roleID = elID.split('_')[1];
+        var statusDiv = Dom.get('status_' + roleID);
+
+        statusDiv.innerHTML = '<blink>updating...</blink>';
+        statusDiv.innerHTML = '<img src="/static/images/loader-bar.gif" />';
+
+        console.log('roleID:  ', roleID);
+        console.log('checked: ', checked);
+    }
+
+    YU.Event.addListener(
+        items,
+        'change',
+        boink
+    );
+</script>

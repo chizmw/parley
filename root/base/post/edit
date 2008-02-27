@@ -56,7 +56,7 @@ Editing [% current_post.creator.forum_name %]'s post
 </form>
 
 <!-- message preview majick -->
-<script type="text/javascript" src="[%c.uri_for('/static/MessagePreview.js')%]"></script>
+<script type="text/javascript" src="[%c.uri_for('/static/MessagePreview-min.js')%]"></script>
 <script type="text/javascript">
     var MessagePreview = new ParleyMessagePreview();
 

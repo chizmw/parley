@@ -485,6 +485,27 @@ th {
     margin-bottom:      5px;
 }
 
+.user_permission_list  {
+    margin-left:        auto;
+    margin-right:       auto;
+    margin-top:         15px;
+    font-size:          93%;
+    width:              100%;
+}
+.user_permission_list td {
+    vertical-align:     top;
+    border:             1px dashed #ddd;
+    border:             none;
+    line-height:        150%;
+    padding-left:       10px;
+    padding-right:      10px;
+    padding-top:        5px;
+    padding-bottom:     5px;
+}
+.user_permission_list img {
+    vertical-align: middle;
+}
+
 .user_post_info {
     background:         #ccc;
     background:         transparent;
