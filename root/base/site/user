@@ -1,0 +1,23 @@
+<h1>User Stuff</h1>
+
+<h2>[% person.forum_name %] ([%person.first_name%] [%person.last_name%])</h2>
+
+<table class="forum_list">
+    <tbody>
+
+        [% WHILE (role = roles.next) %]
+        [% toggler = (1 - (toggler||0)) %]
+        <tr class="row [% row_styles.$toggler %]">
+            <td>
+                [% role.description %]
+            </td>
+            <td>
+                [% person.check_user_roles(role.name) %]
+            </td>
+        </tr>
+        [% END %]
+
+    </tbody>
+</table>
+
+<hr />
