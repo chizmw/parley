@@ -1,5 +1,7 @@
 use inc::Module::Install;
 
+use lib qw{lib};
+
 name 'Parley';
 all_from 'lib/Parley.pm';
 

@@ -1,6 +1,6 @@
 package Parley;
 
-use version; our $VERSION = qv(0.59.001);
+use version; our $VERSION = qv(0.59_001);
 
 =head1 NAME
 
