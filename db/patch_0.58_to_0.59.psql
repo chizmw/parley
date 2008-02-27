@@ -22,23 +22,28 @@ ALTER TABLE person
 
 CREATE TABLE role (
     id          serial      primary key,
+    idx         integer     not null default 9999,
     name        varchar(30) not null unique,
     description text
 );
 -- a couple of roles
-INSERT INTO role (name, description) VALUES (
+INSERT INTO role (idx, name, description) VALUES (
+    0,
     'site_moderator',
     'Site Moderator (aka Da Boss)'
 );
-INSERT INTO role (name, description) VALUES (
+INSERT INTO role (idx, name, description) VALUES (
+    100,
     'ip_ban_posting',
     'Restrict Posting by IP'
 );
-INSERT INTO role (name, description) VALUES (
+INSERT INTO role (idx, name, description) VALUES (
+    100,
     'ip_ban_signup',
     'Restrict Sign-Up by IP'
 );
-INSERT INTO role (name, description) VALUES (
+INSERT INTO role (idx, name, description) VALUES (
+    100,
     'ip_ban_login',
     'Restrict Login by IP'
 );

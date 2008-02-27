@@ -531,6 +531,18 @@ a[href $='.pdf']{
     width:              450px;
 }
 
+#ysearch {
+    text-align:         center;
+}
+#ysearchinput {
+    position:           static;
+    width:              20em;
+} /* to center, set static and explicit width: */
+#ysearchcontainer {
+    text-align:         left;
+    width:              20em;
+} /* to center, set left-align and explicit width: */
+
 /* ForumCode styles */
 .forumcode_code {
     font-family:        monospace;

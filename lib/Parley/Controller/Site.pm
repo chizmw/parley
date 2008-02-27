@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use base 'Catalyst::Controller';
 
+use JSON;
 use Proc::Daemon;
 use Proc::PID::File;
 
@@ -51,10 +52,57 @@ sub users : Local {
     $c->stash->{users_with_roles} =
         $c->model('ParleyDB::Person')->users_with_roles()
     ;
+}
 
-    $c->log->debug(
-        ref($c->stash->{users_with_roles})
+sub user : Local {
+    my ($self, $c) = @_;
+    my $pid = $c->request->param('pid');
+
+    if (defined $pid && $pid =~ m{\A\d+\z}xms) {
+        $c->stash->{person} =
+            $c->model('ParleyDB::Person')->find($pid)
+        ;
+
+        $c->stash->{roles} =
+            $c->model('ParleyDB::Role')->role_list();
+    }
+    else {
+        $c->response->redirect(
+            $c->uri_for('/site/users/')
+        );
+        return;
+    }
+}
+
+sub users_autocomplete : Local {
+    my ($self, $c) = @_;
+    my @results;
+
+    my $stuff = $c->model('ParleyDB::Person')->search(
+        {
+            forum_name => { -ilike => $c->request->param('query') . q{%} },
+        },
+        {
+            'order_by' => 'forum_name',
+            columns => [qw/id forum_name first_name last_name/],
+        }
     );
+
+    while (my $person = $stuff->next) {
+        my %data = $person->get_columns;
+        push @results, \%data;
+    }
+
+    $c->response->body(
+        to_json( 
+            {
+                ResultSet => {
+                    person => \@results,
+                }
+            }
+        )
+    );
+    return;
 }
 
 =head1 NAME

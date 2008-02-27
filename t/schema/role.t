@@ -20,7 +20,9 @@ $schematest->methods(
         columns => [
             qw[
                 id
+                idx
                 name
+                description
             ]
         ],
 
@@ -37,6 +39,7 @@ $schematest->methods(
 
         resultsets => [
             qw[
+                role_list
             ]
         ],
     }

@@ -1,5 +1,6 @@
 TODO LIST
 
+  - Parley::Version (a la SVK)
   - "Cancel" from post/edit
   - "Cancel" from thread/reply
   - fix <ul>/<ol> CSS
