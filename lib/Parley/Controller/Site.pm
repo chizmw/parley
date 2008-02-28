@@ -107,6 +107,98 @@ sub users_autocomplete : Local {
     return;
 }
 
+sub roleSaveHandler :Local {
+    my ($self, $c) = @_;
+    my ($return_data, $json);
+    my ($person_id, $role_id, $value);
+
+    $person_id  = $c->request->param('person');
+    $role_id    = $c->request->param('role');
+    $value      = $c->request->param('value');
+
+    # default to responding with "nothing changed"
+    $return_data->{updated} = 0;
+
+    # check incoming values
+    if (not defined $person_id or $person_id !~ m{\A\d+\z}) {
+        $return_data->{error}{message} = 'Invalid user-id';
+    }
+    elsif (not defined $role_id or $role_id !~ m{\A\d+\z}) {
+        $return_data->{error}{message} = 'Invalid role-id';
+    }
+    elsif (not defined $value or $value !~ m{\A[01]}) {
+        $return_data->{error}{message} = 'Invalid requested value';
+    }
+
+    # remove the role?
+    elsif (0 == $value) {
+        # try to remove the join table entry
+        eval {
+            $c->model('ParleyDB')->schema->txn_do(
+                sub {
+                    $c->model('ParleyDB::UserRole')->search(
+                        {
+                            person_id   => $person_id,
+                            role_id     => $role_id,
+                        }
+                    )
+                    ->delete;
+                }
+            );
+            $return_data->{updated} = 1;
+        };
+        # deal with any transaction errors
+        if ($@) {                                   # Transaction failed
+            die "something terrible has happened!"  #
+                if ($@ =~ /Rollback failed/);       # Rollback failed
+
+            $return_data->{error}{message} =
+                qq{Database transaction failed: $@};
+            $c->log->error( $@ );
+            return;
+        }
+    }
+
+    # add the role?
+    elsif (1 == $value) {
+        # try to remove the join table entry
+        eval {
+            $c->model('ParleyDB')->schema->txn_do(
+                sub {
+                    $c->model('ParleyDB::UserRole')->update_or_create(
+                        {
+                            person_id   => $person_id,
+                            role_id     => $role_id,
+                        }
+                    )
+                }
+            );
+            $return_data->{updated} = 1;
+        };
+        # deal with any transaction errors
+        if ($@) {                                   # Transaction failed
+            die "something terrible has happened!"  #
+                if ($@ =~ /Rollback failed/);       # Rollback failed
+
+            $return_data->{error}{message} =
+                qq{Database transaction failed: $@};
+            $c->log->error( $@ );
+            return;
+        }
+    }
+
+    # else ... um, how did we end up here?
+    else {
+        $return_data->{error}{message} = q{We're not in Kansas any more};
+    }
+
+    # return some JSON
+    $json = to_json($return_data);
+    $c->response->body( $json );
+    $c->log->info( $json );
+    return;
+}
+
 =head1 NAME
 
 Parley::Controller::Site - Catalyst Controller

@@ -17,7 +17,6 @@
                 <td>
                     [% has_role = person.check_user_roles(role.name) %]
                     <input type="checkbox" class="role_checkbox" id="userrole_[%role.id%]" [%IF has_role%]checked="checked"[%END%]/>
-
                     <span id="status_[%role.id%]"></span>
                 </td>
             </tr>
@@ -27,30 +26,81 @@
     </table>
 </form>
 
+<div class="top_padded">
+<a href="[%c.uri_for('/site/users/')%]">Back to User Management</a>
+</div>
+
 <script type="text/javascript">
     var YU  = YAHOO.util,
         Dom = YAHOO.util.Dom;
 
     var items = Dom.getElementsByClassName('role_checkbox');
-    console.log(items);
 
-
-    var boink = function() {
+    update_role = function() {
         var elID = this.id,
-            checked = this.checked;
+            checked = (this.checked ? 1 : 0);
         var roleID = elID.split('_')[1];
         var statusDiv = Dom.get('status_' + roleID);
 
-        statusDiv.innerHTML = '<blink>updating...</blink>';
-        statusDiv.innerHTML = '<img src="/static/images/loader-bar.gif" />';
+        var handleSuccess = function(o) {
+            var data = eval('(' + o.responseText + ')');
+            // show the status message
+            //o.argument.msg_node.innerHTML = data.message;
+            // clear the loader-gif
+            o.argument.msg_node.innerHTML = '';
 
-        console.log('roleID:  ', roleID);
-        console.log('checked: ', checked);
-    }
+            // show any returned errors
+            if (data.error) {
+                if (data.error.message!=undefined) {
+                    o.argument.msg_node.innerHTML = data.error.message;
+                }
+
+                // reset the checkbox
+                Dom.get(o.argument.cb_node).checked =
+                    (1 - o.argument.value);
+            }
+        };
+        var handleFailure = function(o) {
+            // show the status message
+            o.argument.msg_node.innerHTML = o.responseText;
+
+            // reset the checkbox
+            Dom.get(o.argument.cb_node).checked =
+                (1 - o.argument.value);
+        };
+
+        // where to post to
+        var sUrl = '[%c.uri_for('/site/roleSaveHandler')%]';
+
+        // postdata is a query string ... how irksome!!
+        var postData =
+               'person='    + [%person.id%]
+            +  '&role='     + roleID
+            +  '&value='    + checked
+        ;
+
+        // some visual feedback that something is happening
+        statusDiv.innerHTML = '<img src="[%c.uri_for('/static/images/loader-bar.gif')%]" />';
+
+        var request = YAHOO.util.Connect.asyncRequest(
+            'POST',
+            sUrl,
+            {
+                success:  handleSuccess,
+                failure:  handleFailure,
+                argument: {
+                    msg_node: statusDiv,
+                    cb_node:  elID,
+                    value:    checked
+                }
+            },
+            postData
+        );
+    };
 
     YU.Event.addListener(
         items,
         'change',
-        boink
+        update_role
     );
 </script>
