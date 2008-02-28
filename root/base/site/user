@@ -1,4 +1,4 @@
-<h1>User Stuff</h1>
+<h1>[%l('User Roles')%]</h1>
 
 <h2>[% person.forum_name %] ([%person.first_name%] [%person.last_name%])</h2>
 

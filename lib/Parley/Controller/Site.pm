@@ -121,13 +121,16 @@ sub roleSaveHandler :Local {
 
     # check incoming values
     if (not defined $person_id or $person_id !~ m{\A\d+\z}) {
-        $return_data->{error}{message} = 'Invalid user-id';
+        $return_data->{error}{message} =
+            $c->localize('Invalid %1', 'user-id');
     }
     elsif (not defined $role_id or $role_id !~ m{\A\d+\z}) {
-        $return_data->{error}{message} = 'Invalid role-id';
+        $return_data->{error}{message} =
+            $c->localize('Invalid %1', 'role-id');
     }
     elsif (not defined $value or $value !~ m{\A[01]}) {
-        $return_data->{error}{message} = 'Invalid requested value';
+        $return_data->{error}{message} =
+            $c->localize('Invalid requested value');
     }
 
     # remove the role?
@@ -189,7 +192,8 @@ sub roleSaveHandler :Local {
 
     # else ... um, how did we end up here?
     else {
-        $return_data->{error}{message} = q{We're not in Kansas any more};
+        $return_data->{error}{message} =
+            $c->localize(q{We're not in Kansas any more});
     }
 
     # return some JSON

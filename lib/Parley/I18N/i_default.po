@@ -239,6 +239,13 @@ msgstr "Incomplete authentication URL"
 msgid "Incomplete URL"
 msgstr "Incomplete URL"
 
+# e.g. Invalid user-id
+msgid "Invalid %1"
+msgstr "Invalid %1"
+
+msgid "Invalid requested value"
+msgstr "Invalid requested value"
+
 msgid "IP Logged"
 msgstr "IP Logged"
 
@@ -734,6 +741,9 @@ msgstr "Username"
 msgid "Users"
 msgstr "Users"
 
+msgid "User Roles"
+msgstr "User Roles"
+
 msgid "View"
 msgstr "View"
 
@@ -754,6 +764,12 @@ msgstr "Watch this thread"
 
 msgid "watching this thread"
 msgstr "watching this thread"
+
+msgid "We're not in Kansas any more"
+msgstr "We're not in Kansas any more"
+
+msgid "Users"
+msgstr "Users"
 
 msgid "wrote"
 msgstr "wrote"

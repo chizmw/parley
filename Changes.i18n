@@ -15,6 +15,10 @@ It's unlikely that we'll need an 'en' file in the project.
             - "Post Edited By"
             - "Manage"
             - "Users"
+            - "User Roles"
+            - "We're not in Kansas any more"
+            - "Invalid %1"
+            - "Invalid requested value"
 
     it.po:
         - added:
