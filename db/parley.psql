@@ -1,4 +1,4 @@
--- Phorum schema
+-- Parley schema
 
 -- to get your user and database:
 --  createuser -A -d parley
@@ -66,6 +66,9 @@ CREATE TABLE person (
     authentication_id   integer
                         references authentication(id),
 
+    suspended           boolean     not null
+                        default False,
+
     UNIQUE(forum_name),
     UNIQUE(email)
 );
@@ -130,8 +133,12 @@ CREATE TABLE post (
     creator_id      integer     not null
                     references person(id),
 
-    ip_addr         inet
+    ip_addr         inet,
 
+    admin_editor_id integer
+                    references person(id),
+    locked          boolean     not null
+                    default False
 );
 
 -- add ReplyTo information for post
@@ -243,6 +250,42 @@ CREATE TABLE terms_agreed (
     UNIQUE(person_id, terms_id)
 );
 
+-- roles / authentication
+CREATE TABLE role (
+    id              serial      primary key,
+    idx             integer     not null default 9999,
+    name            varchar(30) not null unique,
+    description     text
+);
+CREATE INDEX idx_role_name ON role(name);
+
+CREATE TABLE user_roles (
+    id              serial      primary key,
+    person_id       integer     not null
+                                references person(id),
+    role_id         integer     not null
+                                references role(id),
+    UNIQUE (person_id, role_id)
+);
+CREATE INDEX idx_userroles_personid ON user_roles(person_id);
+CREATE INDEX idx_userroles_roleid   ON user_roles(role_id);
+
+-- admin action log actions/messages
+CREATE TABLE log_admin_action (
+    id              serial      primary key,
+    person_id       integer     not null
+                                references person(id),
+    admin_id        integer     not null
+                                references person(id),
+    created         timestamp   with time zone
+                                not null
+                                default CURRENT_TIMESTAMP,
+
+    message         text        not null
+                                default 'No Message Supplied'
+);
+CREATE INDEX idx_adminaction_personid ON admin_action(person_id);
+CREATE INDEX idx_adminaction_adminid  ON admin_action(admin_id);
 
 --
 -- some default stuff
@@ -269,6 +312,41 @@ VALUES
 INSERT INTO forum (id, name, description) VALUES (0, 'Off-Topic', 'General off-topic discussion');
 INSERT INTO forum (name, description) VALUES ('Suggestions', 'Things you think should be added');
 INSERT INTO forum (name, description) VALUES ('Bugs', 'If you find anything broken, report it here');
+
+-- some roles
+INSERT INTO role (idx, name, description) VALUES (
+    0,
+    'site_moderator',
+    'Site Moderator'
+);
+INSERT INTO role (idx, name, description) VALUES (
+    50,
+    'suspend_account',
+    'Suspend Account'
+);
+INSERT INTO role (idx, name, description) VALUES (
+    100,
+    'ip_ban_posting',
+    'Restrict Posting by IP'
+);
+INSERT INTO role (idx, name, description) VALUES (
+    100,
+    'ip_ban_signup',
+    'Restrict Sign-Up by IP'
+);
+INSERT INTO role (idx, name, description) VALUES (
+    100,
+    'ip_ban_login',
+    'Restrict Login by IP'
+);
+
+-- make topdog a site_moderator
+INSERT INTO user_roles
+    (person_id, role_id)
+VALUES (
+    0,
+    (SELECT id FROM role WHERE name='site_moderator')
+);
 
 -- commit our schema
 COMMIT;
