@@ -13,6 +13,7 @@ __PACKAGE__->load_classes(
         'EmailQueue',
         'ForumModerator',
         'Forum',
+        'LogAdminAction',
         'PasswordReset',
         'Person',
         'Post',

@@ -6,6 +6,8 @@ use warnings;
 use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Controller';
 
+use JSON;
+
 # deal with user login requests on user/login
 sub login : Path('/user/login') {
     my ( $self, $c ) = @_;
@@ -118,6 +120,65 @@ sub profile :Local {
     }
 }
 
+sub suspend :Local {
+    my ($self, $c) = @_;
+    my ($json, $return_data, $person);
+
+    if (not $c->_authed_user->can_suspend_account) {
+        $return_data->{error}{message} =
+            $c->localize(q{You don't have the required privileges to do that});
+    }
+
+    else {
+        my ($suspended, $person);
+
+        # default to turning OFF a suspension
+        $suspended = 0;
+
+        # see if we meet the criteria for a suspend action
+        if (
+            defined $c->request->param('suspend')
+                and
+            1 == $c->request->param('suspend')
+        ) {
+            $suspended = 1;
+        }
+
+        eval {
+            # see if we can find the person to suspend
+            $person = $c->model('ParleyDB::Person')->find(
+                $c->request->param('person')
+            );
+
+            if (defined $person) {
+                $return_data->{error}{suspended} = $suspended;
+                $return_data->{error}{name} = $person->forum_name;
+
+                # suspend a person, giving a reson
+                $person->set_suspended(
+                    {
+                        value   => $suspended,
+                        reason  => $c->request->param('reason'),
+                    }
+                );
+            }
+            else {
+                $return_data->{error}{message} =
+                    $c->localize(q{We're not in Kansas any more});
+            }
+        };
+        if ($@) {
+            $return_data->{error}{message} = $@;
+            $c->log->error($@);
+        }
+    }
+
+    # return some JSON
+    $json = to_json($return_data);
+    $c->response->body( $json );
+    $c->log->info( $json );
+    return;
+}
 
 1;
 

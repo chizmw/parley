@@ -6,6 +6,7 @@
 --  add flagging of posts edited by admin
 --  lock posts (so they can't be changed after being edited by admin)
 --  allow user accounts to be suspended
+--  logging of admin actions on users (e.g. why suspended)
 
 BEGIN;
 
@@ -26,11 +27,18 @@ CREATE TABLE role (
     name        varchar(30) not null unique,
     description text
 );
+CREATE INDEX idx_role_name ON role(name);
+
 -- a couple of roles
 INSERT INTO role (idx, name, description) VALUES (
     0,
     'site_moderator',
-    'Site Moderator (aka Da Boss)'
+    'Site Moderator'
+);
+INSERT INTO role (idx, name, description) VALUES (
+    50,
+    'suspend_account',
+    'Suspend Account'
 );
 INSERT INTO role (idx, name, description) VALUES (
     100,
@@ -56,6 +64,8 @@ CREATE TABLE user_roles (
                             references role(id),
     UNIQUE (person_id, role_id)
 );
+CREATE INDEX idx_userroles_personid ON user_roles(person_id);
+CREATE INDEX idx_userroles_roleid   ON user_roles(role_id);
 
 -- make topdog a site_moderator
 INSERT INTO user_roles
@@ -64,6 +74,24 @@ VALUES (
     0,
     (SELECT id FROM role WHERE name='site_moderator')
 );
+
+-- admin action log actions/messages
+CREATE TABLE log_admin_action (
+    id          serial      primary key,
+    person_id   integer     not null
+                            references person(id),
+    admin_id    integer     not null
+                            references person(id),
+    created     timestamp   with time zone
+                            not null
+                            default CURRENT_TIMESTAMP,
+
+    message     text        not null
+                            default 'No Message Supplied'
+);
+CREATE INDEX idx_adminaction_personid ON admin_action(person_id);
+CREATE INDEX idx_adminaction_adminid  ON admin_action(admin_id);
+
 
 -- patch ends here --
 

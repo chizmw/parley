@@ -139,13 +139,28 @@ sub roleSaveHandler :Local {
         eval {
             $c->model('ParleyDB')->schema->txn_do(
                 sub {
-                    $c->model('ParleyDB::UserRole')->search(
+                    my $userrole = $c->model('ParleyDB::UserRole')->find(
                         {
                             person_id   => $person_id,
                             role_id     => $role_id,
                         }
-                    )
-                    ->delete;
+                    );
+
+                    # moderator suicide?
+                    if (
+                        $person_id = $c->_authed_user->id
+                            and
+                        q{site_moderator} eq $userrole->role->name
+                    ) {
+                        $return_data->{error}{message} =
+                            $c->localize(
+                                q{You can't commit moderator suicide}
+                            );
+                    }
+                    else {
+                        # remove the role
+                        $userrole->delete;
+                    }
                 }
             );
             $return_data->{updated} = 1;

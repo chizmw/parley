@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use Parley::Version;  our $VERSION = $Parley::VERSION;
+use DateTime::Format::Pg;
 
 use base 'DBIx::Class';
 

@@ -66,6 +66,8 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => undef,
   },
+
+  suspended     => {},
 );
 
 __PACKAGE__->set_primary_key("id");
@@ -143,6 +145,9 @@ sub check_user_roles {
     my $record = shift;
     my @roles  = @_;
 
+    return
+        if (not @roles);
+
     my ($schema, $rs);
 
     $schema = $record->result_source()->schema();
@@ -162,6 +167,23 @@ sub check_user_roles {
     );
 
     return ($rs->count == scalar(@roles) || 0);
+}
+
+# thin wrapper around check_user_roles() for convenience
+sub is_site_moderator {
+    my $record = shift;
+
+    return $record->check_user_roles(
+        'site_moderator'
+    );
+}
+# thin wrapper around check_user_roles() for convenience
+sub can_suspend_account {
+    my $record = shift;
+
+    return $record->check_user_roles(
+        'site_moderator'
+    );
 }
 
 1;

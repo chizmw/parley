@@ -28,6 +28,7 @@ $schematest->methods(
                 preference_id
                 last_post_id
                 post_count
+                suspended
             ]
         ],
 
@@ -46,6 +47,10 @@ $schematest->methods(
 
         custom => [
             qw[
+                roles
+                check_user_roles
+                is_site_moderator
+                can_suspend_account
             ]
         ],
 
