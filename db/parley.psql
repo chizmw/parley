@@ -271,6 +271,15 @@ CREATE INDEX idx_userroles_personid ON user_roles(person_id);
 CREATE INDEX idx_userroles_roleid   ON user_roles(role_id);
 
 -- admin action log actions/messages
+CREATE TABLE admin_action (
+    id              serial      primary key,
+    name            text        not null,
+
+    UNIQUE(name)
+);
+INSERT INTO admin_action (id, name) VALUES (0, 'undefined');
+INSERT INTO admin_action (name) VALUES ('suspend_user');
+
 CREATE TABLE log_admin_action (
     id              serial      primary key,
     person_id       integer     not null
@@ -281,11 +290,15 @@ CREATE TABLE log_admin_action (
                                 not null
                                 default CURRENT_TIMESTAMP,
 
+    action_id       integer     not null
+                                default 0
+                                references admin_action(id),
+
     message         text        not null
                                 default 'No Message Supplied'
 );
-CREATE INDEX idx_adminaction_personid ON admin_action(person_id);
-CREATE INDEX idx_adminaction_adminid  ON admin_action(admin_id);
+CREATE INDEX idx_adminaction_personid ON log_admin_action(person_id);
+CREATE INDEX idx_adminaction_adminid  ON log_admin_action(admin_id);
 
 --
 -- some default stuff

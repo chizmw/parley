@@ -18,6 +18,7 @@ __PACKAGE__->add_columns(
   admin_id      => { },
   created       => { },
   message       => { },
+  action_id     => { },
 );
 
 __PACKAGE__->set_primary_key("id");
@@ -30,6 +31,10 @@ __PACKAGE__->belongs_to(
 __PACKAGE__->belongs_to(
     "admin" => "Person",
     { 'foreign.id' => "self.person_id" }
+);
+__PACKAGE__->belongs_to(
+    "action" => "AdminAction",
+    { 'foreign.id' => "self.action_id" }
 );
 
 foreach my $datecol (qw/created/) {

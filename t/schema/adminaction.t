@@ -12,7 +12,7 @@ my $schematest = SchemaTest->new(
     {
         dsn       => 'dbi:Pg:dbname=parley',
         namespace => 'Parley::Schema',
-        moniker   => 'LogAdminAction',
+        moniker   => 'AdminAction',
     }
 );
 $schematest->methods(
@@ -20,19 +20,12 @@ $schematest->methods(
         columns => [
             qw[
                 id
-                person_id
-                admin_id
-                created
-                message
-                action_id
+                name
             ]
         ],
 
         relations => [
             qw[
-                person
-                admin
-                action
             ]
         ],
 

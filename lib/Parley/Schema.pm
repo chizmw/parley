@@ -9,6 +9,7 @@ use base 'DBIx::Class::Schema';
 # explicitly load Parley::Schema classes
 __PACKAGE__->load_classes(
     [
+        'AdminAction',
         'Authentication',
         'EmailQueue',
         'ForumModerator',

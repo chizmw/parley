@@ -9,15 +9,8 @@ function suspend_init() {
             checked = (this.checked ? true : false);
 
         try {
-            // do we want to suspend the tinker?
-            if (checked) {
-                YAHOO.parley.suspend_reason.suspend_reason_dialog.show();
-            }
-
-            // do we want to un-suspend the user?
-            else {
-                //alert('un-suspend');
-            }
+            Dom.get('suspension_reason').value = '';
+            YAHOO.parley.suspend_reason.suspend_reason_dialog.show();
         } catch(e) { alert(e); }
     }
 
@@ -64,6 +57,10 @@ function suspend_reason_init() {
     };
     var handleCancel = function() {
         YAHOO.parley.small_loading.wait.hide();
+        // reset the checkbox
+        Dom.get('suspend_account').checked =
+            ! (Dom.get('suspend_account').checked);
+        // cancel the dialog
         this.cancel();
     };
     var handleSuccess = function(o) {
@@ -71,14 +68,12 @@ function suspend_reason_init() {
         YAHOO.parley.suspend_reason.suspend_reason_dialog.hide();
         var response = o.responseText;
         var data = eval('(' + o.responseText + ')');
-
-        try {
-        YAHOO.parley.ajax_dialog.dlg.show_message(data.error);
-        } catch(e) { alert(e); }
     };
     var handleFailure = function(o) {
         YAHOO.parley.small_loading.wait.hide();
-        alert("Submission failed: " + o.status);
+        try {
+            YAHOO.parley.ajax_dialog.dlg.show_message( o );
+        } catch(e) { alert('handleFailure: ' + e); }
     };
 
     // Instantiate the Dialog

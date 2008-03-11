@@ -4,6 +4,7 @@ package Parley::Schema::Person;
 
 use strict;
 use warnings;
+use Carp;
 
 use Parley::Version;  our $VERSION = $Parley::VERSION;
 
@@ -167,6 +168,58 @@ sub check_user_roles {
     );
 
     return ($rs->count == scalar(@roles) || 0);
+}
+
+# suspend a user (and log a message at the same time)
+sub set_suspended {
+    my ($record, $args) = @_;
+    my ($value, $reason, $admin_id);
+    $value      = $args->{value};
+    $reason     = $args->{reason};
+    $admin_id   = $args->{admin}->id;
+
+    my $schema = $record->result_source()->schema();
+
+    if (not defined $value) {
+        Carp::carp('no value passed to set_suspended()');
+        return;
+    }
+
+    if (not defined $reason) {
+        $reason = q{None Given};
+    }
+
+    # suspend the user and add a log action
+    eval {
+        $schema->txn_do(
+            sub {
+                # set the value of suspended
+                $record->update({suspended => $value});
+                # add a log message
+                $schema->resultset('LogAdminAction')->create(
+                    {
+                        person_id   => $record->id,
+                        admin_id    => $admin_id,
+                        message     => $reason,
+
+                        action => {
+                            name => 'suspend_user',
+                        },
+                    }
+                );
+                return;
+            }
+        )
+    };
+    if ($@) {                                   # Transaction failed
+        die "something terrible has happened!"  #
+            if ($@ =~ /Rollback failed/);       # Rollback failed
+
+        #$return_data->{error}{message} =
+            #qq{Database transaction failed: $@};
+        #$c->log->error( $@ );
+        die $@;
+    }
 }
 
 # thin wrapper around check_user_roles() for convenience

@@ -151,14 +151,15 @@ sub suspend :Local {
             );
 
             if (defined $person) {
-                $return_data->{error}{suspended} = $suspended;
-                $return_data->{error}{name} = $person->forum_name;
+                $return_data->{data}{suspended} = $suspended;
+                $return_data->{data}{name} = $person->forum_name;
 
                 # suspend a person, giving a reson
                 $person->set_suspended(
                     {
                         value   => $suspended,
                         reason  => $c->request->param('reason'),
+                        admin   => $c->_authed_user,
                     }
                 );
             }
