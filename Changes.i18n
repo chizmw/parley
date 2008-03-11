@@ -19,6 +19,10 @@ It's unlikely that we'll need an 'en' file in the project.
             - "We're not in Kansas any more"
             - "Invalid %1"
             - "Invalid requested value"
+            - "Administration"
+            - "Suspend Account"
+            - "Please enter suspension information"
+            - "Reason for suspension"
 
     it.po:
         - added:

@@ -44,12 +44,12 @@
     </div>
 
     [% IF authed_user.is_site_moderator || authed_user.can_suspend_account %]
-    <h2>Administration</h2>
+    <h2>[%l('Administration')%]</h2>
 
     <div class="yui-gf top_padded">
         [% IF authed_user.can_suspend_account %]
         <div class="yui-u first align_right">
-        Suspend Account
+        [%l('Suspend Account')%]
         </div>
         <div class="yui-u">
         <input
@@ -75,17 +75,11 @@
     <div class="hd">Please enter suspension information</div>
     <div class="bd">
         <form method="POST" action="assets/post.php">
-            <label for="suspension_reason">Reason for suspension:</label>
+            <label for="suspension_reason">[%l('Reason for suspension')%]:</label>
             <br />
             <textarea id="suspension_reason" cols="30" rows="6"></textarea>
         </form>
     </div>
 </div>
 
-<div id="ajax_dialog">
-    <div class="hd">AJAX Message Dialog</div>
-    <div class="bd">
-        Message
-    </div>
-</div>
-
+[% PROCESS shared/ajax_dialog %]

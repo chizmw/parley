@@ -52,6 +52,9 @@ msgstr "You must specify the thread to lock"
 msgid "ADMIN SPECIFY STICK THREAD"
 msgstr "You must specify the thread to stick"
 
+msgid "Administration"
+msgstr "Administration"
+
 msgid "ago"
 msgstr "ago"
 
@@ -462,6 +465,9 @@ msgstr "person"
 msgid "Please choose a language"
 msgstr "Please choose a language"
 
+msgid "Please enter suspension information"
+msgstr "Please enter suspension information"
+
 msgid "Please enter your information"
 msgstr "Please enter your information"
 
@@ -515,6 +521,9 @@ msgstr "Post New Topic"
 
 msgid "Quote"
 msgstr "Quote"
+
+msgid "Reason for suspension"
+msgstr "Reason for suspension"
 
 msgid "Recently Updated Threads"
 msgstr "Recently Updated Threads"
@@ -641,6 +650,9 @@ msgstr "Subject"
 
 msgid "Summary of Changes"
 msgstr "Summary of Changes"
+
+msgid "Suspend Account"
+msgstr "Suspend Account"
 
 msgid "TERMS ADD NEW"
 msgstr "Add New Site Terms &amp; Conditions"
