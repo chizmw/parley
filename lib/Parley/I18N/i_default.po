@@ -795,6 +795,9 @@ msgstr "You are not watching any threads"
 msgid "You are watching this thread"
 msgstr "You are watching this thread"
 
+msgid "You don't have the required privileges to do that"
+msgstr "You don't have the required privileges to do that"
+
 msgid "Your Details"
 msgstr "Your Details"
 
