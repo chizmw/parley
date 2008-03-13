@@ -181,6 +181,12 @@ sub suspend :Local {
     return;
 }
 
+sub suspended :Local {
+    my ($self, $c) = @_;
+    $c->stash->{template} = 'user/suspended';
+    return;
+}
+
 1;
 
 __END__

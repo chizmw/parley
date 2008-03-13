@@ -168,7 +168,6 @@ sub auto : Private {
                 'authentication.username'   => $c->user->username(),
             },
             {
-                #join => 'authentication',
                 prefetch => [
                     'authentication',
                     { 'preference' => 'time_format' },
@@ -184,6 +183,22 @@ sub auto : Private {
             $c->log->debug('User needs to accept T&Cs');
             return 0;
         }
+    }
+
+    ############################################################
+    # if we have a suspended user ...
+    ############################################################
+    if (
+        $c->_authed_user
+            and
+        $c->_authed_user->suspended
+            and
+        $c->request->path() !~ m{user/suspended}
+            and
+        $c->request->path() !~ m{user/logout}
+    ) {
+        $c->forward('/user/suspended');
+        return 0;
     }
 
 
