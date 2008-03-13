@@ -51,7 +51,7 @@ function suspend_reason_init() {
                 },
                   'suspend='    + checked
                 + '&person='    + person_id
-                + '&reason='    + reason
+                + '&reason='    + escape(reason)
             );
         } catch(e) { alert(e); }
     };

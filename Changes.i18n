@@ -25,6 +25,7 @@ It's unlikely that we'll need an 'en' file in the project.
             - "Reason for suspension"
             - "You don't have the required privileges to do that"
             - "Suspended"
+            - "No reason given"
 
     it.po:
         - added:

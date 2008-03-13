@@ -57,22 +57,32 @@
     [% IF authed_user.is_site_moderator || authed_user.can_suspend_account %]
     <h2>[%l('Administration')%]</h2>
 
-    <div class="yui-gf top_padded">
-        [% IF authed_user.can_suspend_account %]
-        <div class="yui-u first align_right">
-        [%l('Suspend Account')%]
+    [% IF authed_user.can_suspend_account %]
+        <div class="yui-gf top_padded">
+            <div class="yui-u first align_right">
+            [%l('Suspend Account')%]
+            </div>
+            <div class="yui-u">
+            <input
+                type="checkbox"
+                name="suspend_account"
+                id="suspend_account"
+                value="[%profiled_user.id%]"
+                [% IF profiled_user.suspended %]checked="true"[% END %]
+            >
+            </div>
         </div>
-        <div class="yui-u">
-        <input
-            type="checkbox"
-            name="suspend_account"
-            id="suspend_account"
-            value="[%profiled_user.id%]"
-            [% IF profiled_user.suspended %]checked="true"[% END %]
-        >
-        </div>
+        [% IF profiled_user.suspended %]
+            <div class="yui-gf top_padded">
+                <div class="yui-u first align_right">
+                    [%l('Reason for suspension')%]:
+                </div>
+                <div class="yui-u">
+                    [% profiled_user.last_suspension.message ||l('No reason given') %]
+                </div>
+            </div>
         [% END %]
-    </div>
+    [% END %]
 
     [% END %]
 [% ELSE %]

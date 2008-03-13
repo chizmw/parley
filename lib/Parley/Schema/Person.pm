@@ -222,6 +222,30 @@ sub set_suspended {
     }
 }
 
+sub last_suspension {
+    my $record = shift;
+    my ($schema, $result);
+
+    $schema = $record->result_source()->schema();
+
+    $result = $schema->resultset('LogAdminAction')->search(
+        {
+            'action.name' => 'suspend_user',
+        },
+        {
+            join => [qw( action )],
+            rows => 1,
+            order_by    => 'created DESC',
+        }
+    );
+
+    if ($result->count()) {
+        return $result->first;
+    }
+
+    return;
+}
+
 # thin wrapper around check_user_roles() for convenience
 sub is_site_moderator {
     my $record = shift;

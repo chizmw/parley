@@ -360,6 +360,9 @@ msgstr "No"
 msgid "No posts"
 msgstr "No posts"
 
+msgid "No reason given"
+msgstr "No reason given"
+
 msgid "NO MATCHING USERS"
 msgstr "There are no users matching that information"
 
