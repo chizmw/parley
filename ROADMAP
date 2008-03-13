@@ -27,13 +27,17 @@ reasoning from interested parties.
 0.60:
 
     - upgrade to YUI 2.5.x
-    - advanced search
+    - update to use "new catalyst authentication"
 
 0.61:
 
-    - admin: add/edit/order forums
+    - advanced search
 
 0.62:
+
+    - admin: add/edit/order forums
+
+0.63:
 
     - user prefs:
         - language preference
