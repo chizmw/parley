@@ -78,7 +78,7 @@
                     [%l('Reason for suspension')%]:
                 </div>
                 <div class="yui-u">
-                    [% profiled_user.last_suspension.message ||l('No reason given') %]
+                    [% ForumCode.escape(profiled_user.last_suspension.message) ||l('No reason given') %]
                 </div>
             </div>
         [% END %]
