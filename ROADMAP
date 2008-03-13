@@ -19,6 +19,10 @@ reasoning from interested parties.
         - [D] edit posts (and flag accordingly)
         - abuse handling
           - [D] suspend account(s)
+          - [D] prevent login from IP
+          - prevent signup from IP
+          - prevent posting/editing from IP
+        - UI for IP bans
           - prevent login from IP
           - prevent signup from IP
           - prevent posting/editing from IP
