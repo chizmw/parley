@@ -9,15 +9,16 @@ use base 'DBIx::Class::ResultSet';
 
 use Net::IP::Match::Regexp qw( create_iprange_regexp match_ip );
 
-sub is_login_banned {
+sub is_X_banned {
     my $resultsource = shift;
+    my $ban_type     = shift;
     my $ip_address   = shift;
     my ($rs);
 
-    # get the record for login ip bans
+    # get the record for $ban_type ip bans
     $rs = $resultsource->search(
         {
-            'ban_type.name' => q{login},
+            'ban_type.name' => $ban_type
         },
         {
             'join' => [qw/ban_type/],
@@ -46,6 +47,13 @@ sub is_login_banned {
 
     # if we don't know any better give the benefit of the doubt
     return 0; # not banned
+}
+
+sub is_login_banned {
+    my $resultsource = shift;
+    my $ip_address   = shift;
+
+    return $resultsource->is_X_banned('login', $ip_address);
 }
 
 1;
