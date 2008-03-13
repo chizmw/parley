@@ -16,6 +16,17 @@
                 </div>
             </div>
 
+            [% IF profiled_user.suspended %]
+            <div class="yui-gf top_padded">
+                <div class="yui-u first align_right">
+                &nbsp;
+                </div>
+                <div class="yui-u">
+                    [%l('Suspended')%]
+                </div>
+            </div>
+            [% END %]
+
             <div class="yui-gf top_padded">
                 <div class="yui-u first align_right">
                     [%l('Posts Made')%]:

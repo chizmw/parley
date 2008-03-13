@@ -654,6 +654,9 @@ msgstr "Summary of Changes"
 msgid "Suspend Account"
 msgstr "Suspend Account"
 
+msgid "Suspended"
+msgstr "Suspended"
+
 msgid "TERMS ADD NEW"
 msgstr "Add New Site Terms &amp; Conditions"
 
