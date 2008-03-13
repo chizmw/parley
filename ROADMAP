@@ -18,7 +18,7 @@ reasoning from interested parties.
     - admin/moderator support (deal with bad people)
         - [D] edit posts (and flag accordingly)
         - abuse handling
-          - suspend account(s)
+          - [D] suspend account(s)
           - prevent login from IP
           - prevent signup from IP
           - prevent posting/editing from IP
