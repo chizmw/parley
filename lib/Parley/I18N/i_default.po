@@ -543,6 +543,12 @@ msgstr "Register"
 msgid "Registration Complete"
 msgstr "Registration Complete"
 
+msgid "Registrations are not permitted from %1"
+msgstr "Registrations are not permitted from %1"
+
+msgid "Registration Not Allowed"
+msgstr "Registration Not Allowed"
+
 msgid "Remove Watch"
 msgstr "Remove Watch"
 

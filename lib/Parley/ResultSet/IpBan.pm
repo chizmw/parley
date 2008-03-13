@@ -56,4 +56,11 @@ sub is_login_banned {
     return $resultsource->is_X_banned('login', $ip_address);
 }
 
+sub is_signup_banned {
+    my $resultsource = shift;
+    my $ip_address   = shift;
+
+    return $resultsource->is_X_banned('signup', $ip_address);
+}
+
 1;
