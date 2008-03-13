@@ -14,6 +14,8 @@ __PACKAGE__->load_classes(
         'EmailQueue',
         'ForumModerator',
         'Forum',
+        'IpBan',
+        'IpBanType',
         'LogAdminAction',
         'PasswordReset',
         'Person',

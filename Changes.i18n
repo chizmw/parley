@@ -26,6 +26,8 @@ It's unlikely that we'll need an 'en' file in the project.
             - "You don't have the required privileges to do that"
             - "Suspended"
             - "No reason given"
+            - "Logins are not permitted from %1"
+            - "Login Not Allowed"
 
     it.po:
         - added:

@@ -1,5 +1,5 @@
 package Parley::Controller::User;
-
+# vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;
 
@@ -18,6 +18,16 @@ sub login : Path('/user/login') {
     $c->stash->{'login_message'} = delete( $c->session->{login_message} );
     # make sure we use the correct template - we sometimes detach() here
     $c->stash->{template} = 'user/login';
+
+
+    # deal with logins banned by IP
+    my $ip = $c->request->address;
+    my $login_banned =
+        $c->model('ParleyDB::IpBan')->is_login_banned($ip);
+    if ($login_banned) {
+        $c->stash->{template} = 'user/login_ip_banned';
+        return;
+    }
 
     # if we have a username, try to log the user in
     if ( $c->request->param('username') ) {

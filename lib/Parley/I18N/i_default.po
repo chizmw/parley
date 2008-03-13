@@ -312,6 +312,12 @@ msgstr "Logged in as"
 msgid "Login"
 msgstr "Login"
 
+msgid "Login Not Allowed"
+msgstr "Login Not Allowed"
+
+msgid "Logins are not permitted from %1"
+msgstr "Logins are not permitted from %1"
+
 msgid "Logout"
 msgstr "Logout"
 

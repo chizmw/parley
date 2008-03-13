@@ -36,6 +36,7 @@ requires 'Image::Size';
 requires 'JSON';
 requires 'List::MoreUtils';
 requires 'MIME::Lite';
+requires 'Net::IP::Match::Regexp';
 requires 'Perl6::Export::Attrs';
 requires 'Proc::Daemon';
 requires 'Proc::PID::File';
