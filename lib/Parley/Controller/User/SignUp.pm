@@ -74,9 +74,9 @@ sub begin :Private {
 
     # deal with logins banned by IP
     my $ip = $c->request->address;
-    my $login_banned =
+    my $signup_banned =
         $c->model('ParleyDB::IpBan')->is_signup_banned($ip);
-    if ($login_banned) {
+    if ($signup_banned) {
         $c->stash->{template} = 'user/signup_ip_banned';
         return;
     }

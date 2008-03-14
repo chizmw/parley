@@ -49,11 +49,25 @@ sub is_X_banned {
     return 0; # not banned
 }
 
+sub is_access_banned {
+    my $resultsource = shift;
+    my $ip_address   = shift;
+
+    return $resultsource->is_X_banned('access', $ip_address);
+}
+
 sub is_login_banned {
     my $resultsource = shift;
     my $ip_address   = shift;
 
     return $resultsource->is_X_banned('login', $ip_address);
+}
+
+sub is_posting_banned {
+    my $resultsource = shift;
+    my $ip_address   = shift;
+
+    return $resultsource->is_X_banned('posting', $ip_address);
 }
 
 sub is_signup_banned {

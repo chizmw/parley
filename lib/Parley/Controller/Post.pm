@@ -44,6 +44,15 @@ sub edit : Local {
     # what people will make-up or bookmark)
     $c->login_if_required($c->localize(q{EDIT LOGIN REQUIRED}));
 
+    # deal with posting banned by IP
+    my $ip = $c->request->address;
+    my $posting_banned =
+        $c->model('ParleyDB::IpBan')->is_posting_banned($ip);
+    if ($posting_banned) {
+        $c->stash->{template} = 'user/posting_ip_banned';
+        return;
+    }
+
     # you can only edit you own posts
     # (unless you're a moderator)
     if (

@@ -39,7 +39,9 @@ $schematest->methods(
         resultsets => [
             qw[
                 is_X_banned
+                is_access_banned
                 is_login_banned
+                is_posting_banned
                 is_signup_banned
             ]
         ],

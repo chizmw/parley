@@ -489,6 +489,12 @@ msgstr "people"
 msgid "posted by"
 msgstr "posted by"
 
+msgid "Posting is not permitted from %1"
+msgstr "Posting is not permitted from %1"
+
+msgid "Posting Not Allowed"
+msgstr "Posting Not Allowed"
+
 msgid "Post Edited By: %1"
 msgstr "Post Edited By: %1"
 

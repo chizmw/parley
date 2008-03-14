@@ -47,6 +47,15 @@ sub add : Local {
     # make sure we're authenticated
     # XXX
 
+    # deal with posting banned by IP
+    my $ip = $c->request->address;
+    my $posting_banned =
+        $c->model('ParleyDB::IpBan')->is_posting_banned($ip);
+    if ($posting_banned) {
+        $c->stash->{template} = 'user/posting_ip_banned';
+        return;
+    }
+
     # if we have a form POST ...
     if (defined $c->request->method() and $c->request->method() eq 'POST') {
         $self->_add_new_thread($c);
@@ -100,6 +109,15 @@ sub reply : Local {
 
     # make sure we're authenticated
     # XXX
+
+    # deal with posting banned by IP
+    my $ip = $c->request->address;
+    my $posting_banned =
+        $c->model('ParleyDB::IpBan')->is_posting_banned($ip);
+    if ($posting_banned) {
+        $c->stash->{template} = 'user/posting_ip_banned';
+        return;
+    }
 
     # can't reply to a locked thread
     if ($c->_current_thread()->locked()) {

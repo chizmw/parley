@@ -30,6 +30,8 @@ It's unlikely that we'll need an 'en' file in the project.
             - "Login Not Allowed"
             - "Registrations are not permitted from %1"
             - "Registration Not Allowed"
+            - "Posting is not permitted from %1"
+            - "Posting Not Allowed"
 
     it.po:
         - added:

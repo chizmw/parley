@@ -20,12 +20,14 @@ reasoning from interested parties.
         - abuse handling
           - [D] suspend account(s)
           - [D] prevent login from IP
-          - prevent signup from IP
-          - prevent posting/editing from IP
+          - [D] prevent signup from IP
+          - [D] prevent posting/editing from IP
+          - prevent total access from IP
         - UI for IP bans
           - prevent login from IP
           - prevent signup from IP
           - prevent posting/editing from IP
+          - prevent total access from IP
         - IP reporting
 
 0.60:
