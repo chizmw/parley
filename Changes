@@ -3,6 +3,7 @@ This file documents the revision history for Parley.
 0.59 (UNDER DEVELOPMENT)
     - user roles can now be assigned and removed
     - users can have their "suspended" flag set and removed
+    - application can now prevent login/signup/posting/access by IP
 
 0.58    Fri Feb  8 07:47:31 GMT 2008
     - re-work the UI design to be cleaner

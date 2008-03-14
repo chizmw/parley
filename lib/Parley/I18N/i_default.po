@@ -25,6 +25,12 @@ msgstr "404 Not Found"
 msgid "ACCEPT TERMS"
 msgstr "You need to accept the Terms and Conditions below to continue using the site"
 
+msgid "Access Denied"
+msgstr "Access Denied"
+
+msgid "Access to this application is not permitted from %1"
+msgstr "Access to this application is not permitted from %1"
+
 msgid "Activate Your %s Registration"
 msgstr "Activate Your %s Registration"
 

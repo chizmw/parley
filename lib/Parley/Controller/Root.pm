@@ -18,6 +18,22 @@ use Parley::App::Error qw( :methods );
 #
 __PACKAGE__->config->{namespace} = '';
 
+sub begin :Private {
+    my ($self, $c) = @_;
+
+    # deal with access banned by IP
+    my $ip = $c->request->address;
+    my $access_banned =
+        $c->model('ParleyDB::IpBan')->is_access_banned($ip);
+    if ($access_banned) {
+        $c->stash->{template} = 'user/access_ip_banned';
+        return;
+    }
+
+    return 1;
+}
+
+
 # pre-populate values in the stash if we're given "appropriate" information:
 # - _authed_user
 # - _current_post

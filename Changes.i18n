@@ -32,6 +32,8 @@ It's unlikely that we'll need an 'en' file in the project.
             - "Registration Not Allowed"
             - "Posting is not permitted from %1"
             - "Posting Not Allowed"
+            - "Access Denied"
+            - "Access to this application is not permitted from %1"
 
     it.po:
         - added:

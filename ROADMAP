@@ -22,7 +22,7 @@ reasoning from interested parties.
           - [D] prevent login from IP
           - [D] prevent signup from IP
           - [D] prevent posting/editing from IP
-          - prevent total access from IP
+          - [D] prevent total access from IP
         - UI for IP bans
           - prevent login from IP
           - prevent signup from IP
