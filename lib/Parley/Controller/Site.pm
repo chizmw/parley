@@ -35,6 +35,15 @@ sub index : Private {
     $c->response->body('Matched Parley::Controller::Site in Site.');
 }
 
+sub ip_bans :Local {
+    my ($self, $c) = @_;
+
+    # a list of ban types
+    $c->stash->{ip_ban_types} =
+        $c->model('ParleyDB::IpBanType')
+            ->ban_type_list;
+}
+
 sub services : Local {
     my ($self, $c) = @_;
 
@@ -209,6 +218,91 @@ sub roleSaveHandler :Local {
     else {
         $return_data->{error}{message} =
             $c->localize(q{We're not in Kansas any more});
+    }
+
+    # return some JSON
+    $json = to_json($return_data);
+    $c->response->body( $json );
+    $c->log->info( $json );
+    return;
+}
+
+sub saveBanHandler :Local {
+    my ($self, $c) = @_;
+    my ($fieldname, $return_data, $json);
+
+    $return_data->{updated}     = 0;
+    $return_data->{old_value}   = $c->request->param('ovalue');
+
+    $fieldname = $c->request->param('fieldname');
+
+    # update an existing ban?
+    if ($fieldname =~ m{\Aipban_(\d+)\z}xms) {
+        eval {
+            my $id = $1;
+
+            $c->model('ParleyDB')->schema->txn_do(
+                sub {
+                    $c->model('ParleyDB::IpBan')->find($id)
+                        ->update(
+                            {
+                                ip_range    => $c->request->param('value'),
+                            },
+                    )
+                }
+            );
+            $return_data->{updated} = 1;
+        };
+        # deal with any transaction errors
+        if ($@) {                                   # Transaction failed
+            die "something terrible has happened!"  #
+                if ($@ =~ /Rollback failed/);       # Rollback failed
+
+            $return_data->{error}{message} =
+                qq{Database transaction failed: $@};
+            $c->log->error( $@ );
+            $json = to_json($return_data);
+            $c->response->body( $json );
+            return;
+        }
+    }
+
+    # add a new ban?
+    elsif ($fieldname =~ m{\Aipbannewtype_(\d+)\z}xms) {
+        eval {
+            my $id = $1;
+
+            $c->model('ParleyDB')->schema->txn_do(
+                sub {
+                    $c->model('ParleyDB::IpBan')->update_or_create(
+                        {
+                            ban_type_id => $id,
+                            ip_range    => $c->request->param('value'),
+                        },
+                    )
+                }
+            );
+            $return_data->{updated} = 1;
+        };
+        # deal with any transaction errors
+        if ($@) {                                   # Transaction failed
+            die "something terrible has happened!"  #
+                if ($@ =~ /Rollback failed/);       # Rollback failed
+
+            $return_data->{error}{message} =
+                qq{Database transaction failed: $@};
+            $c->log->error( $@ );
+            $json = to_json($return_data);
+            $c->response->body( $json );
+            $c->log->info( $json );
+            return;
+        }
+    }
+
+    # unknown
+    else {
+        $return_data->{error}{message} =
+            $c->localize(q{Unrecognised field-name format});
     }
 
     # return some JSON

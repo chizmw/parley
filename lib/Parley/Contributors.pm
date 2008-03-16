@@ -23,6 +23,8 @@ Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 L<FamFamFam Silk Icons|http://www.famfamfam.com/lab/icons/silk/>
 
+L<FamFamFam Flag Icons|http://www.famfamfam.com/lab/icons/flags/>
+
 =head1 I18N
 
 =head2 Italian
