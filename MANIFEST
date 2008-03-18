@@ -59,6 +59,7 @@ lib/Parley/Controller/User/LostPassword.pm
 lib/Parley/Controller/User/SignUp.pm
 lib/Parley/I18N/i_default.po
 lib/Parley/I18N/it.po
+lib/Parley/I18N/nl.po
 lib/Parley/Model/ParleyDB.pm
 lib/Parley/ResultSet/Forum.pm
 lib/Parley/ResultSet/IpBan.pm
@@ -179,6 +180,11 @@ root/email_templates/it/password_reset.eml
 root/email_templates/it/thread_update_notify.eml
 root/email_templates/it/thread_update_notify.html
 root/email_templates/it/username_reminder.eml
+root/email_templates/nl/authentication_email.eml
+root/email_templates/nl/password_reset.eml
+root/email_templates/nl/thread_update_notify.eml
+root/email_templates/nl/thread_update_notify.html
+root/email_templates/nl/username_reminder.eml
 root/favicon.ico
 root/static/css/common.css
 root/static/css/default.css
@@ -465,6 +471,7 @@ root/static/MessagePreview-min.js
 root/static/MessagePreview.js
 root/static/script/ajax_error_dlg.js
 root/static/script/prototype.js
+root/static/script/user_forum_moderate.js
 root/static/script/user_suspend.js
 root/static/yui/animation/animation-debug.js
 root/static/yui/animation/animation-min.js
