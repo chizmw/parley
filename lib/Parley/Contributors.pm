@@ -27,6 +27,10 @@ L<FamFamFam Flag Icons|http://www.famfamfam.com/lab/icons/flags/>
 
 =head1 I18N
 
+=head2 Dutch
+
+Translation by Rob Partridge
+
 =head2 Italian
 
 Translation by Darius Jokilehto
