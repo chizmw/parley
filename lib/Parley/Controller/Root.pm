@@ -49,8 +49,6 @@ sub auto : Private {
     # do we have a request for a chosen language?
     ##################################################
     if (defined $c->request->param('lang')) {
-        $c->log->debug('SET LANG: ' . $c->request->param('lang'));
-        $c->log->debug($c->request->referer());
         $c->response->cookies->{ $cookie_name } = {
             value       => $c->request->param('lang'),
             expires     => '+14d',
@@ -196,7 +194,6 @@ sub auto : Private {
         my $status = terms_check($c, $c->_authed_user);
         if (not $status) {
             $c->res->body('need to accept');
-            $c->log->debug('User needs to accept T&Cs');
             return 0;
         }
     }
@@ -227,7 +224,6 @@ sub auto : Private {
             and
         $c->check_user_roles('site_moderator')
     ) {
-        $c->log->debug( q{site_moderator role for user} );
         $c->stash->{site_moderator} = 1;
     }
 
@@ -238,7 +234,6 @@ sub auto : Private {
     if (defined $c->_authed_user() and defined $c->_current_forum()) {
         # site_moderators can moderate anything
         if ($c->check_user_roles('site_moderator')) {
-            $c->log->debug( q{site_moderator role moderates anything he wants} );
             $c->stash->{moderator} = 1;
         }
         else {
@@ -256,7 +251,6 @@ sub auto : Private {
             );
             # if we found something, they must moderate the current forum
             if ($results) {
-                #$c->log->debug( q{user moderates this forum} );
                 $c->stash->{moderator} = 1;
             }
         }
