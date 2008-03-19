@@ -110,7 +110,7 @@ msgid "Continue reading"
 msgstr "Blijf lezend"
 
 msgid "Create New Thread"
-msgstr "Cre‘er Nieuwe Draad"
+msgstr "CreÃ«er Nieuwe Draad"
 
 msgid "created by"
 msgstr "langs gecreeerd"
@@ -137,10 +137,10 @@ msgid "Default"
 msgstr "Gebrek"
 
 msgid "DFV FIELDS MISSING"
-msgstr "ƒŽn of meerdere vereiste gebieden missen."
+msgstr "??n of meerdere vereiste gebieden missen."
 
 msgid "DFV FIELDS INVALID"
-msgstr "ƒŽn of meerdere gebieden zijn ongeldig."
+msgstr "??n of meerdere gebieden zijn ongeldig."
 
 msgid "DFV FILL REQUIRED"
 msgstr "U moet alle vereiste gebieden invullen."

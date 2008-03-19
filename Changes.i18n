@@ -42,6 +42,9 @@ It's unlikely that we'll need an 'en' file in the project.
             - "Locked Post"
             - "Post Edited By"
 
+    nl.po:
+        - full translation from i_default.po
+
 0.58
     (en renamed to i_default)
 
