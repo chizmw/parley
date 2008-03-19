@@ -55,35 +55,56 @@
     </div>
 
     [% IF authed_user.is_site_moderator || authed_user.can_suspend_account %]
-    <h2>[%l('Administration')%]</h2>
+        <h2>[%l('Administration')%]</h2>
 
-    [% IF authed_user.can_suspend_account %]
-        <div class="yui-gf top_padded">
-            <div class="yui-u first align_right">
-            [%l('Suspend Account')%]
-            </div>
-            <div class="yui-u">
-            <input
-                type="checkbox"
-                name="suspend_account"
-                id="suspend_account"
-                value="[%profiled_user.id%]"
-                [% IF profiled_user.suspended %]checked="true"[% END %]
-            >
-            </div>
-        </div>
-        [% IF profiled_user.suspended %]
+        [% IF authed_user.can_suspend_account %]
             <div class="yui-gf top_padded">
                 <div class="yui-u first align_right">
-                    [%l('Reason for suspension')%]:
+                [%l('Suspend Account')%]
                 </div>
                 <div class="yui-u">
-                    [% ForumCode.escape(profiled_user.last_suspension.message) ||l('No reason given') %]
+                <input
+                    type="checkbox"
+                    name="suspend_account"
+                    id="suspend_account"
+                    value="[%profiled_user.id%]"
+                    [% IF profiled_user.suspended %]checked="true"[% END %]
+                >
                 </div>
             </div>
+            [% IF profiled_user.suspended %]
+                <div class="yui-gf top_padded">
+                    <div class="yui-u first align_right">
+                        [%l('Reason for suspension')%]:
+                    </div>
+                    <div class="yui-u">
+                        [% ForumCode.escape(profiled_user.last_suspension.message) ||l('No reason given') %]
+                    </div>
+                </div>
+            [% END %]
         [% END %]
     [% END %]
 
+    [% IF authed_user.is_site_moderator %]
+        <h2>[%l('Forum Moderation')%]</h2>
+
+        [% SET dummy=available_forums.reset %]
+        [% WHILE (forum = available_forums.next) %]
+            <div class="yui-gf top_padded">
+                <div class="yui-u first align_right">
+                [%forum.name%]
+                </div>
+                <div class="yui-u">
+                <input
+                    type="checkbox"
+                    name="moderate_forum"
+                    id="moderate_forum"
+                    value="[%forum.id%]"
+                    [%IF profiled_user.can_moderate_forum(forum.id)%]checked="true"[% END %]
+                >
+                </div>
+            </div>
+        [% END %]
     [% END %]
 [% ELSE %]
     <p>[%l('PROFILE NOT FOUND')%]</p>
@@ -92,7 +113,9 @@
 
 
 <script type="text/javascript" src="[%c.uri_for('/static/script/user_suspend.js')%]"></script>
-<div id="suspend_reason_dialog">
+<script type="text/javascript" src="[%c.uri_for('/static/script/user_forum_moderate.js')%]"></script>
+
+<div id="suspend_reason_dialog" style="visibility:hidden;">
     <div class="hd">Please enter suspension information</div>
     <div class="bd">
         <form method="POST" action="assets/post.php">

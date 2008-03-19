@@ -68,6 +68,10 @@ YAHOO.util.Event.onDOMReady(language_dialog_init);
         code    => 'it',
         name    => 'Italiano',
     },
+    {
+        code    => 'nl',
+        name    => 'Nederlands',
+    },
    ]
 %]
 
@@ -77,11 +81,15 @@ YAHOO.util.Event.onDOMReady(language_dialog_init);
     </div>
     <div class="bd">
         [% FOR lang IN lang_data %]
+        <div style="float:left;width:110px;">
         <a href="[% c.uri_for('/') %]?lang=[%lang.code%]" style="margin-left:15px;">
             <img src="/static/images/icons/flags/[%lang.code%].png" width="16" height="11" alt="[%lang.name%]" />
             [%lang.name%]
         </a>
+        </div>
         [% END %]
+
+        <div style="margin-top:10px;clear:both;"></div>
     </div>
 </div>
 <!-- (end) LANGUAGE DIALOG -->

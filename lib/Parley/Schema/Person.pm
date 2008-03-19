@@ -263,4 +263,27 @@ sub can_suspend_account {
     );
 }
 
+sub can_moderate_forum {
+    my $record = shift;
+    my $forum_id = shift;
+    my $schema = $record->result_source()->schema();
+
+    my $results = $schema->resultset('ForumModerator')->find(
+        {
+            person_id       => $record->id(),
+            forum_id        => $forum_id,
+            can_moderate    => 1,
+        },
+        {
+            key     => 'forum_moderator_person_key',
+        }
+    );
+
+    if ($results) {
+        return 1;
+    }
+
+    return 0;
+}
+
 1;

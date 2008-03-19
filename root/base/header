@@ -54,14 +54,14 @@
         <script type="text/javascript" src="[%c.uri_for('/static/script/ajax_error_dlg.js')%]"></script>
 
         <!-- defined styles for parley -->
-        <link type="text/css" rel="stylesheet" title="Simple" href="[%c.uri_for('/static/css/parley-min.css')%]" />
+        <link type="text/css" rel="stylesheet" title="Simple"
+            href="[%c.uri_for('/static/css/parley-min.css')%]" />
     </head>
 
     <body class="yui-skin-sam">
         <div id="doc3">
             <div id="hd">
                 <div id="user_information">
-                    [%l('Current User')%]:
                     [% IF authed_user %]
                     <em>[% authed_user.forum_name %]</em>
                     [% ELSE %]
