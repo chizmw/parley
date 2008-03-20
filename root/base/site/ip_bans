@@ -1,13 +1,24 @@
 <h1>[%l('IP Bans')%]</h1>
 [% WHILE (ban_type = ip_ban_types.next) %]
-<h2 class="top_padded">[% ban_type.description %]</h2>
-    [% bans = ban_type.ip_bans_rs %]
+    [% role_name = 'ip_ban_' _ ban_type.name %]
+    [% has_role  = authed_user.check_any_user_role('site_moderator', role_name) %]
+    [% IF has_role %][% eclass="editable" %][% ELSE %][% eclass="noneditable" %][% END %]
+    [% bans      = ban_type.ip_bans_rs %]
+
+<h2 class="top_padded">
+    [% ban_type.description %]
+</h2>
+    [% IF has_role %]
+    <img src="/static/images/icons/page_edit.png" width="16" height="16" />
+    [% ELSE %]
+    <img src="/static/images/icons/lock.png" width="16" height="16" />
+    [% END %]
     [% IF bans.count %]
         [% WHILE (ip_ban = bans.next) %]
-        <span id="ipban_[%ip_ban.id%]" class="editable">[%ip_ban.ip_range%]</span>
+        <span id="ipban_[%ip_ban.id%]" class="[%eclass%]">[%ip_ban.ip_range%]</span>
         [% END %]
     [% ELSE %]
-        <span id="ipbannewtype_[%ban_type.id%]" class="editable">None</span>
+        <span id="ipbannewtype_[%ban_type.id%]" class="[%eclass%]">None</span>
     [% END %]
 [% END %]
 

@@ -27,6 +27,7 @@ use Catalyst qw/
     Authentication::Credential::Password
 
     Authorization::Roles
+    Authorization::ACL
 
     I18N
 /;
@@ -38,6 +39,66 @@ __PACKAGE__->setup;
 
 # only show certain log levels in output
 __PACKAGE__->log (Catalyst::Log->new( @{__PACKAGE__->config->{log_levels}} ));
+
+
+# ---- START: ACL RULES ----
+
+#
+# /site
+#
+##__PACKAGE__->deny_access_unless(
+##    '/site/ip_bans',
+##    [$_]
+##)
+##for qw/ip_ban_posting site_moderator/;
+
+__PACKAGE__->deny_access_unless(
+    '/site/fmodSaveHandler',
+    [qw/site_moderator/]
+);
+__PACKAGE__->deny_access_unless(
+    '/site/ip_bans',
+    sub {
+        my $c = shift;
+        $c->check_any_user_role(
+            qw/site_moderator ip_ban_posting ip_ban_signup ip_ban_login/
+        )
+    }
+);
+__PACKAGE__->deny_access_unless(
+    '/site/roleSaveHandler',
+    [qw/site_moderator/]
+);
+__PACKAGE__->deny_access_unless(
+    '/site/saveBanHandler',
+    sub {
+        my $c = shift;
+        $c->check_any_user_role(
+            qw/site_moderator ip_ban_posting ip_ban_signup ip_ban_login/
+        )
+    }
+);
+__PACKAGE__->deny_access_unless(
+    '/site/services',
+    [qw/site_moderator/]
+);
+__PACKAGE__->deny_access_unless(
+    '/site/user',
+    [qw/site_moderator/]
+);
+__PACKAGE__->deny_access_unless(
+    '/site/users',
+    [qw/site_moderator/]
+);
+__PACKAGE__->deny_access_unless(
+    '/site/users_autocomplete',
+    [qw/site_moderator/]
+);
+
+
+# ---- END:   ACL RULES ----
+
+
 
 # I'm sure there's a (better) way to do this by overriding set()/get() in Class::Accessor
 {

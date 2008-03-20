@@ -512,6 +512,14 @@ th {
     vertical-align: middle;
 }
 
+.forum_moderator_list div input{
+    height: 150%;
+}
+.forum_moderator_list img {
+    vertical-align: middle;
+}
+
+
 .user_post_info {
     background:         #ccc;
     background:         transparent;

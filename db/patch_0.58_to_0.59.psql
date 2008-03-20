@@ -8,6 +8,7 @@
 --  allow user accounts to be suspended
 --  logging of admin actions on users (e.g. why suspended)
 --  table support for various per-ip bans
+--  add PK to forum_moderator table
 
 BEGIN;
 
@@ -127,6 +128,8 @@ CREATE TABLE ip_ban (
     UNIQUE(ban_type_id)
 );
 
+ALTER TABLE forum_moderator
+    ADD COLUMN id SERIAL primary key;
 
 -- patch ends here --
 

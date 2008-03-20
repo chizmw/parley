@@ -170,6 +170,34 @@ sub check_user_roles {
     return ($rs->count == scalar(@roles) || 0);
 }
 
+sub check_any_user_role {
+    my $record = shift;
+    my @roles  = @_;
+
+    return
+        if (not @roles);
+
+    my ($schema, $rs);
+
+    $schema = $record->result_source()->schema();
+
+    $rs = $schema->resultset('Role')->search(
+        {
+            'map_user_role.person_id'   => $record->id(),
+            'me.name' => {
+                -in => \@roles,
+            },
+        },
+        {
+            prefetch => [
+                { 'map_user_role' => 'person' },
+            ],
+        },
+    );
+
+    return ($rs->count > 0);
+}
+
 # suspend a user (and log a message at the same time)
 sub set_suspended {
     my ($record, $args) = @_;
@@ -258,8 +286,24 @@ sub is_site_moderator {
 sub can_suspend_account {
     my $record = shift;
 
-    return $record->check_user_roles(
-        'site_moderator'
+    return $record->check_any_user_role(
+        'site_moderator', 'suspend_account'
+    );
+}
+# thin wrapper around check_any_user_role() for convenience
+sub can_ip_ban {
+    my $record = shift;
+
+    return $record->check_any_user_role(
+        'site_moderator', 'ip_ban_posting', 'ip_ban_signup', 'ip_ban_login'
+    );
+}
+
+sub can_view_site_menu {
+    my $record = shift;
+
+    return $record->check_any_user_role(
+        'site_moderator', 'ip_ban_posting', 'ip_ban_signup', 'ip_ban_login'
     );
 }
 
@@ -268,18 +312,18 @@ sub can_moderate_forum {
     my $forum_id = shift;
     my $schema = $record->result_source()->schema();
 
-    my $results = $schema->resultset('ForumModerator')->find(
+    my $results = $schema->resultset('ForumModerator')->search(
         {
             person_id       => $record->id(),
             forum_id        => $forum_id,
             can_moderate    => 1,
         },
         {
-            key     => 'forum_moderator_person_key',
+            #key     => 'forum_moderator_person_key',
         }
     );
 
-    if ($results) {
+    if ($results->count) {
         return 1;
     }
 

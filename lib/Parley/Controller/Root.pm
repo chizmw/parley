@@ -276,6 +276,10 @@ sub default : Private {
     $c->response->body( $c->localize('404 Not Found') );
 }
 
+sub access_denied :Local {
+    my ($self, $c) = @_;
+    parley_die($c,"Unauthorized!");
+}
 
 # deal with the end of the phase
 sub render : ActionClass('RenderView') {

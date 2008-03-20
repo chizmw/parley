@@ -90,18 +90,19 @@
 
         [% SET dummy=available_forums.reset %]
         [% WHILE (forum = available_forums.next) %]
-            <div class="yui-gf top_padded">
+            <div class="yui-gf top_padded forum_moderator_list">
                 <div class="yui-u first align_right">
                 [%forum.name%]
                 </div>
                 <div class="yui-u">
                 <input
                     type="checkbox"
+                    class="fmod_checkbox"
                     name="moderate_forum"
-                    id="moderate_forum"
-                    value="[%forum.id%]"
+                    id="moderateforum_[%forum.id%]"
                     [%IF profiled_user.can_moderate_forum(forum.id)%]checked="true"[% END %]
                 >
+                    <span id="status_[%forum.id%]"></span>
                 </div>
             </div>
         [% END %]
@@ -113,6 +114,11 @@
 
 
 <script type="text/javascript" src="[%c.uri_for('/static/script/user_suspend.js')%]"></script>
+<script type="text/javascript">
+    var person = {
+        id: [%profiled_user.id%]
+    };
+</script>
 <script type="text/javascript" src="[%c.uri_for('/static/script/user_forum_moderate.js')%]"></script>
 
 <div id="suspend_reason_dialog" style="visibility:hidden;">

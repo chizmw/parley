@@ -9,6 +9,8 @@ use Parley::Version;  our $VERSION = $Parley::VERSION;
 __PACKAGE__->load_components('PK::Auto', 'Core');
 __PACKAGE__->table('forum_moderator');
 __PACKAGE__->add_columns(
+    id => {},
+
     person_id => {
         data_type       => "integer",
         default_value   => undef,
@@ -30,6 +32,8 @@ __PACKAGE__->add_columns(
         size => 1,
     },
 );
+
+__PACKAGE__->set_primary_key(qw/id/);
 
 __PACKAGE__->add_unique_constraint(
     'forum_moderator_person_key',

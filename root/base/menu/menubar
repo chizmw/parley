@@ -110,19 +110,27 @@
                 </div>                                        
             </li>
             [% END %]
-            [% IF site_moderator %]
+            [% IF authed_user.can_view_site_menu %]
             <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">[%l('Site')%]</a>
                 <div id="menu_site_moderate" class="yuimenu">
                     <div class="bd">                                        
                         <ul>
+                            [% IF authed_user.is_site_moderator %]
                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="terms/add">[%l('Add T-and-Cs')%]</a></li>
+                            [% END %]
                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#">[%l('Manage')%]</a>
                                 <div id="site" class="yuimenu">
                                     <div class="bd">
                                         <ul class="first-of-type">
+                                            [% IF authed_user.is_site_moderator %]
                                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="site/services">[%l('Services')%]</a></li>
+                                            [% END %]
+                                            [% IF authed_user.is_site_moderator %]
                                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="site/users">[%l('Users')%]</a></li>
+                                            [% END %]
+                                            [% IF authed_user.can_ip_ban %]
                                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="site/ip_bans">[%l('IP Bans')%]</a></li>
+                                            [% END %]
                                         </ul>            
                                     </div>
                                 </div>                    

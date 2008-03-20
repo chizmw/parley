@@ -11,6 +11,7 @@ requires 'Catalyst::Model::DBIC::Schema';
 requires 'Catalyst::Plugin::Authentication';
 requires 'Catalyst::Plugin::Authentication::Credential::Password';
 requires 'Catalyst::Plugin::Authentication::Store::DBIC';
+requires 'Catalyst::Plugin::Authorization::ACL';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Dumper';
 requires 'Catalyst::Plugin::Email';

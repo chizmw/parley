@@ -12,28 +12,7 @@ use Proc::PID::File;
 
 use Parley::App::Error qw( :methods );
 
-sub auto : Private {
-    my ($self, $c) = @_;
-
-    if (not $c->stash->{site_moderator}) {
-        parley_warn($c, $c->localize(q{SITE MODERATOR REQUIRED}));
-
-        $c->response->redirect(
-            $c->uri_for(
-                $c->config->{default_uri}
-            )
-        );
-        return 0;
-    }
-
-    return 1;
-}
-
-sub index : Private {
-    my ( $self, $c ) = @_;
-
-    $c->response->body('Matched Parley::Controller::Site in Site.');
-}
+# there are ACL rules in Parley.pm #
 
 sub ip_bans :Local {
     my ($self, $c) = @_;
@@ -226,6 +205,55 @@ sub roleSaveHandler :Local {
     $c->log->info( $json );
     return;
 }
+
+sub fmodSaveHandler :Local {
+    my ($self, $c) = @_;
+    my ($fieldname, $return_data, $json);
+    my ($value, $person_id, $forum_id);
+
+    $return_data->{updated}     = 0;
+
+    eval {
+        $value      = $c->request->param('value');
+        $person_id  = $c->request->param('person');
+        $forum_id   = $c->request->param('forum');
+
+        $c->model('ParleyDB')->schema->txn_do(
+            sub {
+                $c->model('ParleyDB::ForumModerator')->update_or_create(
+                    {
+                        person_id       => $person_id,
+                        forum_id        => $forum_id,
+                        can_moderate    => $value,
+                    },
+                    {
+                        key => 'forum_moderator_person_key',
+                    }
+                );
+                $return_data->{updated} = 1;
+            }
+        )
+    };
+    # deal with any transaction errors
+    if ($@) {                                   # Transaction failed
+        die "something terrible has happened!"  #
+            if ($@ =~ /Rollback failed/);       # Rollback failed
+
+        $return_data->{error}{message} =
+            qq{Database transaction failed: $@};
+        $c->log->error( $@ );
+        $json = to_json($return_data);
+        $c->response->body( $json );
+        return;
+    }
+
+    # return some JSON
+    $json = to_json($return_data);
+    $c->response->body( $json );
+    $c->log->info( $json );
+    return;
+}
+
 
 sub saveBanHandler :Local {
     my ($self, $c) = @_;
