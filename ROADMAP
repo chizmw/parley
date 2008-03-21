@@ -14,7 +14,7 @@ reasoning from interested parties.
 
 0.59:
 
-    - assign new moderators (on a per-forum basis)
+    - [D] assign new moderators (on a per-forum basis)
     - admin/moderator support (deal with bad people)
         - [D] edit posts (and flag accordingly)
         - abuse handling
@@ -24,10 +24,10 @@ reasoning from interested parties.
           - [D] prevent posting/editing from IP
           - [D] prevent total access from IP
         - UI for IP bans
-          - prevent login from IP
-          - prevent signup from IP
-          - prevent posting/editing from IP
-          - prevent total access from IP
+          - [D] prevent login from IP
+          - [D] prevent signup from IP
+          - [D] prevent posting/editing from IP
+          - [D] prevent total access from IP
         - IP reporting
 
 0.60:

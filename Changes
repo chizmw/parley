@@ -2,6 +2,7 @@ This file documents the revision history for Parley.
 
 0.59 (UNDER DEVELOPMENT)
     - added Dutch translation (Thanks Rob!)
+    - forum moderators can be assigned and removed through the UI
     - user roles can now be assigned and removed
     - users can have their "suspended" flag set and removed
     - application can now prevent login/signup/posting/access by IP
