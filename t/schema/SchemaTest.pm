@@ -63,35 +63,50 @@ sub run_tests {
 
         my @std_method_types = qw(columns relations custom);
 
-        foreach my $method_type (@std_method_types) {
-            SKIP: {
-                skip qq{no $method_type methods}, 1
-                    unless @{ $self->{methods}->{$method_type} };
+        eval {
+            $schema->txn_do(
+                sub {
+                    foreach my $method_type (@std_method_types) {
+                        SKIP: {
+                            skip qq{no $method_type methods}, 1
+                                unless @{ $self->{methods}->{$method_type} };
 
-                can_ok(
-                    $record,
-                    @{ $self->{methods}->{$method_type} },
-                );
-                # try calling each method
-                foreach my $method ( @{ $self->{methods}->{$method_type} } ) {
-                    eval { $record->$method };
-                    is($@, q{}, qq{calling $method() didn't barf});
+                            can_ok(
+                                $record,
+                                @{ $self->{methods}->{$method_type} },
+                            );
+                            # try calling each method
+                            foreach my $method ( @{ $self->{methods}->{$method_type} } ) {
+                                eval { $record->$method };
+                                is($@, q{}, qq{calling $method() didn't barf});
+                            }
+                        }
+                    } # foreach
+
+                    # resultset class methods - we need something slightly different here
+                    SKIP: {
+                        skip qq{no resultsets methods}, 1
+                            unless @{ $self->{methods}->{resultsets} };
+
+                        $resultset = $schema->resultset( $self->{moniker} )->search({});
+                        can_ok(
+                            $resultset,
+                            @{ $self->{methods}->{resultsets} },
+                        );
+                    } # SKIP, no resultsets
+
+
+                    # rollback any evil changes that crept through from the
+                    # tested calls
+                    $schema->txn_rollback;
                 }
-            }
+            )
+        };
+        if ($@) {
+            warn $@;
         }
 
-        # resultset class methods - we need something slightly different here
-        SKIP: {
-            skip qq{no resultsets methods}, 1
-                unless @{ $self->{methods}->{resultsets} };
-
-            $resultset = $schema->resultset( $self->{moniker} )->search({});
-            can_ok(
-                $resultset,
-                @{ $self->{methods}->{resultsets} },
-            );
-        }
-    }
+    } # SKIP, no records
 }
 
 1;
