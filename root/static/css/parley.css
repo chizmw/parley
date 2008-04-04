@@ -1,5 +1,10 @@
 /* core layout styling */
 
+body {
+    background-color:   #fff;
+    font-family:        Verdana,Arial,Helvetica,sans-serif;
+}
+
 #hd {
     height:         80px;
     line-height:    80px;
