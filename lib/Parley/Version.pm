@@ -11,11 +11,11 @@ Parley::Version - The Parley project-wide version number
     package Parley::Whatever;
 
     # Must be on one line so MakeMaker can parse it.
-use Parley::Version;  our  = ;
+    use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 =head1 DESCRIPTION
 
-Because of the problems coordinationg revision numbers in a distributed
+Because of the problems coordinating revision numbers in a distributed
 version control system and across a directory full of Perl modules, this
 module provides a central location for the project's release number.
 
