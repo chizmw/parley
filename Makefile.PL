@@ -43,6 +43,7 @@ requires 'Proc::Daemon';
 requires 'Proc::PID::File';
 requires 'Readonly';
 requires 'Text::Context::EitherSide';
+requires 'Time::Piece';
 requires 'YAML'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
 
