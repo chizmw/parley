@@ -1,6 +1,6 @@
 This file documents the revision history for Parley.
 
-0.59 (UNDER DEVELOPMENT)
+0.59    Thu Apr 10 18:56:19 BST 2008
     - added Dutch translation (Thanks Rob!)
     - forum moderators can be assigned and removed through the UI
     - user roles can now be assigned and removed

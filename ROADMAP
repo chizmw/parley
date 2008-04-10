@@ -14,7 +14,7 @@ reasoning from interested parties.
     - DBIC ResultSetManager deprecation
     - DBIC prefetch (DB optimisation)
 
-0.59:
+0.59 (Apr 2008):
 
     - [D] assign new moderators (on a per-forum basis)
     - admin/moderator support (deal with bad people)
