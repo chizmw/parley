@@ -1,54 +1,63 @@
+#!/usr/bin/env perl
+# vim: ts=8 sts=4 et sw=4 sr sta
+use strict;
+use warnings;
 use inc::Module::Install;
 
-use lib qw{lib};
+name            ('Parley');
+author          ('Chisel Wright<chiselwright@users.berlios.de>');
+abstract        ('Message board / forum application');
+license         ('perl');
+version_from    ('lib/Parley/Version.pm');
 
-name 'Parley';
-all_from 'lib/Parley.pm';
+requires(
+    'Catalyst'                                                  => '5.008001',
+    'Catalyst::Action::RenderView'                              => 0,
+    'Catalyst::Model::DBIC::Schema'                             => 0,
+    'Catalyst::Plugin::Authentication'                          => 0,
+    'Catalyst::Plugin::Authentication::Credential::Password'    => 0,
+    'Catalyst::Plugin::Authentication::Store::DBIC'             => 0,
+    'Catalyst::Plugin::Authorization::ACL'                      => 0,
+    'Catalyst::Plugin::ConfigLoader'                            => 0,
+    'Catalyst::Plugin::Dumper'                                  => 0,
+    'Catalyst::Plugin::Email'                                   => 0,
+    'Catalyst::Plugin::FillInForm'                              => 0,
+    'Catalyst::Plugin::FormValidator'                           => 0,
+    'Catalyst::Plugin::I18N'                                    => 0,
+    'Catalyst::Plugin::Session'                                 => 0,
+    'Catalyst::Plugin::Session::State::Cookie'                  => 0,
+    'Cache::FastMmap'                                           => 0,
+    'Catalyst::Plugin::Session::Store::FastMmap'                => 0,
+    'Catalyst::Plugin::StackTrace'                              => 0,
+    'Catalyst::Plugin::Static::Simple'                          => 0,
+    'Catalyst::View::TT'                                        => 0,
+    'Data::FormValidator'                                       => '4.50',
+    'Data::SpreadPagination'                                    => 0,
+    'DateTime'                                                  => 0,
+    'DateTime::Format::Pg'                                      => 0,
+    'DateTime::TimeZone'                                        => 0,
+    'Email::Valid'                                              => 0,
+    'Graphics::Magick'                                          => 0,
+    'HTML::FillInForm'                                          => '1.07',
+    'Image::Size'                                               => 0,
+    'JSON'                                                      => 0,
+    'List::MoreUtils'                                           => 0,
+    'MIME::Lite'                                                => 0,
+    'Net::IP::Match::Regexp'                                    => 0,
+    'Perl6::Export::Attrs'                                      => 0,
+    'Proc::Daemon'                                              => 0,
+    'Proc::PID::File'                                           => 0,
+    'Readonly'                                                  => 0,
+    'Text::Context::EitherSide'                                 => 0,
+    'Time::Piece'                                               => 0,
+    'YAML'                                                      => 0,
+);
 
-requires 'Catalyst' => '5.008001';
-requires 'Catalyst::Action::RenderView';
-requires 'Catalyst::Model::DBIC::Schema';
-requires 'Catalyst::Plugin::Authentication';
-requires 'Catalyst::Plugin::Authentication::Credential::Password';
-requires 'Catalyst::Plugin::Authentication::Store::DBIC';
-requires 'Catalyst::Plugin::Authorization::ACL';
-requires 'Catalyst::Plugin::ConfigLoader';
-requires 'Catalyst::Plugin::Dumper';
-requires 'Catalyst::Plugin::Email';
-requires 'Catalyst::Plugin::FillInForm';
-requires 'Catalyst::Plugin::FormValidator';
-requires 'Catalyst::Plugin::I18N';
-requires 'Catalyst::Plugin::Session';
-requires 'Catalyst::Plugin::Session::State::Cookie';
-requires 'Cache::FastMmap';
-requires 'Catalyst::Plugin::Session::Store::FastMmap';
-requires 'Catalyst::Plugin::StackTrace';
-requires 'Catalyst::Plugin::Static::Simple';
-requires 'Catalyst::View::TT';
-requires 'Data::FormValidator' => '4.50';
-requires 'Data::SpreadPagination';
-requires 'DateTime';
-requires 'DateTime::Format::Pg';
-requires 'DateTime::TimeZone';
-requires 'Email::Valid';
-requires 'Graphics::Magick';
-requires 'HTML::FillInForm' => '1.07';
-requires 'Image::Size';
-requires 'JSON';
-requires 'List::MoreUtils';
-requires 'MIME::Lite';
-requires 'Net::IP::Match::Regexp';
-requires 'Perl6::Export::Attrs';
-requires 'Proc::Daemon';
-requires 'Proc::PID::File';
-requires 'Readonly';
-requires 'Text::Context::EitherSide';
-requires 'Time::Piece';
-requires 'YAML'; # This should reflect the config file format you've chosen
-                 # See Catalyst::Plugin::ConfigLoader for supported formats
-
-build_requires 'Test::More';
-build_requires 'Test::WWW::Mechanize::Catalyst';
+build_requires (
+    'Test::More'                                                => 0,
+    'Test::WWW::Mechanize::Catalyst'                            => 0,
+    'Test::DBIx::Class::Schema'                                 => '0.01004',
+);
 
 catalyst;
 
