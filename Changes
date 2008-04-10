@@ -6,6 +6,8 @@ This file documents the revision history for Parley.
     - user roles can now be assigned and removed
     - users can have their "suspended" flag set and removed
     - application can now prevent login/signup/posting/access by IP
+    - user profile lists IPs posted from
+    - new action (site/ip_info) to list users posting from a given IP
 
 0.58    Fri Feb  8 07:47:31 GMT 2008
     - re-work the UI design to be cleaner

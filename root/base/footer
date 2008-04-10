@@ -3,7 +3,7 @@
 
             <div id="ft">
                 <p>
-                <a href="http://developer.berlios.de/projects/parley">Parley</a>
+                <a href="http://developer.berlios.de/projects/parley">[%c.config.name%]</a>
                 (version [%c.config.version%])
                 &copy; Chisel Wright 2006-2008. [%l('All Rights Reserved')%].
                 </p>

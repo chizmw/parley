@@ -85,6 +85,38 @@
         [% END %]
     [% END %]
 
+    [% IF authed_user.can_ip_ban %]
+        <h2>[%l('IP Addresses')%]</h2>
+        <div class="yui-gf top_padded">
+            <div class="yui-u first align_right">
+                [%l('User has posted from')%]
+            </div>
+            <div class="yui-u">
+                [% SET ips = profiled_user.ips_posted_from %]
+                [% FOR ip IN ips %]
+                <span id="ctx_[%ip%]">
+                    <a href="[%c.uri_for('/site/ip_info',{'address'=>ip})%]">[% ip %]</a>
+                </span>[% UNLESS loop.last %], [% END %]
+                <script type="text/javascript">
+                    YAHOO.namespace("example.container");
+                    [% SET people_posting = c.model('ParleyDB::Post').people_posting_from_ip("$ip") %]
+                    [% SET ttTxt = '' %]
+                    [% WHILE (post = people_posting.next) %]
+                    [% ttTxt = "${ttTxt} <li>$post.creator.forum_name</li>" %]
+                    [% END %]
+                    YAHOO.example.container.tt1 = new YAHOO.widget.Tooltip(
+                        "tt_[%ip%]",
+                        {
+                            context:"ctx_[%ip%]",
+                            text:"Users posting from [%ip%]: <ul>[%ttTxt%]</ul>"
+                        }
+                    );
+                </script>
+                [% END %]
+            </div>
+        </div>
+    [% END %]
+
     [% IF authed_user.is_site_moderator %]
         <h2>[%l('Forum Moderation')%]</h2>
 

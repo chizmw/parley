@@ -66,6 +66,15 @@ __PACKAGE__->deny_access_unless(
     }
 );
 __PACKAGE__->deny_access_unless(
+    '/site/ip_info',
+    sub {
+        my $c = shift;
+        $c->check_any_user_role(
+            qw/site_moderator ip_ban_posting ip_ban_signup ip_ban_login/
+        )
+    }
+);
+__PACKAGE__->deny_access_unless(
     '/site/roleSaveHandler',
     [qw/site_moderator/]
 );

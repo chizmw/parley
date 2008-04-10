@@ -1,4 +1,5 @@
 package Parley::Schema::Person;
+# vim: ts=8 sts=4 et sw=4 sr sta
 
 # Created by DBIx::Class::Schema::Loader v0.03004 @ 2006-08-10 09:12:24
 
@@ -15,7 +16,6 @@ __PACKAGE__->table("person");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",
-    #default_value => "nextval('person_person_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },
@@ -72,7 +72,6 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->set_primary_key("id");
-
 __PACKAGE__->resultset_class('Parley::ResultSet::Person');
 
 __PACKAGE__->add_unique_constraint(
@@ -328,6 +327,47 @@ sub can_moderate_forum {
     }
 
     return 0;
+}
+
+sub ips_posted_from {
+    my $record = shift;
+    my ($rs, $schema, @ips);
+
+    # grab the schema so we can search a different table
+    $schema = $record->result_source()->schema();
+
+    $rs = $schema->resultset('Post')->search(
+        {
+            creator_id  => $record->id,
+        },
+        {
+            distinct    => 1,
+            columns     => [ qw/ip_addr/ ],
+        }
+    );
+
+    while (my $result = $rs->next) {
+        push @ips, $result->ip_addr;
+    }
+
+    return \@ips;
+}
+
+sub posts_from_ip {
+    my ($record, $ip_address) = @_;
+    my ($schema, $rs);
+
+    # grab the schema so we can search a different table
+    $schema = $record->result_source()->schema();
+
+    $rs = $schema->resultset('Post')->search(
+        {
+            creator_id  => $record->id,
+            ip_addr     => $ip_address,
+        },
+    );
+
+    return $rs;
 }
 
 1;

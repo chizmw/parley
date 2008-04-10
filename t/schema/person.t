@@ -10,9 +10,10 @@ use SchemaTest;
 
 my $schematest = SchemaTest->new(
     {
-        dsn       => 'dbi:Pg:dbname=parley',
-        namespace => 'Parley::Schema',
-        moniker   => 'Person',
+        dsn         => 'dbi:Pg:dbname=parley',
+        username    => 'parley',
+        namespace   => 'Parley::Schema',
+        moniker     => 'Person',
     }
 );
 $schematest->methods(
@@ -49,9 +50,16 @@ $schematest->methods(
             qw[
                 roles
                 check_user_roles
+                check_any_user_role
                 is_site_moderator
                 can_suspend_account
-            ]
+                last_suspension
+                can_ip_ban
+                can_view_site_menu
+                can_moderate_forum
+                set_suspended
+                posts_from_ip
+            ],
         ],
 
         resultsets => [

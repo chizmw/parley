@@ -35,6 +35,7 @@ It's unlikely that we'll need an 'en' file in the project.
             - "Access Denied"
             - "Access to this application is not permitted from %1"
             - "IP Bans"
+            - "IP Information"
 
     it.po:
         - added:
@@ -43,7 +44,7 @@ It's unlikely that we'll need an 'en' file in the project.
             - "Post Edited By"
 
     nl.po:
-        - full translation from i_default.po
+        - full translation from i_default.po (v0.58)
 
 0.58
     (en renamed to i_default)

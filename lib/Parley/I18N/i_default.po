@@ -258,6 +258,9 @@ msgstr "Invalid requested value"
 msgid "IP Bans"
 msgstr "IP Bans"
 
+msgid "IP Information"
+msgstr "IP Information"
+
 msgid "IP Logged"
 msgstr "IP Logged"
 

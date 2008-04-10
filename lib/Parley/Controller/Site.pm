@@ -23,6 +23,17 @@ sub ip_bans :Local {
             ->ban_type_list;
 }
 
+sub ip_info : Local {
+    my ($self, $c) = @_;
+    my $ip = $c->request->param('address');
+
+    # the address
+    $c->stash->{ip_address} = $ip;
+    # a breakdown of posts/users for the address
+    $c->stash->{people_posting} = 
+        $c->model('ParleyDB::Post')->people_posting_from_ip($ip);
+}
+
 sub services : Local {
     my ($self, $c) = @_;
 

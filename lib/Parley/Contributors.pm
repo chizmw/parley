@@ -37,6 +37,8 @@ Translation by Darius Jokilehto
 
 =head1 PATCHES AND BUG-FIXES
 
+Toby Corkindale C<< TJC >>
+
 Kaare Rasmussen C<< CPANID: KAARE >>
 
 =head1 PROJECTS
