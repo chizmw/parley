@@ -1,6 +1,6 @@
 package Parley;
 
-# "perl Makefile.PL" comaplined, "WARNING: VERSION takes a string/number
+# "perl Makefile.PL" complained, "WARNING: VERSION takes a string/number
 # not a version reference."
 # I just numified the VERSION - it's legible and seems to stop the warning
 use version; our $VERSION = qv(0.59_001)->numify;
