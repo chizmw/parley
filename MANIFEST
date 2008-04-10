@@ -2,6 +2,7 @@ Changes
 Changes.i18n
 config/parley.fastcgi
 contrib/patch/0.57_02_KAARE.patch
+contrib/patch/0.59_001_TJC.patch
 db/parley.psql
 db/patch.skel
 db/patch_0.06_to_0.07.psql
@@ -145,6 +146,7 @@ root/base/shared/useful_tt_stuff
 root/base/shared/user_avatar
 root/base/shared/user_status
 root/base/site/ip_bans
+root/base/site/ip_info
 root/base/site/services
 root/base/site/user
 root/base/site/users
