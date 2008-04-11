@@ -1,6 +1,7 @@
 This file documents the revision history for Parley.
 
 0.60 *DEVELOPMENT*
+    - upgrade to YUI 2.5.1
     - moved README.* into doc/
     - added parley.sites-enabled
 
