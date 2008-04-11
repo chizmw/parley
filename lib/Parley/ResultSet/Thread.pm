@@ -122,7 +122,7 @@ sub recent {
 
             prefetch => [
                 {'creator' => 'authentication'},
-                'last_post',
+                {'last_post' => 'creator'},
                 'forum',
             ],
         }
