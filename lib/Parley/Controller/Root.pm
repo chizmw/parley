@@ -302,8 +302,13 @@ sub end : Private {
     $c->forward('render');
 
     # fill in any forms
-    $c->fillform( $c->request->parameters );
-    $c->fillform( $c->stash->{formdata} );
+    $c->fillform(
+        {
+            # combine two hashrefs so we only make one method call
+            %{ $c->request->parameters || {} },
+            %{ $c->stash->{formdata}   || {} },
+        }
+    );
 }
 
 
