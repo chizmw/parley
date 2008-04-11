@@ -50,15 +50,7 @@ YAHOO.example.ACJson = new function(){
 
     this.oAutoComp.itemSelectEvent.subscribe(
         function(oSelf, elItem, oData) {
-            console.log(elItem[2][1]);
-
             YAHOO.util.Dom.get('ac_personid').value = elItem[2][1].id;
-
-            try {
-                console.log( YAHOO.util.Dom.get('ac_personid') );
-            }
-            catch(e) { console.log(e); }
-
         },
         this,
         false

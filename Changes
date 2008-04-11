@@ -1,5 +1,14 @@
 This file documents the revision history for Parley.
 
+0.59.03 Fri Apr 11 00:13:36 BST 2008
+    - removed console.log() javascript calls
+
+0.59.02 Thu Apr 10 22:56:04 BST 2008
+    - require minimum version of JSON (2.04) for to_json() method
+
+0.59.01 Thu Apr 10 22:38:43 BST 2008
+    - added Catalyst::Plugin::Authorization::Roles to Makefile.PL
+
 0.59    Thu Apr 10 18:56:19 BST 2008
     - added Dutch translation (Thanks Rob!)
     - forum moderators can be assigned and removed through the UI

@@ -11,7 +11,6 @@ function login_dialog_init() {
 		this.cancel();
 	};
 	var handleSuccess = function(o) {
-        console.log('Success');
 	};
 	var handleFailure = function(o) {
 		alert("Submission failed: " + o.status);
