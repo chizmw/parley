@@ -1,0 +1,12 @@
+# this is an example of a named virtualhost config file
+# for a Debian/Ubuntu system using the sites-enabled method with apache2:
+#
+# $ cp parley.sites-enabled /etc/apache2/sites-enabled/parley.named_vhost
+# $ sudo a2en parley.named_vhost
+
+<VirtualHost *:80>                                                                                     
+	ServerName parley.herlpacker.co.uk                                                                   
+	DocumentRoot /home/parley/parley/root                                                                
+	Alias /static /home/parley/parley/root/static                                                        
+	Alias / /home/parley/parley/script/parley_fastcgi.pl/                                                
+</VirtualHost>    
