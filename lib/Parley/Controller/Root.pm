@@ -302,7 +302,7 @@ sub end : Private {
     $c->forward('render');
 
     # fill in any forms
-    $c->fillform( );
+    $c->fillform( $c->request->parameters );
     $c->fillform( $c->stash->{formdata} );
 }
 
