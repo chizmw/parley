@@ -1,5 +1,11 @@
 Element Release Notes
 
+*** version 2.5.1 ***
+no change
+
+*** version 2.5.0 ***
+* SetAttributes now correctly handles false values
+
 *** version 2.4.0 ***
 no change
 

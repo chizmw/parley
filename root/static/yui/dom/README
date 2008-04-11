@@ -7,9 +7,11 @@ Dom Release Notes
 
 ----------------------------
 
-*** version 2.4.1 ***
+*** version 2.5.1 ***
+* getStyle fix for getting computedStyle across documents
 
-No change
+*** version 2.5.0 ***
+* get() now correctly handles textNodes
 
 *** version 2.4.0 ***
 * no longer accounting for safari body margin when offsetParent == body

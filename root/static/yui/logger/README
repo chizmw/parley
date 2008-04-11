@@ -1,7 +1,17 @@
 Logger Release Notes
 
-*** version 2.4.1 ***
-No change
+*** version 2.5.1 ***
+
+* Support object introspection to Firebug.
+* Better performance when rendering messages to LogReader.
+
+
+
+*** version 2.5.0 ***
+
+* No changes.
+
+
 
 *** version 2.4.0 ***
 

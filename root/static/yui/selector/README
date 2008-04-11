@@ -1,8 +1,15 @@
 YUI Library - Selector - Release Notes
 
-2.4.1
+2.5.1
 
-No change
+  * query() returns null when firstOnly and no result 
+  * correctly handle quoted attributes 
+
+2.5.0
+
+  * query() now returns single node (not array) when firstOnly is true
+  * filter() now works with ID input
+  * pseudos and attributes correctly handle spaces
 
 2.4.0
 
