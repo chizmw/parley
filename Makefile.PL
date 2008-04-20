@@ -9,6 +9,7 @@ author          ('Chisel Wright<chiselwright@users.berlios.de>');
 abstract        ('Message board / forum application');
 license         ('perl');
 version_from    ('lib/Parley/Version.pm');
+version         ('1.0.0');
 
 requires(
     'Catalyst'                                                  => '5.008001',
@@ -38,7 +39,7 @@ requires(
     'DateTime::Format::Pg'                                      => 0,
     'DateTime::TimeZone'                                        => 0,
     'Email::Valid'                                              => 0,
-    'Graphics::Magick'                                          => 0,
+    'Image::Magick'                                             => 0,
     'HTML::FillInForm'                                          => '1.07',
     'Image::Size'                                               => 0,
     'JSON'                                                      => '2.04',
@@ -63,5 +64,5 @@ build_requires (
 catalyst;
 
 install_script glob('script/*.pl');
-auto_install;
+#auto_install;
 WriteAll;

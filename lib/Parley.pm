@@ -34,7 +34,14 @@ use Catalyst qw/
 
 use Parley::App::Communication::Email qw( :email );
 
-__PACKAGE__->config( version => $VERSION );
+VERSION_MADNESS: {
+    use version;
+    my $vstring = version->new($VERSION)->normal;
+    __PACKAGE__->config(
+        version => $vstring
+    );
+}
+
 __PACKAGE__->setup;
 
 # only show certain log levels in output

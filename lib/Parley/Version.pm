@@ -1,9 +1,10 @@
 package Parley;
+# vim: ts=8 sts=4 et sw=4 sr sta
+use strict;
+use warnings;
 
-# "perl Makefile.PL" complained, "WARNING: VERSION takes a string/number
-# not a version reference."
-# I just numified the VERSION - it's legible and seems to stop the warning
-use version; our $VERSION = qv("0.60.00_01");
+# from mst on #catalyst
+our $VERSION = '1.000000'; $VERSION = eval $VERSION;
 
 =head1 NAME
 

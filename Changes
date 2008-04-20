@@ -1,9 +1,15 @@
 This file documents the revision history for Parley.
 
-0.60 *DEVELOPMENT*
+1.0.0 *DEVELOPMENT*
     - upgrade to YUI 2.5.1
     - moved README.* into doc/
     - added parley.sites-enabled
+    - switched from Graphics::Magick to Image::Magick
+
+
+After knackering up the version numbers towards the end of 0.59
+I've taken the bold step of declaring the next release v1.0.0
+
 
 0.59.03 Fri Apr 11 00:13:36 BST 2008
     - removed console.log() javascript calls

@@ -34,20 +34,23 @@ reasoning from interested parties.
           - [D] IPs used by user
           - [D] Users posting from IP
 
-0.60:
+** VERSION FORMAT ALTERATION **
+
+1.0.0:
 
     - [D] upgrade to YUI 2.5.x
     - update to use "new catalyst authentication"
+    - replace Graphics::Magick (Image::Mate?)
 
-0.61:
+1.0.1:
 
     - advanced search
 
-0.62:
+1.0.2:
 
     - admin: add/edit/order forums
 
-0.63:
+1.0.3:
 
     - user prefs:
         - language preference

@@ -5,7 +5,7 @@ use warnings;
 use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Controller';
 
-use Graphics::Magick;
+use Image::Magick;
 use JSON;
 use Image::Size qw( html_imgsize imgsize );
 
@@ -547,7 +547,7 @@ sub _convert_and_scale_image {
     my ($width, $height) = imgsize($file);
 
     # create a new image mangling object
-    my $img = Graphics::Magick->new()
+    my $img = Image::Magick->new()
         or die $!;
 
     # read in the image file
