@@ -16,11 +16,17 @@ $mech->get_ok("http://localhost/forum/list", 'Got forum list page URL');
 $mech->content_contains('Forum List', 'Returned page is the forum list');
 
 @forum_links = $mech->find_all_links( url_regex => qr{/forum/view\?forum=} );
-$mech->links_ok(
-    \@forum_links,
-    'Check all links for forum/view'
-);
 
-# let's follow the link into the first forum...
-$mech->get_ok($forum_links[0]->url(), 'Got forum view page OK');
-$mech->content_contains('List Of Active Threads', 'Returned page is the forum view');
+SKIP: {
+    skip q{Forum has no threads}, 3
+        if not @forum_links;
+
+    $mech->links_ok(
+        \@forum_links,
+        'Check all links for forum/view'
+    );
+
+    # let's follow the link into the first forum...
+    $mech->get_ok($forum_links[0]->url(), 'Got forum view page OK');
+    $mech->content_contains('List Of Active Threads', 'Returned page is the forum view');
+};
