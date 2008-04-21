@@ -10,8 +10,11 @@ use Perl6::Export::Attrs;
 
 sub dfv_constraint_confirm_equal :Export( :constraints ) {
     my ($attrs)  = @_;
+    my ($first, $second);
 
-    my ($first, $second) = @{ $attrs->{fields} } if $attrs->{fields};
+    if ($attrs->{fields}) {
+        ($first, $second) = @{ $attrs->{fields} };
+    }
 
     return sub {
         my $dfv = shift;
