@@ -106,6 +106,7 @@ __PACKAGE__->has_many(
 __PACKAGE__->belongs_to(
     "creator" => "Person",
     { 'foreign.id' => "self.creator_id" },
+    { join_type => 'left' }
 );
 __PACKAGE__->belongs_to(
     "reply_to" => "Post",

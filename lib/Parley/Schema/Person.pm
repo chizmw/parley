@@ -108,6 +108,7 @@ __PACKAGE__->belongs_to(
 __PACKAGE__->belongs_to(
   "authentication" => "Authentication",
   { 'foreign.id' => 'self.authentication_id' },
+    { join_type => 'left' }
 );
 __PACKAGE__->has_many(
   "registration_authentications",
