@@ -61,6 +61,8 @@ build_requires (
     'Test::DBIx::Class::Schema'                                 => '0.01004',
 );
 
+tests_recursive;
+
 catalyst;
 
 install_script glob('script/*.pl');
