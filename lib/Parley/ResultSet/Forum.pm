@@ -7,6 +7,7 @@ use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 use base 'DBIx::Class::ResultSet';
 
+# list of available forums (for menus and search-drop-downs)
 sub available_list {
     my ($resultsource) = @_;
     my ($rs);
@@ -17,6 +18,25 @@ sub available_list {
         },
         {
             order_by    => 'name ASC',
+        }
+    );
+
+    return $rs;
+}
+
+sub forum_list {
+    my ($resultsource) = @_;
+    my ($rs);
+
+    $rs = $resultsource->search(
+        {
+            active => 1,
+        },
+        {
+            'order_by'  => 'me.id ASC',
+            prefetch => [
+                {'last_post' => { 'creator' => 'authentication' } },
+            ],
         }
     );
 

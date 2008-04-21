@@ -13,17 +13,8 @@ sub list : Local {
 
     # get a list of (active) forums
     $c->stash->{forum_list} =
-        $c->model('ParleyDB')->resultset('Forum')->search(
-            {
-                active => 1,
-            },
-            {
-                'order_by'  => 'me.id ASC',
-                prefetch => [
-                    {'last_post' => { 'creator' => 'authentication' } },
-                ],
-            }
-        );
+        $c->model('ParleyDB')->resultset('Forum')
+            ->forum_list();
 }
 
 sub view : Local {
