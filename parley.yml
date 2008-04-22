@@ -27,7 +27,7 @@ Model::ParleyDB:
     connect_info:   
         - 'dbi:Pg:dbname=parley;host=localhost'
         - 'parley'
-        - ''
+        - 
         - AutoCommit: 1
 
 # emails; perldoc Catalyst::Plugin::Email
@@ -37,20 +37,26 @@ email:
     - localhost
 
 #--
-#-- LINES BELOW THIS SHOULDN'T NEED CHANGING
+#-- LINES BELOW THIS SHOULD NOT NEED CHANGING
 #--
 
 # the default view to use
 default_view:         'TT'
 
-# authentiation settings; perldoc Catalyst::Plugin::Authentication::Store::DBIC
+# authentiation settings; perldoc Catalyst::Authentication::Store::DBIx::Class
 authentication:
-    dbic:
-        user_class:         'ParleyDB::Authentication'
-        user_field:         'username'
-        password_field:     'password'
-        password_type:      'hashed'
-        password_hash_type: 'MD5'
+    default_realm:                      'members'
+    realms:
+        members:
+            credential:
+                class:                  'Password'
+                password_field:         'password'
+                password_type:          'hashed'
+                password_hash_type:     'MD5'
+            store:
+                class:                  'DBIx::Class'
+                user_class:             'ParleyDB::Authentication'
+                id_field:               'username'
 
 authorization:
     dbic:
