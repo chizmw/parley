@@ -13,11 +13,10 @@ version         ('1.0.0');
 
 requires(
     'Catalyst'                                                  => '5.008001',
+    'Catalyst::Runtime'                                         => 0,
     'Catalyst::Action::RenderView'                              => 0,
+    'Catalyst::Authentication::Store::DBIx::Class'              => '0.10',
     'Catalyst::Model::DBIC::Schema'                             => 0,
-    'Catalyst::Plugin::Authentication'                          => 0,
-    'Catalyst::Plugin::Authentication::Credential::Password'    => 0,
-    'Catalyst::Plugin::Authentication::Store::DBIC'             => 0,
     'Catalyst::Plugin::Authorization::ACL'                      => 0,
     'Catalyst::Plugin::Authorization::Roles'                    => 0,
     'Catalyst::Plugin::ConfigLoader'                            => 0,
@@ -33,6 +32,7 @@ requires(
     'Catalyst::Plugin::StackTrace'                              => 0,
     'Catalyst::Plugin::Static::Simple'                          => 0,
     'Catalyst::View::TT'                                        => 0,
+    'Config::General'                                           => 2.37,
     'Data::FormValidator'                                       => '4.50',
     'Data::SpreadPagination'                                    => 0,
     'DateTime'                                                  => 0,
@@ -52,7 +52,6 @@ requires(
     'Readonly'                                                  => 0,
     'Text::Context::EitherSide'                                 => 0,
     'Time::Piece'                                               => 0,
-    'YAML'                                                      => 0,
 );
 
 build_requires (
