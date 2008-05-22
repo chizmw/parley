@@ -32,9 +32,11 @@ sub login : Path('/user/login') {
     # if we have a username, try to log the user in
     if ( $c->request->param('username') ) {
         # try to log the user in
-        my $login_status = $c->login(
-            $c->request->param('username'),
-            $c->request->param('password'),
+        my $login_status = $c->authenticate(
+            {
+                username => $c->request->param('username'),
+                password => $c->request->param('password'),
+            }
         );
 
         # if we have a user we're logged in
