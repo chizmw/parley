@@ -39,9 +39,17 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("authentication_username_key", ["username"]);
+
 __PACKAGE__->has_many(
   "people" => "Person",
   { "foreign.authentication_id" => "self.id" },
 );
+
+__PACKAGE__->has_many(
+    map_user_role => 'Parley::Schema::UserRole',
+    'authentication_id',
+    { join_type => 'right' }
+);
+__PACKAGE__->many_to_many('roles' => 'map_user_role' => 'role');
 
 1;

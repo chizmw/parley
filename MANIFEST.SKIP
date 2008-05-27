@@ -16,6 +16,7 @@ Parley-0.*
 \.bak$
 root/base/help/en/yui_test
 ttcache
+t/60.image_mate.t
 t/99.prefetch_experiments.t
 .*YUI.*
 root/base/yui

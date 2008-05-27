@@ -40,7 +40,8 @@ reasoning from interested parties.
 
     - [D] upgrade to YUI 2.5.x
     - update to use "new catalyst authentication"
-    - replace Graphics::Magick (Image::Mate?)
+    - [D] replace Graphics::Magick (Image::Mate?)
+    - write decent Getting Started docs
 
 1.0.1:
 

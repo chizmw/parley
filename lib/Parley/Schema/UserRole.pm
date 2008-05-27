@@ -12,7 +12,7 @@ __PACKAGE__->load_components(qw/PK::Auto Core/);
 # Set the table name
 __PACKAGE__->table('user_roles');
 # Set columns in table
-__PACKAGE__->add_columns(qw/id person_id role_id/);
+__PACKAGE__->add_columns(qw/id authentication_id role_id/);
 # Set the primary key for the table
 __PACKAGE__->set_primary_key(qw/id/);
 
@@ -25,7 +25,10 @@ __PACKAGE__->set_primary_key(qw/id/);
 #     1) Name of relationship, DBIC will create accessor with this name
 #     2) Name of the model class referenced by this relationship
 #     3) Column name in *this* table
-__PACKAGE__->belongs_to(person => 'Parley::Schema::Person', 'person_id');
+__PACKAGE__->belongs_to(
+    authentication => 'Parley::Schema::Authentication',
+    'authentication_id'
+);
 
 # belongs_to():
 #   args:
@@ -36,8 +39,8 @@ __PACKAGE__->belongs_to(role => 'Parley::Schema::Role', 'role_id');
 
 
 __PACKAGE__->add_unique_constraint(
-    'userroles_person_role_key',
-    ['person_id', 'role_id']
+    'userroles_authentication_role_key',
+    ['authentication_id', 'role_id']
 );
 
 

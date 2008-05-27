@@ -261,15 +261,15 @@ CREATE TABLE role (
 CREATE INDEX idx_role_name ON role(name);
 
 CREATE TABLE user_roles (
-    id              serial      primary key,
-    person_id       integer     not null
-                                references person(id),
-    role_id         integer     not null
-                                references role(id),
-    UNIQUE (person_id, role_id)
+    id                  serial      primary key,
+    authentication_id   integer     not null
+                                    references authentication(id),
+    role_id             integer     not null
+                                    references role(id),
+    UNIQUE (authentication_id, role_id)
 );
-CREATE INDEX idx_userroles_personid ON user_roles(person_id);
-CREATE INDEX idx_userroles_roleid   ON user_roles(role_id);
+CREATE INDEX idx_userroles_authenticationid ON user_roles(authentication_id);
+CREATE INDEX idx_userroles_roleid           ON user_roles(role_id);
 
 -- admin action log actions/messages
 CREATE TABLE admin_action (
@@ -344,6 +344,27 @@ INSERT INTO person
 (id,first_name, last_name, email, forum_name, authentication_id, preference_id)
 VALUES
 (0, 'Top','Dog','topdog@herlpacker.co.uk','TopDog', 0, 0);
+
+
+-- #1 authentication
+INSERT INTO authentication
+(id, username, password, authenticated)
+VALUES
+(1, 'norm', md5('k1tt3n'), true);
+-- #1 preference
+INSERT INTO preference
+(id, timezone)
+VALUES
+(1, 'UTC');
+-- #1 person info
+INSERT INTO person
+(id,first_name, last_name, email, forum_name, authentication_id, preference_id)
+VALUES
+(1, 'Norman','Normal','norman.normal@herlpacker.co.uk','Norman', 1, 1);
+-- fix PK sequences
+SELECT setval('authentication_id_seq',  1);
+SELECT setval('preference_id_seq',      1);
+SELECT setval('person_id_seq',          1);
 
 INSERT INTO forum (id, name, description) VALUES (0, 'Off-Topic', 'General off-topic discussion');
 INSERT INTO forum (name, description) VALUES ('Suggestions', 'Things you think should be added');

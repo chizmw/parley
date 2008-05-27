@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<!-- Header : Start -->
+<html>
+    <head>
+        <title>Parley - Setup Guide</title>
+
+        <style type="text/css">
+            body {
+                color:              #000;
+                background-color:   #fff;
+                font-family:        Verdana,Arial,Helvetica,sans-serif;
+            }
+            blockquote>code {
+                display:            block;
+                overflow:           auto;
+                border:             solid black 1px;
+                background:         #ccc;
+                font-family:        "courier new", courier, fixed;
+                color:              #000;
+                margin-left:        25px;
+                margin-top:         5px;
+                margin-bottom:      5px;
+                padding:            5px;
+                line-height:        1.5em;
+                white-space:        pre;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <h1>Parley - Setup Guide</h1>
+
+        <h2>Table of Contents</h2>
+
+        <ol>
+            <li><a href="#getting_parley">Getting Parley</a></li>
+            <li><a href="#initial_deployment">Initial Deployment</a></li>
+            <ol>
+                <li><a href="#location">Location</a></li>
+                <li><a href="#extract">Extract</a></li>
+                <li><a href="#database">Database</a></li>
+                <li><a href="#testing">Testing</a></li>
+            </ol>
+            <li><a href="#launching">Launching the Application</a></li>
+            <li><a href="#email_engine">The Email Engine</a></li>
+            <li><a href="#using_parley">Using Parley</a></li>
+        </ol>
+
+        <a id="getting_parley"></a>
+        <h2>Getting Parley</h2>
+
+        <p>You should get Parley by visiting the
+        <a href="http://developer.berlios.de/projcts/parley">project page at BerliOS</a>
+        or from
+        <a href="http://search.cpan.org/~chisel">the author's CPAN page</a>
+        </p>
+
+        <a id="initial_deployment"></a>
+        <h2>Initial Deployment</h2>
+
+
+        <a id="location"></a>
+        <h3>Location</h3>
+
+        <p>We'll keep as much of parley as possible inside its own directory
+        area:</p>
+
+        <blockquote><code>mkdir -p ~/development/parley_app/dist
+cd ~/development/parley_app/</code></blockquote>
+
+        We'll use <code>dist/</code> to store any tarballs that we have
+        downloaded, to reduce clutter:
+
+        <blockquote><code>mv /.../Parley-1.x.y.tar.gz dist/</code></blockquote>
+
+
+        <a id="extract"></a>
+        <h3>Extract</h3>
+
+        Then extract our most recent copy [the only one currently]:
+
+        <blockquote><code>tar zxf dist/Parley-1.x.y.tar.gz</code></blockquote>
+
+        Making a softlink to the current version makes navigation easier,
+        and will aid us later when we consider a full Apache based deployment:
+
+        <blockquote><code>ln -sv Parley-1.x.y parley
+cd parley</code></blockquote>
+
+
+        <a id="database"></a>
+        <h3>Database</h3>
+
+        Before we can run the application we need to setup the database:
+        <blockquote><code>sudo -u postgres createuser -A -d parley
+createdb -U parley -E UTF8 parley
+psql -U parley -d parley -f db/parley.psql</code></blockquote>
+
+        We can quickly check that we have created <em>something</em>:
+        <blockquote><code>psql -U parley -d parley -c '\dt'</code></blockquote>
+
+
+        <a id="testing"></a>
+        <h3>Testing</h3>
+
+        <p>Although coverage isn't as high as desired, it makes sense to run the
+        application tests to make sure there are no show-stopping issues:</p>
+
+        <blockquote><code>PARLEY_DEBUG=0 prove -lr t/</code></blockquote>
+
+        <p>All test should pass. If they don't you may run into problems
+        when using the application:</p>
+
+        <blockquote><code>All tests successful, 2 tests and 169 subtests skipped.
+Files=44, Tests=455, 54 wallclock secs (38.13 cusr +  2.59 csys = 40.72 CPU)</code></blockquote>
+
+        <a id="launching"></a>
+        <h2>Launching the Application</h2>
+
+        <p>Assuming that the tests passed, you should be in a position where
+        you can run and explore the application.</p>
+
+        </p>Although not recommended for a production deployment you can
+        run the application for testing and evaluation using
+        <code>script/parley_server.pl</code>.</p>
+
+        <p>In its most simple form you can start that application with:</p>
+
+        <blockquote><code>script/parley_server.pl</code></blockquote>
+
+        <p>If there are no problems you should see somthing similar to:
+
+        <blockquote><code>[info] Parley powered by Catalyst 5.7012
+You can connect to your server at http://localhost:3000</code></blockquote>
+
+        <p>View the URL in your browser and you should see the Forum List page
+        with three forums listed.</p>
+
+
+        <a id="email_engine"></a>
+        <h2>The Email Engine</h2>
+
+        <p>Parley emails will only be sent if the email engine is running. The
+        email engine is a stand-alone script that is launched and runs in the
+        background.</p>
+
+        <p>It polls a table for emails that need to be sent and performs the
+        required magic to send them.</p>
+
+        <p><strong>BEFORE</strong> you start the email engine, please edit
+        <code>parley.yml</code> and edit <code>from_name</code> and
+        <code>from_address</code> in the <code>alerts</code> section.</p>
+
+        <p>You can start the email engine with:</p>
+
+        <blockquote><code>./script/parley_email_engine.pl</code></blockquote>
+
+        <p>Because the script puts itself into the background you won't see
+        any output in your terminal. You can verify that the script is running
+        by doing the following:</p>
+
+        <blockquote><code>ps ax |grep parley_email</code></blockquote>
+
+        and you should see something similar to:
+
+        <blockquote><code>18061 ?        S      0:00 perl ./script/parley_email_engine.pl</code></blockquote>
+
+        <p>The email engine uses syslog to log messages, which means you may
+        be able to see further information in
+        <code>/var/log/messages</code>:</p>
+
+        <blockquote><code>$ grep parley_email_engine /var/log/messages
+Apr 21 19:07:26 wiggin parley_email_engine[18058]: script started 
+Apr 21 19:07:26 wiggin parley_email_engine[18061]: child process created</code></blockquote>
+
+        <a id="using_parley"></a>
+        <h2>Using Parley</h2>
+
+        <p>There isn't much you can do in a forum with no messages. Parley
+        comes with two users out of the box: <em>Top Dog</em>, an application
+        super-user, and <a>Normal Normal</a>, a user with no special powers at
+        all.</p>
+
+        <p>Top Dog's username is <code>topdog</code> and has a default
+        password of <code>k1tt3n</code>.</p>
+
+        <p>Norman's username is <code>norm</code> and also has a default
+        password of <code>k1tt3n</code>.</p>
+
+        <p>Both users can post, read posts, search, browse, etc. Top Dog also
+        has access to the <em>Site</em> menu in the menu-bar.</p>
+
+        <h2>Site Usage Terms</h2>
+
+        <p>One of the first tasks you may like to perform as Top Dog is adding
+        T&amp;Cs for the site. If Parley has T&amp;Cs defined all registered
+        users must agree to those terms to continue using the site. ('Guest'
+        users can use the site in read-only mode without needing to agree to
+        the T&amp;Cs).</p>
+
+        <p>If new T&amp;Cs are added, users must agree to those to continue
+        uing the site.</p>
+
+        <p>You can add new T&amp;Cs by clicking the <em>Add T&amp;Cs</em> item
+        in the <em>Site</em> menu.</p>
+    </body>
+</html>
