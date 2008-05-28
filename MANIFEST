@@ -15,6 +15,7 @@ db/patch_0.52_to_0.53.psql
 db/patch_0.53_to_0.57.psql
 db/patch_0.57_to_0.58.psql
 db/patch_0.58_to_0.59.psql
+db/patch_0.59_to_1.0.0.psql
 db_script/Parley-Schema-0.57_08-PostgreSQL.sql
 db_script/Parley-Schema-0.58-PostgreSQL.sql
 db_script/Parley-Schema-0.58_13-MySQL.sql
@@ -112,6 +113,7 @@ Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
+parley.conf
 parley.yml
 README
 ROADMAP
@@ -836,6 +838,7 @@ script/parley_schema_export_all.pl
 script/parley_server.pl
 script/parley_test.pl
 script/time_string_sample.pl
+script/yml2conf
 t.output/0.59.00
 t.output/0.59.03
 t.output/1.0.0
