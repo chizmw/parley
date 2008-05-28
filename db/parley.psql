@@ -399,7 +399,7 @@ INSERT INTO role (idx, name, description) VALUES (
 
 -- make topdog a site_moderator
 INSERT INTO user_roles
-    (person_id, role_id)
+    (authentication_id, role_id)
 VALUES (
     0,
     (SELECT id FROM role WHERE name='site_moderator')
