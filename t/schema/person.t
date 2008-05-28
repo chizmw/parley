@@ -42,7 +42,6 @@ $schematest->methods(
                 last_post
                 authentication
                 registration_authentications
-                map_user_role
             ]
         ],
 

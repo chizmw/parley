@@ -4,7 +4,16 @@ use strict;
 use warnings;
 
 # from mst on #catalyst
-our $VERSION = '1.000000'; $VERSION = eval $VERSION;
+#our $VERSION = '1.000000'; $VERSION = eval $VERSION;
+use version; our $VERSION = qv(1.0.0)->numify;
+
+
+package Parley::Version;
+
+our $VERSION = $Parley::VERSION;
+
+1;
+
 
 =head1 NAME
 

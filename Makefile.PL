@@ -8,7 +8,6 @@ name            ('Parley');
 author          ('Chisel Wright<chiselwright@users.berlios.de>');
 abstract        ('Message board / forum application');
 license         ('perl');
-version_from    ('lib/Parley/Version.pm');
 version         ('1.0.0');
 
 requires(

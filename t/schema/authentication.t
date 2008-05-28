@@ -29,6 +29,8 @@ $schematest->methods(
         relations => [
             qw[
                 people
+                map_user_role
+                roles
             ]
         ],
 

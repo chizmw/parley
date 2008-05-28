@@ -20,14 +20,14 @@ $schematest->methods(
         columns => [
             qw[
                 id
-                person_id
+                authentication_id
                 role_id
             ]
         ],
 
         relations => [
             qw[
-                person
+                authentication
                 role
             ]
         ],
