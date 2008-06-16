@@ -336,6 +336,9 @@ msgstr "Logout"
 msgid "Manage"
 msgstr "Manage"
 
+msgid "Manage user roles"
+msgstr "Manage user roles"
+
 msgid "Me"
 msgstr "Me"
 
@@ -741,6 +744,9 @@ msgstr "Time formatting example"
 msgid "Topic"
 msgstr "Topic"
 
+msgid "Unauthorized!"
+msgstr "Unauthorized!"
+
 msgid "Unknown field name"
 msgstr "Unknown field name"
 
@@ -776,6 +782,9 @@ msgstr "Your registration has been authenticated"
 
 msgid "User Profile"
 msgstr "User Profile"
+
+msgid "User has never posted"
+msgstr "User has never posted"
 
 msgid "USERNAME IN USE"
 msgstr "The username you have chosen is already in use. Please try a different one."

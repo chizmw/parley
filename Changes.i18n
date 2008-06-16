@@ -6,8 +6,15 @@ other translations being made from it.  As a consequence of this, i-default
 will be used as the 'en' i18n file.
 It's unlikely that we'll need an 'en' file in the project.
 
-0.59 (UNDER DEVELOPMENT)
+1.0.0 (UNDER DEVELOPMENT)
 
+    i_default.po:
+        - added:
+            - "User has never posted"
+            - "Manage user roles"
+            - "Unauthorized!"
+
+0.59
     i_default.po:
         - added:
             - "ADMIN LOCK POST"

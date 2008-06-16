@@ -278,7 +278,7 @@ sub default : Private {
 
 sub access_denied :Local {
     my ($self, $c) = @_;
-    parley_die($c,"Unauthorized!");
+    parley_die($c,$c->localize('Unauthorized!'));
 }
 
 # deal with the end of the phase

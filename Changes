@@ -7,6 +7,7 @@ This file documents the revision history for Parley.
     - switched from Graphics::Magick to Image::Magick
     - resolved some bugs and errors when deploying from scratch
     - added more comprehensive instructions for getting started
+    - updated to new Authentication and Authorization modules
 
 
 After knackering up the version numbers towards the end of 0.59
