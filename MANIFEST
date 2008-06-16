@@ -24,6 +24,7 @@ db_script/Parley-Schema-0.58_13-SQLite.sql
 db_script/Parley-Schema-0.59_01-MySQL.sql
 db_script/Parley-Schema-0.59_01-PostgreSQL.sql
 db_script/Parley-Schema-0.59_01-SQLite.sql
+doc/fonts-min.css
 doc/parley-qs.html
 doc/README.admin
 doc/README.gravatar
