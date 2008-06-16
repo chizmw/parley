@@ -29,16 +29,6 @@ doc/parley-qs.html
 doc/README.admin
 doc/README.gravatar
 doc/setup.html
-inc.nip/Module/Install.pm
-inc.nip/Module/Install/Base.pm
-inc.nip/Module/Install/Can.pm
-inc.nip/Module/Install/Catalyst.pm
-inc.nip/Module/Install/Fetch.pm
-inc.nip/Module/Install/Makefile.pm
-inc.nip/Module/Install/Metadata.pm
-inc.nip/Module/Install/Scripts.pm
-inc.nip/Module/Install/Win32.pm
-inc.nip/Module/Install/WriteAll.pm
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
