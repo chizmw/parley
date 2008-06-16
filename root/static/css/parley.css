@@ -12,6 +12,7 @@ body {
     padding-left:   10px;
     background:     #EEE url('/static/images/parley_logo.jpg') no-repeat left;
     color:          #79B30B
+    color:          #3366CC;
 }
 
 #hd h1 {
@@ -74,6 +75,7 @@ div#user_information .user_info_actions {
     margin-top:         5px;
     margin-bottom:      5px;
     color:              #79B30B
+    color:              #3366CC;
 }
 
 /* links */
@@ -166,8 +168,8 @@ th {
     text-align:         right;
 }
 .forum_lastpost_subject a {
-    color:              #333;
     color:              #79B30B
+    color:              #3366CC;
 }
 .forum_link {
     font-size:          100%;
@@ -201,8 +203,8 @@ th {
     margin-top:         5px;
 }
 .forum_name a {
-    color:              #333;
     color:              #79B30B
+    color:              #3366CC;
 }
 .forum_postcount {
     font-size:          85%;
@@ -479,8 +481,8 @@ th {
 
 .thread_subject a {
     font-size:          93%;
-    color:              #333;
     color:              #79B30B
+    color:              #3366CC;
 }
 
 .thread_watch {
