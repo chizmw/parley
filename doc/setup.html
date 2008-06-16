@@ -6,6 +6,8 @@
     <head>
         <title>Parley - Setup Guide</title>
 
+        <link rel="stylesheet" type="text/css" href="fonts-min.css" />
+
         <style type="text/css">
             body {
                 color:              #000;
@@ -47,6 +49,17 @@
             <li><a href="#launching">Launching the Application</a></li>
             <li><a href="#email_engine">The Email Engine</a></li>
             <li><a href="#using_parley">Using Parley</a></li>
+            <ul>
+                <li><a href="#site_usage_terms">Site Usage Terms</a></li>
+                <li><a href="#site_administration">Site Administration</a></li>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#users">Users</a></li>
+                    <li><a href="#ip_bans">IP Bans</a></li>
+                </ul>
+                <li><a href="#additional_user_administration">Additional User Administration</a></li>
+            </ul>
+            <li><a href="#apache_fastcgi">apache + fastcgi</a></li>
         </ol>
 
         <a id="getting_parley"></a>
@@ -127,11 +140,11 @@ Files=44, Tests=455, 54 wallclock secs (38.13 cusr +  2.59 csys = 40.72 CPU)</co
         run the application for testing and evaluation using
         <code>script/parley_server.pl</code>.</p>
 
-        <p>In its most simple form you can start that application with:</p>
+        <p>In its most simple form you can start the application with:</p>
 
         <blockquote><code>script/parley_server.pl</code></blockquote>
 
-        <p>If there are no problems you should see somthing similar to:
+        <p>If there are no problems you should see something similar to:
 
         <blockquote><code>[info] Parley powered by Catalyst 5.7012
 You can connect to your server at http://localhost:3000</code></blockquote>
@@ -139,6 +152,11 @@ You can connect to your server at http://localhost:3000</code></blockquote>
         <p>View the URL in your browser and you should see the Forum List page
         with three forums listed.</p>
 
+        <h3>Running under apache</h3>
+
+        <p>This is described in greater detail later in this document. At this
+        point in the process we just want to run the application and explore
+        it a little.</p>
 
         <a id="email_engine"></a>
         <h2>The Email Engine</h2>
@@ -193,7 +211,8 @@ Apr 21 19:07:26 wiggin parley_email_engine[18061]: child process created</code><
         <p>Both users can post, read posts, search, browse, etc. Top Dog also
         has access to the <em>Site</em> menu in the menu-bar.</p>
 
-        <h2>Site Usage Terms</h2>
+        <a id="site_usage_terms"></a>
+        <h3>Site Usage Terms</h3>
 
         <p>One of the first tasks you may like to perform as Top Dog is adding
         T&amp;Cs for the site. If Parley has T&amp;Cs defined all registered
@@ -206,5 +225,81 @@ Apr 21 19:07:26 wiggin parley_email_engine[18061]: child process created</code><
 
         <p>You can add new T&amp;Cs by clicking the <em>Add T&amp;Cs</em> item
         in the <em>Site</em> menu.</p>
+
+        <a id="site_administration"></a>
+        <h3>Site Administration</h3>
+
+        <p>As a <em>site moderator</em> you will have access to the
+        "Site&rarr;Manage" menu.</p>
+
+        <p>This is the primary area for checking on the status of services,
+        managing users and also various ban types</p>
+
+        <a id="services"></a>
+        <h4>Services</h4>
+
+        <p>Lists known services (currently only the email-engine) and their
+        current status</p>
+
+        <a id="users"></a>
+        <h4>Users</h4>
+
+        <p>This section currently provides role-management functionality. It's
+        functional, but in the early phases of development - which means it
+        could be nicer to use.</p>
+
+        <p>Select the user you'd like to manage by typing the first part of
+        their name in the User Search field, then selecting the correct menu
+        item, and submitting the query.</p>
+
+        <p>You'll be presented with a list of roles and checkboxes. Select and
+        unselect the options to your heart's delight</p>
+
+        <p><b>Note:</b> you are not able to remove your own "Site Moderator"
+        role. Other site moderators can do it to you, you can do it to them.
+        Unless my brain is broken this means you'll always have a minimum of
+        one Site Moderator.</p>
+
+        <a id="ip_bans"></a>
+        <h4>IP Bans</h4>
+
+        <p>Unfortunately there will always be at least one bad apple. The IP
+        bans are one tool in your battle against the Bad Ones. Banning by IP
+        isn't a silver bullet for numerous reasons but it can stop or slow
+        down some abusers.</p>
+
+        <p>Click on the data area for the type of ban you'd like to edit and
+        edit the values in the text input area that appears. The items in the
+        list should be in CIDR format (<em>a.b.c.d/x</em>) format.</p>
+
+        <p>To remove bans, edit the field and remove the relevant entry.</p>
+
+        <p>The anticipated escalation level for bans is:
+        posting, sign-up, login, all
+        </p>
+
+        <a id="additional_user_administration"></a>
+        <h3>Additional User Administration</h3>
+
+        <p>Providing you have the required roles you will be able to perform
+        additional tasks from a user's profile page: <em>Suspend Account</em>
+        and <em>Forum Moderation</em>.</p>
+
+        <a id="apache_fastcgi"></a>
+        <h3>apache + fastcgi</h3>
+
+        <p>Any vaguely sane deployment of parley <strong>will not</strong> run
+        using <i>server/parley_server.pl</i>.</p>
+
+        <p>A common (and Catalyst recommended) deployment method is to use
+        <em>apache + fastcgi</em>. The process is outlined in the
+        <a href="">Catalyst Cookbook</a></p>
+
+        <p>Assuming you have a system with <em>a2ensite</em> installed on it
+        you can do the following:</p>
+
+        <blockquote><code>sudo cp config/parley.sites-enabled /etc/apache2/sites-enabled/parley.named_vhost
+sudo vim /etc/apache2/sites-enabled/parley.named_vhost <font color="green"># make appropriate changes</font>
+sudo a2en parley.named_vhost</code></blockquote>
     </body>
 </html>
