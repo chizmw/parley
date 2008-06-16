@@ -144,13 +144,13 @@ sub roleSaveHandler :Local {
                     my $userrole = $c->model('ParleyDB::UserRole')->find(
                         {
                             authentication_id   => $person->authentication_id,
-                            role_id     => $role_id,
+                            role_id             => $role_id,
                         }
                     );
 
                     # moderator suicide?
                     if (
-                        $person_id = $c->_authed_user->id
+                        $person_id == $c->_authed_user->id
                             and
                         q{site_moderator} eq $userrole->role->name
                     ) {
