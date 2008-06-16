@@ -1,6 +1,6 @@
 <h1>[%l('Services')%]</h1>
 
-<table class="site_services">
+<table class="service_list">
     <thead>
         <tr>
             <th>[%l('Service')%]</th>
@@ -11,7 +11,7 @@
     </thead>
 
     <tbody>
-        <tr>
+        <tr class="row row_odd">
             <td>[%l('Email Engine')%]</td>
             <td>
                 [% IF email_engine.pid %]
