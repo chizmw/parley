@@ -4,10 +4,13 @@ use warnings;
 
 use Data::Dump qw(pp);
 use Getopt::Long;
+use File::Find;
 use File::Slurp;
 use FindBin qw($Bin);
-# use List::Compare
 use Path::Class;
+
+# evil global for wanted() function used with File::Find
+my %tpl_of;
 
 # default options
 my %cliopt = (
@@ -18,6 +21,7 @@ GetOptions(\%cliopt, "language=s");
 
 # show the differences for the chosen language
 token_diffs( $cliopt{language} );
+template_diffs( $cliopt{language} );
 
 sub token_diffs {
     my $target_lang = shift;
@@ -37,6 +41,26 @@ sub token_diffs {
     print "Additional phrases in '$target_lang' translation:\n\n";
     diffs($targetlang_msgids, $idefault_msgids);
 
+    return;
+}
+
+sub template_diffs {
+    my $target_lang = shift;
+
+    # get the list of i_default email templates
+    my %idefault_tpls = template_list( q{i_default} );
+
+    # get the list of templates for the target language
+    my %targetlang_tpls = template_list( $target_lang );
+
+    # see what's missing from the target
+    print "Missing templates in '$target_lang' translation:\n\n";
+    tpl_diffs(\%idefault_tpls, \%targetlang_tpls);
+
+    # see if we have anything extra in the target
+    print "Additional templates in '$target_lang' translation:\n\n";
+    tpl_diffs(\%targetlang_tpls, \%idefault_tpls);
+    
     return;
 }
 
@@ -67,6 +91,30 @@ sub diffs {
     return;
 }
 
+sub tpl_diffs {
+    my ($left, $right) = @_;
+
+    my %left_copy = %{ $left };
+
+    # see what's missing from the target
+    map (
+        delete $left_copy{$_},
+        keys %{$right}
+    );
+
+    my @keys = sort keys %left_copy;
+    if (@keys) {
+        foreach my $key (@keys) {
+            print "  $key\n\n";
+        }
+    }
+    else {
+        print " - NONE -\n\n";
+    }
+
+    return;
+}
+
 # read in an i18n file
 sub read_i18n {
     my $filename = shift;
@@ -87,6 +135,27 @@ sub read_i18n {
         or die $!;
 
     return $filedata;
+}
+
+sub wanted {
+    -f $_
+    && $tpl_of{$_}++
+}
+
+sub template_list {
+    my $target_lang = shift;
+
+    my $dir = dir(
+        dir($Bin)->parent,
+        q{root},
+        q{email_templates},
+        $target_lang
+    );
+
+    %tpl_of = ();
+    find( \&wanted, $dir );
+
+    return %tpl_of;
 }
 
 # TODO - find a suitable "gettext" perl module to do this properly
