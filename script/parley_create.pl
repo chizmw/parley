@@ -39,6 +39,7 @@ parley_create.pl [options] model|view|controller name [helper] [options]
 
  Examples:
    parley_create.pl controller My::Controller
+   parley_create.pl controller My::Controller BindLex
    parley_create.pl -mechanize controller My::Controller
    parley_create.pl view My::View
    parley_create.pl view MyView TT
