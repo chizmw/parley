@@ -567,7 +567,6 @@ sub _increase_thread_view_count {
     eval {
         $c->model('ParleyDB')->schema->txn_do(
             sub {
-                $c->log->info( q{Increasing view count} );
                 $c->_current_thread->view_count(
                     $c->_current_thread->view_count + 1
                 );
