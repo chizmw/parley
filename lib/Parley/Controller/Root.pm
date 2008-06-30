@@ -173,8 +173,6 @@ sub auto : Private {
     # if we have a user ... fetch some info (if we don't already have it)
     ############################################################
     if ( $c->user and not defined $c->_authed_user ) {
-        $c->log->info('Fetching user information for ' . $c->user->id);
-
         # FIXME : move this to the ResultSet class?
         # get the person info for the username
         my $row = $c->model('ParleyDB')->resultset('Person')->find(
