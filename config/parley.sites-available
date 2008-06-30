@@ -6,11 +6,11 @@
 
 <VirtualHost parley.private.herlpacker.co.uk:80>
 	ServerName              parley.private.herlpacker.co.uk
-	DocumentRoot            /home/parley/development_parley_app/root
-	Alias           /static /home/parley/development_parley_app/root/static
-	Alias           /       /home/parley/development_parley_app/script/parley_fastcgi.pl/
+	DocumentRoot            /home/parley/development/parley_app/root
+	Alias           /static /home/parley/development/parley_app/root/static
+	Alias           /       /home/parley/development/parley_app/script/parley_fastcgi.pl/
 
-    FastCgiServer           /home/parley/development_parley_app/script/parley_fastcgi.pl -processes 3
+    FastCgiServer           /home/parley/development/parley_app/script/parley_fastcgi.pl -processes 3
 
     # stuff that's good to have
     ServerAdmin         someone.useful@somewhere.useful
