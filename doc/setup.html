@@ -295,11 +295,15 @@ Apr 21 19:07:26 wiggin parley_email_engine[18061]: child process created</code><
         <em>apache + fastcgi</em>. The process is outlined in the
         <a href="">Catalyst Cookbook</a></p>
 
+        <p>Before going too far down this route, please ensure that you have
+        mod_fastcgi installed:</p>
+        <blockquote><code>sudo aptitude install libapache2-mod-fastcgi</code></blockquote>
+
         <p>Assuming you have a system with <em>a2ensite</em> installed on it
         you can do the following:</p>
 
-        <blockquote><code>sudo cp config/parley.sites-enabled /etc/apache2/sites-enabled/parley.named_vhost
-sudo vim /etc/apache2/sites-enabled/parley.named_vhost <font color="green"># make appropriate changes</font>
-sudo a2en parley.named_vhost</code></blockquote>
+        <blockquote><code>sudo cp config/parley.sites-enabled /etc/apache2/sites-available/parley.named_vhost
+sudo vim /etc/apache2/sites-available/parley.named_vhost <font color="green"># make appropriate changes</font>
+sudo a2ensite parley.named_vhost</code></blockquote>
     </body>
 </html>
