@@ -1,5 +1,9 @@
 TODO LIST
 
+  - 11:58 <marcus> btw did you consider packing the css and js to reduce the number of includes?
+    http://search.cpan.org/~pmichaux/JavaScript-Minifier-1.05/lib/JavaScript/Minifier.pm
+    http://search.cpan.org/~pmichaux/CSS-Minifier-0.01/lib/CSS/Minifier.pm
+  - setup guide; add mailing list details
   - Gravatar?
   - OpenID?
   - User Profile --> User Roles (for admins)
