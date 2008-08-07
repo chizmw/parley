@@ -53,13 +53,22 @@
                 <li><a href="#site_usage_terms">Site Usage Terms</a></li>
                 <li><a href="#site_administration">Site Administration</a></li>
                 <ul>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#users">Users</a></li>
-                    <li><a href="#ip_bans">IP Bans</a></li>
+                    <li><a href="#services">services</a></li>
+                    <li><a href="#users">users</a></li>
+                    <li><a href="#ip_bans">ip bans</a></li>
                 </ul>
                 <li><a href="#additional_user_administration">Additional User Administration</a></li>
             </ul>
             <li><a href="#apache_fastcgi">apache + fastcgi</a></li>
+            <ul>
+                <li><a href="#apache_fastcgi_configure">configuring fastcgi</a></li>
+                <li><a href="#apache_fastcgi_troubleshooting">troubleshooting fastcgi</a></li>
+                <ul>
+                    <li><a href="#fastcgi_permission_denied">Permission Denied</a></li>
+                    <li><a href="#fastcgi_unable_to_store_upload">Unable to store upload</a></li>
+                </ul>
+            </ul>
+            <li><a href="#further_information">Further Information</a></li>
         </ol>
 
         <a id="getting_parley"></a>
@@ -78,11 +87,15 @@
         <a id="location"></a>
         <h3>Location</h3>
 
+        <p>For the purposes of this guide we are assuming that there is a user
+        called "parley" [HOME=/home/parley/] who has never deployed the
+        application previously.</p>
+
         <p>We'll keep as much of parley as possible inside its own directory
         area:</p>
 
-        <blockquote><code>mkdir -p ~/development/parley_app/dist
-cd ~/development/parley_app/</code></blockquote>
+        <blockquote><code>mkdir -p ~/parley_app/{dist,versions,user_files}
+cd ~/parley_app/</code></blockquote>
 
         We'll use <code>dist/</code> to store any tarballs that we have
         downloaded, to reduce clutter:
@@ -95,14 +108,19 @@ cd ~/development/parley_app/</code></blockquote>
 
         Then extract our most recent copy [the only one currently]:
 
-        <blockquote><code>tar zxf dist/Parley-1.x.y.tar.gz</code></blockquote>
+        <blockquote><code>tar -C versions/ -zxf dist/Parley-1.x.y.tar.gz</code></blockquote>
 
         Making a softlink to the current version makes navigation easier,
         and will aid us later when we consider a full Apache based deployment:
 
-        <blockquote><code>ln -sv Parley-1.x.y parley
+        <blockquote><code>ln -sv versions/Parley-1.x.y parley
+ln -sv $PWD/user_files parley/root/static/user_file
+chmod -R g+w user_files
 cd parley</code></blockquote>
 
+        <p>To prevent permission errors later on, you should ensure
+        that the user that runs the apache processes is in the <em>parley</em>
+        group.</p>
 
         <a id="database"></a>
         <h3>Database</h3>
@@ -286,10 +304,10 @@ Apr 21 19:07:26 wiggin parley_email_engine[18061]: child process created</code><
         and <em>Forum Moderation</em>.</p>
 
         <a id="apache_fastcgi"></a>
-        <h3>apache + fastcgi</h3>
+        <h2>apache + fastcgi</h2>
 
-        <p>Any vaguely sane deployment of parley <strong>will not</strong> run
-        using <i>server/parley_server.pl</i>.</p>
+        <p>Any vaguely sane deployment of parley <strong>will not</strong> be
+        run using <i>script/parley_server.pl</i>.</p>
 
         <p>A common (and Catalyst recommended) deployment method is to use
         <em>apache + fastcgi</em>. The process is outlined in the
@@ -299,11 +317,99 @@ Apr 21 19:07:26 wiggin parley_email_engine[18061]: child process created</code><
         mod_fastcgi installed:</p>
         <blockquote><code>sudo aptitude install libapache2-mod-fastcgi</code></blockquote>
 
+        <a id="apache_fastcgi_configure"></a>
+        <h3>Configuring fastcgi</h3>
+
+        <p>To avoid permission issues with certain files it's recommended that
+        you edit <em>parley.conf</em> and change:</p>
+
+        <blockquote><code>COMPILE_DIR             /tmp/parley-ttcache
+
+# ...
+
+storage   /tmp/parley.session</code></blockquote>
+
+        <p>to:</p>
+
+        <blockquote><code>COMPILE_DIR             /tmp/parley-<b>fastcgi</b>.ttcache
+
+# ...
+
+storage   /tmp/parley.<b>fastcgi</b>.session</code></blockquote>
+
         <p>Assuming you have a system with <em>a2ensite</em> installed on it
         you can do the following:</p>
 
-        <blockquote><code>sudo cp config/parley.sites-enabled /etc/apache2/sites-available/parley.named_vhost
+        <blockquote><code>sudo cp config/parley.sites-available /etc/apache2/sites-available/parley.named_vhost
 sudo vim /etc/apache2/sites-available/parley.named_vhost <font color="green"># make appropriate changes</font>
-sudo a2ensite parley.named_vhost</code></blockquote>
+sudo a2ensite parley.named_vhost
+sudo /etc/init.d/apache2 reload</code></blockquote>
+
+        <p>If all went well, you should now be able to visit the VirtualHost
+        defined in <em>/etc/apache2/sites-available/parley.named_vhost</em>
+        and find a working instance of Parley.</p>
+
+        <a id="apache_fastcgi_troubleshooting"></a>
+        <h3>Troubleshooting fastcgi</h3>
+
+        <a id="fastcgi_permission_denied"></a>
+        <h4>Open of share file /tmp/parley.session failed: Permission denied</h4>
+
+        <p>Sometimes the fastcgi processes fail to start, and raise an error
+        similar to:</p>
+        
+        <blockquote><code>Open of share file /tmp/parley.session failed: Permission denied
+  at /usr/lib/perl5/Cache/FastMmap.pm line 574.</code></blockquote>
+
+        <p>This is usually caused by running the application as one user, then
+        later trying to run it as a different user. The second user will
+        usually discover that they don't have write access to the application
+        session file.</p>
+
+        <p>There are a number of resolutions for the issue:</p>
+        <ul>
+            <li>remove /tmp/parley.session and parley-ttcache</li>
+            <li>make the files world-writable</li>
+            <li>make the files group-writable, and put relevant users in the relevant group</li>
+        </ul>
+
+        <a id="fastcgi_unable_to_store_upload"></a>
+        <h4>Failed to create destination directory. Unable to store upload.</h4>
+
+        <p>If you see the above message when trying to upload a user avatar
+        it's usually a result of incorrect permissions. You will usually have
+        a corresponding message in the apache error log:</p>
+
+        <blockquote><code>/home/parley/parley_app/versions/Parley-1.0.0/root/static/user_file/0
+  - Permission denied</code></blockquote>
+
+        <p>This can be resolved (as can most file permission issues) in more
+        that one way.</p>
+
+        <p><strong>NOTE:</strong> because of the way the application was
+        deployed the "offending" directory is
+        <code>parley_app/user_files/</code></p> which we linked to as
+        <code>parley_app/versions/Parley-1.0.0/root/static/user_file</code>.
+
+        <p>One solution is to make the directory group-writeable and add the
+        apache process owner to that group:</p>
+
+        <blockquote><code>cd ~/parley_app/
+chmod -Rv g+w user_files
+sudo usermod -a -G parley <em>www-data</em>
+groups <em>www-data</em></code></blockquote>
+
+        <a id="further_information"></a>
+        <h2>Further Information</h2>
+
+        <p>
+        Please direct any further questions to the
+        <a href="">Parley user's mailing list</a>.
+
+        <!--
+            c&#104;iselwright&#64;users.be&#114;lios&#46;de
+        -->
+        </p>
+
     </body>
 </html>

@@ -339,7 +339,14 @@ sub _process_form_avatar {
 
         # create the directory if it doesn't exist
         if (not -d $target_dir) {
-            mkdir $target_dir;
+            # try to create the target directory
+            mkdir $target_dir or do {
+                $c->log->error( qq{$target_dir - $!} );
+                parley_warn($c, $c->localize(q{FILE NEWDIR FAILED}));
+                return;
+            };
+
+            # if for some reason the directory still doesn't exist..
             if (not -d $target_dir) {
                 parley_warn($c, $c->localize(q{FILE NEWDIR FAILED}));
                 $c->log->error( qq{$target_dir - $!} );
