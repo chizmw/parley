@@ -25,6 +25,9 @@ msgstr "Errore 404"
 msgid "ACCEPT TERMS"
 msgstr "È necessario accettare i Termini e Condizioni per continuare ad utilizzare questo sito"
 
+msgid "Access Denied"
+msgstr "Accesso Negato"
+
 msgid "Activate Your %s Registration"
 msgstr "Attivare Registrazione %s"
 
@@ -51,6 +54,9 @@ msgstr "Bisogna specificare il discussione da chiudere"
 
 msgid "ADMIN SPECIFY STICK THREAD"
 msgstr "Bisogna specificare il discussione di rilievo"
+
+msgid "Administration"
+msgstr "Amministrazione"
 
 msgid "ago"
 msgstr "fa"
@@ -239,8 +245,20 @@ msgstr "Autenticazione URL Incompleta"
 msgid "Incomplete URL"
 msgstr "URL Incompleta"
 
+msgid "IP Bans"
+msgstr "Indirizzi IP banditi"
+
+msgid "IP Information"
+msgstr "IP Information"
+
 msgid "IP Logged"
 msgstr "IP Loggato"
+
+msgid "Invalid %1"
+msgstr "%1 invalido"
+
+msgid "Invalid requested value"
+msgstr "Valore richiesto invalido"
 
 msgid "Last"
 msgstr "Ultimo"
@@ -305,8 +323,20 @@ msgstr "Utente:"
 msgid "Login"
 msgstr "Login"
 
+msgid "Login Not Allowed"
+msgstr "Login Non Permesso"
+
+msgid "Logins are not permitted from %1"
+msgstr "Login non permessi da %1"
+
 msgid "Logout"
 msgstr "Logout"
+
+msgid "Manage"
+msgstr "Amministra"
+
+msgid "Manage user roles"
+msgstr "Amministra ruoli utenti"
 
 msgid "Me"
 msgstr "Personale"
@@ -347,8 +377,14 @@ msgstr "Nick"
 msgid "No"
 msgstr "No"
 
+msgid "No Moderators"
+msgstr "Non ci sono moderatori"
+
 msgid "No posts"
 msgstr "Non ci sono messaggi"
+
+msgid "No reason given"
+msgstr "Non è data nessuna ragione"
 
 msgid "NO MATCHING USERS"
 msgstr "Non ci sono utenti che corrispondo alle informazioni fornite"
@@ -455,6 +491,9 @@ msgstr "Scegli una lingua"
 msgid "Please enter your information"
 msgstr "Per favore fornire le proprie informazioni"
 
+msgid "Please enter suspension information"
+msgstr "Immettere informazioni riguardanti la sospensione"
+
 msgid "Please enter your username and password"
 msgstr "Per favore fornire il nome utente e la password"
 
@@ -469,6 +508,12 @@ msgstr "Messaggio Modificato Da: %1"
 
 msgid "Posted from %1"
 msgstr "Inviato da %1"
+
+msgid "Posting Not Allowed"
+msgstr "Non è permesso inviare messaggi"
+
+msgid "Posting is not permitted from %1"
+msgstr "Non è permesso inviare messaggi da %1"
 
 msgid "Posts"
 msgstr "Messaggi"
@@ -506,8 +551,17 @@ msgstr "Crea Nuova Discussione"
 msgid "Quote"
 msgstr "Cita"
 
+msgid "Reason for suspension"
+msgstr "Ragione per sospensione"
+
 msgid "Recently Updated Threads"
 msgstr "Thread Aggiornati Recentemente"
+
+msgid "Registration Not Allowed"
+msgstr "Non è permesso effettuare la registrazione"
+
+msgid "Registrations are not permitted from %1"
+msgstr "Non è permesso effettuare la registrazione da %1"
 
 # "Sign Up"
 msgid "Register"
@@ -609,6 +663,9 @@ msgstr "Sito"
 #msgid "Snippet"
 #msgstr "Frammento"
 
+msgid "Snippet"
+msgstr "Frammento"
+
 msgid "Start"
 msgstr "Start"
 
@@ -632,6 +689,12 @@ msgstr "Oggetto"
 
 msgid "Summary of Changes"
 msgstr "Sommario di Modifiche"
+
+msgid "Suspend Account"
+msgstr "Sospendi Account"
+
+msgid "Suspended"
+msgstr "Sospeso"
 
 msgid "TERMS ADD NEW"
 msgstr "Aggiungi Nuovi Termini &amp; Condizioni del sito"
@@ -684,6 +747,9 @@ msgstr "Esempio formattazione ora"
 msgid "Topic"
 msgstr "Discussione"
 
+msgid "Unauthorized!"
+msgstr "Non autorizzato!"
+
 msgid "Unknown field name"
 msgstr "Nome campo sconsociuto"
 
@@ -720,6 +786,12 @@ msgstr "La registrazione è stat autenticata"
 msgid "User Profile"
 msgstr "Profilo Utente"
 
+msgid "User Roles"
+msgstr "Ruoli Utente"
+
+msgid "User has never posted"
+msgstr "L'utente non ha mai inviato messaggi"
+
 msgid "USERNAME IN USE"
 msgstr "Il nome utente fornito è già in uso. Selezionare un altro nome."
 
@@ -729,17 +801,20 @@ msgstr "Nome Utente Fornito Sbagliato."
 msgid "Username"
 msgstr "Nome Utente"
 
+msgid "Users"
+msgstr "Utenti"
+
 msgid "View"
 msgstr "Visualizza"
 
-#msgid "view"
-#msgstr "visualizzare"
+msgid "view"
+msgstr "view"
 
 msgid "View all"
 msgstr "Visualizza tutti"
 
-#msgid "views"
-#msgstr "views"
+msgid "views"
+msgstr "views"
 
 msgid "View Threads"
 msgstr "Visualizza Thread"
@@ -749,6 +824,9 @@ msgstr "Segui questo discussione"
 
 msgid "watching this thread"
 msgstr "questo discussione è sotto osservazione"
+
+msgid "We're not in Kansas any more"
+msgstr "Non siamo più in Kansas"
 
 msgid "wrote"
 msgstr "ha scritto"
@@ -761,6 +839,9 @@ msgstr "Non stai seguendo alcun discussione"
 
 msgid "You are watching this thread"
 msgstr "Stai seguendo questo discussione"
+
+msgid "You don't have the required privileges to do that"
+msgstr "Non hai l'autorizzazione necessaria per farlo"
 
 msgid "Your Details"
 msgstr "Le tue Informazioni"

@@ -14,6 +14,38 @@ It's unlikely that we'll need an 'en' file in the project.
             - "Manage user roles"
             - "Unauthorized!"
 
+    it.po:
+        - added:
+            - "Access Denied"
+            - "Administration"
+            - "IP Bans"
+            - "IP Information"
+            - "Invalid %1"
+            - "Invalid requested value"
+            - "Login Not Allowed"
+            - "Logins are not permitted from %1"
+            - "Manage"
+            - "Manage user roles"
+            - "No Moderators"
+            - "No reason given"
+            - "Please enter suspension information"
+            - "Posting Not Allowed"
+            - "Posting is not permitted from %1"
+            - "Reason for suspension"
+            - "Registration Not Allowed"
+            - "Registrations are not permitted from %1"
+            - "Snippet"
+            - "Suspend Account"
+            - "Suspended"
+            - "Unauthorized!"
+            - "User Roles"
+            - "User has never posted"
+            - "Users"
+            - "view"
+            - "views"
+            - "We're not in Kansas any more"
+            - "You don't have the required privileges to do that"
+
 0.59
     i_default.po:
         - added:
