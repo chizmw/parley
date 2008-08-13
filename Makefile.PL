@@ -19,7 +19,6 @@ requires(
     'Catalyst::Plugin::Authorization::ACL'                      => 0,
     'Catalyst::Plugin::Authorization::Roles'                    => 0,
     'Catalyst::Plugin::ConfigLoader'                            => 0,
-    'Catalyst::Plugin::Dumper'                                  => 0,
     'Catalyst::Plugin::Email'                                   => 0,
     'Catalyst::Plugin::FillInForm'                              => 0,
     'Catalyst::Plugin::FormValidator'                           => 0,

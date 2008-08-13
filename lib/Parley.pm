@@ -7,7 +7,6 @@ use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 use Catalyst::Runtime '5.70';
 use Catalyst qw/
-    Dumper
     StackTrace
 
     ConfigLoader
