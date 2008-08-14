@@ -9,7 +9,6 @@ TODO LIST
   - User Profile --> User Roles (for admins)
   - use TheSchwartz
   - forumcode "quickhelp" in posting screen(s)
-  - get latest i18n from DJ
   - "Cancel" from post/edit
   - "Cancel" from thread/reply
   - fix <ul>/<ol> CSS
@@ -36,6 +35,7 @@ TODO LIST
   - investigate: package Your::Schema; sub connect { do the check; next::method }
   - investigate: DBIx::Class::Schema::Versioned
   - investigate: t/model_Post.t / distinct count
+D - get latest i18n from DJ
 D - Parley::Version (a la SVK)
 D - login form flickers on IE7 page load
 D - [bug] user/profile doesn't show avatar

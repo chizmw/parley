@@ -39,9 +39,9 @@ reasoning from interested parties.
 1.0.0:
 
     - [D] upgrade to YUI 2.5.x
-    - update to use "new catalyst authentication"
+    - [D] update to use "new catalyst authentication"
     - [D] replace Graphics::Magick (Image::Mate?)
-    - write decent Getting Started docs
+    - [D] write decent Getting Started docs
 
 1.0.1:
 
@@ -59,3 +59,8 @@ reasoning from interested parties.
         - resend auth mail(s)
         - realtime time-format example update
         - gravatar support
+
+1.0.4:
+
+    - quick reply
+    - quick help
