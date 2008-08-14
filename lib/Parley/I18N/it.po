@@ -28,6 +28,9 @@ msgstr "È necessario accettare i Termini e Condizioni per continuare ad utilizz
 msgid "Access Denied"
 msgstr "Accesso Negato"
 
+msgid "Access to this application is not permitted from %1"
+msgstr "Non è permesso accedere all'applicazione da %1"
+
 msgid "Activate Your %s Registration"
 msgstr "Attivare Registrazione %s"
 
