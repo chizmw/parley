@@ -105,6 +105,7 @@ MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
 parley.conf
+parley.nl
 README
 ROADMAP
 root/base/about/modules
@@ -829,6 +830,7 @@ script/parley_schema_export_all.pl
 script/parley_server.pl
 script/parley_test.pl
 script/time_string_sample.pl
+script/update_i18n_todo.sh
 script/yml2conf
 t.output/0.59.00
 t.output/0.59.03
@@ -879,3 +881,5 @@ t/schema/user_role.t
 t/view_Plain.t
 t/view_TT.t
 TODO
+todo.i18n/it
+todo.i18n/nl
