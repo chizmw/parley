@@ -36,7 +36,7 @@ reasoning from interested parties.
 
 ** VERSION FORMAT ALTERATION **
 
-1.0.0:
+1.0.0 (Oct 2008):
 
     - [D] upgrade to YUI 2.5.x
     - [D] update to use "new catalyst authentication"
