@@ -32,6 +32,8 @@ L<FamFamFam Flag Icons|http://www.famfamfam.com/lab/icons/flags/>
 
 Translation by Rob Partridge
 
+Additional translations by Kevin Golding
+
 =head2 Italian
 
 Translation by Darius Jokilehto
