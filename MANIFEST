@@ -29,6 +29,7 @@ doc/parley-qs.html
 doc/README.admin
 doc/README.gravatar
 doc/setup.html
+inc-wibble/Module/Install.pm
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
