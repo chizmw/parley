@@ -102,7 +102,7 @@ sub auto : Private {
         $c->model('ParleyDB')->resultset('PreferenceTimeString')->search(
             {},     # fetch everything
             {
-                order_by    => 'sample',    # order by the "preview/sample" string
+                order_by    => [\'sample ASC'],    # order by the "preview/sample" string
             }
         );
 
@@ -160,7 +160,7 @@ sub preferences : Local {
             watched     => 1,
         },
         {
-            order_by    => 'last_post.created DESC',
+            order_by    => [\'last_post.created DESC'],
             join        => {
                 'thread' => 'last_post',
             },

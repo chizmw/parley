@@ -15,7 +15,7 @@ sub role_list {
         {
         },
         {
-            'order_by' => [ 'idx ASC', 'description ASC' ],
+            'order_by' => [ \'idx ASC', \'description ASC' ],
         },
     );
 

@@ -89,7 +89,7 @@ sub forum :Local {
         $where,
         {
             join        => \@join,
-            order_by    => q{created DESC},
+            order_by    => [\'created DESC'],
             # results paging
             rows        => $c->config->{search_results_per_page},
             page        => $c->stash->{current_page},

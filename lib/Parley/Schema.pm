@@ -32,4 +32,7 @@ __PACKAGE__->load_classes(
     ]
 );
 
+# XXX doesn't play at all well with postgres
+#__PACKAGE__->load_components(qw/+DBIx::Class::Schema::Versioned/);
+
 1;

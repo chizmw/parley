@@ -174,7 +174,7 @@ sub view : Local {
             'me.thread_id' => $c->_current_thread->id(),
         },
         {
-            order_by    => 'me.created ASC',
+            order_by    => [\'me.created ASC'],
             rows        => $c->config->{posts_per_page},
             page        => $c->stash->{current_page},
 
@@ -305,7 +305,7 @@ sub watches : Local {
             watched     => 1,
         },
         {
-            order_by    => 'last_post.created DESC',
+            order_by    => [\'last_post.created DESC'],
             join        => {
                 'thread' => 'last_post',
             },
@@ -499,7 +499,7 @@ sub _get_thread_reply_post {
                 'thread_id' => $c->_current_thread()->id(),
             },
             {
-                order_by    => 'created ASC',
+                order_by    => [\'created ASC'],
                 rows        => 1,
             }
         );

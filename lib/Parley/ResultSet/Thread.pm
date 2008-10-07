@@ -48,7 +48,7 @@ sub last_post_viewed_in_thread {
             },
             {
                 rows        => 1,
-                order_by    => 'created ASC',
+                order_by    => [\'created ASC'],
             }
         );
 
@@ -75,7 +75,7 @@ sub last_post_viewed_in_thread {
             },
             {
                 rows        => 1,
-                order_by    => 'created DESC',
+                order_by    => [\'created DESC'],
             }
         );
 
@@ -115,7 +115,7 @@ sub recent {
         $where,
         {
             join        => \@join,
-            order_by    => 'last_post.created DESC',
+            order_by    => [\'last_post.created DESC'],
 
             rows        => $c->config->{threads_per_page},
             page        => $c->stash->{current_page},

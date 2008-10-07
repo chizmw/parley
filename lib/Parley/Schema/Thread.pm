@@ -152,7 +152,7 @@ sub PROBABLY_DEAD_last_post_viewed_in_thread :ResultSet {
             },
             {
                 rows        => 1,
-                order_by    => 'created ASC',
+                order_by    => [\'created ASC'],
             }
         );
 
@@ -177,7 +177,7 @@ sub PROBABLY_DEAD_last_post_viewed_in_thread :ResultSet {
         },
         {
             rows        => 1,
-            order_by    => 'created DESC',
+            order_by    => [\'created DESC'],
         }
     );
 

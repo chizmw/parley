@@ -84,7 +84,7 @@ sub users_autocomplete : Local {
             forum_name => { -ilike => $c->request->param('query') . q{%} },
         },
         {
-            'order_by' => 'forum_name',
+            'order_by' => [\'forum_name ASC'],
             columns => [qw/id forum_name first_name last_name/],
         }
     );

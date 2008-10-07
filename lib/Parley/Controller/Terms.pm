@@ -28,7 +28,7 @@ sub index : Private {
         $c->model('ParleyDB')->resultset('Terms')->search(
             {},
             {
-                'order_by' => 'created DESC',
+                'order_by' => [\'created DESC'],
             }
         )
     ;

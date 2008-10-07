@@ -255,7 +255,7 @@ sub last_suspension {
         {
             join => [qw( action )],
             rows => 1,
-            order_by    => 'created DESC',
+            order_by    => [\'created DESC'],
         }
     );
 

@@ -5,14 +5,16 @@ use strict;
 use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Model::DBIC::Schema';
 
-__PACKAGE__->config(
-    schema_class => 'Parley::Schema',
-    connect_info => [
-        'dbi:Pg:dbname=parley',
-        'parley',
-        
-    ],
-);
+#__PACKAGE__->config(
+#    schema_class => 'Parley::Schema',
+#    connect_info => [
+#        'dbi:Pg:dbname=parley',
+#        'parley',
+#        
+#    ],
+#);
+
+# CONFIG COMES FROM parley.conf
 
 =head1 NAME
 

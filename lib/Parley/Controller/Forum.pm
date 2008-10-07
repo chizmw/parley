@@ -37,7 +37,7 @@ sub view : Local {
             },
             {
                 join        => 'last_post',
-                order_by    => 'sticky DESC, last_post.created DESC',
+                order_by    => [\'sticky DESC', \'last_post.created DESC'],
                 # pager information
                 rows        => $c->config->{threads_per_page},
                 page        => $c->stash->{current_page},

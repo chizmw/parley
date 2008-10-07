@@ -14,7 +14,7 @@ sub ban_type_list {
     $rs = $resultsource->search(
         {},
         {
-            'order_by'  => ['name ASC'],
+            'order_by'  => [\'name ASC'],
         }
     );
 

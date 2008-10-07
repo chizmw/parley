@@ -17,7 +17,7 @@ sub available_list {
             active  => 1,
         },
         {
-            order_by    => 'name ASC',
+            order_by    => [\'name ASC'],
         }
     );
 
@@ -33,7 +33,7 @@ sub forum_list {
             active => 1,
         },
         {
-            'order_by'  => 'me.id ASC',
+            'order_by'  => [\'me.id ASC'],
             prefetch => [
                 {'last_post' => { 'creator' => 'authentication' } },
             ],

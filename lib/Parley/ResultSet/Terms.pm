@@ -15,7 +15,7 @@ sub latest_terms {
         },
         {
             rows        => 1,
-            order_by    => 'created DESC',
+            order_by    => [\'created DESC'],
         }
     );
 
