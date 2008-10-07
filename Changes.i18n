@@ -6,7 +6,7 @@ other translations being made from it.  As a consequence of this, i-default
 will be used as the 'en' i18n file.
 It's unlikely that we'll need an 'en' file in the project.
 
-1.0.0
+1.0.1
 
     Differences are now tracked and reported using a script that compares
     a given language with 'i_default'.
@@ -17,6 +17,7 @@ It's unlikely that we'll need an 'en' file in the project.
 
     (2008-10-06)
 
+1.0.0
 
     i_default.po:
         - added:
