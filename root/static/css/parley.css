@@ -90,6 +90,18 @@ a, a:link, a:visited, a:active {
     text-decoration:    none;
 }
 
+/* lists */
+ol li {
+    list-style-type:        decimal;
+    list-style-position:    inside;
+}
+
+ul li {
+    list-style-type:        disc;
+    list-style-position:    inside;
+}
+
+
 /* tables */
 th {
     font-size:          100%;
