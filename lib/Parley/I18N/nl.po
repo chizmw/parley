@@ -258,6 +258,9 @@ msgstr "Ongeldige gevraagde waarde"
 msgid "IP Bans"
 msgstr "IP Verboden"
 
+msgid "IP Information"
+msgstr "IP-Informatie"
+
 msgid "IP Logged"
 msgstr "IP Geregistreerd"
 
@@ -332,6 +335,9 @@ msgstr "Logout"
 
 msgid "Manage"
 msgstr "Leid"
+
+msgid "Manage user roles"
+msgstr "Beheren rollen van gebruikers"
 
 msgid "Me"
 msgstr "Me"
@@ -601,10 +607,13 @@ msgid "Search Results"
 msgstr "De Resultaten van het onderzoek"
 
 msgid "Searching for"
-msgstr "Het zoeken naar
+msgstr "Het zoeken naar"
 
 msgid "Select Zone"
 msgstr "Selecteer Streek"
+
+#msgid "Select Zone"
+#msgstr "Kies Tijdzone"
 
 msgid "Service"
 msgstr "De dienst"
@@ -738,6 +747,9 @@ msgstr "Het formatteren van de tijd voorbeeld"
 msgid "Topic"
 msgstr "Onderwerp"
 
+msgid "Unauthorized!"
+msgstr "Toestemming geweigerd!"
+
 msgid "Unknown field name"
 msgstr "Onbekende gebiedsnaam"
 
@@ -770,6 +782,9 @@ msgstr "Bijna daar..."
 
 msgid "USER AUTHENTICATED"
 msgstr "Uw registratie is voor authentiek verklaard"
+
+msgid "User has never posted"
+msgstr "Geen berichten van deze gebruiker"
 
 msgid "User Profile"
 msgstr "Het Profiel van de gebruiker"

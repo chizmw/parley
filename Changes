@@ -8,7 +8,7 @@ This file documents the revision history for Parley.
     - resolved some bugs and errors when deploying from scratch
     - added more comprehensive instructions for getting started
     - updated to new Authentication and Authorization modules
-    - added recent i18n translations
+    - added recent i18n translations (.it and .nl)`
 
 
 After knackering up the version numbers towards the end of 0.59

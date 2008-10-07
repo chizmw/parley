@@ -6,7 +6,17 @@ other translations being made from it.  As a consequence of this, i-default
 will be used as the 'en' i18n file.
 It's unlikely that we'll need an 'en' file in the project.
 
-1.0.0 (UNDER DEVELOPMENT)
+1.0.0
+
+    Differences are now tracked and reported using a script that compares
+    a given language with 'i_default'.
+    The comparisons are generated and viewed as follows:
+
+       ./script/update_i18n_todo.sh
+       more todo.i18n/*
+
+    (2008-10-06)
+
 
     i_default.po:
         - added:
@@ -45,6 +55,16 @@ It's unlikely that we'll need an 'en' file in the project.
             - "views"
             - "We're not in Kansas any more"
             - "You don't have the required privileges to do that"
+
+    nl.po:
+        - fixed:
+            - "Searching for"
+
+        - added:
+            - "IP Information"
+            - "Manage user roles"
+            - "Unauthorized!"
+            - "User has never posted"
 
 0.59
     i_default.po:
