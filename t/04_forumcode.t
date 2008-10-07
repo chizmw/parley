@@ -86,6 +86,10 @@ BEGIN {
             in  => '[url name="Google" ]http://www.google.com/[/url]',
             out => '<a href="http://www.google.com/">Google</a>',
         },
+        {
+            in  => '[URL="http://www.google.com/"]Google[/URL]',
+            out => '<a href="http://www.google.com/">Google</a>',
+        },
 
         # let people put odd stuff in the name if they really want
         {
@@ -137,6 +141,11 @@ BEGIN {
             in      => q{[img alt="Foo"]http://somewhere.com/myImage.jpg[/img]},
             out     => q{<img src="http://somewhere.com/myImage.jpg" alt=&quot;Foo&quot; />},
             diag    => 'Test this URL in browsers!',
+        },
+        # explosm / cyanide style
+        {
+            in      => q{[IMG]http://www.flashasylum.com/db/files/Comics/Rob/luckyunderwear.png[/IMG]},
+            out     => q{<img src="http://www.flashasylum.com/db/files/Comics/Rob/luckyunderwear.png" />},
         },
 
         {
@@ -213,6 +222,13 @@ And another:
         {
             in      => q{[quote quoting="Joe"]quote markup test[/quote]},
             out     => q{<div class="forumcode_quote"><div class="forumcode_quoting">Quoting Joe:</div>quote markup test</div>},
+        },
+
+
+        # Cyanide Comic (explosm.com) forum-code
+        {
+            in      => q{[URL="http://www.explosm.net/comics/1393/"][IMG]http://www.flashasylum.com/db/files/Comics/Rob/luckyunderwear.png[/IMG][/URL]},
+            out     => q{<a href="http://www.explosm.net/comics/1393/"><img src="http://www.flashasylum.com/db/files/Comics/Rob/luckyunderwear.png" /></a>},
         },
     );
 

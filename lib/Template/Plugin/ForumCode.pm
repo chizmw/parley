@@ -109,6 +109,15 @@ sub _url_links {
         \[/url\]        # close the URL tag
     }
     {<a href="$2">$1</a>}xmsg;
+    # bbcode / explosm style urls
+    $$textref =~ s{
+        \[URL=&quot;    # opening url tag
+        (.+?)           # the url
+        &quot;\]        # close-opening tag
+        (.+?)           # link name/text/label
+        \[/URL]         # closing tag
+    }
+    {<a href="$1">$2</a>}ximsg;
 }
 
 sub _images {
@@ -122,7 +131,8 @@ sub _images {
         (.+?)
         \[/img\]
     }
-    {<img src="$2"$1 />}xmsg;
+    {<img src="$2"$1 />}ximsg;
+    # bbcode / explosm style images
 }
 
 sub _colouring {
