@@ -43,15 +43,15 @@ reasoning from interested parties.
     - [D] replace Graphics::Magick (Image::Mate?)
     - [D] write decent Getting Started docs
 
-1.0.1:
+1.1.0:
 
     - advanced search
 
-1.0.2:
+1.2.0:
 
     - admin: add/edit/order forums
 
-1.0.3:
+1.3.0:
 
     - user prefs:
         - language preference
@@ -60,7 +60,7 @@ reasoning from interested parties.
         - realtime time-format example update
         - gravatar support
 
-1.0.4:
+1.4.0:
 
     - quick reply
     - quick help
