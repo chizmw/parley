@@ -21,3 +21,4 @@ t/99.prefetch_experiments.t
 .*YUI.*
 root/base/yui
 .*\.sqlite3
+\.svk
