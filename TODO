@@ -1,9 +1,12 @@
 TODO LIST
 
+  - local file permissions (for avatar uploads)
+  - optional ReCAPTCHA during sign-up
+  - optional google ads
+  - optional google analytics
   - 11:58 <marcus> btw did you consider packing the css and js to reduce the number of includes?
     http://search.cpan.org/~pmichaux/JavaScript-Minifier-1.05/lib/JavaScript/Minifier.pm
     http://search.cpan.org/~pmichaux/CSS-Minifier-0.01/lib/CSS/Minifier.pm
-  - setup guide; add mailing list details
   - Gravatar?
   - OpenID?
   - User Profile --> User Roles (for admins)
@@ -11,7 +14,6 @@ TODO LIST
   - forumcode "quickhelp" in posting screen(s)
   - "Cancel" from post/edit
   - "Cancel" from thread/reply
-  - fix <ul>/<ol> CSS
   - Quick Reply
   - login form doesn't submit onEnter
   - TESTS, TESTS, TESTS!
@@ -35,6 +37,8 @@ TODO LIST
   - investigate: package Your::Schema; sub connect { do the check; next::method }
   - investigate: DBIx::Class::Schema::Versioned
   - investigate: t/model_Post.t / distinct count
+D - fix <ul>/<ol> CSS
+D - setup guide; add mailing list details
 D - get latest i18n from DJ
 D - Parley::Version (a la SVK)
 D - login form flickers on IE7 page load
