@@ -122,7 +122,6 @@ sub authenticate : Path('/user/authenticate') {
     );
 
     # get the first (and should be only) match
-    $c->log->dumper($c->stash->{signup_user}->{_column_data});
 
     # mark the person as authenticated
     $c->stash->{signup_user}->authentication->authenticated(1);

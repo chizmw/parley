@@ -351,7 +351,6 @@ sub _user_reset {
             . $matches->count
             . q{ record(s)}
         );
-        $c->log->dumper($criteria);
         #return uniq(sort @messages);
         return;
     }
@@ -389,10 +388,6 @@ sub _user_reset {
 sub _txn_password_reset {
     my ($self, $c, $person) = @_;
     my ($random, $pwd_reset);
-
-    $c->log->dumper( ref $self,     'REF_SELF' );
-    $c->log->dumper( ref $c,        'REF_C' );
-    $c->log->dumper( ref $person,   'REF_PERSON' );
 
     # if it's good enough for Cozens, it's good enough for me :-)
     $random = md5_hex(time.(0+{}).$$.rand);
