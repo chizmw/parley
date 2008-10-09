@@ -1,5 +1,10 @@
 This file documents the revision history for Parley.
 
+1.0.2
+    - fixed "vanishing '+' symbol" issue in Message Preview
+    - removed ->dumper() calls that were overlooked and caused fatal errors
+    - specified minimum version numbers for most dependencies
+
 1.0.1   Wed Oct  8 00:26:29 BST 2008
     - added config options to use quote_char and name_sep in DB calls
     - updated order_by params in searches to work with quote_char
