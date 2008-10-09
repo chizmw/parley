@@ -114,6 +114,11 @@
         };
 
         this.preview = function() {
+            /* we need to escape the string */
+            /* we also need to (separately) escape '+' during submission */
+            var msgSource = escape(this.user_input.value);
+            msgSource = msgSource.replace(/\+/g, '%2b');
+
             var request = YU.Connect.asyncRequest(
                 'POST',
                 this.config.post_url, //'post/preview',
@@ -124,7 +129,7 @@
                         obj: this
                     }
                 },
-                'msg_source=' + escape(this.user_input.value)
+                'msg_source=' + msgSource
             );
         };
 
