@@ -18,7 +18,7 @@ use Catalyst qw/
     Static::Simple
 
     Session
-    Session::Store::FastMmap
+    Session::Store::DBIC
     Session::State::Cookie
 
     Authentication

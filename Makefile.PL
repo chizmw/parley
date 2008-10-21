@@ -26,7 +26,7 @@ requires(
     'Catalyst::Plugin::Session'                                 => '0.19',
     'Catalyst::Plugin::Session::State::Cookie'                  => '0.09',
     'Cache::FastMmap'                                           => '1.24',
-    'Catalyst::Plugin::Session::Store::FastMmap'                => '0.05',
+    'Catalyst::Plugin::Session::Store::DBIC'                    => '0.06',
     'Catalyst::Plugin::StackTrace'                              => '0.08',
     'Catalyst::Plugin::Static::Simple'                          => '0.20',
     'Catalyst::View::TT'                                        => '0.27',

@@ -1,7 +1,7 @@
 This file documents the revision history for Parley.
 
 1.0.3
-    - (nothing yet)
+    - switch to database store for sessions
 
 1.0.2   Thu Oct  9 14:52:26 BST 2008
     - fixed "vanishing '+' symbol" issue in Message Preview

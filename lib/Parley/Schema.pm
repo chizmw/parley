@@ -24,6 +24,7 @@ __PACKAGE__->load_classes(
         'PreferenceTimeString',
         'RegistrationAuthentication',
         'Role',
+        'Session',
         'TermsAgreed',
         'Terms',
         'Thread',
