@@ -53,6 +53,7 @@ requires(
 );
 
 build_requires (
+    'Test::Aggregate'                                           => '0.35',
     'Test::More'                                                => 0,
     'Test::WWW::Mechanize::Catalyst'                            => 0,
     'Test::DBIx::Class::Schema'                                 => '0.01004',
