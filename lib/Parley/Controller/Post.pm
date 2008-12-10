@@ -7,7 +7,7 @@ use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Controller';
 use DateTime;
 use JSON;
-use Template::Plugin::ForumCode;
+use HTML::ForumCode;
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Global class data
@@ -166,7 +166,7 @@ sub view : Local {
 
 sub preview : Local {
     my ($self, $c) = @_;
-    my $tt_forum = Template::Plugin::ForumCode->new();
+    my $tt_forum = HTML::ForumCode->new();
     my $msg_source = $c->request->param('msg_source');
 
     my $json = to_json(
