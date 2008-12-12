@@ -165,16 +165,8 @@ sub view : Local {
 
 sub preview : Local {
     my ($self, $c) = @_;
-    my $tt_forum = HTML::ForumCode->new();
-    my $msg_source = $c->request->param('msg_source');
-
-    $c->stash->{json_data} = {
-        'formatted' =>
-            $tt_forum->forumcode(
-                $msg_source
-            )
-    };
-    $c->forward('View::JSON');
+    $c->log->warn('/post/preview used; please replace with /forumcode/preview');
+    $c->forward('/forumcode/preview');
     return;
 }
 
