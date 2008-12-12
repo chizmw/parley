@@ -8,7 +8,7 @@ BEGIN {
     use Test::Aggregate;
     use FindBin qw($Bin);
     # set our aggregate location
-    $other_test_dir = 't_aggregate_schematests/';
+    $other_test_dir = 't_aggregate/schematests/';
 }
 
 # load the module that provides all of the common test functionality
