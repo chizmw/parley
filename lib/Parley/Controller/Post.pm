@@ -1,12 +1,11 @@
 package Parley::Controller::Post;
-
+# vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;
 
 use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Controller';
 use DateTime;
-use JSON;
 use HTML::ForumCode;
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
