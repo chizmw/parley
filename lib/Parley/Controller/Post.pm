@@ -169,16 +169,13 @@ sub preview : Local {
     my $tt_forum = HTML::ForumCode->new();
     my $msg_source = $c->request->param('msg_source');
 
-    my $json = to_json(
-        {
-            'formatted' =>
-                $tt_forum->forumcode(
-                    $msg_source
-                )
-        }
-    );
-
-    $c->response->body( $json );
+    $c->stash->{json_data} = {
+        'formatted' =>
+            $tt_forum->forumcode(
+                $msg_source
+            )
+    };
+    $c->forward('View::JSON');
     return;
 }
 
