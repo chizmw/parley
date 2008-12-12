@@ -1,5 +1,6 @@
 TODO LIST
 
+  - use HTML::ForumCode::Cookbook::Recipe1 for message preview(s)
   - local file permissions (for avatar uploads)
   - optional ReCAPTCHA during sign-up
   - optional google ads

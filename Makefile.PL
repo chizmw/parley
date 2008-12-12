@@ -30,6 +30,7 @@ requires(
     'Catalyst::Plugin::StackTrace'                              => '0.08',
     'Catalyst::Plugin::Static::Simple'                          => '0.20',
     'Catalyst::View::TT'                                        => '0.27',
+    'Catalyst::View::JSON'                                      => '0.24',
     'Config::General'                                           => '2.37',
     'Data::FormValidator'                                       => '4.50',
     'Data::SpreadPagination'                                    => '0.1.2',

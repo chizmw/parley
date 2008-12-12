@@ -133,6 +133,7 @@
 		</div>
 	</div>
 </div>
+</form>
 
 <style type="text/css">
 	.yui-overlay { position:absolute;background:transparent;border:none;padding:none;margin:none; }
