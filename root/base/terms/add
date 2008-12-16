@@ -104,7 +104,8 @@
             this.preview = function() {
                 var request = YU.Connect.asyncRequest(
                     'POST',
-                    '[%base%]post/preview',
+                    // '/forumcode/preview',
+                    "[%c.uri_for('/forumcode/preview')%]",
                     {
                         success: this.handleSuccess,
                         failure: this.handleFailure,

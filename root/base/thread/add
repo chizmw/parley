@@ -64,7 +64,7 @@
 
     MessagePreview.config.label_preview = '[%l('Preview')%]';
     MessagePreview.config.label_edit    = '[%l('Edit')%]';
-    MessagePreview.config.post_url      = "[%c.uri_for('/post/preview')%]";
+    MessagePreview.config.post_url      = "[%c.uri_for('/forumcode/preview')%]";
 
     MessagePreview.init();
 </script>
