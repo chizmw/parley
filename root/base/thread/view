@@ -107,7 +107,9 @@
                     <br />
                     [% IF post.ip_addr %]
                         [% IF moderator %]
+                        <a href="[%c.uri_for('/site/ip_info',{address=>post.ip_addr})%]">
                             [%l('Posted from [_1]', post.ip_addr)%]
+                        </a>
                         [% ELSE %]
                            [%l('IP Logged')%] 
                         [% END %]
