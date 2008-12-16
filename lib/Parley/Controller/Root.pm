@@ -283,6 +283,22 @@ sub access_denied :Local {
 sub render : ActionClass('RenderView') {
     my ($self, $c) = @_;
 
+    # are we skinned?
+    if (defined $c->config->{site_skin}) {
+        # we always want root and "skin dir"
+        my $include_path = [
+            $c->path_to( 'root' ),
+            $c->path_to( 'root', $c->config->{site_skin}),
+        ];
+        # we /might/ want to fall back on the default (base)
+        if ($c->config->{skin_default_fallback}) {
+            push @{$include_path}, 
+                $c->path_to( 'root', 'base' );
+        }
+        # set the INCLUDE_PATH for TT
+        $c->view('TT')->{include_path} = $include_path
+    }
+
     # if we have any error(s) in the stash, automatically show the error page
     if (defined $c->stash->{error}) {
         $c->stash->{template} = 'error/simple';

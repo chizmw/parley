@@ -53,13 +53,21 @@
         <!-- homebrew javascript -->
         <script type="text/javascript" src="[%c.uri_for('/static/script/ajax_error_dlg.js')%]"></script>
 
-        <!-- defined styles for parley -->
-        <link type="text/css" rel="stylesheet" title="Simple"
-            href="[%c.uri_for('/static/css/parley-min.css')%]" />
+        [% IF ( (!c.config.site_skin) || (c.config.site_skin && c.config.skin_default_fallback) ) %]
+            [% IF (!c.config.exists('skin_default_css') || c.config.skin_default_css) %]
+            <!-- base styling -->
+            <link type="text/css" rel="stylesheet" title="Simple" href="[%c.uri_for('/static/css/parley-min.css')%]" />
+            [% END %]
+        [% END %]
+        [% IF (skin = c.config.site_skin) %]
+        <!-- Skin : [%skin%] -->
+        <link type="text/css" rel="stylesheet" title="Skin:[%skin%]" href="[%c.uri_for("/static/css/parley-${skin}.css")%]" />
+        [% END %]
+
     </head>
 
     <body class="yui-skin-sam">
-        <div id="doc3">
+        <div id="doc4">
             <div id="hd">
                 <div id="user_information">
                     [% IF authed_user %]
