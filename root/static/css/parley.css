@@ -91,14 +91,17 @@ a, a:link, a:visited, a:active {
 }
 
 /* lists */
-ol li {
-    list-style-type:        decimal;
+ol > li, ul > li {
+    margin-left:            8px;
     list-style-position:    inside;
 }
 
-ul li {
+ol > li {
+    list-style-type:        decimal;
+}
+
+ul > li {
     list-style-type:        disc;
-    list-style-position:    inside;
 }
 
 
