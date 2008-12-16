@@ -10,9 +10,9 @@ reasoning from interested parties.
 
 0.58 (Feb 2008):
 
-    - UI improvements and cleanup
-    - DBIC ResultSetManager deprecation
-    - DBIC prefetch (DB optimisation)
+    - [D] UI improvements and cleanup
+    - [D] DBIC ResultSetManager deprecation
+    - [D] DBIC prefetch (DB optimisation)
 
 0.59 (Apr 2008):
 
@@ -67,3 +67,8 @@ reasoning from interested parties.
 
     - quick reply
     - quick help
+
+1.5.0:
+
+    - internal messaging
+    - Report To Moderator
