@@ -8,6 +8,7 @@ This file documents the revision history for Parley.
       - aggregate t/schema/*.t tests
     - use HTML::ForumCode for post preview
     - added /forumcode/preview
+    - make "Posted from a.b.c.d" a clickable link to site/ip_info
 
 1.0.2   Thu Oct  9 14:52:26 BST 2008
     - fixed "vanishing '+' symbol" issue in Message Preview

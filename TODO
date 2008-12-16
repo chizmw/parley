@@ -1,6 +1,7 @@
 TODO LIST
 
-  - use HTML::ForumCode::Cookbook::Recipe1 for message preview(s)
+  - fix "oversized image" bug
+  - fix "user information" CSS location
   - local file permissions (for avatar uploads)
   - optional ReCAPTCHA during sign-up
   - optional google ads
@@ -38,6 +39,7 @@ TODO LIST
   - investigate: package Your::Schema; sub connect { do the check; next::method }
   - investigate: DBIx::Class::Schema::Versioned
   - investigate: t/model_Post.t / distinct count
+D - use HTML::ForumCode::Cookbook::Recipe1 for message preview(s)
 D - fix <ul>/<ol> CSS
 D - setup guide; add mailing list details
 D - get latest i18n from DJ
