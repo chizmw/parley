@@ -45,6 +45,7 @@ reasoning from interested parties.
     - [D] use Test::Aggregate [v1.0.3]
     - [D] upgrade to YUI 2.6.x [v1.0.3]
     - [D] use database for sessions [v1.0.3]
+    - [D] skinning support [v1.0.3]
 
 1.1.0:
 
