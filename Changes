@@ -11,6 +11,10 @@ This file documents the revision history for Parley.
     - make "Posted from a.b.c.d" a clickable link to site/ip_info
     - CSS/layout tweaks and improvements
     - added template skinning [beta]
+    - added example skins: skin1, skin2, skin3
+      - skin1 - CSS only
+      - skin2 - copy of all template files
+      - skin3 - one template file overridden
 
 1.0.2   Thu Oct  9 14:52:26 BST 2008
     - fixed "vanishing '+' symbol" issue in Message Preview
