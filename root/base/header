@@ -59,7 +59,7 @@
             <link type="text/css" rel="stylesheet" title="Parley" href="[%c.uri_for('/static/css/parley-min.css')%]" />
             [% END %]
         [% END %]
-        [% IF (skin = c.config.site_skin) %]
+        [% IF ((skin = authed_user.preference.skin) || (skin = c.config.site_skin)) %]
         <!-- Skin : [%skin%] -->
         <link type="text/css" rel="stylesheet" href="[%c.uri_for("/static/css/parley-${skin}.css")%]" />
         [% END %]

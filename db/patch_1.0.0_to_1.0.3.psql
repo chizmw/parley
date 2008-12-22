@@ -27,9 +27,7 @@ BEGIN;
 
     ALTER TABLE public.preference
         ADD COLUMN
-            skin        varchar(100)
-                NOT NULL
-                DEFAULT 'base'
+            skin        varchar(100) NULL
     ;
 
 -- patch ends here --
