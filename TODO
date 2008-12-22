@@ -38,7 +38,7 @@ TODO LIST
   - investigate: package Your::Schema; sub connect { do the check; next::method }
   - investigate: DBIx::Class::Schema::Versioned
   - investigate: t/model_Post.t / distinct count
-  - skinning (user pref overrides CSS used?)
+D - skinning (user pref overrides CSS used?)
 D - skinning (config frile driven)
 D - use HTML::ForumCode::Cookbook::Recipe1 for message preview(s)
 D - fix <ul>/<ol> CSS
