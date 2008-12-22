@@ -133,7 +133,8 @@ sub preferences : Local {
 
     # show a specific tab?
     if (defined $c->request->param('tab')) {
-        $c->flash->{show_pref_tab} ||= 'tab_' . $c->request->param('tab');
+        $c->session->{show_pref_tab} = 'tab_' . $c->request->param('tab');
+        $c->log->warn( $c->session->{show_pref_tab} );
     }
 
     # formfill/stash data
@@ -167,6 +168,9 @@ sub preferences : Local {
         }
     );
     $c->stash->{thread_watches} = $watches;
+
+    # skin
+    $c->stash->{formdata}{skin} = 'base';
 
     return;
 }
@@ -205,7 +209,7 @@ sub update :Path('/my/preferences/update') {
     if ('time_format' eq $form_name) {
         # return to the right tab
         # use session flash, or we lose the info with the redirect
-        $c->flash->{show_pref_tab} = 'tab_time';
+        $c->session->{show_pref_tab} = 'tab_time';
 
         $ok_update = $self->_process_form_time_format( $c );
     }
@@ -213,7 +217,7 @@ sub update :Path('/my/preferences/update') {
     elsif ('notifications' eq $form_name) {
         # return to the right tab
         # use session flash, or we lose the info with the redirect
-        $c->flash->{show_pref_tab} = 'tab_notifications';
+        $c->session->{show_pref_tab} = 'tab_notifications';
 
         $ok_update = $self->_process_form_notifications( $c );
     }
@@ -221,9 +225,17 @@ sub update :Path('/my/preferences/update') {
     elsif ('user_avatar' eq $form_name) {
         # return to the right tab
         # use session flash, or we lose the info with the redirect
-        $c->flash->{show_pref_tab} = 'tab_avatar';
+        $c->session->{show_pref_tab} = 'tab_avatar';
 
         $ok_update = $self->_process_form_avatar( $c );
+    }
+    # are we updating the avatar
+    elsif ('user_skin' eq $form_name) {
+        # return to the right tab
+        # use session flash, or we lose the info with the redirect
+        $c->session->{show_pref_tab} = 'tab_skin';
+
+        $ok_update = $self->_process_form_skin( $c );
     }
 
     # otherwise we haven't decided how to handle the specified form ...

@@ -48,6 +48,13 @@ __PACKAGE__->add_columns(
     default_value => 'false',
     size => 1,
   },
+
+  "skin" => {
+    data_type => "text",
+    default_value => "base",
+    is_nullable => 0,
+    size => 100,
+  },
 );
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->has_many(

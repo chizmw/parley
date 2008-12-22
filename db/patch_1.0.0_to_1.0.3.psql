@@ -5,6 +5,7 @@
 -- Description:
 --
 --      add table for database based sessions
+--      add skin column in preferences
 
 BEGIN;
 
@@ -23,6 +24,13 @@ BEGIN;
                         not null
     );
     ALTER TABLE sessions OWNER TO parley;
+
+    ALTER TABLE public.preference
+        ADD COLUMN
+            skin        varchar(100)
+                NOT NULL
+                DEFAULT 'base'
+    ;
 
 -- patch ends here --
 

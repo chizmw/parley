@@ -17,9 +17,11 @@
             { label => l('Time'),               tab_name => 'tab_time' },
             { label => l('Notifications'),      tab_name => 'tab_notifications' },
             { label => l('Avatar'),             tab_name => 'tab_avatar' },
+            { label => l('Skin'),               tab_name => 'tab_skin' },
        ]
     %]
-    [% SET selected_tab = c.flash.show_pref_tab || 'tab_you' %]
+    [% SET selected_tab = c.session.show_pref_tab || 'tab_you' %]
+    <!-- selected_tab = [%selected_tab%] -->
 
     <ul class="yui-nav">
     [% FOR tab IN tab_info %]

@@ -25,6 +25,7 @@ $schematest->methods(
                 show_tz
                 notify_thread_watch
                 watch_on_post
+                skin
             ]
         ],
 
