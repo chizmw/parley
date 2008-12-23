@@ -202,6 +202,32 @@ sub i18nise {
     );
 }
 
+sub skin {
+    my $c = shift;
+    my $skin;
+
+    # what's the skin?
+    if (
+        defined $c->_authed_user()
+            and
+        $c->_authed_user()->preference()->skin()
+    ) {
+        # user preference
+        $skin = $c->_authed_user()->preference()->skin();
+        $c->log->debug('user-skin');
+    }
+    else {
+        # application config
+        $skin = $c->config->{site_skin};
+        $c->log->debug('app-skin');
+    };
+
+    $c->log->debug(
+        q{skin is: } . ($skin || '[site default]')
+    );
+    return $skin;
+}
+
 1;
 
 __END__
