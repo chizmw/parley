@@ -1,6 +1,6 @@
 This file documents the revision history for Parley.
 
-1.0.3
+1.0.3   Tue Dec 23 09:34:32 GMT 2008
     - switch to database store for sessions
     - upgrade to YUI 2.6.0
     - use Test::Aggregate
