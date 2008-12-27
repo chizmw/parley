@@ -5,7 +5,7 @@ use warnings;
 
 # from mst on #catalyst
 #our $VERSION = '1.000000'; $VERSION = eval $VERSION;
-use version; our $VERSION = qv(1.0.3)->numify;
+use version; our $VERSION = qv(1.0.4)->numify;
 
 
 package Parley::Version;
