@@ -1,5 +1,10 @@
 This file documents the revision history for Parley.
 
+1.0.4   Wed Dec 24 18:54:24 GMT 2008
+    - fixed skin2
+    - remove yui/ softlink
+    - made yui_2.6.0/ into yui/
+
 1.0.3   Tue Dec 23 09:34:32 GMT 2008
     - switch to database store for sessions
     - upgrade to YUI 2.6.0
