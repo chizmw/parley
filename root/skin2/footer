@@ -3,6 +3,9 @@
 
             <div id="ft">
                 <p>
+This is a copy of the default skin, with the addition of this annoying message
+int the footer.
+<br />
                 <a href="http://developer.berlios.de/projects/parley">[%c.config.name%]</a>
                 (version [%c.config.version%])
                 &copy; Chisel Wright 2006-2008. [%l('All Rights Reserved')%].
