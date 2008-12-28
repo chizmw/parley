@@ -13,10 +13,29 @@ use Data::FormValidator '4.50';
 use Data::FormValidator::Constraints qw(:closures);
 
 sub form_check :Private {
-    my ($self, $c, $dfv_profile) = @_;
+    my ($self, $c, $dfv_profile, $param_type) = @_;
+    my $parameters;
+
+    # Which parameters? GET / POST or "all"?
+    # - POST [default]
+    if (
+        not defined $param_type
+            or
+        q{POST} eq $param_type
+    ) {
+        $parameters = $c->request->body_parameters;
+    }
+    # - GET
+    elsif (q{GET} eq $param_type) {
+        $parameters = $c->request->query_parameters;
+    }
+    # - "all"
+    elsif (q{all} eq $param_type) {
+        $parameters = $c->request->parameters;
+    }
 
     my $results = Data::FormValidator->check(
-        $c->request->body_parameters,
+        $parameters,
         $dfv_profile
     );
 

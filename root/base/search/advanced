@@ -1,0 +1,38 @@
+<h1>Search Forums</h1>
+
+<form>
+
+Search for messages matching
+<select name="match_type">
+    <option value="any">any</option>
+    <option value="all">all</option>
+</select>
+of the following criteria:
+<br />
+
+Subject
+[% INCLUDE search_type name="subject_search_type" %]
+<input type="text" name="subject_search_terms" />
+<br />
+
+Message
+[% INCLUDE search_type name="message_search_type" %]
+<input type="text" name="message_search_terms" />
+<br />
+
+Author's name
+[% INCLUDE search_type name="author_search_type" %]
+<input type="text" name="author_search_terms" />
+<br />
+
+<input type="submit" value="Search" />
+
+[% PROCESS search/results %]
+
+[% BLOCK search_type %]
+<select name="[%name%]">
+    <option value="contains">contains</option>
+    <option value="exact">is</option>
+</select>
+[% END %]
+

@@ -333,6 +333,12 @@ msgstr "Logins are not permitted from %1"
 msgid "Logout"
 msgstr "Logout"
 
+msgid "MISSING_SEARCH_MATCH_TYPE"
+msgstr "Please specify the method you would like to match by"
+
+msgid "MISSING_SEARCH_TERMS"
+msgstr "Please provide something to search for"
+
 msgid "Manage"
 msgstr "Manage"
 
