@@ -25,6 +25,18 @@ Author's name
 <input type="text" name="author_search_terms" />
 <br />
 
+Posted
+<select name="search_post_date">
+    <option value="">at any time</option>
+    <option value="last_hour">in the last hour</option>
+    <option value="last_day">in the last day</option>
+    <option value="last_month">in the last month</option>
+    <option value="last_six_months">in the last six months</option>
+    <option value="last_year">in the last year</option>
+    <option value="over_a_year">over a year ago</option>
+</select>
+<br />
+
 <input type="submit" value="Search" />
 
 [% PROCESS search/results %]

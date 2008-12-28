@@ -8,6 +8,7 @@ use base 'Catalyst::Controller';
 use base 'Catalyst::Controller::FormValidator';
 
 use Data::Dump qw(pp);
+use Date::Manip;
 use Text::Search::SQL;
 use URI;
 use URI::QueryParam;
@@ -36,6 +37,7 @@ my %dfv_profile_for = (
             author_search_type
             message_search_type
             subject_search_type
+            search_post_date
         >],
         filters     => [qw< trim >],
     },
@@ -175,17 +177,21 @@ sub do_advanced_search : Private {
     $c->stash->{current_page}= $c->request->param('page') || 1;
 
     $search_where = undef;
-    foreach my $search_field (qw<author message subject>) {
+    foreach my $search_field (qw<author message subject date>) {
         # process the search field
-        my ($extra_clauses, $extra_joins) =
-            @{$c->forward(q{search_clauses_} . $search_field)};
-        # add any search clauses
-        if ($extra_clauses) {
-            push @{$search_where}, @$extra_clauses;
-        }
-        # add any required table joins
-        if ($extra_joins) {
-            push @join, @$extra_joins;
+        my $results = 
+            $c->forward(q{search_clauses_} . $search_field);
+        if (defined $results) {
+            my ($extra_clauses, $extra_joins) = @{ $results };
+
+            # add any search clauses
+            if ($extra_clauses) {
+                push @{$search_where}, @$extra_clauses;
+            }
+            # add any required table joins
+            if ($extra_joins) {
+                push @join, @$extra_joins;
+            }
         }
     }
 
@@ -289,6 +295,59 @@ sub search_clauses_author : Private {
     push @joins, 'creator';
 
     return [\@search_where, \@joins];
+}
+
+sub search_clauses_date : Private {
+    my ($self, $c) = @_;
+    my $results = $c->stash->{validation};
+    my $terms = $results->valid('search_post_date');
+    my (@search_where);
+
+    # if we don't have date "stuff", don't add any terms
+    if (not $terms) {
+        $c->log->debug('no date crap');
+        return []; # add nothing at all
+    }
+
+    use Date::Manip;
+    # UnixDate($_, "%Y-%m-%d %H:%M:%S")
+
+    my %search_clauses = (
+        last_hour => {
+            '>=' => UnixDate('1 hour ago', "%Y-%m-%d %H:%M:%S")
+        },
+        last_day => {
+            '>=' => UnixDate('1 day ago', "%Y-%m-%d %H:%M:%S")
+        },
+        last_month => {
+            '>=' => UnixDate('1 month ago', "%Y-%m-%d %H:%M:%S")
+        },
+        last_six_months => {
+            '>=' => UnixDate('6 months ago', "%Y-%m-%d %H:%M:%S")
+        },
+        last_year => {
+            '>=' => UnixDate('1 year ago', "%Y-%m-%d %H:%M:%S")
+        },
+        over_a_year => {
+            '<' => UnixDate('1 year ago', "%Y-%m-%d %H:%M:%S")
+        },
+    );
+
+    # if we don't have a matching search clause, abort ...
+    if (not exists $search_clauses{'$terms'}) {
+        $c->log->error(
+              $terms
+            . q{ is not a valid date label in search_clauses_date()}
+        );
+        return [];
+    };
+
+    push @search_where,
+        'me.created',
+        $search_clauses{$terms}
+    ;
+
+    return [\@search_where, undef];
 }
 
 sub search_clauses_message : Private {
