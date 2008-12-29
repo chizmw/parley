@@ -27,6 +27,7 @@ my %dfv_profile_for = (
                     author_search_terms
                     message_search_terms
                     subject_search_terms
+                    search_post_date
                 >
             ]
         },
@@ -68,7 +69,10 @@ sub advanced : Local {
     # explicitly
     $c->stash->{template} = q{search/advanced};
 
+    # if we have a method and any (GET) parameters, do the searchy stuff
     if (
+        keys %{$c->request->query_parameters}
+            and
         defined $c->request->method
     ) {
         $c->forward('form_check', [$dfv_profile_for{advanced}, 'GET']);
@@ -120,6 +124,9 @@ sub forum :Local {
     );
     $tss->parse();
     $search_where = $tss->get_sql_where();
+    $c->log->debug(
+        pp $search_where
+    );
 
     # build the where clause to pass to our search
     $where = {
@@ -309,9 +316,7 @@ sub search_clauses_date : Private {
         return []; # add nothing at all
     }
 
-    use Date::Manip;
-    # UnixDate($_, "%Y-%m-%d %H:%M:%S")
-
+    # the mapping from form values to search clauses
     my %search_clauses = (
         last_hour => {
             '>=' => UnixDate('1 hour ago', "%Y-%m-%d %H:%M:%S")
@@ -334,7 +339,7 @@ sub search_clauses_date : Private {
     );
 
     # if we don't have a matching search clause, abort ...
-    if (not exists $search_clauses{'$terms'}) {
+    if (not exists $search_clauses{$terms}) {
         $c->log->error(
               $terms
             . q{ is not a valid date label in search_clauses_date()}

@@ -1,5 +1,7 @@
 TODO LIST
 
+  - update i18n from Advanced Search additions
+  - move search_dialog inline styles into CSS file
   - fix "oversized image" bug
   - fix "user information" CSS location
   - local file permissions (for avatar uploads)

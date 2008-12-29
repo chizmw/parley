@@ -1,6 +1,6 @@
 <h1>Search Forums</h1>
 
-<form>
+<form method="get" action="[%c.uri_for('/search/advanced')%]">
 
 Search for messages matching
 <select name="match_type">
@@ -48,3 +48,4 @@ Posted
 </select>
 [% END %]
 
+</form>
