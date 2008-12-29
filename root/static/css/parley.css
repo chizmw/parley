@@ -159,6 +159,10 @@ th {
 
 /* style classes */
 
+.add_this {
+    text-align:         right;
+}
+
 .admin_edited_post {
     color:              #000;
     background:         #ccc;

@@ -189,6 +189,12 @@
         </td>
     </tr>
 
+    <tr>
+        <td colspan="2" class="add_this">
+            [% PROCESS shared/add_this %]
+        </td>
+    </tr>
+
     </tbody>
 </table>
 <!-- end : thread contents -->
