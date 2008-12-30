@@ -1,8 +1,6 @@
 <!-- thread/view -->
 [% SET dummy_value = post_list.reset %]
 
-<h1>Skin 2</h1>
-
 <!-- thread contents -->
 <table class="thread_posts">
     <tbody>

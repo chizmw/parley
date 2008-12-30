@@ -1,4 +1,4 @@
-<!-- preferences : tab_you -->
+<!-- preferences : tab_avatar -->
 <form action="my/preferences/update" method="post" enctype="multipart/form-data">
     <input type="hidden" name="form_name" value="user_avatar">
 
@@ -22,4 +22,4 @@
         </div>
     </div>
 </form>
-<!-- (end) preferences : tab_you -->
+<!-- (end) preferences : tab_avatar -->
