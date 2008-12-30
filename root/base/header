@@ -112,4 +112,6 @@
                     [% END %]
                 </div>
                 [% END %]
+
+                [% PROCESS dfv/display_validation_messages %]
 <!-- Header : End -->

@@ -3,10 +3,8 @@ package Parley;
 use strict;
 use warnings;
 
-# from mst on #catalyst
-#our $VERSION = '1.000000'; $VERSION = eval $VERSION;
-use version; our $VERSION = qv(1.0.4)->numify;
-
+# derived from mst suggestion on #catalyst
+use version; our $VERSION = qv(1.1.0)->numify;
 
 package Parley::Version;
 

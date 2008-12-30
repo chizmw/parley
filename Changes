@@ -1,5 +1,13 @@
 This file documents the revision history for Parley.
 
+1.1.0
+    - added Advanced Search page
+    - added Add This (www.addthis.com) to thread/view page
+      (if username set in configuration)
+    - modified CSS for "user information"; now the header is a fixed-width we
+      can place this div inside it (instead of flushed to the RHS of the
+      page/window)
+
 1.0.4   Wed Dec 24 18:54:24 GMT 2008
     - fixed skin2
     - remove yui/ softlink

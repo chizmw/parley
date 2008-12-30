@@ -8,7 +8,7 @@ name            ('Parley');
 author          ('Chisel Wright<chiselwright@users.berlios.de>');
 abstract        ('Message board / forum application');
 license         ('perl');
-version         ('1.0.4');
+version         ('1.1.0');
 
 requires(
     'Catalyst'                                                  => '5.7014',
@@ -34,6 +34,7 @@ requires(
     'Config::General'                                           => '2.37',
     'Data::FormValidator'                                       => '4.50',
     'Data::SpreadPagination'                                    => '0.1.2',
+    'Date::Manip'                                               => '5.54',
     'DateTime'                                                  => '0.41',
     'DateTime::Format::Pg'                                      => '0.16001',
     'DateTime::TimeZone'                                        => '0.70',

@@ -64,7 +64,7 @@ YAHOO.util.Event.onDOMReady(search_dialog_init);
             <br />
         </fieldset>
 
-        <fieldset>
+        <fieldset style="background-color:transparent; text-align: center; margin-top: 5px;">
             <label for="search_forum"><em>[%l('in')%]:</em></label>
             <select id="search_forum" name="search_forum">
                 <optgroup label="[%l('General')%]">
@@ -83,6 +83,10 @@ YAHOO.util.Event.onDOMReady(search_dialog_init);
             <br />
         </fieldset>
     </form>
+
+    <div style="background-color:transparent; text-align: right;">
+        <a href="[%c.uri_for('/search/advanced')%]">Advanced Search</a>
+    </div>
 </div>
 </div>
 <!-- SEARCH DIALOG -->
