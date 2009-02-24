@@ -85,7 +85,8 @@ sub advanced : Local {
         # something didn't validate
         else {
             $c->log->debug(
-                pp($c->stash->{validation})
+                q{Something didn't validate}
+                #pp($c->stash->{validation})
             );
         }
     }

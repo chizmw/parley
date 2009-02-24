@@ -37,6 +37,17 @@ Posted
 </select>
 <br />
 
+Forum:
+[% IF available_forums %]
+<select id="search_forum" name="search_forum" multiple="multiple">
+[% SET dummy=available_forums.reset %]
+<optgroup label="[%l('Forums')%]">
+[% WHILE (forum = available_forums.next) %]
+<option value="[% forum.id %]">[% forum.name %]</option>
+[% END %]
+</select>
+[% END %]
+
 <input type="submit" value="Search" />
 
 [% PROCESS search/results %]
