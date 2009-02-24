@@ -86,8 +86,8 @@
     [% END %]
 
     [% IF authed_user.can_ip_ban %]
-        [% SET ips = profiled_user.ips_posted_from %]
         <h2>[%l('IP Addresses')%]</h2>
+        [% SET ips = profiled_user.ips_posted_from %]
         <div class="yui-gf top_padded">
             <div class="yui-u first align_right">
                 [% IF ips.size %]
@@ -99,24 +99,34 @@
             <div class="yui-u">
                 [% IF ips.size %]
                     [% FOR ip IN ips %]
-                    <span id="ctx_[%ip%]">
-                        <a href="[%c.uri_for('/site/ip_info',{'address'=>ip})%]">[% ip %]</a>
-                    </span>[% UNLESS loop.last %], [% END %]
-                    <script type="text/javascript">
-                        YAHOO.namespace("example.container");
-                        [% SET people_posting = c.model('ParleyDB::Post').people_posting_from_ip("$ip") %]
-                        [% SET ttTxt = '' %]
-                        [% WHILE (post = people_posting.next) %]
-                        [% ttTxt = "${ttTxt} <li>$post.creator.forum_name</li>" %]
+                        [% IF ip %]
+                        <span id="ctx_[%ip%]">
+                            <a href="[%c.uri_for('/site/ip_info',{'address'=>ip})%]">[% ip || 'No Address Recorded' %]</a>
+                        </span>
+                        [% ELSE %]
+                        No Address Recorded
+                        [% END %][% UNLESS loop.last %], [% END %]
+                        [% NEXT UNLESS ip %]
+                        [% TRY %]
+                        <script type="text/javascript">
+                            YAHOO.namespace("example.container");
+                                [% SET people_posting = c.model('ParleyDB::Post').people_posting_from_ip("$ip") %]
+                                [% SET ttTxt = '' %]
+                                [% WHILE (post = people_posting.next) %]
+                                [% ttTxt = "${ttTxt} <li>$post.creator.forum_name</li>" %]
+                                [% END %]
+                                YAHOO.example.container.tt1 = new YAHOO.widget.Tooltip(
+                                    "tt_[%ip%]",
+                                    {
+                                        context:"ctx_[%ip%]",
+                                        text:"Users posting from [%ip%]: <ul>[%ttTxt%]</ul>"
+                                    }
+                                );
+                        </script>
+                        [% CATCH %]
+                        </script>
+                        An error occurred!
                         [% END %]
-                        YAHOO.example.container.tt1 = new YAHOO.widget.Tooltip(
-                            "tt_[%ip%]",
-                            {
-                                context:"ctx_[%ip%]",
-                                text:"Users posting from [%ip%]: <ul>[%ttTxt%]</ul>"
-                            }
-                        );
-                    </script>
                     [% END %]
                 [% END %]
             </div>

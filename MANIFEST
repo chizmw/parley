@@ -145,6 +145,7 @@ root/base/shared/add_this
 root/base/shared/ajax_dialog
 root/base/shared/autocomplete_style
 root/base/shared/focus_username_js
+root/base/shared/google_analytics
 root/base/shared/language_dialog
 root/base/shared/loading_please_wait
 root/base/shared/login_dialog
