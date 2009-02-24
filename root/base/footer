@@ -23,6 +23,7 @@
             [% PROCESS shared/login_dialog %]
             [% PROCESS shared/language_dialog %]
         </div><!-- id="doc3" -->
+        [% PROCESS shared/google_analytics %]
     </body>
 </html>
 <!-- Footer : End -->

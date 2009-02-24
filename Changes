@@ -7,6 +7,7 @@ This file documents the revision history for Parley.
     - modified CSS for "user information"; now the header is a fixed-width we
       can place this div inside it (instead of flushed to the RHS of the
       page/window)
+    - added Google Analytics (configurable via parley.conf)
 
 1.0.4   Wed Dec 24 18:54:24 GMT 2008
     - fixed skin2
