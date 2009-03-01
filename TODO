@@ -5,7 +5,6 @@ TODO LIST
   - move search_dialog inline styles into CSS file
   - fix "oversized image" bug
   - local file permissions (for avatar uploads)
-  - optional ReCAPTCHA during sign-up
   - optional google ads
   - 11:58 <marcus> btw did you consider packing the css and js to reduce the number of includes?
     http://search.cpan.org/~pmichaux/JavaScript-Minifier-1.05/lib/JavaScript/Minifier.pm
@@ -38,6 +37,7 @@ TODO LIST
   - investigate: package Your::Schema; sub connect { do the check; next::method }
   - investigate: DBIx::Class::Schema::Versioned
   - investigate: t/model_Post.t / distinct count
+D - optional ReCAPTCHA during sign-up
 D - optional google analytics
 D - advanced search page
 D - fix "user information" CSS location
