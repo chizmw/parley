@@ -1,13 +1,12 @@
 TODO LIST
 
+  - refactor/tidy conf file(s)
   - update i18n from Advanced Search additions
   - move search_dialog inline styles into CSS file
   - fix "oversized image" bug
-  - fix "user information" CSS location
   - local file permissions (for avatar uploads)
   - optional ReCAPTCHA during sign-up
   - optional google ads
-  - optional google analytics
   - 11:58 <marcus> btw did you consider packing the css and js to reduce the number of includes?
     http://search.cpan.org/~pmichaux/JavaScript-Minifier-1.05/lib/JavaScript/Minifier.pm
     http://search.cpan.org/~pmichaux/CSS-Minifier-0.01/lib/CSS/Minifier.pm
@@ -24,7 +23,6 @@ TODO LIST
   - investigate in-application language preference/choice
   - write some sensible T&Cs
   - update avatar update response to force a No-Cache?
-  - advanced search page
   - proper moderator support/management
      - forum creation
      - abuse handling
@@ -40,6 +38,9 @@ TODO LIST
   - investigate: package Your::Schema; sub connect { do the check; next::method }
   - investigate: DBIx::Class::Schema::Versioned
   - investigate: t/model_Post.t / distinct count
+D - optional google analytics
+D - advanced search page
+D - fix "user information" CSS location
 D - skinning (user pref overrides CSS used?)
 D - skinning (config frile driven)
 D - use HTML::ForumCode::Cookbook::Recipe1 for message preview(s)

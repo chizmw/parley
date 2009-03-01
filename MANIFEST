@@ -2,6 +2,7 @@ Changes
 Changes.i18n
 config/parley.fastcgi
 config/parley.sites-available
+contrib/example/deploy.sh
 contrib/patch/0.57_02_KAARE.patch
 contrib/patch/0.59_001_TJC.patch
 db/parley.psql
@@ -39,6 +40,8 @@ inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
+lib/Catalyst/Controller/FormValidator.pm
+lib/Catalyst/Plugin/Dumper.pm
 lib/Parley.pm
 lib/Parley/App/Communication/Email.pm
 lib/Parley/App/DateTime.pm
@@ -111,6 +114,8 @@ parley.conf
 README
 ROADMAP
 root/base/about/modules
+root/base/dfv/display_validation_messages
+root/base/dfv/validation_messages_data
 root/base/error/simple
 root/base/footer
 root/base/forum/list
@@ -119,6 +124,7 @@ root/base/header
 root/base/help/i_default/contents
 root/base/help/i_default/faq
 root/base/help/i_default/formatting_posts
+root/base/help/i_default/wide
 root/base/help/unknown
 root/base/menu/left/main
 root/base/menu/menubar
@@ -132,10 +138,14 @@ root/base/my/tab_time
 root/base/my/tab_watch
 root/base/my/tab_you
 root/base/post/edit
+root/base/search/advanced
 root/base/search/forum
+root/base/search/results
+root/base/shared/add_this
 root/base/shared/ajax_dialog
 root/base/shared/autocomplete_style
 root/base/shared/focus_username_js
+root/base/shared/google_analytics
 root/base/shared/language_dialog
 root/base/shared/loading_please_wait
 root/base/shared/login_dialog
@@ -161,6 +171,7 @@ root/base/terms/index
 root/base/thread/add
 root/base/thread/recent
 root/base/thread/reply
+root/base/thread/reply-yuirte
 root/base/thread/view
 root/base/thread/watches
 root/base/user/access_ip_banned
@@ -194,6 +205,8 @@ root/email_templates/nl/thread_update_notify.html
 root/email_templates/nl/username_reminder.eml
 root/favicon.ico
 root/skin2/about/modules
+root/skin2/dfv/display_validation_messages
+root/skin2/dfv/validation_messages_data
 root/skin2/error/simple
 root/skin2/footer
 root/skin2/forum/list
@@ -215,7 +228,10 @@ root/skin2/my/tab_time
 root/skin2/my/tab_watch
 root/skin2/my/tab_you
 root/skin2/post/edit
+root/skin2/search/advanced
 root/skin2/search/forum
+root/skin2/search/results
+root/skin2/shared/add_this
 root/skin2/shared/ajax_dialog
 root/skin2/shared/autocomplete_style
 root/skin2/shared/focus_username_js

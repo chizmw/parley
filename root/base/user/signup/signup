@@ -140,6 +140,21 @@
         </div>
     </div>
 
+    [% IF recaptcha %] [% # only show reCAPTCHA if we have one; it may not be enabled %]
+    <div class="yui-gb top-padded" id="recaptcha">
+        <div class="yui-u first align_right">
+            [%l('PROVE YOU ARE HUMAN')%]:
+        </div>
+        <div class="yui-u">
+            [% recaptcha %]
+        </div>
+        <div class="yui-u">
+            &nbsp;
+        </div>
+    </div>
+    [% END %]
+
+
     <div class="yui-gb top_padded">
         <div class="yui-u first align_right">
             &nbsp;

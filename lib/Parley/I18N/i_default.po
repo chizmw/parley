@@ -193,6 +193,9 @@ msgstr "Failed to store upload."
 msgid "FILE TOO LARGE"
 msgstr "File size too large. File must be no larger than 20K."
 
+msgid "FORUMNAME_NOT_UNIQUE"
+msgstr "The forum name you have chosen is already in use. Please try a different one."
+
 msgid "First"
 msgstr "First"
 
@@ -332,6 +335,30 @@ msgstr "Logins are not permitted from %1"
 
 msgid "Logout"
 msgstr "Logout"
+
+msgid "MISSING_CONFIRM_EMAIL"
+msgstr "Please confirm your email address"
+
+msgid "MISSING_CONFIRM_PASSWORD"
+msgstr "Please confirm your password"
+
+msgid "MISSING_EMAIL"
+msgstr "Please provide an email address"
+
+msgid "MISSING_FIRST_NAME"
+msgstr "Please provide your first name"
+
+msgid "MISSING_FORUM_NAME"
+msgstr "Please provide a forumname"
+
+msgid "MISSING_LAST_NAME"
+msgstr "Please provide your last name"
+
+msgid "MISSING_NEW_PASSWORD"
+msgstr "Please provide a password"
+
+msgid "MISSING_NEW_USERNAME"
+msgstr "Please provide a username"
 
 msgid "MISSING_SEARCH_MATCH_TYPE"
 msgstr "Please specify the method you would like to match by"
@@ -548,6 +575,9 @@ msgstr "Previous"
 
 msgid "PROFILE NOT FOUND"
 msgstr "Can't locate a profile for the requested user."
+
+msgid "PROVE YOU ARE HUMAN"
+msgstr "Prove you're human"
 
 msgid "Post New Terms"
 msgstr "Post New Terms"
@@ -793,6 +823,9 @@ msgid "User has never posted"
 msgstr "User has never posted"
 
 msgid "USERNAME IN USE"
+msgstr "The username you have chosen is already in use. Please try a different one."
+
+msgid "USERNAME_NOT_UNIQUE"
 msgstr "The username you have chosen is already in use. Please try a different one."
 
 msgid "USERNAME INCORRECT"

@@ -114,41 +114,16 @@ __PACKAGE__->deny_access_unless(
 
 # ---- END:   ACL RULES ----
 
-
-
-# I'm sure there's a (better) way to do this by overriding set()/get() in Class::Accessor
-{
-    sub set_get {
-        my $c = shift;
-        my $key = shift;
-
-        if(@_ == 1) {
-            $c->stash->{$key} = $_[0];
-        }
-        elsif(@_ > 1) {
-            $c->stash->{$key} = [@_];
-        }
-
-        $c->stash->{$key};
-    }
-
-    sub _authed_user {
-        my $c = shift;
-        $c->set_get('authed_user', @_);
-    }
-    sub _current_post {
-        my $c = shift;
-        $c->set_get('current_post', @_);
-    }
-    sub _current_thread {
-        my $c = shift;
-        $c->set_get('current_thread', @_);
-    }
-    sub _current_forum {
-        my $c = shift;
-        $c->set_get('current_forum', @_);
-    }
-}
+# useful places to Store Stuff
+# (less typing)
+__PACKAGE__->mk_accessors(
+    qw<
+        _authed_user
+        _current_post
+        _current_thread
+        _current_forum
+    >
+);
 
 ################################################################################
 

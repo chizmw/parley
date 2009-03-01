@@ -7,6 +7,11 @@ This file documents the revision history for Parley.
     - modified CSS for "user information"; now the header is a fixed-width we
       can place this div inside it (instead of flushed to the RHS of the
       page/window)
+    - added Google Analytics (configurable via parley.conf)
+    - switch to using Catalyst::Controller::Validation::DFV for form re-fill
+    - use mk_accessors instead of home-grown rubbish
+    - added reCaptcha to signup screen
+    - added check for unique username/forumname (signup)
 
 1.0.4   Wed Dec 24 18:54:24 GMT 2008
     - fixed skin2

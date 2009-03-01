@@ -8,23 +8,18 @@
     <head>
         <base href="[% c.request.base %]" />
         <title>
-            [% c.config.name %]
-
-            [%# Show version if we're debugging %]
-            [% IF c.debug %]
-            ([% c.config.version %])
-            [% END %]
-
             [%# Show custom page title if we have one %]
             [% IF page_title %]
-             : [% page_title %]
+             [% page_title %] :
             [%# Show thread name if we have one %]
             [% ELSIF current_thread %]
-             : [% current_thread.subject %]
+             [% current_thread.subject %] :
             [%# Show forum name if we have one %]
             [% ELSIF current_forum %]
-             : [% current_forum.name %]
+             [% current_forum.name %] :
             [% END %]
+
+            [% c.config.name %]
         </title>
         <meta name="author" content="Chisel Wright" />
         <link rel="shortcut icon" href="[% c.request.base %]/favicon.ico" type="image/x-icon" />
