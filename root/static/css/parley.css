@@ -20,6 +20,14 @@ body {
     text-align: left;
 }
 
+#advanced_search input[type="text"] {
+    width:      30em;
+}
+
+#advanced_search select.multiple {
+    width:      20em;
+}
+
 div#ft   {background: #666;color: #FFF; font-size: 77%; margin-top: 20px;}
 div#ft p {border:none;margin-top:30px;padding:5px 10px 5px 10px; text-align:right;display:block;}
 div#ft a {color: #ccc;}
