@@ -39,6 +39,7 @@ my %dfv_profile_for = (
             message_search_type
             subject_search_type
             search_post_date
+            search_forum
         >],
         filters     => [qw< trim >],
     },
@@ -176,7 +177,7 @@ sub forum :Local {
 sub do_advanced_search : Private {
     my ($self, $c) = @_;
     my $results = $c->stash->{validation};
-    my ($where, $search_where, $resultset, @join, $order_by);
+    my ($where, $search_where, $resultset, @join, $order_by, @forum_ids);
 
     # default ORDER BY
     $order_by = [\'created DESC'];
@@ -203,6 +204,20 @@ sub do_advanced_search : Private {
         }
     }
 
+    # are we limiting to a particular (list of) forum(s)
+    if (defined $results->valid('search_forum')) {
+        if (
+            defined(ref $results->valid('search_forum'))
+                and
+            (q{ARRAY} eq ref($results->valid('search_forum')))
+        ) {
+            @forum_ids = sort @{ $results->valid('search_forum') };
+        }
+        else {
+            @forum_ids = ( $results->valid('search_forum') );
+        }
+    }
+
     # make sure we're searching for something
     # if it turns out we're searching for nothingness, return an empty
     # result set
@@ -216,15 +231,24 @@ sub do_advanced_search : Private {
             # we want to OR the items in $sql_where
             -or => $search_where,
         };
+        # ... AND in the list of forums to resrict to
+        if (@forum_ids) {
+            $where->{'-and'} =
+                [ 'thread.forum_id' => { 'IN', \@forum_ids } ];
+        }
     }
     elsif (q{all} eq $results->valid('match_type')) {
+        if (@forum_ids) {
+            push @{$search_where},
+                'thread.forum_id' => { 'IN', \@forum_ids };
+        }
         $where = {
             # we want to OR the items in $sql_where
             -and => $search_where,
         };
     }
 
-    $c->log->debug('SEARCH TERMS: ' . pp($where));
+    $c->log->debug('SEARCH TERMS: ' . pp($where)) if (0);
 
     $resultset = $c->model('ParleyDB')->resultset('Post')->search(
         $where,
@@ -313,7 +337,6 @@ sub search_clauses_date : Private {
 
     # if we don't have date "stuff", don't add any terms
     if (not $terms) {
-        $c->log->debug('no date crap');
         return []; # add nothing at all
     }
 
