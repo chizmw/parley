@@ -34,7 +34,6 @@ sub begin :Private {
     return 1;
 }
 
-
 # pre-populate values in the stash if we're given "appropriate" information:
 # - _authed_user
 # - _current_post
@@ -333,6 +332,13 @@ sub skin : Private {
 
 sub end : Private {
     my ($self, $c) = @_;
+
+    # move some data into the stash
+    $c->stash->{authed_user}    = $c->_authed_user;
+    $c->stash->{current_post}   = $c->_current_post;
+    $c->stash->{current_thread} = $c->_current_thread;
+    $c->stash->{current_forum}  = $c->_current_forum;
+
     # render the page
     $c->forward('render');
     # fill in any forms
