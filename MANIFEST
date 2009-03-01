@@ -65,6 +65,7 @@ lib/Parley/Controller/Thread.pm
 lib/Parley/Controller/User.pm
 lib/Parley/Controller/User/LostPassword.pm
 lib/Parley/Controller/User/SignUp.pm
+lib/Parley/ControllerBase/FormValidation.pm
 lib/Parley/I18N/i_default.po
 lib/Parley/I18N/it.po
 lib/Parley/I18N/nl.po
