@@ -19,6 +19,12 @@ msgstr "%quant(%1,View,Views)"
 msgid "%quant(%1,view)"
 msgstr "%quant(%1,view,views)"
 
+msgid "SEARCH FOR MESSAGES MATCHING"
+msgstr "Search for messages matching"
+
+msgid "OF THE FOLLOWING CRITERIA"
+msgstr "of the following criteria"
+
 msgid "404 Not Found"
 msgstr "404 Not Found"
 
@@ -76,8 +82,17 @@ msgstr "An email has been sent to"
 msgid "An error has occurred"
 msgstr "An error has occurred"
 
+msgid "ALL"
+msgstr "all"
+
+msgid "ANY"
+msgstr "any"
+
 msgid "AUTHENTICATION FAILED"
 msgstr "Unable to authenticate the supplied login credentials"
+
+msgid "AUTHORS_NAME"
+msgstr "Author's Name"
 
 msgid "Avatar"
 msgstr "Avatar"
@@ -99,6 +114,9 @@ msgstr "Comment"
 
 msgid "Confirm Password"
 msgstr "Confirm Password"
+
+msgid "CONTAINS"
+msgstr "contains"
 
 msgid "Contents"
 msgstr "Contents"
@@ -205,6 +223,9 @@ msgstr "First Name"
 msgid "Forgotten Password"
 msgstr "Forgotten Password"
 
+msgid "FORUM"
+msgstr "Forum"
+
 msgid "Forum"
 msgstr "Forum"
 
@@ -266,6 +287,9 @@ msgstr "IP Information"
 
 msgid "IP Logged"
 msgstr "IP Logged"
+
+msgid "IS"
+msgstr "is"
 
 msgid "Last"
 msgstr "Last"
@@ -377,6 +401,9 @@ msgstr "Me"
 
 msgid "Main Page"
 msgstr "Main Page"
+
+msgid "MESSAGE"
+msgstr "Message"
 
 msgid "Message"
 msgstr "Message"
@@ -533,6 +560,9 @@ msgstr "Please enter your username and password"
 
 msgid "people"
 msgstr "people"
+
+msgid "POSTED"
+msgstr "Posted"
 
 msgid "posted by"
 msgstr "posted by"
@@ -720,6 +750,9 @@ msgstr "Stop"
 msgid "Subject"
 msgstr "Subject"
 
+msgid "SUBJECT"
+msgstr "Subject"
+
 msgid "Summary of Changes"
 msgstr "Summary of Changes"
 
@@ -893,6 +926,26 @@ msgstr "Your %s Username"
 
 
 # UNITS OF TIME
+msgid "AT ANY TIME"
+msgstr "at any time"
+
+msgid "IN THE LAST HOUR"
+msgstr "in the last hour"
+
+msgid "IN THE LAST DAY"
+msgstr "in the last day"
+
+msgid "IN THE LAST MONTH"
+msgstr "in the last month"
+
+msgid "IN THE LAST SIX MONTHS"
+msgstr "in the last six months"
+
+msgid "IN THE LAST YEAR"
+msgstr "in the last year"
+
+msgid "OVER A YEAR AGO"
+msgstr "over a year ago"
 
 msgid "second"
 msgstr "second"
