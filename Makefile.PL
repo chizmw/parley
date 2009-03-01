@@ -15,6 +15,8 @@ requires(
     'Catalyst::Runtime'                                         => '5.7014',
     'Catalyst::Action::RenderView'                              => '0.08',
     'Catalyst::Authentication::Store::DBIx::Class'              => '0.10',
+    'Catalyst::Controller::reCAPTCHA'                           => '0.30001',
+    'Catalyst::Controller::Validation::DFV'                     => '0.0.2',
     'Catalyst::Model::DBIC::Schema'                             => '0.20',
     'Catalyst::Plugin::Authorization::ACL'                      => '0.08',
     'Catalyst::Plugin::Authorization::Roles'                    => '0.05',

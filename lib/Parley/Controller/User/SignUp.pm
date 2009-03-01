@@ -5,6 +5,9 @@ use warnings;
 
 use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Controller';
+use base 'Catalyst::Controller::FormValidator';
+use base 'Catalyst::Controller::reCAPTCHA';
+use base 'Parley::ControllerBase::FormValidation';
 
 use List::MoreUtils qw{ uniq };
 use Digest::MD5 qw{ md5_hex };
@@ -138,6 +141,11 @@ sub authenticate : Path('/user/authenticate') {
 sub signup : Path('/user/signup') {
     my ( $self, $c ) = @_;
     my (@messages);
+
+    # get a reCAPTCHA to use in the form
+    if ($c->config->{recaptcha}{enabled}) {
+        $c->forward('captcha_get');
+    }
 
     # logged-in? no need to signup again...
     if ($c->is_logged_in()) {
@@ -285,31 +293,59 @@ sub _user_signup {
     my ($self, $c) = @_;
     my ($results, @messages);
 
-    # validate the form data
-    $c->form(
-        $dfv_profile_for{signup}
-    );
+    # check the form for errors
+    $c->forward('form_check', [$dfv_profile_for{signup}]);
 
-    # deal with missing/invalid fields
-    if ($c->form->has_missing()) {
-        $c->stash->{view}{error}{message}
-            = $c->localize(q{DFV FILL REQUIRED});
-        foreach my $f ( $c->form->missing ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
-        }
-    }
-    elsif ($c->form->has_invalid()) {
-        $c->stash->{view}{error}{message}
-            = $c->localize(q{DFV FIELDS INVALID});
-        foreach my $f ( $c->form->invalid ) {
-            push @{ $c->stash->{view}{error}{messages} }, $f;
+    # if the captcha is enabled
+    if ($c->config->{recaptcha}{enabled}) {
+        # check the captcha
+        $c->forward('captcha_check');
+        # deal with any errors
+        if ($c->stash->{recaptcha_error}) {
+            # add to form validation failures
+            $c->forward(
+                'add_form_invalid',
+                [ 'recaptcha', $c->stash->{recaptcha_error} ]
+            );
         }
     }
 
-    # otherwise the form data is ok...
-    else {
+    # check to see if the username has already been used
+    $c->forward('check_unique_username', ['new_username']);
+
+    # check to see if the username has already been used
+    $c->forward('check_unique_forumname', ['forum_name']);
+
+    if ($c->stash->{validation}->success) {
         @messages = $self->_add_new_user($c, $results);
     }
+
+#
+#    # validate the form data
+#    $c->form(
+#        $dfv_profile_for{signup}
+#    );
+#
+#    # deal with missing/invalid fields
+#    if ($c->form->has_missing()) {
+#        $c->stash->{view}{error}{message}
+#            = $c->localize(q{DFV FILL REQUIRED});
+#        foreach my $f ( $c->form->missing ) {
+#            push @{ $c->stash->{view}{error}{messages} }, $f;
+#        }
+#    }
+#    elsif ($c->form->has_invalid()) {
+#        $c->stash->{view}{error}{message}
+#            = $c->localize(q{DFV FIELDS INVALID});
+#        foreach my $f ( $c->form->invalid ) {
+#            push @{ $c->stash->{view}{error}{messages} }, $f;
+#        }
+#    }
+#
+#    # otherwise the form data is ok...
+#    else {
+#        @messages = $self->_add_new_user($c, $results);
+#    }
 
     return (uniq(sort @messages));
 }
@@ -337,13 +373,13 @@ sub _txn_add_new_user {
     my ($valid_results, $new_auth, $new_person, $new_preference, $status_ok);
 
     # less typing
-    $valid_results = $c->form->valid;
-
+    $valid_results = $c->stash->{validation}->valid;
+use Data::Dump qw(pp); $c->log->debug( pp($valid_results) );
     # add authentication record
     $new_auth = $c->model('ParleyDB')->resultset('Authentication')->create(
         {
-            username => $c->form->valid->{new_username},
-            password => md5_hex( $c->form->valid->{new_password} ),
+            username => $valid_results->{new_username},
+            password => md5_hex( $valid_results->{new_password} ),
         }
     );
 

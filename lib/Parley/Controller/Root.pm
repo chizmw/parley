@@ -5,6 +5,7 @@ use warnings;
 
 use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Controller';
+use base 'Catalyst::Controller::Validation::DFV';
 
 use DateTime;
 use List::MoreUtils qw(uniq);
@@ -332,16 +333,10 @@ sub skin : Private {
 
 sub end : Private {
     my ($self, $c) = @_;
+    # render the page
     $c->forward('render');
-
     # fill in any forms
-    $c->fillform(
-        {
-            # combine two hashrefs so we only make one method call
-            %{ $c->request->parameters || {} },
-            %{ $c->stash->{formdata}   || {} },
-        }
-    );
+    $c->forward('refill_form');
 }
 
 
