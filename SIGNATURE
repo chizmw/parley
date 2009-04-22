@@ -14,14 +14,14 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 f0db802ddb4173f0857a4c844eee9612eb838b48 Changes
+SHA1 a40bcc8741c84f770960d48257589317216f2889 Changes
 SHA1 7c8800f62bd6314327c9d79858802130dd8b9ade Changes.i18n
-SHA1 e8271fe91b8c0bec7a9c531e581d4595cc7da9e8 MANIFEST
+SHA1 9fad9417451c739ec56f9707edab2193085f37b2 MANIFEST
 SHA1 8bee674483b15605a91c4b68cd52555c4780d0f4 MANIFEST.SKIP
 SHA1 34065e2d62d9516832a7b56766e9da738560138c META.yml
 SHA1 338c08fa38a4846b80661d2251f66f8a1efcf430 Makefile.PL
 SHA1 8b3d60b51b7e484158325887297066031018c1c6 README
-SHA1 4370c6fe776a26e8ee789cf7afe91563b0ab6ebf ROADMAP
+SHA1 2e29e8934226503e3d69ea1fd15178311670b289 ROADMAP
 SHA1 49d9bc278e76000575d718ccf31211288ad64b25 TODO
 SHA1 4eba6a1a116ca15a4d9c7aeae85b2451fe1c67c8 config/parley.fastcgi
 SHA1 4daa0d31f285ed0260a8f76f79fac55c7dfc208b config/parley.sites-available
@@ -53,7 +53,7 @@ SHA1 09a0e347c7857e82fe58bca1afb992a5f9d3206b doc/README.admin
 SHA1 f9420747d7cf5a5aea57f8300ab6530bae02038c doc/README.gravatar
 SHA1 a034e27d5e2ab1d774802970620b3928c92b5f44 doc/fonts-min.css
 SHA1 f930be388a0b4d6b41b26491b30eaaf6b1b0b1b9 doc/parley-qs.html
-SHA1 fab9c781d8df83e9dfdafcdebdd483b9a9245c1b doc/setup.html
+SHA1 484bbc92d0fdfc1d640a35a594e1dead00a82817 doc/setup.html
 SHA1 5c9e093b0facca46d50e3c69d5569aa7a98db0b8 inc/Module/Install.pm
 SHA1 465acb50b9006ce61f58a7bd02d0bb029ddceaa6 inc/Module/Install/Base.pm
 SHA1 8356d82167fc00550b4a3ceea8bd852a374d7509 inc/Module/Install/Can.pm
@@ -135,7 +135,7 @@ SHA1 0063e8a67acab399e4357b6898eda11f7c52f384 root/base/about/modules
 SHA1 c466da60399521086bf4bdd77ba74c773889712a root/base/dfv/display_validation_messages
 SHA1 1f3d2c058ead8d91ceeeffbc23f4902dc9e93464 root/base/dfv/validation_messages_data
 SHA1 8a8da2b6c01cb5abf0dfa01c6df3650496364fae root/base/error/simple
-SHA1 1e2173a8c405b47a9c3529c04d52fbeb294c4eb2 root/base/footer
+SHA1 775af0fc24835453e6efb376b4382f8f0d523941 root/base/footer
 SHA1 c6fece353946d6a2aee436e15520cd7a7e015615 root/base/forum/list
 SHA1 77423b8c0020e887affe3291a0d3ddf2aac068ac root/base/forum/view
 SHA1 e97f85f68c21f700fb4e27879fd6a42bd028ae2d root/base/google/adsense_728_90
@@ -978,6 +978,7 @@ SHA1 55545dd301316f6a36b7466ee4433785e7eecb0a t.output/0.59.03
 SHA1 0e47aafe8376dee320739cbf678714883d335c25 t.output/1.0.0
 SHA1 866b89fe8624846ba9415a762bb558a7ac97b826 t.output/1.0.3
 SHA1 836678ab2880da69a75b2472d7f5690ed53d51f2 t.output/1.0.4
+SHA1 2fd1f750dc95a0b3db27dbc3d98338e0000af4a1 t.output/1.1.0
 SHA1 89bafc4afa5f65a68075562ef54eee443dde2528 t/01app.t
 SHA1 69cb4e530158d9e3a3b8499cb2b356bed5c03c83 t/02pod.t
 SHA1 19e797985fada8c25f13ce5f0fb873999c3cbe44 t/03podcoverage.t
@@ -1031,7 +1032,7 @@ SHA1 4b08a07150c82ac1a2a6c08d77336551cd5b3bbf todo.i18n/nl
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAknvXbYACgkQh4j7xTiFuxF6pACgtUWMLFuMXeXx8D6vdcGUDAq4
-HG8AnREwisi40LntBxAWpkZdevJrjEKJ
-=4Yfo
+iEYEARECAAYFAknvg/IACgkQh4j7xTiFuxHbAwCgw9ykIFNV3me2hd+PRtHGz5jU
+nNwAoKh79AgK3ssFm85lhUrShQL2bWlB
+=wcI4
 -----END PGP SIGNATURE-----

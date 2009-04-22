@@ -1,6 +1,6 @@
 This file documents the revision history for Parley.
 
-1.1.0
+1.1.0   Wed Apr 22 21:53:52 BST 2009
     - added Advanced Search page
     - added Add This (www.addthis.com) to thread/view page
       (if username set in configuration)
