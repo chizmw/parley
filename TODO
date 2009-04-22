@@ -1,11 +1,12 @@
 TODO LIST
 
   - investigate "use base 'Catalyst::Controller'" and Class::C3
+  - don't show "Add Watch" if user is already watching the thread
+  - check "reply->post in thread" still works correctly
   - refactor/tidy conf file(s)
   - move search_dialog inline styles into CSS file
   - fix "oversized image" bug
   - local file permissions (for avatar uploads)
-  - optional google ads
   - 11:58 <marcus> btw did you consider packing the css and js to reduce the number of includes?
     http://search.cpan.org/~pmichaux/JavaScript-Minifier-1.05/lib/JavaScript/Minifier.pm
     http://search.cpan.org/~pmichaux/CSS-Minifier-0.01/lib/CSS/Minifier.pm
@@ -37,6 +38,7 @@ TODO LIST
   - investigate: package Your::Schema; sub connect { do the check; next::method }
   - investigate: DBIx::Class::Schema::Versioned
   - investigate: t/model_Post.t / distinct count
+D - optional google ads
 D - update i18n from Advanced Search additions
 D - optional ReCAPTCHA during sign-up
 D - optional google analytics

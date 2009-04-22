@@ -1025,12 +1025,12 @@ SHA1 40f7f2978574dc4b2b16a5f47ce441bc2cd837d2 t_aggregate/schematests/terms_agre
 SHA1 88f5b01d4ea7bb9f4f1ff3d5c35ca4234a7132d2 t_aggregate/schematests/thread.t
 SHA1 bebc948f5535eb83a346b7a350e9b44e191f5892 t_aggregate/schematests/thread_view.t
 SHA1 00471f03ca3b521055698b058a5bfda13b575614 t_aggregate/schematests/user_role.t
-SHA1 7a76fa5f6e2e43d1ab9b3287686d68300956e628 todo.i18n/it
-SHA1 4b08a07150c82ac1a2a6c08d77336551cd5b3bbf todo.i18n/nl
+SHA1 68ecf0c41f5b6ac0e1996279b8f6e72a19a59c88 todo.i18n/it
+SHA1 48b6d7eec0dc277f42d3594119590941ba2169f8 todo.i18n/nl
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAknvjBAACgkQh4j7xTiFuxG0EwCeJqNmfALfZvD1BrCkC7PykSvM
-ah8AoKdl6eW4cJK2XUQpHyn6GEtHqusj
-=FJYp
+iEYEARECAAYFAknvjOEACgkQh4j7xTiFuxGfvwCfW66qRdbnULgBgVz16GtjnriO
+tvgAn0DoXyekQFuWlMZiJQDl+JE3+487
+=pzBe
 -----END PGP SIGNATURE-----
