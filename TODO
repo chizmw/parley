@@ -1,7 +1,7 @@
 TODO LIST
 
+  - investigate "use base 'Catalyst::Controller'" and Class::C3
   - refactor/tidy conf file(s)
-  - update i18n from Advanced Search additions
   - move search_dialog inline styles into CSS file
   - fix "oversized image" bug
   - local file permissions (for avatar uploads)
@@ -37,6 +37,7 @@ TODO LIST
   - investigate: package Your::Schema; sub connect { do the check; next::method }
   - investigate: DBIx::Class::Schema::Versioned
   - investigate: t/model_Post.t / distinct count
+D - update i18n from Advanced Search additions
 D - optional ReCAPTCHA during sign-up
 D - optional google analytics
 D - advanced search page
