@@ -99,7 +99,7 @@
 
             <div id="bd">
                 [% PROCESS menu/menubar %]
-                [% PROCESS google/adsense_728_90 %]
+                [% # PROCESS google/adsense_728_90 %]
 
                 [% IF view.error.messages %]
                 <div class="error_messages">
