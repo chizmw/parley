@@ -14,15 +14,15 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 3ac4bf1b8da008abbd3c87fba32be1b687e56e02 Changes
+SHA1 f0db802ddb4173f0857a4c844eee9612eb838b48 Changes
 SHA1 7c8800f62bd6314327c9d79858802130dd8b9ade Changes.i18n
-SHA1 e2551b490600612475734261e7bd1b8e30e6ab73 MANIFEST
+SHA1 e8271fe91b8c0bec7a9c531e581d4595cc7da9e8 MANIFEST
 SHA1 8bee674483b15605a91c4b68cd52555c4780d0f4 MANIFEST.SKIP
 SHA1 30fdbafd110edec999eb8f6d1852a9ab63c91a52 META.yml
 SHA1 b8fd1dbc9caa8becb752b357f61bb36caa86f6f8 Makefile.PL
 SHA1 8b3d60b51b7e484158325887297066031018c1c6 README
-SHA1 eb56cf229d006b40ac7d077c566380def4b9c4a6 ROADMAP
-SHA1 83cc647fa38e22805349c9154afdff8492f03134 TODO
+SHA1 4370c6fe776a26e8ee789cf7afe91563b0ab6ebf ROADMAP
+SHA1 49d9bc278e76000575d718ccf31211288ad64b25 TODO
 SHA1 4eba6a1a116ca15a4d9c7aeae85b2451fe1c67c8 config/parley.fastcgi
 SHA1 4daa0d31f285ed0260a8f76f79fac55c7dfc208b config/parley.sites-available
 SHA1 576be13e4eab87480d9c8bef73626b4d33d5210c contrib/example/deploy.sh
@@ -80,14 +80,14 @@ SHA1 b049c9286177c9e4ced87a2a5624b02e4a1d6fa9 lib/Parley/Controller/ForumCode.pm
 SHA1 af659b37b0397345d24c9becc1b38e26132de424 lib/Parley/Controller/Help.pm
 SHA1 3c311d0ab98e75764842041e78b0446cc7ec3efc lib/Parley/Controller/My.pm
 SHA1 6f17c6096c9ca591e2288934a2205985daa0510d lib/Parley/Controller/Post.pm
-SHA1 d4876dc093143a090b9bf9f30d42753b3486828f lib/Parley/Controller/Root.pm
-SHA1 a7b8c85ed6210de20046359a50ef36e807dadf21 lib/Parley/Controller/Search.pm
+SHA1 1ad9f8478a779fcfd79e48a21d77243b197957ee lib/Parley/Controller/Root.pm
+SHA1 969df77f320de0c04b865fc2af2db8a854e544d1 lib/Parley/Controller/Search.pm
 SHA1 c339b0133605f9b38ba062e60c5ce43cf7234bcb lib/Parley/Controller/Site.pm
 SHA1 1c09d47d75dd86476cca1d9a8a257a51c9bf2f77 lib/Parley/Controller/Terms.pm
 SHA1 60475c59323a381dca79ca71d8553e670303597e lib/Parley/Controller/Thread.pm
 SHA1 2adbfbb1c47b523f88b11bf0fb4a52154a234298 lib/Parley/Controller/User.pm
 SHA1 49dd70b1365b42161c72993b12ab7851b718327b lib/Parley/Controller/User/LostPassword.pm
-SHA1 c0bf97b9615253428fedf88a60d97fb4df6bc706 lib/Parley/Controller/User/SignUp.pm
+SHA1 40cf8147a6245190713bbef2cc310491bf28a814 lib/Parley/Controller/User/SignUp.pm
 SHA1 4d7d8312709e3a31bedab41212a89621c473a76b lib/Parley/ControllerBase/FormValidation.pm
 SHA1 efb93c43b2b513cdc11c5c3d696a133c3140542e lib/Parley/I18N/i_default.po
 SHA1 ebc5e8aeead6d3b99ac76a00f724b1c95ef80ceb lib/Parley/I18N/it.po
@@ -138,7 +138,8 @@ SHA1 8a8da2b6c01cb5abf0dfa01c6df3650496364fae root/base/error/simple
 SHA1 1e2173a8c405b47a9c3529c04d52fbeb294c4eb2 root/base/footer
 SHA1 c6fece353946d6a2aee436e15520cd7a7e015615 root/base/forum/list
 SHA1 77423b8c0020e887affe3291a0d3ddf2aac068ac root/base/forum/view
-SHA1 44dff5730956d0a4a212b10d05c129f698730f44 root/base/header
+SHA1 e97f85f68c21f700fb4e27879fd6a42bd028ae2d root/base/google/adsense_728_90
+SHA1 2b7baeb54acaa6b4e92bb183b32cabad9f489109 root/base/header
 SHA1 cc66d00a1863d64117022e5b477143d8795e7af9 root/base/help/i_default/contents
 SHA1 7ea54bb746cddcc7807e5fc05c48c88ddc099956 root/base/help/i_default/faq
 SHA1 b527d071acaf7e6f2061cc8261659104ffdf0120 root/base/help/i_default/formatting_posts
@@ -305,7 +306,7 @@ SHA1 4aed5507b368435a7f03af268e006f302b00fddc root/static/css/images/logo.png
 SHA1 291165b6133245bcc87e1e26a53f03669ce67693 root/static/css/layout23.css
 SHA1 aaf51a629475d0e2bc29a0331d15cd978c0ad0ce root/static/css/layout27.css
 SHA1 1e9b8d25121b078033dc50607619cad496f2d1ab root/static/css/layout33.css
-SHA1 3adcd0dccd4ff3dadc94dbc8bbd3b27b5ffa6425 root/static/css/parley-min.css
+SHA1 43ed7d0dcfb6f062581c49e587d074d5985f4dae root/static/css/parley-min.css
 SHA1 f5b354e415e8936ef95ebd3cf1148048840b8e0a root/static/css/parley-skin1.css
 SHA1 487839ada3a862a293991f99659ca39f209cab28 root/static/css/parley.css
 SHA1 b4b8c80b71885cf49fefd4cf9681d06fb54e4fc8 root/static/images/btn_120x50_built.png
@@ -1030,7 +1031,7 @@ SHA1 4b08a07150c82ac1a2a6c08d77336551cd5b3bbf todo.i18n/nl
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAknJVo8ACgkQ5S9GdAmyhin1NACfchE49pLY9RDCyk+qHUpupJyD
-JyYAmwWYSr2/U1fResRKe8St1bgwqenU
-=mioj
+iEYEARECAAYFAknvWIUACgkQh4j7xTiFuxGhaACgvFfF/POHXhdn+wlYQhKAH+YQ
+cKkAoKByjjszdcZrkwBfrTf7qZoTIGqv
+=A954
 -----END PGP SIGNATURE-----

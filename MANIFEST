@@ -126,7 +126,6 @@ root/base/header
 root/base/help/i_default/contents
 root/base/help/i_default/faq
 root/base/help/i_default/formatting_posts
-root/base/help/i_default/wide
 root/base/help/unknown
 root/base/menu/left/main
 root/base/menu/menubar
@@ -173,7 +172,6 @@ root/base/terms/index
 root/base/thread/add
 root/base/thread/recent
 root/base/thread/reply
-root/base/thread/reply-yuirte
 root/base/thread/view
 root/base/thread/watches
 root/base/user/access_ip_banned
