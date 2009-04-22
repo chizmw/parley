@@ -18,8 +18,8 @@ SHA1 f0db802ddb4173f0857a4c844eee9612eb838b48 Changes
 SHA1 7c8800f62bd6314327c9d79858802130dd8b9ade Changes.i18n
 SHA1 e8271fe91b8c0bec7a9c531e581d4595cc7da9e8 MANIFEST
 SHA1 8bee674483b15605a91c4b68cd52555c4780d0f4 MANIFEST.SKIP
-SHA1 30fdbafd110edec999eb8f6d1852a9ab63c91a52 META.yml
-SHA1 b8fd1dbc9caa8becb752b357f61bb36caa86f6f8 Makefile.PL
+SHA1 34065e2d62d9516832a7b56766e9da738560138c META.yml
+SHA1 338c08fa38a4846b80661d2251f66f8a1efcf430 Makefile.PL
 SHA1 8b3d60b51b7e484158325887297066031018c1c6 README
 SHA1 4370c6fe776a26e8ee789cf7afe91563b0ab6ebf ROADMAP
 SHA1 49d9bc278e76000575d718ccf31211288ad64b25 TODO
@@ -54,15 +54,15 @@ SHA1 f9420747d7cf5a5aea57f8300ab6530bae02038c doc/README.gravatar
 SHA1 a034e27d5e2ab1d774802970620b3928c92b5f44 doc/fonts-min.css
 SHA1 f930be388a0b4d6b41b26491b30eaaf6b1b0b1b9 doc/parley-qs.html
 SHA1 fab9c781d8df83e9dfdafcdebdd483b9a9245c1b doc/setup.html
-SHA1 f0577f8f88a6703e9bca2d10196cfd293f3d6f2f inc/Module/Install.pm
-SHA1 5d574849849860b8cf06035cc6f1a306c66cb326 inc/Module/Install/Base.pm
-SHA1 c30f50bc2a1542dff17f84a54d9316f3c3c6299e inc/Module/Install/Can.pm
+SHA1 5c9e093b0facca46d50e3c69d5569aa7a98db0b8 inc/Module/Install.pm
+SHA1 465acb50b9006ce61f58a7bd02d0bb029ddceaa6 inc/Module/Install/Base.pm
+SHA1 8356d82167fc00550b4a3ceea8bd852a374d7509 inc/Module/Install/Can.pm
 SHA1 ef238ba84f6abaf5753a1efc4e80beaa3ce51196 inc/Module/Install/Catalyst.pm
-SHA1 9b618efcd783f6ed4bab84fa22b31886fcc38d57 inc/Module/Install/Fetch.pm
-SHA1 cd14c8de2a67b0f14df9bc20c27f3edabd359d1b inc/Module/Install/Makefile.pm
-SHA1 a2162aec678d21988fce47ab805cf01773196292 inc/Module/Install/Metadata.pm
-SHA1 4ae5d56e11e640bd9520634dde6d563926f6d98a inc/Module/Install/Win32.pm
-SHA1 587cc94b52b640fe2d4972253b6369aa951e2210 inc/Module/Install/WriteAll.pm
+SHA1 b47ce07fa6d6e38e3daa6cfc752b23f59a64754c inc/Module/Install/Fetch.pm
+SHA1 37ed4ccd7aba10119e6f2993b8082674ce2e5961 inc/Module/Install/Makefile.pm
+SHA1 4aa1c578faad51f31e62bed7b28d3d42b88219c3 inc/Module/Install/Metadata.pm
+SHA1 d7529d795a1304c88253b26a9089913edf31ae5e inc/Module/Install/Win32.pm
+SHA1 2a74aba5a78e7ab2776382e42106ebe941c2ac28 inc/Module/Install/WriteAll.pm
 SHA1 795ab14291a44cee6270beda4e39e5b897bca1f0 lib/Catalyst/Controller/FormValidator.pm
 SHA1 f921a88fca85c1f1712ccc6ebc6738020de751e7 lib/Catalyst/Plugin/Dumper.pm
 SHA1 271757ea4a811dcbcfac603bdf6ff0071c3e9c84 lib/Parley.pm
@@ -139,7 +139,7 @@ SHA1 1e2173a8c405b47a9c3529c04d52fbeb294c4eb2 root/base/footer
 SHA1 c6fece353946d6a2aee436e15520cd7a7e015615 root/base/forum/list
 SHA1 77423b8c0020e887affe3291a0d3ddf2aac068ac root/base/forum/view
 SHA1 e97f85f68c21f700fb4e27879fd6a42bd028ae2d root/base/google/adsense_728_90
-SHA1 2b7baeb54acaa6b4e92bb183b32cabad9f489109 root/base/header
+SHA1 07d82d0534dd471bdc2db61bcadc19dd5dfcae3e root/base/header
 SHA1 cc66d00a1863d64117022e5b477143d8795e7af9 root/base/help/i_default/contents
 SHA1 7ea54bb746cddcc7807e5fc05c48c88ddc099956 root/base/help/i_default/faq
 SHA1 b527d071acaf7e6f2061cc8261659104ffdf0120 root/base/help/i_default/formatting_posts
@@ -306,9 +306,9 @@ SHA1 4aed5507b368435a7f03af268e006f302b00fddc root/static/css/images/logo.png
 SHA1 291165b6133245bcc87e1e26a53f03669ce67693 root/static/css/layout23.css
 SHA1 aaf51a629475d0e2bc29a0331d15cd978c0ad0ce root/static/css/layout27.css
 SHA1 1e9b8d25121b078033dc50607619cad496f2d1ab root/static/css/layout33.css
-SHA1 43ed7d0dcfb6f062581c49e587d074d5985f4dae root/static/css/parley-min.css
+SHA1 d82b16fe8380b79da837ec759c764d7704c0bb92 root/static/css/parley-min.css
 SHA1 f5b354e415e8936ef95ebd3cf1148048840b8e0a root/static/css/parley-skin1.css
-SHA1 487839ada3a862a293991f99659ca39f209cab28 root/static/css/parley.css
+SHA1 280aaa7c5bf393c4a72f955dfe44b168ca0079bb root/static/css/parley.css
 SHA1 b4b8c80b71885cf49fefd4cf9681d06fb54e4fc8 root/static/images/btn_120x50_built.png
 SHA1 5d553cbf0f827e53896765af57ba85eba0998938 root/static/images/btn_120x50_built_shadow.png
 SHA1 c15f7a700abd0db49e2b46e26336bf984e208c2f root/static/images/btn_120x50_powered.png
@@ -1031,7 +1031,7 @@ SHA1 4b08a07150c82ac1a2a6c08d77336551cd5b3bbf todo.i18n/nl
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAknvWIUACgkQh4j7xTiFuxGhaACgvFfF/POHXhdn+wlYQhKAH+YQ
-cKkAoKByjjszdcZrkwBfrTf7qZoTIGqv
-=A954
+iEYEARECAAYFAknvXbYACgkQh4j7xTiFuxF6pACgtUWMLFuMXeXx8D6vdcGUDAq4
+HG8AnREwisi40LntBxAWpkZdevJrjEKJ
+=4Yfo
 -----END PGP SIGNATURE-----
