@@ -41,7 +41,6 @@ inc/Module/Install/Metadata.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Catalyst/Controller/FormValidator.pm
-lib/Catalyst/Plugin/Dumper.pm
 lib/Parley.pm
 lib/Parley/App/Communication/Email.pm
 lib/Parley/App/DateTime.pm
@@ -105,7 +104,6 @@ lib/Parley/Version.pm
 lib/Parley/View/JSON.pm
 lib/Parley/View/Plain.pm
 lib/Parley/View/TT.pm
-lib/Template/Plugin/ForumCode.pm
 lib/Text/Search/SQL.pm
 Makefile.PL
 MANIFEST			This list of files
