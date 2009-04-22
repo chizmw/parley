@@ -4,8 +4,9 @@ use strict;
 use warnings;
 
 use Parley::Version;  our $VERSION = $Parley::VERSION;
-use base 'Catalyst::Controller';
-use base 'Catalyst::Controller::Validation::DFV';
+use base qw<
+    Catalyst::Controller::Validation::DFV
+>;
 
 use DateTime;
 use List::MoreUtils qw(uniq);

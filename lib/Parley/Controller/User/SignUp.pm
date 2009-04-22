@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Parley::Version;  our $VERSION = $Parley::VERSION;
-use base 'Catalyst::Controller';
 use base 'Catalyst::Controller::FormValidator';
 use base 'Catalyst::Controller::reCAPTCHA';
 use base 'Parley::ControllerBase::FormValidation';
