@@ -345,6 +345,12 @@ msgstr "You must be logged in before you can view your watched threads."
 msgid "LOGIN WATCH TOPIC"
 msgstr "You must be logged in before you can watch a topic."
 
+msgid "LOGIN_AND_REPLY"
+msgstr "Login and Reply"
+
+msgid "LOGIN_AND_QUOTE"
+msgstr "Login and Quote Reply"
+
 msgid "Logged in as"
 msgstr "Logged in as"
 

@@ -121,6 +121,7 @@ root/base/error/simple
 root/base/footer
 root/base/forum/list
 root/base/forum/view
+root/base/google/adsense_728_90
 root/base/header
 root/base/help/i_default/contents
 root/base/help/i_default/faq
@@ -957,6 +958,7 @@ script/parley_test.pl
 script/time_string_sample.pl
 script/update_i18n_todo.sh
 script/yml2conf
+SIGNATURE
 t.output/0.59.00
 t.output/0.59.03
 t.output/1.0.0

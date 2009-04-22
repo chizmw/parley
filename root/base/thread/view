@@ -53,6 +53,9 @@
         <!-- end : nested table evil -->
 
     <!-- thread posts -->
+    [% post_counter = 0 IF (! post_counter.defined) %]
+    [% posts_on_page = post_list.count %]
+    [% CALL post_list.reset %]
     [% WHILE (post = post_list.next) %]
         <tr class="thread_post_row">
             <td class="user_post_info">
@@ -134,10 +137,59 @@
                                 <a href="thread/reply?thread=[% current_thread.id %]">[%l('Reply')%]</a>
                             </span>
                         </span>
+                    [% ELSIF (!current_thread.locked && !authed_user) %]
+                        <span class="yui-button yui-link-button">
+                            <span class="first-child">
+                                <a href="thread/reply?thread=[% current_thread.id %]">[%l('LOGIN_AND_REPLY')%]</a>
+                            </span>
+                        </span>
+                        <span class="yui-button yui-link-button">
+                            <span class="first-child">
+                                <a href="thread/reply?post=[% post.id %]">[%l('LOGIN_AND_QUOTE')%]</a>
+                            </span>
+                        </span>
                     [% END %]
                 </div>
             </td>
         </tr>
+        [% IF (c.config.google_adsense.enabled == 1) %]
+            [% # show ONE ad at the halfway point %]
+            [% post_counter = post_counter + 1 %]
+            [% show_ad = (
+                    ((posts_on_page div 2) || 1)
+                    ==
+                    post_counter
+                )
+                || 0
+            %]
+            [% IF show_ad %]
+            [% gad = c.config.google_adsense.ad728_90 IF (c.config.google_adsense.enabled == 1) %]
+            <tr>
+                <td colspan="2">
+                    <div class="google_ad_thread_view">
+                        [% IF gad %]
+                        <div class="googlead_728_90">
+                            <script type="text/javascript"><!--
+                            google_ad_width = 728;
+                            google_ad_height = 90;
+                            google_language = "en"; 
+
+                            google_ad_client = "pub-2964145353238376";
+                            google_ad_slot = "4846354265";
+                            //-->
+                            </script>
+                            <script type="text/javascript"
+                            src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                            </script>
+                        </div>
+                        [% ELSE %]
+                        <b>SHOW AD HERE</b>
+                        [% END %]
+                    </div>
+                </td>
+            </tr>
+            [% END %]
+        [% END %]
     [% END %]
     <!-- end : thread posts -->
 

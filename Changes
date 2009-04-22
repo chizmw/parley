@@ -12,6 +12,10 @@ This file documents the revision history for Parley.
     - use mk_accessors instead of home-grown rubbish
     - added reCaptcha to signup screen
     - added check for unique username/forumname (signup)
+    - added "Login and X" buttons in thread view
+    - removed a couple of "use base 'Catalyst::Controller'" calls for classes
+      that "use base" another module that already inherits from it
+      (result of upgrading to 5.80001)
 
 1.0.4   Wed Dec 24 18:54:24 GMT 2008
     - fixed skin2

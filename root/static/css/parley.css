@@ -284,6 +284,25 @@ th {
     padding-right:      10px;
 }
 
+.googlead_728_90 {
+    display:                block;
+    margin-top:             10px;
+    margin-left:            auto;
+    margin-right:           auto;
+    margin-bottom:          10px;
+    text-align:             center;
+}
+
+.google_ad_thread_view {
+    display:            block;
+    margin-left:        auto;
+    margin-right:       auto;
+    margin-top:         10px;
+    margin-bottom:      10px;
+    min-height:         110px;
+    border: 2px solid red;
+}
+
 .help li {
     margin-top:         25px;
     margin-right:       25px;
