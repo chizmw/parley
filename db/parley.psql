@@ -10,6 +10,20 @@
 -- wrap it all in a transaction
 BEGIN;
 
+-- Create a table in your database for sessions
+-- [from Catalyst::Plugin::Session::Store::DBIC docs]
+CREATE TABLE sessions (
+    id              CHAR(72) PRIMARY KEY,
+    session_data    TEXT,
+    expires         INTEGER,
+
+    -- we like to know when a session was created
+    created         timestamp with time zone
+                    default CURRENT_TIMESTAMP
+                    not null
+);
+ALTER TABLE sessions OWNER TO parley;
+
 -- we have authentication
 CREATE TABLE authentication (
     id                      SERIAL          not null        primary key,
@@ -48,7 +62,8 @@ CREATE TABLE preference (
     show_tz         boolean     default True,
 
     notify_thread_watch     boolean     default False,
-    watch_on_post           boolean     default True
+    watch_on_post           boolean     default True,
+    skin                    varchar(100) NULL
 );
 
 CREATE TABLE person (
