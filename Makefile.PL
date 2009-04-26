@@ -11,8 +11,8 @@ license         ('perl');
 version         ('1.2.0');
 
 requires(
-    'Catalyst'                                                  => '5.7014',
-    'Catalyst::Runtime'                                         => '5.7014',
+    'Catalyst'                                                  => '5.80001',
+    'Catalyst::Runtime'                                         => '5.80001',
     'Catalyst::Action::RenderView'                              => '0.08',
     'Catalyst::Authentication::Store::DBIx::Class'              => '0.10',
     'Catalyst::Controller::reCAPTCHA'                           => '0.30001',

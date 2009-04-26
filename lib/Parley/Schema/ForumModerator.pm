@@ -7,7 +7,7 @@ use base 'DBIx::Class';
 use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 __PACKAGE__->load_components('PK::Auto', 'Core');
-__PACKAGE__->table('forum_moderator');
+__PACKAGE__->table('parley.forum_moderator');
 __PACKAGE__->add_columns(
     id => {},
 

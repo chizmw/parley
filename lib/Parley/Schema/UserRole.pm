@@ -10,7 +10,7 @@ use base qw/DBIx::Class/;
 # Load required DBIC stuff
 __PACKAGE__->load_components(qw/PK::Auto Core/);
 # Set the table name
-__PACKAGE__->table('user_roles');
+__PACKAGE__->table('parley.user_roles');
 # Set columns in table
 __PACKAGE__->add_columns(qw/id authentication_id role_id/);
 # Set the primary key for the table

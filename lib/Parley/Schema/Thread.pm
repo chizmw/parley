@@ -11,7 +11,7 @@ use DateTime::Format::Pg;
 use base 'DBIx::Class';
 
 __PACKAGE__->load_components("PK::Auto", "Core");
-__PACKAGE__->table("thread");
+__PACKAGE__->table("parley.thread");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",

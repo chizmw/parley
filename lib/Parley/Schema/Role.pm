@@ -11,7 +11,7 @@ use DateTime::Format::Pg;
 use Parley::App::DateTime qw( :interval );
 
 __PACKAGE__->load_components("PK::Auto", "Core");
-__PACKAGE__->table("role");
+__PACKAGE__->table("parley.role");
 __PACKAGE__->add_columns(
   id            => { },
   idx           => { },

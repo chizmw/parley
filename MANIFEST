@@ -18,6 +18,7 @@ db/patch_0.57_to_0.58.psql
 db/patch_0.58_to_0.59.psql
 db/patch_0.59_to_1.0.0.psql
 db/patch_1.0.0_to_1.0.3.psql
+db/patch_1.0.3_to_1.2.0.psql
 db_script/Parley-Schema-0.57_08-PostgreSQL.sql
 db_script/Parley-Schema-0.58-PostgreSQL.sql
 db_script/Parley-Schema-0.58_13-MySQL.sql
@@ -961,6 +962,7 @@ t.output/1.0.0
 t.output/1.0.3
 t.output/1.0.4
 t.output/1.1.0
+t.output/1.2.0
 t/01app.t
 t/02pod.t
 t/03podcoverage.t

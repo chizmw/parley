@@ -18,7 +18,7 @@ use Parley::App::DateTime qw( :interval );
 use base 'DBIx::Class';
 
 __PACKAGE__->load_components("PK::Auto", "Core");
-__PACKAGE__->table("post");
+__PACKAGE__->table("parley.post");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",

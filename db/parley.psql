@@ -12,6 +12,7 @@ BEGIN;
 
 -- put all tables in a separate namespace
 CREATE SCHEMA parley;
+ALTER SCHEMA parley OWNER TO parley;
 
 
 -- Create a table in your database for sessions

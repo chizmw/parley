@@ -11,7 +11,7 @@ use DateTime::Format::Pg;
 use Parley::App::DateTime qw( :interval );
 
 __PACKAGE__->load_components("PK::Auto", "Core");
-__PACKAGE__->table("log_admin_action");
+__PACKAGE__->table("parley.log_admin_action");
 __PACKAGE__->add_columns(
   id            => { },
   person_id     => { },

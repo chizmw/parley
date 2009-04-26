@@ -10,7 +10,7 @@ use base qw/DBIx::Class/;
 # Load required DBIC stuff
 __PACKAGE__->load_components(qw/PK::Auto Core/);
 # Set the table name
-__PACKAGE__->table('ip_ban_type');
+__PACKAGE__->table('parley.ip_ban_type');
 # Set columns in table
 __PACKAGE__->add_columns(qw/id name description/);
 # Set the primary key for the table

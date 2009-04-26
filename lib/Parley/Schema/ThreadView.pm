@@ -13,7 +13,7 @@ use DateTime::Format::Pg;
 use Parley::App::DateTime qw( :interval );
 
 __PACKAGE__->load_components("PK::Auto", "Core");
-__PACKAGE__->table("thread_view");
+__PACKAGE__->table("parley.thread_view");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",

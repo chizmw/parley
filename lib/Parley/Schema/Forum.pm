@@ -10,7 +10,7 @@ use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'DBIx::Class';
 
 __PACKAGE__->load_components("PK::Auto", "Core");
-__PACKAGE__->table("forum");
+__PACKAGE__->table("parley.forum");
 __PACKAGE__->add_columns(
   "id" => {
     data_type => "integer",

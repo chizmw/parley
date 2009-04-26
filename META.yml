@@ -20,7 +20,7 @@ no_index:
     - t
 requires:
   Cache::FastMmap: 1.24
-  Catalyst: 5.7014
+  Catalyst: 5.80001
   Catalyst::Action::RenderView: 0.08
   Catalyst::Authentication::Store::DBIx::Class: 0.10
   Catalyst::Controller::Validation::DFV: 0.0.5
@@ -38,7 +38,7 @@ requires:
   Catalyst::Plugin::Session::Store::DBIC: 0.06
   Catalyst::Plugin::StackTrace: 0.08
   Catalyst::Plugin::Static::Simple: 0.20
-  Catalyst::Runtime: 5.7014
+  Catalyst::Runtime: 5.80001
   Catalyst::View::JSON: 0.24
   Catalyst::View::TT: 0.27
   Config::General: 2.37

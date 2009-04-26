@@ -7,7 +7,7 @@ use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'DBIx::Class';
 
 __PACKAGE__->load_components("PK::Auto", "Core");
-__PACKAGE__->table("password_reset");
+__PACKAGE__->table("parley.password_reset");
 __PACKAGE__->add_columns(
 
   id => {
