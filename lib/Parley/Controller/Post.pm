@@ -141,7 +141,7 @@ sub view : Local {
     # work out what page in which thread the post lives
     my $thread = $c->_current_post->thread->id();
     my $page_number =  $c->model('ParleyDB')->resultset('Post')->page_containing_post(
-        $c->stash->{current_post},
+        $c->_current_post,
         $c->config->{posts_per_page},
     );
 
