@@ -10,6 +10,7 @@ BEGIN;
 
 -- patch starts here --
     CREATE SCHEMA parley;
+    ALTER SCHEMA parley OWNER TO parley;
 
     ALTER TABLE public.admin_action                 SET SCHEMA parley;
     ALTER TABLE public.authentication               SET SCHEMA parley;
