@@ -1,3 +1,0 @@
-<h1>[%l('Access Denied')%]</h1>
-
-[%l('Access to this application is not permitted from [_1]', c.request.address)%]
