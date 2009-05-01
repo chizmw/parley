@@ -1,32 +1,16 @@
 #!/usr/bin/env sh
 
-############################################################################
-#
-# Usage: deploy.sh <version>
-#   e.g. deploy 0.58_12
-#
-# This is the script I use on my home server to (easily)
-# deploy new versions of Parley
-#
-# I run under FastCGI using config/parley and Ubuntu's "site_available"
-# with apache2
-#
-# I drop all my tarballs in /home/parley and run the script from there
-#
-# I don't know how the script will behave if there isn't an existing
-# deployment - I had one before writing the script.
-#
-############################################################################
-
-############################################################################
-#            THERE IS NOTHING CONFIGURABLE IN THIS SCRIPT!!                #
-############################################################################
-
 VERSION=$1;
-MAJOR_VERSION=${VERSION%_*}
-MINOR_VERSION=${VERSION#*_}
+MAJOR_VERSION=${VERSION%.*}
+MINOR_VERSION=${VERSION##*.}
 
+echo $VERSION
+echo $MAJOR_VERSION
+echo $MINOR_VERSION
+
+#TARBALL="Parley-v${VERSION}.tar.gz"
 TARBALL="Parley-${VERSION}.tar.gz"
+#DIR="Parley-v${VERSION}"
 DIR="Parley-${VERSION}"
 
 if [ -z "$VERSION" ]; then
@@ -42,7 +26,7 @@ fi
 
 tar zxf $TARBALL
 
-PATCH_MATCH_COUNT=`ls ${DIR}/db/*${MAJOR_VERSION}*sql | grep -c -`
+PATCH_MATCH_COUNT=`ls ${DIR}/db/*_${MAJOR_VERSION}*sql |grep -c -`
 
 if [ $PATCH_MATCH_COUNT -gt 0 ]; then
 	echo "There are ${PATCH_MATCH_COUNT} patch(es) that match the requested version to deploy:"
@@ -57,7 +41,12 @@ if [ ! -d $DIR ]; then
 fi
 
 cp -a ./parley/root/static/user_file ./$DIR/root/static/ 2>/dev/null
+sudo chown -R parley:www-data ./$DIR/root/static/user_file/
 ls ./$DIR/root/static/user_file/
+
+if [ -f ./parley/parley_local.conf ]; then
+	cp -av ./parley/parley_local.conf ./$DIR/parley_local.conf
+fi
 
 (cd $DIR && perl Makefile.PL)
 
