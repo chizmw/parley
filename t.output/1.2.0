@@ -20,4 +20,4 @@ t/view_JSON.....................ok
 t/view_Plain....................ok
 t/view_TT.......................ok
 All tests successful, 2 tests and 75 subtests skipped.
-Files=17, Tests=464, 25 wallclock secs (20.78 cusr +  1.13 csys = 21.91 CPU)
+Files=17, Tests=464, 22 wallclock secs (19.64 cusr +  0.91 csys = 20.55 CPU)
