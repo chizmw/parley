@@ -143,7 +143,7 @@ BEGIN {
         },
         {
             in      => q{[img alt="Foo"]http://somewhere.com/myImage.jpg[/img]},
-            out     => q{<img src="http://somewhere.com/myImage.jpg" alt=&quot;Foo&quot; />},
+            out     => q{<img src="http://somewhere.com/myImage.jpg" alt="Foo" />},
             diag    => 'Test this URL in browsers!',
         },
         # explosm / cyanide style

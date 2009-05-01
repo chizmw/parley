@@ -8,7 +8,7 @@ name            ('Parley');
 author          ('Chisel Wright<chiselwright@users.berlios.de>');
 abstract        ('Message board / forum application');
 license         ('perl');
-version         ('1.2.0');
+version         ('1.2.1');
 
 requires(
     'Catalyst'                                                  => '5.80001',

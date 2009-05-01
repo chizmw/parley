@@ -1,5 +1,9 @@
 This file documents the revision history for Parley.
 
+1.2.1   Wed Apr 29 19:41:25 BST 2009
+    - fix test case in t/04_forumcode.t (output no longer suffers from &quot;
+      issue)
+
 1.2.0   Wed Apr 29 19:24:12 BST 2009
     - removed deprecated modules
     - fixed post/view (incorrectly using unassigned stash value)

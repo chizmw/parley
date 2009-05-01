@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 # derived from mst suggestion on #catalyst
-use version; our $VERSION = qv(1.2.0)->numify;
+use version; our $VERSION = qv(1.2.1)->numify;
 
 package Parley::Version;
 
