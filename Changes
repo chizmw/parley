@@ -5,6 +5,7 @@ This file documents the revision history for Parley.
       issue)
 
 1.2.0   Wed Apr 29 19:24:12 BST 2009
+    - moved tables into "parley" namespace
     - removed deprecated modules
     - fixed post/view (incorrectly using unassigned stash value)
     - upgraded YUI to 2.7.0b
