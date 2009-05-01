@@ -932,6 +932,7 @@ t.output/1.0.3
 t.output/1.0.4
 t.output/1.1.0
 t.output/1.2.0
+t.output/1.2.1
 t/01app.t
 t/02pod.t
 t/03podcoverage.t
