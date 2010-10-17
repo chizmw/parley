@@ -9,17 +9,14 @@
         <p>This is a quick guide to getting Parley running on a machine using
         the Catalyst testing/development server.</p>
 
-        <p><b>NOTE</b> v0.51 has missing dependencies in Makefile.PL. Save
-        yourself some pain and fetch v0.52 or later.</p>
-
         <h2>Initial Installation</h2>
         <blockquote><code>
         mkdir -p ~/development<br />
         cd ~/development<br />
 <br />
-        wget http://download.berlios.de/parley/Parley-0.52.tar.gz<br />
-        tar -zxvf Parley-0.52.tar.gz<br />
-        cd Parley-0.52/<br />
+        wget http://search.cpan.org/CPAN/authors/id/C/CH/CHISEL/Parley-1.2.1.tar.gz<br />
+        tar -zxvf Parley-1.2.1.tar.gz<br />
+        cd Parley-1.2.1/<br />
 <br />
         perl Makefile.PL<br />
         <em># install missing dependencies</em><br />
@@ -29,7 +26,7 @@
         <em>## local   all  parley                trust</em><br />
         <em>## host&nbsp;   all  parley  127.0.0.1/32  trust</em><br />
         sudo -u postgres createuser -A -d parley<br />
-        createdb -U parley -E UTF8 parley<br />
+        sudo -u postgres createdb --owner=parley -E UTF8 parley<br />
         psql -U parley -d parley -f db/parley.psql<br />
         </code></blockquote>
 
