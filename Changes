@@ -1,5 +1,8 @@
 This file documents the revision history for Parley.
 
+1.2.2   Sun Oct 17 15:39:13 BST 2010
+    - replace avatar upload with Gravatar
+
 1.2.1   Wed Apr 29 19:41:25 BST 2009
     - fix test case in t/04_forumcode.t (output no longer suffers from &quot;
       issue)

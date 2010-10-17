@@ -5,7 +5,6 @@ use warnings;
 use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Controller';
 
-use Image::Magick;
 use JSON;
 use Image::Size qw( html_imgsize imgsize );
 
@@ -298,104 +297,6 @@ sub _form_data_valid {
     }
 
     # otherwise, the form data is ok ...
-    return 1;
-}
-
-
-sub upload : Global {
-    my ($self, $c) = @_;
-
-    if ( $c->request->parameters->{form_submit} eq 'yes' ) {
-
-        if ( my $upload = $c->request->upload('avatar_file') ) {
-
-            my $filename = $upload->filename;
-            my $target   = "/tmp/upload/$filename";
-
-            unless ( $upload->link_to($target) || $upload->copy_to($target) ) {
-                die( "Failed to copy '$filename' to '$target': $!" );
-            }
-        }
-    }
-
-    $c->stash->{template} = 'my/preferences';
-}
-
-
-sub _process_form_avatar {
-    my ($self, $c) = @_;
-    my ($upload);
-    $c->log->debug('_process_form_avatar');
-
-    if (not $self->_form_data_valid($c)) {
-        $c->log->debug('form data is not valid');
-        return;
-    }
-
-    $c->log->info( $c->request->param('avatar_file') );
-    
-    if ( $upload = $c->request->upload('avatar_file') ) {
-        $c->log->debug( ref($upload) );
-        $c->log->debug( $upload->filename );
-        $c->log->debug( $upload->type );
-        $c->log->debug( $upload->size );
-
-        # reject files that are too large
-        if ($upload->size > 20480 ) {
-            parley_warn($c, $c->localize(q{FILE TOO LARGE}));
-            $c->log->info($c->localize(q{FILE TOO LARGE}));
-            return;
-        }
-
-        # reject anything that doesn't appear to be an image
-        if ($upload->type !~ m{\Aimage/}xms) {
-            parley_warn(
-                $c,
-                  $c->localize(q{FILE NOT IMAGE}) 
-                . q{ [}
-                . $upload->type
-                . q{]}
-            );
-            return;
-        }
-
-        # store the file (but don't make it active yet)
-        my $filename    = $upload->filename;
-        my $target_dir  =   $c->path_to('root')
-                          . q{/static/user_file/}
-                          . $c->_authed_user->id();
-        my $target      = $target_dir . q{/} . $filename;
-
-        # create the directory if it doesn't exist
-        if (not -d $target_dir) {
-            # try to create the target directory
-            mkdir $target_dir or do {
-                $c->log->error( qq{$target_dir - $!} );
-                parley_warn($c, $c->localize(q{FILE NEWDIR FAILED}));
-                return;
-            };
-
-            # if for some reason the directory still doesn't exist..
-            if (not -d $target_dir) {
-                parley_warn($c, $c->localize(q{FILE NEWDIR FAILED}));
-                $c->log->error( qq{$target_dir - $!} );
-                return;
-            }
-        }
-
-        # save the file for processing
-        if ( not $upload->link_to($target) and not $upload->copy_to($target) ) {
-            parley_warn($c, $c->localize(q{FILE STORE FAILED}));
-            $c->log->error( qq{$target - $!} );
-            return;
-        }
-        $c->log->info($target, $target_dir);
-
-        # check the image dimensions, and if it's too large, scale it down to
-        # something we accept, also convert it to a JPG
-        _convert_and_scale_image($target, $target_dir);
-    }
-
     return 1;
 }
 

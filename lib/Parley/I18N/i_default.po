@@ -101,7 +101,7 @@ msgid "Cancel"
 msgstr "Cancel"
 
 msgid "CHANGE AVATAR"
-msgstr "Change your avatar image by selecting a file and clicking the Upload button below"
+msgstr "Change your avatar image at <a href=\"http://gravatar.com\">Gravatar</a>"
 
 msgid "Click on the login link to continue"
 msgstr "Click on the login link to continue"

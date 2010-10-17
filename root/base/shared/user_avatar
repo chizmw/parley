@@ -1,11 +1,11 @@
-<!-- user avatar -->
-[% avatar_file = c.path_to('root') _ "/static/user_file/${person.id}/avatar.jpg" %]
-[% TRY %]
-    [% USE avatar = Image(avatar_file) %]
-    [% tmp = avatar.attr %]
-    <img class="picborder" src="/static/user_file/[% person.id %]/avatar.jpg" border="0" [% avatar.attr %] alt="[%l('Avatar')%]" />
-    <br />
-[% CATCH %]
-   [%l('No User Avatar')%] 
+<!-- START : Gravatar -->
+[% IF person && person.email %]
+<div id="user_gravatar">
+[% USE Gravatar %]
+<img src="[% Gravatar( email => person.email, rating => 'PG', default => c.uri_for("/static/images/mystery_head.jpg
+") ) | html %]" alt="[% person.first_name | html %]" width="80" height="80" />
+</div>
+[% ELSE %]
+<!-- NO AVATAR -->
 [% END %]
-<!-- end : user avatar -->
+<!-- END : Gravatar -->

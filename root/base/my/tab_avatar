@@ -13,11 +13,7 @@
         </div>
         <div class="yui-u">
             <div>
-                [%l('CHANGE AVATAR')%]:
-            </div>
-            <div class="top_padded">
-                <input type="file" id="avatar_file" name="avatar_file" />
-                <input type="submit" value="[%l('Upload')%]""/>
+                [%l('CHANGE AVATAR')%]
             </div>
         </div>
     </div>
