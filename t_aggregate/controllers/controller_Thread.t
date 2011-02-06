@@ -2,8 +2,8 @@ use strict;
 use warnings;
 use Test::More tests => 9;
 
-BEGIN { use_ok 'Catalyst::Test', 'Parley' }
-BEGIN { use_ok 'Parley::Controller::Thread' }
+use_ok 'Catalyst::Test', 'Parley';
+use_ok 'Parley::Controller::Thread';
 
 ok( request('/thread/add')      ->is_success,   'thread/add exists'         );
 ok( request('/thread/next_post')->is_success,   'thread/next_post exists'   );
