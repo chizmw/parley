@@ -24,6 +24,9 @@
         <meta name="author" content="Chisel Wright" />
         <link rel="shortcut icon" href="[% c.request.base %]/favicon.ico" type="image/x-icon" />
 
+        <!-- jQuery -->
+        [% INCLUDE shared/jquery/include_js %]
+
         <!-- YUI ajax magick -->
 
         <!-- CSS -->
