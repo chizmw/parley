@@ -91,7 +91,7 @@
                     [% ELSE %]
                     <div class="user_info_actions">
                         [
-                            <a href="javascript:YAHOO.parley.login.login_dialog.show();">[%l('Login')%]</a>
+                            <a href="[%c.uri_for('/user/login')%]" id="login-user">[%l('Login')%]</a>
                         [%l('or')%]
                             <a href="[%c.uri_for('/user/signup')%]">[%l('Register')%]</a>
                         ]

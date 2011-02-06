@@ -79,7 +79,7 @@
                         </ul>
                         [% ELSE %]
                         <ul>
-                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="javascript:YAHOO.parley.login.login_dialog.show();">[%l('Login')%]</a></li>
+                            <li class="yuimenuitem"><a class="yuimenuitemlabel" href="[%c.uri_for('/user/login')%]" id="menubar-login-user">[%l('Login')%]</a></li>
                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="user/signup">[%l('Register')%]</a></li>
                             <li class="yuimenuitem"><a class="yuimenuitemlabel" href="user/password/forgotten">[%l('Password Reminder')%]</a></li>
                         </ul>
