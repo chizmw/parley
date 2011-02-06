@@ -1,9 +1,8 @@
 package Parley::App::DFV;
+# ABSTRACT: Functions used with Data::FormValidator
 # vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;
-
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 use Email::Valid;
 use Perl6::Export::Attrs;
@@ -66,10 +65,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Parley::App::DFV - Functions used with Data::FormValidator
-
 =head1 SYNOPSIS
 
   use Parley::App::DFV qw( :constraints );
@@ -92,9 +87,5 @@ Parley::App::DFV - Functions used with Data::FormValidator
 
     },
   );
-
-=head1 AUTHOR
-
-Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 =cut

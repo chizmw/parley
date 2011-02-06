@@ -1,9 +1,9 @@
 package Parley::Schema::PreferenceTimeString;
+# ABSTRACT: Schema class for preference_time_string table
+# vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;
 use base 'DBIx::Class';
-
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 __PACKAGE__->load_components("PK::Auto", "Core");
 __PACKAGE__->table("parley.preference_time_string");

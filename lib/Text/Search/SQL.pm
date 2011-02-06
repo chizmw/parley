@@ -1,11 +1,10 @@
 package Text::Search::SQL;
+# ABSTRACT: split search terms into something that can be used with DBIx::Class or SQL::Abstract
 # vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;
 use Carp;
 use Data::Dump qw(pp);
-
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 sub new {
     my ($proto, $options) = @_;
@@ -154,13 +153,5 @@ sub _parse_chunks {
 __END__
 
 =pod
-
-=head1 NAME
-
-Text::Search::SQL - split search terms into something that can be used with DBIx::Class or SQL::Abstract
-
-=head1 AUTHOR
-
-Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 =cut

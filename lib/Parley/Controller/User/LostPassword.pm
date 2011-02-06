@@ -1,9 +1,8 @@
 package Parley::Controller::User::LostPassword;
-
+# ABSTRACT: Lost Password action controller
 use strict;
 use warnings;
 
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Controller';
 
 use List::MoreUtils qw{ uniq };
@@ -441,13 +440,5 @@ sub _txn_user_password_update {
 
 1;
 __END__
-
-=pod
-
-=head1 NAME
-
-Parley::Controller::User::LostPassword
-
-=cut
 
 vim: ts=8 sts=4 et sw=4 sr sta

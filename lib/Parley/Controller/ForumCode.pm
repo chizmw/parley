@@ -1,4 +1,5 @@
 package Parley::Controller::ForumCode;
+# ABSTRACT: ForumCode actions controller class
 # vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;

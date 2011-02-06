@@ -1,9 +1,8 @@
 package Parley::Schema::UserRole;
+# ABSTRACT: Schema class for user_roles table
 # vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;
-
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 use base qw/DBIx::Class/;
 

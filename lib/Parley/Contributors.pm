@@ -1,6 +1,6 @@
 package Parley::Contributors;
+# ABSTRACT: people that helped out along the way
 use strict;
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 # this is a dummy package to provide POD
 
@@ -9,14 +9,6 @@ use Parley::Version;  our $VERSION = $Parley::VERSION;
 __END__
 
 =pod
-
-=head1 NAME
-
-Parley::Contributors - people that helped out along the way
-
-=head1 AUTHOR
-
-Chisel Wright C<< <chiselwright@users.berlios.de> >>
 
 =head1 INTERFACE
 

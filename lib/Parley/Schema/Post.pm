@@ -1,12 +1,12 @@
 package Parley::Schema::Post;
+# ABSTRACT: Schema class for post table
+# vim: ts=8 sts=4 et sw=4 sr sta
 
 # Created by DBIx::Class::Schema::Loader v0.03004 @ 2006-08-10 09:12:24
 
 use strict;
 use warnings;
 use Data::Dump qw(pp);
-
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 use DateTime;
 use DateTime::Format::Pg;

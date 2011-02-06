@@ -1,4 +1,5 @@
 package Parley::Schema::Person;
+# ABSTRACT: Schema class for person table
 # vim: ts=8 sts=4 et sw=4 sr sta
 
 # Created by DBIx::Class::Schema::Loader v0.03004 @ 2006-08-10 09:12:24
@@ -6,8 +7,6 @@ package Parley::Schema::Person;
 use strict;
 use warnings;
 use Carp;
-
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 use base 'DBIx::Class';
 

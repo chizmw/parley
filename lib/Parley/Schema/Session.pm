@@ -1,4 +1,5 @@
 package Parley::Schema::Session;
+# ABSTRACT: Schema class for session table
 # vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;

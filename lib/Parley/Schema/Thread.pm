@@ -1,11 +1,12 @@
 package Parley::Schema::Thread;
+# ABSTRACT: Schema class for thread table
+# vim: ts=8 sts=4 et sw=4 sr sta
 
 # Created by DBIx::Class::Schema::Loader v0.03004 @ 2006-08-10 09:12:24
 
 use strict;
 use warnings;
 
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 use DateTime::Format::Pg;
 
 use base 'DBIx::Class';

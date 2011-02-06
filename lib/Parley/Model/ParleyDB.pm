@@ -1,8 +1,8 @@
 package Parley::Model::ParleyDB;
-
+# ABSTRACT:  Catalyst DBIC Schema Model
+# vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Model::DBIC::Schema';
 
 #__PACKAGE__->config(
@@ -16,9 +16,11 @@ use base 'Catalyst::Model::DBIC::Schema';
 
 # CONFIG COMES FROM parley.conf
 
-=head1 NAME
+1;
+__END__
 
-Parley::Model::ParleyDB - Catalyst DBIC Schema Model
+=pod
+
 =head1 SYNOPSIS
 
 See L<Parley>
@@ -27,15 +29,4 @@ See L<Parley>
 
 L<Catalyst::Model::DBIC::Schema> Model using schema L<Parley::Schema>
 
-=head1 AUTHOR
-
-Chisel Wright C<< <chiselwright@users.berlios.de> >>
-
-=head1 LICENSE
-
-This library is free software, you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
 =cut
-
-1;

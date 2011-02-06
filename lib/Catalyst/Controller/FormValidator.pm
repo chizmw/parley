@@ -1,4 +1,6 @@
-package Catalyst::Controller::FormValidator;
+package # hide from PAUSE
+    Catalyst::Controller::FormValidator;
+# ABSTRACT: Form Validation actions controller class
 # vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;
@@ -114,14 +116,5 @@ Form-validation using a Catalyst controller and Data::FormValidator
             [ $error_key, $error_constraint_name ]
         );
     }
-
-=head1 AUTHOR
-
-Chisel Wright
-
-=head1 LICENSE
-
-This library is free software, you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

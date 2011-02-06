@@ -1,9 +1,10 @@
 package Parley::Controller::User::SignUp;
+# ABSTRACT: User Signup actions controller class
+# vim: ts=8 sts=4 et sw=4 sr sta
 
 use strict;
 use warnings;
 
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 use base 'Catalyst::Controller::FormValidator';
 use base 'Catalyst::Controller::reCAPTCHA';
 use base 'Parley::ControllerBase::FormValidation';

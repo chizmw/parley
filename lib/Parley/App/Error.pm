@@ -1,9 +1,8 @@
 package Parley::App::Error;
+# ABSTRACT: Helper methods for error handling
 # vim: ts=8 sts=4 et sw=4 sr sta
 use strict;
 use warnings;
-
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 use Perl6::Export::Attrs;
 

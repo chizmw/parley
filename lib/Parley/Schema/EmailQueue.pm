@@ -1,11 +1,11 @@
 package Parley::Schema::EmailQueue;
+# ABSTRACT: Schema class for email_queue table
+# vim: ts=8 sts=4 et sw=4 sr sta
 
 # Created by DBIx::Class::Schema::Loader v0.03004 @ 2006-08-10 09:12:24
 
 use strict;
 use warnings;
-
-use Parley::Version;  our $VERSION = $Parley::VERSION;
 
 use base 'DBIx::Class';
 
