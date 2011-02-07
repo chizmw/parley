@@ -1,86 +1,42 @@
 <!-- LANGUAGE DIALOG -->
 <script type="text/javascript">
-YAHOO.namespace("parley.language");
-
-function language_dialog_init() {
-	// Define various event handlers for Dialog
-	var handleSubmit = function() {
-		this.submit();
-	};
-	var handleCancel = function() {
-		this.cancel();
-	};
-	var handleSuccess = function(o) {
-	};
-	var handleFailure = function(o) {
-		alert("Submission failed: " + o.status);
-	};
-
-	// Instantiate the Dialog
-	YAHOO.parley.language.language_dialog = new YAHOO.widget.Dialog(
-        'language_dialog', 
-        {
-            postmethod:             'form',
-            fixedcenter:            true,
-            visible:                false, 
-            modal:                  false,
-            constraintoviewport:    true,
-            width:                  '250px',
-            buttons : [
-                { text:'[%l('Cancel')%]', handler:handleCancel }
-            ]
+$(function() {
+    $( "#language_dialog" ).dialog({
+        autoOpen: false,
+        width: 250,
+        modal: true,
+        buttons: {
+            Cancel: function() {
+                $( this ).dialog( "close" );
+            }
         }
-    );
-	
-	// Validate the entries in the form to require that both first and last name are entered
-	YAHOO.parley.language.language_dialog.validate = function() {
-		var data = this.getData();
-		if (data.username == "" || data.password == "") {
-			alert("[%l('Please enter your username and password')%].");
-			return false;
-		}
-        else {
-			return true;
-		}
-	};
-
-	// Wire up the success and failure handlers
-	YAHOO.parley.language.language_dialog.callback = {
-        success: handleSubmit,
-        failure: handleFailure
-    };
-	
-	// Render the Dialog
-	YAHOO.parley.language.language_dialog.render();
-	//YAHOO.parley.language.language_dialog.show();
-}
-
-YAHOO.util.Event.onDOMReady(language_dialog_init);
+    });
+    /* make the #language_chooser link display the dialog */
+    $( "#language_chooser" )
+    .click(function(e) {
+        e.preventDefault();
+        $( "#language_dialog" ).dialog( "open" );
+    });
+});
 </script>
 
 [% lang_data = [
-    {
-        code    => 'gb',
+    {   code    => 'gb',
         name    => 'English',
     },
-    {
-        code    => 'it',
+    {   code    => 'it',
         name    => 'Italiano',
     },
-    {
-        code    => 'nl',
+    {   code    => 'nl',
         name    => 'Nederlands',
     },
    ]
 %]
 
-<div id="language_dialog">
-    <div class="hd">
-        [%l('Please choose a language')%]
-    </div>
-    <div class="bd">
+<div id="language_dialog" title="[%l('Please choose a language')%]">
+    <div>
         [% FOR lang IN lang_data %]
-        <div style="float:left;width:110px;">
+        <div style="float:left;width:110px;font-size:75%;">
         <a href="[% c.uri_for('/') %]?lang=[%lang.code%]" style="margin-left:15px;">
             <img src="/static/images/icons/flags/[%lang.code%].png" width="16" height="11" alt="[%lang.name%]" />
             [%lang.name%]

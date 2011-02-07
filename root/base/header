@@ -75,7 +75,7 @@
                     [% END %]
 
                     &nbsp;
-                    <a href="javascript:YAHOO.parley.language.language_dialog.show();">
+                    <a href="#" id="language_chooser">
                         [% IF (country_code = c.language) %]
                         <img src="/static/images/icons/flags/[%country_code%].png" width="16" height="11" alt="[%country_code%]" />
                         [% ELSE %]
