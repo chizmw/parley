@@ -64,7 +64,7 @@
                 </div>
             </li>
 
-            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="javascript:YAHOO.parley.search.search_dialog.show();">[%l('Search')%]</a>
+            <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="[%c.uri_for('/search/advanced')%]" id="show_search_dialog">[%l('Search')%]</a>
             </li>
 
             <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">[%l('Me')%]</a>
