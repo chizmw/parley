@@ -79,14 +79,24 @@ sub users_autocomplete : Local {
     my ($self, $c) = @_;
     my @results;
 
+    my %extra_info = (
+        'order_by' => [\'forum_name ASC'],
+        columns => [qw/id forum_name first_name last_name/],
+    );
+
+    # limit results?
+    if (
+            defined $c->request->param('max_rows')
+        and $c->request->param('max_rows') =~ m{\d+$}
+    ) {
+        $extra_info{rows} = $c->request->param('max_rows');
+    }
+
     my $stuff = $c->model('ParleyDB::Person')->search(
         {
-            forum_name => { -ilike => $c->request->param('query') . q{%} },
+            forum_name => { -ilike => $c->request->param('forum_name') . q{%} },
         },
-        {
-            'order_by' => [\'forum_name ASC'],
-            columns => [qw/id forum_name first_name last_name/],
-        }
+        \%extra_info
     );
 
     while (my $person = $stuff->next) {
@@ -94,15 +104,7 @@ sub users_autocomplete : Local {
         push @results, \%data;
     }
 
-    $c->response->body(
-        to_json( 
-            {
-                ResultSet => {
-                    person => \@results,
-                }
-            }
-        )
-    );
+    $c->response->body( to_json({people => \@results}) );
     return;
 }
 

@@ -37,7 +37,6 @@
         <link rel="stylesheet" type="text/css" href="[%c.uri_for('/static/yui/container/assets/skins/sam/container.css')%]" />
         <link rel="stylesheet" type="text/css" href="[%c.uri_for('/static/yui/menu/assets/skins/sam/menu.css')%]" /> 
         <link rel="stylesheet" type="text/css" href="[%c.uri_for('/static/yui/tabview/assets/skins/sam/tabview.css')%]" />
-        <link rel="stylesheet" type="text/css" href="[%c.uri_for('/static/yui/autocomplete/assets/skins/sam/autocomplete.css')%]" />
 
         <!-- Dependency source files -->
         <script type="text/javascript" src="[%c.uri_for('/static/yui/yahoo-dom-event/yahoo-dom-event.js')%]"></script>
@@ -46,7 +45,6 @@
         <script type="text/javascript" src="[%c.uri_for('/static/yui/button/button-min.js')%]"></script>
         <script type="text/javascript" src="[%c.uri_for('/static/yui/menu/menu-min.js')%]"></script>
         <script type="text/javascript" src="[%c.uri_for('/static/yui/tabview/tabview-min.js')%]"></script>
-        <script type="text/javascript" src="[%c.uri_for('/static/yui/autocomplete/autocomplete-min.js')%]"></script>
 
         <!-- homebrew javascript -->
         <script type="text/javascript" src="[%c.uri_for('/static/script/ajax_error_dlg.js')%]"></script>
