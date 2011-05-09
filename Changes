@@ -1,6 +1,7 @@
 This file documents the revision history for Parley.
 
 {{$NEXT}}
+  - apply patches from NINE: search_path and signup
   - login dialog now uses jQuery
   - switch to using Dizt::Zilla
 
