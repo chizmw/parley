@@ -36,6 +36,8 @@ Toby Corkindale C<< TJC >>
 
 Kaare Rasmussen C<< CPANID: KAARE >>
 
+Stefan Seifert C<< CPANID: NINE >>
+
 =head1 PROJECTS
 
 L<Catalyst>,
