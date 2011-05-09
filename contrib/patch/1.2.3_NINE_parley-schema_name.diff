@@ -1,0 +1,271 @@
+commit d871cf42f60843d0ff0645f80eb6909a0d0aa373
+Author: Stefan Seifert <nine@detonation.org>
+Date:   Thu May 5 13:42:05 2011 +0200
+
+    Use search_path instead of hard coded schema name in half of the statements
+    
+    Schema name was only used when creating tables, not when inserting data,
+    so a simple psql parley -f db/parley.sql would not work.
+    
+    Using search_path reduces usage of the schema name to only two lines
+    making it easier to change (or remove)
+
+diff --git a/db/parley.psql b/db/parley.psql
+index 7f87153..73daea0 100644
+--- a/db/parley.psql
++++ b/db/parley.psql
+@@ -12,12 +12,12 @@ BEGIN;
+ 
+ -- put all tables in a separate namespace
+ CREATE SCHEMA parley;
+-ALTER SCHEMA parley OWNER TO parley;
++SET search_path = parley;
+ 
+ 
+ -- Create a table in your database for sessions
+ -- [from Catalyst::Plugin::Session::Store::DBIC docs]
+-CREATE TABLE parley.sessions (
++CREATE TABLE sessions (
+     id              CHAR(72) PRIMARY KEY,
+     session_data    TEXT,
+     expires         INTEGER,
+@@ -27,10 +27,9 @@ CREATE TABLE parley.sessions (
+                     default CURRENT_TIMESTAMP
+                     not null
+ );
+-ALTER TABLE parley.sessions OWNER TO parley;
+ 
+ -- we have authentication
+-CREATE TABLE parley.authentication (
++CREATE TABLE authentication (
+     id                      SERIAL          not null        primary key,
+     username                text            not null,
+     password                text            not null,
+@@ -41,7 +40,7 @@ CREATE TABLE parley.authentication (
+ 
+ 
+ -- a table of acceptable TZ strings
+-CREATE TABLE parley.preference_time_string (
++CREATE TABLE preference_time_string (
+     id                              SERIAL      primary key,
+     time_string                     text        not null,
+     sample                          text        not null,
+@@ -58,7 +57,7 @@ INSERT INTO preference_time_string (time_string, sample) VALUES ('%R, %b %d', '1
+ INSERT INTO preference_time_string (time_string, sample) VALUES ('%R, %b %d ''%y', '18:15, Jul 13 ''06');
+ 
+ 
+-CREATE TABLE parley.preference (
++CREATE TABLE preference (
+     id             SERIAL      primary key,
+ 
+     timezone        text        not null
+@@ -71,13 +70,13 @@ CREATE TABLE parley.preference (
+     skin                    varchar(100) NULL
+ );
+ 
+-CREATE TABLE parley.person (
++CREATE TABLE person (
+     id                  SERIAL      primary key,
+-    
++
+     first_name          text        not null,
+     last_name           text        not null,
+     email               text        not null,
+-    
++
+     forum_name          text        not null,
+ 
+     preference_id       integer
+@@ -93,7 +92,7 @@ CREATE TABLE parley.person (
+     UNIQUE(email)
+ );
+ 
+-CREATE TABLE parley.registration_authentication (
++CREATE TABLE registration_authentication (
+     id              text  primary key,
+     recipient_id    integer     not null
+                     references person(id),
+@@ -101,14 +100,14 @@ CREATE TABLE parley.registration_authentication (
+ );
+ 
+ -- new table used during forgotten password process
+-CREATE TABLE parley.password_reset (
++CREATE TABLE password_reset (
+     id                      text        primary key,
+     recipient_id            integer     not null
+                             references person(id),
+     expires                 timestamp
+ );
+ 
+-CREATE TABLE parley.forum (
++CREATE TABLE forum (
+     id              SERIAL      primary key,
+     name            text        not null,
+     description     text,
+@@ -120,13 +119,13 @@ CREATE TABLE parley.forum (
+     UNIQUE(name)
+ );
+ 
+-CREATE TABLE parley.thread (
++CREATE TABLE thread (
+     id              SERIAL      primary key,
+     forum_id        integer     not null
+                     references forum(id),
+ 
+     subject         text        not null,
+-    
++
+     created         timestamp with time zone
+                     default CURRENT_TIMESTAMP,
+     creator_id      integer     not null
+@@ -140,7 +139,7 @@ CREATE TABLE parley.thread (
+     locked          boolean     not null    default False
+ );
+ 
+-CREATE TABLE parley.post (
++CREATE TABLE post (
+     id              SERIAL      primary key,
+     thread_id       integer     not null
+                     references thread(id),
+@@ -162,42 +161,42 @@ CREATE TABLE parley.post (
+ );
+ 
+ -- add ReplyTo information for post
+-ALTER TABLE parley.post ADD COLUMN reply_to_id
++ALTER TABLE post ADD COLUMN reply_to_id
+     integer references post(id)
+ ;
+ -- deal with quoted replies
+-ALTER TABLE parley.post
++ALTER TABLE post
+ ADD COLUMN quoted_post_id
+ integer REFERENCES post(id);
+ 
+-ALTER TABLE parley.post
++ALTER TABLE post
+ ADD COLUMN quoted_text text;
+ 
+ -- add LastPost information
+-ALTER TABLE parley.thread ADD COLUMN last_post_id
++ALTER TABLE thread ADD COLUMN last_post_id
+     integer references post(id)
+ ;
+-ALTER TABLE parley.forum ADD COLUMN last_post_id
++ALTER TABLE forum ADD COLUMN last_post_id
+     integer references post(id)
+ ;
+ 
+ -- person posting information
+-ALTER TABLE parley.person ADD COLUMN last_post_id
++ALTER TABLE person ADD COLUMN last_post_id
+     integer references post(id)
+ ;
+-ALTER TABLE parley.person ADD COLUMN post_count
++ALTER TABLE person ADD COLUMN post_count
+     integer NOT NULL default 0
+ ;
+ 
+ -- post edited time (if any)
+-ALTER TABLE parley.post
++ALTER TABLE post
+     ADD COLUMN
+         edited  timestamp with time zone
+ ;
+ 
+ 
+ -- when a user last viewed a thread
+-CREATE TABLE parley.thread_view (
++CREATE TABLE thread_view (
+     id                  SERIAL      not null        primary key,
+     person_id           integer     not null        references person(id),
+     thread_id           integer     not null        references thread(id),
+@@ -213,7 +212,7 @@ CREATE TABLE parley.thread_view (
+ 
+ -- overall it's better to queue outgoing emails, and have a separate process
+ -- deal with them
+-CREATE TABLE parley.email_queue (
++CREATE TABLE email_queue (
+     id                  SERIAL      not null        primary key,
+     queued              timestamp with time zone    not null
+                         default CURRENT_TIMESTAMP,
+@@ -234,7 +233,7 @@ CREATE TABLE parley.email_queue (
+ 
+ 
+ -- a table of person/forum to show who's a moderator
+-CREATE TABLE parley.forum_moderator (
++CREATE TABLE forum_moderator (
+     id                  SERIAL      primary key,
+     person_id           integer     not null    references person(id),
+     forum_id            integer     not null    references forum(id),
+@@ -245,7 +244,7 @@ CREATE TABLE parley.forum_moderator (
+ 
+ 
+ -- a table to contain site terms & conditions
+-CREATE TABLE parley.terms (
++CREATE TABLE terms (
+     id              serial      primary key,
+     created         timestamp with time zone
+                     default CURRENT_TIMESTAMP
+@@ -256,7 +255,7 @@ CREATE TABLE parley.terms (
+     change_summary  text
+ );
+ -- keep track of who agreed to what, and when
+-CREATE TABLE parley.terms_agreed (
++CREATE TABLE terms_agreed (
+     id              serial      primary key,
+ 
+     person_id       integer     not null
+@@ -272,7 +271,7 @@ CREATE TABLE parley.terms_agreed (
+ );
+ 
+ -- roles / authentication
+-CREATE TABLE parley.role (
++CREATE TABLE role (
+     id              serial      primary key,
+     idx             integer     not null default 9999,
+     name            varchar(30) not null unique,
+@@ -280,7 +279,7 @@ CREATE TABLE parley.role (
+ );
+ CREATE INDEX idx_role_name ON role(name);
+ 
+-CREATE TABLE parley.user_roles (
++CREATE TABLE user_roles (
+     id                  serial      primary key,
+     authentication_id   integer     not null
+                                     references authentication(id),
+@@ -292,7 +291,7 @@ CREATE INDEX idx_userroles_authenticationid ON user_roles(authentication_id);
+ CREATE INDEX idx_userroles_roleid           ON user_roles(role_id);
+ 
+ -- admin action log actions/messages
+-CREATE TABLE parley.admin_action (
++CREATE TABLE admin_action (
+     id              serial      primary key,
+     name            text        not null,
+ 
+@@ -301,7 +300,7 @@ CREATE TABLE parley.admin_action (
+ INSERT INTO admin_action (id, name) VALUES (0, 'undefined');
+ INSERT INTO admin_action (name) VALUES ('suspend_user');
+ 
+-CREATE TABLE parley.log_admin_action (
++CREATE TABLE log_admin_action (
+     id              serial      primary key,
+     person_id       integer     not null
+                                 references person(id),
+@@ -322,7 +321,7 @@ CREATE INDEX idx_adminaction_personid ON log_admin_action(person_id);
+ CREATE INDEX idx_adminaction_adminid  ON log_admin_action(admin_id);
+ 
+ 
+-CREATE TABLE parley.ip_ban_type (
++CREATE TABLE ip_ban_type (
+     id          serial      primary key,
+     name        text        not null,
+     description text,
+@@ -334,7 +333,7 @@ INSERT INTO ip_ban_type (name,description) VALUES ('login','Restrict login by IP
+ INSERT INTO ip_ban_type (name,description) VALUES ('posting','Restrict posting by IP');
+ INSERT INTO ip_ban_type (name,description) VALUES ('signup','Restrict sign-up by IP');
+ 
+-CREATE TABLE parley.ip_ban (
++CREATE TABLE ip_ban (
+     id          serial      primary key,
+     ban_type_id integer     not null
+                             references ip_ban_type(id),
