@@ -17,6 +17,9 @@ sub dfv_constraint_confirm_equal :Export( :constraints ) {
 
     return sub {
         my $dfv = shift;
+
+        $dfv->name_this($attrs->{name} || 'confirm');
+
         my $data = $dfv->get_filtered_data();
 
         return ( $data->{$first} eq $data->{$second} );
@@ -28,6 +31,9 @@ sub dfv_constraint_valid_email :Export( :constraints ) {
 
     return sub {
         my $dfv = shift;
+
+        $dfv->name_this('email');
+
         my $data = $dfv->get_filtered_data();
 
         return Email::Valid->address($data->{email});

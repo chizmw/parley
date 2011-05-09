@@ -37,6 +37,7 @@ my %dfv_profile_for = (
             confirm_password =>
                 dfv_constraint_confirm_equal(
                     {
+                        name   => 'confirm_password',
                         fields => [qw/new_password confirm_password/],
                     }
                 ),
@@ -51,6 +52,7 @@ my %dfv_profile_for = (
             confirm_email =>
                 dfv_constraint_confirm_equal(
                     {
+                        name   => 'confirm_email',
                         fields => [qw/email confirm_email/],
                     }
                 ),
@@ -171,11 +173,11 @@ sub signup : Path('/user/signup') {
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 sub _add_new_user {
-    my ($self, $c) = @_;
-    my ($valid_results, @messages, $new_user);
+    my ($self, $c, $valid_results) = @_;
+    my (@messages, $new_user);
 
     # less typing
-    $valid_results = $c->form->valid;
+    $valid_results ||= $c->form->valid;
 
     # is the requested username already in use?
     if ($self->_username_exists($c, $valid_results->{new_username})) {
@@ -317,7 +319,7 @@ sub _user_signup {
     $c->forward('check_unique_forumname', ['forum_name']);
 
     if ($c->stash->{validation}->success) {
-        @messages = $self->_add_new_user($c, $results);
+        @messages = $self->_add_new_user($c, scalar $c->stash->{validation}->valid);
     }
 
 #
