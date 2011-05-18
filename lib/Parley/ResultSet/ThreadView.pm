@@ -40,9 +40,7 @@ sub notification_list {
     # make sure we have full object details
     # [we don't seem to get all the default column data for a new create()]
     $schema = $self->result_source()->schema();
-    $post = $schema->resultset('Post')->find(
-        id => $post->id()
-    );
+    $post = $schema->resultset('Post')->find($post->id());
     if (not defined $post) {
         warn 'failed to re-fetch post in notification_list()';
         return;
