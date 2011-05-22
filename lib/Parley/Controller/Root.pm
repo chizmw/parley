@@ -23,13 +23,31 @@ __PACKAGE__->config->{namespace} = '';
 sub begin :Private {
     my ($self, $c) = @_;
 
-    # deal with access banned by IP
-    my $ip = $c->request->address;
-    my $access_banned =
-        $c->model('ParleyDB::IpBan')->is_access_banned($ip);
-    if ($access_banned) {
-        $c->stash->{template} = 'user/access_ip_banned';
-        return;
+    # wrap the access check - if it fails it's usually because it's a fresh
+    # install without then database set-up
+    # Although we might want to improve the check later, it's a quick and easy
+    # way to make it nicer if the DB isn't set-up properly
+    eval {
+        # deal with access banned by IP
+        my $ip = $c->request->address;
+        my $access_banned =
+            $c->model('ParleyDB::IpBan')->is_access_banned($ip);
+        if ($access_banned) {
+            $c->stash->{template} = 'user/access_ip_banned';
+            return;
+        }
+    };
+
+    if (my $e = $@) {
+        # schema/namespace missing? forgot to setup database?
+        if ($e =~ m{schema "parley" does not exist}) {
+            $c->stash->{template} = 'error/database_missing_schema';
+            $c->forward('View::TT');
+            return 1;
+        }
+
+        # catch-all - just die with the error
+        die $e;
     }
 
     return 1;

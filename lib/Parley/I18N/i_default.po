@@ -19,6 +19,12 @@ msgstr "%quant(%1,View,Views)"
 msgid "%quant(%1,view)"
 msgstr "%quant(%1,view,views)"
 
+msgid "header.database.error"
+msgstr "Database Error"
+
+msgid "error.database.schema.missing"
+msgstr "The application database does not appear to have been correctly configured."
+
 msgid "SEARCH FOR MESSAGES MATCHING"
 msgstr "Search for messages matching"
 
